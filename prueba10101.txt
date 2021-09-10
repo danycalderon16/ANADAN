@@ -1,0 +1,24 @@
+just hola2 = 1;
+hola()
+begin
+	just hola = 1;
+	hola = 2; 
+	filltriangle(1,1,1,1,1,1,1,1,1);
+	if(hola=2){
+		hola=3;
+	}else{
+		hola=4;
+	}
+
+	while (hola=3){
+		hola=4;
+		cut;
+	}
+	prueba(just x,just y){
+		if(hola=2){
+			hola=3;
+		}else{
+			hola=4;
+		}
+	}
+end

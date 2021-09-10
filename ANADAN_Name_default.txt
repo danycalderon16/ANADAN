@@ -1,0 +1,43 @@
+mide()
+begin
+	piramide(just x1, just y1, just z1){
+		crearpiramide(x1, y1, z1);
+	}
+	method crearpiramide(just x, just y, just z){ 
+
+		for (just i=0; i<=60; i++)
+		{
+			check{
+				fillrectangle(x,y,z,-x,y,z,-x,-y,z,x,-y,z);
+				x--;
+				y--;
+				z++;
+			}trap(colisionexception e){
+				stop();
+				home();
+				sleep();
+			}	
+		}
+
+/*
+hola
+*/
+	}
+end
+proyecto1
+begin
+	method iniciar(){
+		printerport(1);
+		setnewfilament(2);
+		setfilamenttype(2);
+	}
+	nd
+	main(){
+		iniciar();
+		piramide piramide1 = new piramide(30,30,0);
+	}	
+End
+
+a
+a
+A

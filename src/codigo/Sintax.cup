@@ -1,0 +1,209 @@
+package codigo;
+
+import java_cup.runtime.Symbol;
+
+parser code
+{:
+    private Symbol s;
+    
+    //public void syntax_error(Symbol s){
+    //    this.s = s;
+    //}
+
+    public Symbol getS(){
+        return this.s;
+    }
+
+    public void syntax_error(Symbol s){
+        VentanaPrincipal.notificar_er(">Linea: "+(s.right+1)+" Error de sintaxis, cadena inesperada: "+ s.value );
+    }
+
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{ 
+        VentanaPrincipal.notificar_er(">Linea: "+(s.right+1)+" Error de sintaxis, cadena inesperada: "+ s.value );
+    }
+
+:};
+
+terminal Setfilamenttype, Fillrectangle, Drawrectangle, Sleep, Fillcircle, Drawcircle,
+Filltriangle, Drawtriangle, Stop, Getextrusorx, Getextrusory, Getextrusorz, Getfilamenttype, Setnewfilament,
+Getfilament, Gettemperature, End, Same, Get, Give, For, If, Else, Select, Empty,
+While, Case, Flag, Cut, Just, Begin, Model, Defect, New, Do, Goback, Broken, Home,
+Printerport, Method, Check, Trap, Class, Main, Signo_de_igual, Signo_de_Suma, Signo_de_Resta,
+Signo_de_Multiplicación, Signo_de_División, Signo_de_Residuo, NOT, AND, OR, Mas_Mas,
+Menos_Menos, Menor_que, Mayor_que, Menor_o_igual_que, Mayor_o_igual_que, Diferente_que,
+Igual_que, Parentesis_Abre, Parentesis_Cierra, Llave_Abre, Llave_Cierra, Corchete_Abre,
+Corchete_Cierra, PuntoYComa, Identificador, Numero,Word, True, False, Coma, Cadena, Punto, NUMERO_ERRONEO,
+ERROR,MAYUSCULAS_EN_CADENA, MAL_NOMBRE_PARA_IDENTIFICADOR;
+
+non terminal INICIO, SENTENCIA, DECLARACION, DECLARACION_FOR, IF, IF_ELSE,
+    WHILE, DO_WHILE, FOR, SENTENCIA_BOOLEANA, SENTENCIA_FOR, T_dato,Datos_Array,Continua,Cuerpo,
+    Declaraciones,Declaracion,BloqueSentencias,Sentencias,Sentencia,Expresion,
+SentIf,
+SentElse,
+SentWhile,
+SentAsignacion,
+SentCut,
+Expresiondos,
+Expresiontres,
+Expresioncuatro,
+OP_REL,
+OP_ART,
+OP_LOG,
+Condicion,
+Condiciondos,
+FILLTRIANGLE,
+SETFILAMENTTYPE,
+STOP,
+GETEXTRUSORX,
+GETEXTRUSORY,
+GETEXTRUSORZ,
+GETFILAMENTTYPE,
+SETNEWFILAMENT,
+GETFILAMENT,
+GETTEMPERATURE,
+DRAWTRIANGLE,
+FILLRECTANGLE,
+DRAWRECTANGLE,
+SLEEP,
+DRAWCIRCLE,
+FILLCIRCLE,
+HOME,
+PRINTERPORT,
+CONSTRUCTOR,
+METODO,
+PARAMETROS,
+PARAMETROSA,
+Parametro,
+MAIN,
+LLAMAR,
+TRYYCATCH,
+GET,
+GIVE,
+parametroa,
+Expresioncinco;
+
+start with INICIO;
+INICIO ::= 
+    Identificador Parentesis_Abre Parentesis_Cierra Begin BloqueSentencias End |
+    Declaracion Identificador Parentesis_Abre Parentesis_Cierra Begin BloqueSentencias End |
+    Identificador Parentesis_Abre Parentesis_Cierra Begin BloqueSentencias End Identificador Parentesis_Abre Parentesis_Cierra Begin BloqueSentencias End |
+    error Begin;
+BloqueSentencias::= Sentencias |;
+Sentencias::= Sentencia Sentencias | Sentencia;
+//Sentencias::= Sentencia Sentencias | Sentencia;
+Sentencia::= Declaracion | SentIf | SentWhile | SentAsignacion | SentCut | METODO |
+            FILLTRIANGLE | 
+            SETFILAMENTTYPE |
+            STOP |
+            GETEXTRUSORX |
+            GETEXTRUSORY |
+            GETEXTRUSORZ |
+            GETFILAMENTTYPE |
+            SETNEWFILAMENT |
+            GETFILAMENT |
+            GETTEMPERATURE |
+            DRAWTRIANGLE |
+            FILLRECTANGLE |
+            DRAWRECTANGLE |
+            SLEEP |
+            DRAWCIRCLE |
+            FILLCIRCLE |
+            HOME |
+            CONSTRUCTOR |
+            MAIN |
+            FOR |
+            TRYYCATCH |
+            GET|
+            GIVE|
+            error PuntoYComa | error Llave_Cierra |
+            PRINTERPORT 
+; 
+
+T_dato::= Broken|Just|Word|Flag;
+
+Declaracion ::= 
+    T_dato Identificador PuntoYComa | 
+    T_dato Identificador Signo_de_igual Numero PuntoYComa |
+    T_dato Identificador Signo_de_igual Cadena PuntoYComa |
+    T_dato Identificador Signo_de_igual True PuntoYComa |
+    T_dato Identificador Signo_de_igual False PuntoYComa |
+    T_dato Corchete_Abre Corchete_Cierra Identificador Signo_de_igual T_dato Corchete_Abre Numero Corchete_Cierra PuntoYComa |
+    T_dato Corchete_Abre Corchete_Cierra Identificador Signo_de_igual Llave_Abre Datos_Array Llave_Cierra PuntoYComa |
+    Identificador Identificador Signo_de_igual New Identificador Parentesis_Abre PARAMETROSA Parentesis_Cierra PuntoYComa
+;
+
+
+Expresion ::= Numero | Identificador | Parentesis_Abre  Expresion OP_ART Expresion Parentesis_Cierra;
+
+OP_REL ::= Mayor_que | Menor_que | Mayor_o_igual_que | Menor_o_igual_que | Diferente_que | Signo_de_igual;
+OP_ART ::= Signo_de_Suma | Signo_de_Resta | Signo_de_División | Signo_de_Multiplicación ;
+OP_LOG ::= OR | AND;
+
+
+SentIf::=  If Parentesis_Abre Condicion Parentesis_Cierra Llave_Abre BloqueSentencias Llave_Cierra SentElse;
+SentElse::= Else Llave_Abre BloqueSentencias Llave_Cierra |;
+SentWhile::= While Parentesis_Abre Condicion Parentesis_Cierra Llave_Abre BloqueSentencias Llave_Cierra;
+SentAsignacion::= Identificador Signo_de_igual Expresion PuntoYComa;
+SentCut::= Cut PuntoYComa;
+
+Condicion::= Expresion OP_REL Expresion;
+
+FILLTRIANGLE::= Filltriangle Parentesis_Abre Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Parentesis_Cierra PuntoYComa;
+SETFILAMENTTYPE::= Setfilamenttype Parentesis_Abre Numero Parentesis_Cierra PuntoYComa;
+STOP::= Stop Parentesis_Abre Parentesis_Cierra PuntoYComa;
+GETEXTRUSORX::= Getextrusorx Parentesis_Abre Parentesis_Cierra PuntoYComa;
+GETEXTRUSORY::= Getextrusory Parentesis_Abre Parentesis_Cierra PuntoYComa;
+GETEXTRUSORZ::= Getextrusorz Parentesis_Abre Parentesis_Cierra PuntoYComa;
+GETFILAMENTTYPE::= Getfilamenttype Parentesis_Abre Parentesis_Cierra PuntoYComa;
+SETNEWFILAMENT::= Setnewfilament Parentesis_Abre Numero Parentesis_Cierra PuntoYComa;
+GETFILAMENT::= Getfilament Parentesis_Abre Parentesis_Cierra PuntoYComa;
+GETTEMPERATURE::= Gettemperature Parentesis_Abre Parentesis_Cierra PuntoYComa;
+DRAWTRIANGLE::= Drawtriangle Parentesis_Abre Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Parentesis_Cierra PuntoYComa;
+FILLRECTANGLE::= Fillrectangle Parentesis_Abre Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Parentesis_Cierra PuntoYComa;
+DRAWRECTANGLE::= Drawrectangle Parentesis_Abre Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Parentesis_Cierra PuntoYComa;
+SLEEP::= Sleep Parentesis_Abre Parentesis_Cierra PuntoYComa;
+DRAWCIRCLE::= Drawcircle Parentesis_Abre Numero Coma Numero Coma Numero Coma Numero Parentesis_Cierra PuntoYComa;
+FILLCIRCLE::= Fillcircle Parentesis_Abre Numero Coma Numero Coma Numero Coma Numero Parentesis_Cierra PuntoYComa;
+HOME::= Home Parentesis_Abre Parentesis_Cierra PuntoYComa;
+PRINTERPORT::= Printerport Parentesis_Abre Numero Parentesis_Cierra PuntoYComa;
+
+METODO::= Method Identificador Parentesis_Abre PARAMETROS Parentesis_Cierra Llave_Abre BloqueSentencias Llave_Cierra | Model Identificador Parentesis_Abre Parentesis_Cierra PuntoYComa;
+CONSTRUCTOR::= Identificador Parentesis_Abre PARAMETROS Parentesis_Cierra Llave_Abre BloqueSentencias Llave_Cierra;
+MAIN::= Main Parentesis_Abre Parentesis_Cierra Llave_Abre BloqueSentencias Llave_Cierra;
+
+PARAMETROS::= Parametro Coma PARAMETROS 
+            | Parametro |;
+
+Parametro::= T_dato Identificador;
+
+PARAMETROSA::= parametroa | parametroa Coma PARAMETROSA;
+
+parametroa::= Identificador | Numero;
+
+
+FOR::= For Parentesis_Abre SENTENCIA_FOR Parentesis_Cierra Llave_Abre BloqueSentencias Llave_Cierra ;
+
+
+SENTENCIA_FOR::=
+   Identificador Signo_de_igual Numero PuntoYComa SENTENCIA_BOOLEANA PuntoYComa DECLARACION_FOR |
+   Just Identificador Signo_de_igual Numero PuntoYComa SENTENCIA_BOOLEANA PuntoYComa DECLARACION_FOR PuntoYComa ;
+
+DECLARACION_FOR::= 
+    Identificador Signo_de_igual Numero |
+    Identificador Mas_Mas | 
+    Mas_Mas Identificador
+;
+
+SENTENCIA_BOOLEANA::= 
+    Identificador OP_REL True |
+    Identificador OP_REL False |
+    Identificador OP_REL Numero |
+    Identificador OP_REL Identificador |
+    Identificador Punto Same Parentesis_Abre Cadena Parentesis_Cierra 
+;
+
+TRYYCATCH::= Check Llave_Abre BloqueSentencias Llave_Cierra Trap Parentesis_Abre Identificador Identificador Parentesis_Cierra Llave_Abre BloqueSentencias Llave_Cierra;
+    
+GET::= Get Parentesis_Abre Cadena Parentesis_Cierra PuntoYComa;
+
+GIVE::= Give Parentesis_Abre Identificador Parentesis_Cierra PuntoYComa;
