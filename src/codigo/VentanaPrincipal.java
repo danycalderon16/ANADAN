@@ -648,13 +648,25 @@ NumeroLinea lineatxtCodigo;
 
     private void jmnLexicaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmnLexicaMouseReleased
 
+        InformacionLexema c = new InformacionLexema();
         mnuMinimize.setEnabled(true);
         jplAreaEdit.setBounds(jplAreaEdit.getX(), jplAreaEdit.getY(), 800, 370);
         scPanAreaEdit.setBounds(jplAreaEdit.getX(), jplAreaEdit.getY(), 800, 370);
         txtAreaEdit.setBounds(jplAreaEdit.getX(), jplAreaEdit.getY(), 800, 370);
 
+        File fichero = new File("fichero.and");
+        PrintWriter writer;
+
+        try {
+            writer = new PrintWriter(fichero);
+            writer.print(txtAreaEdit.getText());
+            writer.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         //validar si esta guardado el archivo
-        if (name == null) {
+        /*   if (name == null) {
             if (seleccionar.showDialog(null, "Guardar") == JFileChooser.APPROVE_OPTION) {
 
                 archivo = seleccionar.getSelectedFile();
@@ -675,7 +687,7 @@ NumeroLinea lineatxtCodigo;
             }
 
             return;
-        }
+        }*/
         int i = 0;
         txtConsola.setText("");
         errores = "";
@@ -701,8 +713,7 @@ escribir.close();
          */
 
         try {
-            InformacionLexema c = new InformacionLexema();
-            Reader lector = new BufferedReader(new FileReader(name));
+            Reader lector = new BufferedReader(new FileReader("fichero.and"));
             Lexer lexer = new Lexer(lector);
 
             while (true) {
@@ -711,7 +722,7 @@ escribir.close();
                 Tokens tokens = lexer.yylex();
 
                 if (tokens == null) {
-                    System.out.println(name);
+                    System.out.println("fichero.and");
                     txtConsola.setText(errores);
                     if (errores.equals("")) {
                         txtConsola.setText("El programa no contiene errores :)");
@@ -1452,13 +1463,25 @@ escribir.close();
     }
 
     public void analisisLexico() {
+        InformacionLexema c = new InformacionLexema();
         mnuMinimize.setEnabled(true);
         jplAreaEdit.setBounds(jplAreaEdit.getX(), jplAreaEdit.getY(), 800, 370);
         scPanAreaEdit.setBounds(jplAreaEdit.getX(), jplAreaEdit.getY(), 800, 370);
         txtAreaEdit.setBounds(jplAreaEdit.getX(), jplAreaEdit.getY(), 800, 370);
 
+        File fichero = new File("fichero.and");
+        PrintWriter writer;
+
+        try {
+            writer = new PrintWriter(fichero);
+            writer.print(txtAreaEdit.getText());
+            writer.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         //validar si esta guardado el archivo
-        if (name == null) {
+        /*  if (name == null) {
             if (seleccionar.showDialog(null, "Guardar") == JFileChooser.APPROVE_OPTION) {
 
                 archivo = seleccionar.getSelectedFile();
@@ -1479,34 +1502,13 @@ escribir.close();
             }
 
             return;
-        }
+        }*/
         int i = 0;
         txtConsola.setText("");
         errores = "";
-        /*
-
-if (!name.equals("ANADAN_Name_default.txt")) {
-    name = archivo.getAbsolutePath();
-       System.out.println(errores+" NEGADO");
-} else{
-    System.out.println(errores+" ELSE");
-try {
-         
-PrintWriter escribir;
-    System.out.println("HOLA");
-escribir = new PrintWriter("ANADAN_Name_default.txt");
-escribir.print(txtAreaEdit.getText());
-escribir.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-}        
-        
-         */
 
         try {
-            InformacionLexema c = new InformacionLexema();
-            Reader lector = new BufferedReader(new FileReader(name));
+            Reader lector = new BufferedReader(new FileReader("fichero.and"));
             Lexer lexer = new Lexer(lector);
 
             while (true) {
@@ -1515,7 +1517,7 @@ escribir.close();
                 Tokens tokens = lexer.yylex();
 
                 if (tokens == null) {
-                    System.out.println(name);
+                    System.out.println("fichero.and");
                     txtConsola.setText(errores);
                     if (errores.equals("")) {
                         txtConsola.setText("El programa no contiene errores :)");
