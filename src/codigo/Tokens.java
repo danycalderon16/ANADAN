@@ -92,5 +92,6 @@ public enum Tokens {
     Corchete_Cierra,
     PuntoYComa,
     Identificador,
-    Numero
+    Numero,
+    COMILLAS_DOBLES
 }

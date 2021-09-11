@@ -22,17 +22,25 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.undo.UndoManager;
+import modelos.Simbolos;
 
 public class VentanaPrincipal extends javax.swing.JFrame {
+    
+    
+    private ArrayList<String> identificadores = new ArrayList<String>();
+    private ArrayList<Simbolos> simbolos = new ArrayList<Simbolos>();
 
     public VentanaPrincipal() {
         initComponents();
@@ -71,7 +79,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         javax.swing.JMenuItem miZoomOutFont = new javax.swing.JMenuItem();
         mnuTablaS = new javax.swing.JMenu();
         mnuFija = new javax.swing.JMenuItem();
-        mnuVariable = new javax.swing.JMenuItem();
+        miDynamicTable = new javax.swing.JMenuItem();
         miMethod = new javax.swing.JMenuItem();
         mnuCompile = new javax.swing.JMenu();
         miCompileLexical = new javax.swing.JMenuItem();
@@ -239,13 +247,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         mnuTablaS.add(mnuFija);
 
-        mnuVariable.setText("Dynamic");
-        mnuVariable.addMouseListener(new java.awt.event.MouseAdapter() {
+        miDynamicTable.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        miDynamicTable.setText("Dynamic");
+        miDynamicTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                mnuVariableMouseReleased(evt);
+                miDynamicTableMouseReleased(evt);
             }
         });
-        mnuTablaS.add(mnuVariable);
+        mnuTablaS.add(miDynamicTable);
 
         miMethod.setText("Method");
         miMethod.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -270,11 +279,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         mnuCompile.add(miCompileLexical);
 
+        miCompileSyntax.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         miCompileSyntax.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/analysis (1).png"))); // NOI18N
         miCompileSyntax.setText("Syntax");
         miCompileSyntax.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 miCompileSyntaxMouseReleased(evt);
+            }
+        });
+        miCompileSyntax.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miCompileSyntaxActionPerformed(evt);
             }
         });
         mnuCompile.add(miCompileSyntax);
@@ -746,10 +761,23 @@ NumeroLinea lineatxtCodigo;
         txtConsola.setBackground(Color.white);
     }//GEN-LAST:event_miNomalModeMouseReleased
 
-    private void mnuVariableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuVariableMouseReleased
-        TablaDinamica.me.setRowCount(0);
-        rquicksort();
-    }//GEN-LAST:event_mnuVariableMouseReleased
+    private void miDynamicTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_miDynamicTableMouseReleased
+        /*TablaDinamica.me.setRowCount(0);
+        rquicksort();*/
+        
+        for(int i = 0; i< m.getRowCount()-1;i++){
+            int linea = Integer.parseInt(m.getValueAt(i,1).toString());
+            String lexema =  m.getValueAt(i,2).toString();
+            String componente =  m.getValueAt(i,3).toString();
+            if(componente.equals("Identificador"))
+                simbolos.add(new Simbolos(componente, linea, lexema, "", ""));                       
+        }
+        
+        Collections.sort(simbolos);
+        
+        TablaDinamica ts = new TablaDinamica(simbolos);
+        ts.setVisible(true);
+    }//GEN-LAST:event_miDynamicTableMouseReleased
 
     private void mnuEditMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuEditMouseReleased
 
@@ -1166,7 +1194,13 @@ NumeroLinea lineatxtCodigo;
                         tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
                         tblTablaSimbolos.setValueAt("RESERVADA", i, 3);
                         i++;
-
+                        break;
+                    case Cadena:
+                       tblTablaSimbolos.setValueAt(c.columna, i, 0);
+                        tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
+                        tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
+                        tblTablaSimbolos.setValueAt("Constante de caracter", i, 3);
+                        i++;
                         break;
                     default:
                         //   resultado+= lexer.yytext()+ ": Es un " + tokens+"\n";
@@ -1227,6 +1261,10 @@ NumeroLinea lineatxtCodigo;
         }
     }//GEN-LAST:event_btnayudaMousePressed
 
+    private void miCompileSyntaxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miCompileSyntaxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_miCompileSyntaxActionPerformed
+
     public void rquicksort() {
 
         int col = m.getColumnCount();
@@ -1246,7 +1284,7 @@ NumeroLinea lineatxtCodigo;
             arreglo[i][1] = m.getValueAt(i, 3).toString(); //componentye lexico
         }
 
-        burbuja(arreglo, 0, ren);
+        //burbuja(arreglo, 0, ren);
     }
 
     public void burbuja(String[][] arreglo, int ini, int ter) {
@@ -1290,7 +1328,7 @@ NumeroLinea lineatxtCodigo;
 
         }
 
-        nuevo.setVisible(true);
+        //tabaDinamica.setVisible(true);
     }
 
     public boolean buscardup(String ar) {
@@ -1349,7 +1387,7 @@ NumeroLinea lineatxtCodigo;
     public int tamanioletra = 12;
     private DefaultTableModel m = new DefaultTableModel();
     public String arreglo[][];
-    TablaDinamica nuevo = new TablaDinamica();
+    //TablaDinamica tabaDinamica = new TablaDinamica();
 
     public static TablaMetodos tblMetodos = new TablaMetodos();
 
@@ -1366,6 +1404,7 @@ NumeroLinea lineatxtCodigo;
     private javax.swing.JMenuItem miCompileLexical;
     private javax.swing.JMenuItem miCompileSyntax;
     private javax.swing.JMenuItem miDarkMode;
+    private javax.swing.JMenuItem miDynamicTable;
     private javax.swing.JMenuItem miMethod;
     private javax.swing.JMenuItem miNomalMode;
     private javax.swing.JMenuItem miRetroMode;
@@ -1379,7 +1418,6 @@ NumeroLinea lineatxtCodigo;
     private javax.swing.JMenuItem mnuSave;
     private javax.swing.JMenuItem mnuSaveAs;
     private javax.swing.JMenu mnuTablaS;
-    private javax.swing.JMenuItem mnuVariable;
     private javax.swing.JMenu mnufile;
     private javax.swing.JScrollPane scPanAreaEdit;
     public static javax.swing.JTable tblTablaSimbolos;

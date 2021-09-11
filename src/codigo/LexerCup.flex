@@ -14,6 +14,8 @@ espacio=[ ,\t,\r,\n]+
 
 A=[/*]
 C=[*/]
+
+cadena = (\")~(\")
  
 %{
     private Symbol symbol(int type, Object value){
@@ -79,6 +81,9 @@ class {return new Symbol(sym.Class, yychar, yyline, yytext());}
 
 {A}[^]*{C} {/*Ignore*/}
 
+"\"" {return new Symbol(sym.COMILLAS_DOBLES, yychar, yyline, yytext());}
+({cadena})       {return new Symbol(sym.Cadena,      yychar, yyline, yytext());}
+
 "=" {return new Symbol(sym.Signo_de_igual, yychar, yyline, yytext());}
 
 "+" {return new Symbol(sym.Signo_de_Suma, yychar, yyline, yytext());}
@@ -112,7 +117,7 @@ class {return new Symbol(sym.Class, yychar, yyline, yytext());}
 
 {L}({L}|{D})* {return new Symbol(sym.Identificador, yychar, yyline, yytext());}
 
-("+"|"-")?{D}+|("+"|"-")?{D}+"." {D}+ {return new Symbol(sym.Numero, yychar, yyline, yytext());}
+("+"|"-")?{D}+|("+"|"-")?{D}+"." {D}+ {return new Symbol(sym.Numero, yychar, yyline,new Integer(yytext()));}
 
 (("+-")|("-+"))({D}+|{D}+"."{D}+) {return new Symbol(sym.NUMERO_ERRONEO, yychar, yyline, yytext());}
  

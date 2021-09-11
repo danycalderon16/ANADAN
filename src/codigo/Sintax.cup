@@ -1,9 +1,26 @@
 package codigo;
 
+import java.util.*;
+import java.io.*;
 import java_cup.runtime.Symbol;
+import java.util.logging.Level;
+import java.util.Stack;
+
+action code
+    {:
+        Hashtable table = new Hashtable();
+    :};
 
 parser code
 {:
+
+    static TablaSimbolos tablaSimbolos = new TablaSimbolos();
+    static int verificarTipo = 0;
+    static Stack <String> listaIdentificadores = new Stack <String>();
+	public static void main(String args[]) throws Exception{
+		new Sintax(new LexerCup(System.in)).parse();
+	}
+    
     private Symbol s;
     
     //public void syntax_error(Symbol s){
@@ -24,19 +41,25 @@ parser code
 
 :};
 
+terminal String Identificador;
+terminal Integer Numero;
+terminal String Cadena,True, False;
+terminal String Broken,Just,Word,Flag;
 terminal Setfilamenttype, Fillrectangle, Drawrectangle, Sleep, Fillcircle, Drawcircle,
 Filltriangle, Drawtriangle, Stop, Getextrusorx, Getextrusory, Getextrusorz, Getfilamenttype, Setnewfilament,
 Getfilament, Gettemperature, End, Same, Get, Give, For, If, Else, Select, Empty,
-While, Case, Flag, Cut, Just, Begin, Model, Defect, New, Do, Goback, Broken, Home,
+While, Case,  Cut, Begin, Model, Defect, New, Do, Goback,  Home,
 Printerport, Method, Check, Trap, Class, Main, Signo_de_igual, Signo_de_Suma, Signo_de_Resta,
 Signo_de_Multiplicación, Signo_de_División, Signo_de_Residuo, NOT, AND, OR, Mas_Mas,
 Menos_Menos, Menor_que, Mayor_que, Menor_o_igual_que, Mayor_o_igual_que, Diferente_que,
 Igual_que, Parentesis_Abre, Parentesis_Cierra, Llave_Abre, Llave_Cierra, Corchete_Abre,
-Corchete_Cierra, PuntoYComa, Identificador, Numero,Word, True, False, Coma, Cadena, Punto, NUMERO_ERRONEO,
-ERROR,MAYUSCULAS_EN_CADENA, MAL_NOMBRE_PARA_IDENTIFICADOR;
+Corchete_Cierra, PuntoYComa,  Coma,  Punto, NUMERO_ERRONEO,
+ERROR,MAYUSCULAS_EN_CADENA, MAL_NOMBRE_PARA_IDENTIFICADOR,
+COMILLAS_DOBLES;
 
+non terminal String T_dato;
 non terminal INICIO, SENTENCIA, DECLARACION, DECLARACION_FOR, IF, IF_ELSE,
-    WHILE, DO_WHILE, FOR, SENTENCIA_BOOLEANA, SENTENCIA_FOR, T_dato,Datos_Array,Continua,Cuerpo,
+    WHILE, DO_WHILE, FOR, SENTENCIA_BOOLEANA, SENTENCIA_FOR ,Datos_Array,Continua,Cuerpo,
     Declaraciones,Declaracion,BloqueSentencias,Sentencias,Sentencia,Expresion,
 SentIf,
 SentElse,
@@ -84,13 +107,54 @@ Expresioncinco;
 
 start with INICIO;
 INICIO ::= 
-    Identificador Parentesis_Abre Parentesis_Cierra Begin BloqueSentencias End |
-    Declaracion Identificador Parentesis_Abre Parentesis_Cierra Begin BloqueSentencias End |
-    Identificador Parentesis_Abre Parentesis_Cierra Begin BloqueSentencias End Identificador Parentesis_Abre Parentesis_Cierra Begin BloqueSentencias End |
+    Identificador:nombre Parentesis_Abre Parentesis_Cierra Begin BloqueSentencias End
+    {:
+        try{
+            TablaSimbolos.crear(nombre, "--","Nombre");
+            TablaSimbolos.insertar(nombre, String.valueOf("--"));
+
+            //Crear relacion ciclo PARA con su variable asociada
+            TablaSimbolos.lista.push(nombre);          
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                           
+    :} |
+    Declaracion Identificador:nombre Parentesis_Abre Parentesis_Cierra Begin BloqueSentencias End 
+    {:
+        try{
+            TablaSimbolos.crear(nombre, "--","Nombre");
+            TablaSimbolos.insertar(nombre, String.valueOf("--"));
+
+            //Crear relacion ciclo PARA con su variable asociada
+            TablaSimbolos.lista.push(nombre);          
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                           
+    :}|
+    Identificador:nombre Parentesis_Abre Parentesis_Cierra Begin BloqueSentencias End Identificador Parentesis_Abre Parentesis_Cierra Begin BloqueSentencias End 
+    {:
+        try{
+            TablaSimbolos.crear(nombre, "--","Nombre");
+            TablaSimbolos.insertar(nombre, String.valueOf("--"));
+
+            //Crear relacion ciclo PARA con su variable asociada
+            TablaSimbolos.lista.push(nombre);          
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                           
+    :}|
     error Begin;
+
 BloqueSentencias::= Sentencias |;
+
 Sentencias::= Sentencia Sentencias | Sentencia;
-//Sentencias::= Sentencia Sentencias | Sentencia;
+
 Sentencia::= Declaracion | SentIf | SentWhile | SentAsignacion | SentCut | METODO |
             FILLTRIANGLE | 
             SETFILAMENTTYPE |
@@ -119,19 +183,112 @@ Sentencia::= Declaracion | SentIf | SentWhile | SentAsignacion | SentCut | METOD
             PRINTERPORT 
 ; 
 
-T_dato::= Broken|Just|Word|Flag;
-
 Declaracion ::= 
-    T_dato Identificador PuntoYComa | 
-    T_dato Identificador Signo_de_igual Numero PuntoYComa |
-    T_dato Identificador Signo_de_igual Cadena PuntoYComa |
-    T_dato Identificador Signo_de_igual True PuntoYComa |
-    T_dato Identificador Signo_de_igual False PuntoYComa |
+   
+    Just:nombre Identificador PuntoYComa   {:
+        try{
+            TablaSimbolos.crear(nombre, "--","Nombre");
+            TablaSimbolos.insertar(nombre, String.valueOf("--"));
+
+            //Crear relacion ciclo PARA con su variable asociada
+            TablaSimbolos.lista.push(nombre);          
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                           
+    :}|
+    Word:nombre Identificador PuntoYComa   {:
+        try{
+            TablaSimbolos.crear(nombre, "--","Nombre");
+            TablaSimbolos.insertar(nombre, String.valueOf("--"));
+
+            //Crear relacion ciclo PARA con su variable asociada
+            TablaSimbolos.lista.push(nombre);          
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                           
+    :}|
+    Flag:nombre Identificador PuntoYComa   {:
+        try{
+            TablaSimbolos.crear(nombre, "--","Nombre");
+            TablaSimbolos.insertar(nombre, String.valueOf("--"));
+
+            //Crear relacion ciclo PARA con su variable asociada
+            TablaSimbolos.lista.push(nombre);          
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                           
+    :}|
+    Just:tipo Identificador:nombre Signo_de_igual Numero:valor PuntoYComa 
+    {:
+        try{
+            TablaSimbolos.crear(nombre, tipo,"Variable numérica");
+            TablaSimbolos.insertar(nombre, String.valueOf(valor));
+
+            //Crear relacion ciclo PARA con su variable asociada
+            TablaSimbolos.lista.push(nombre);         
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                      
+    :}|
+    Word:tipo Identificador:nombre Signo_de_igual Cadena:valor PuntoYComa 
+    {:
+        try{
+            TablaSimbolos.crear(nombre, tipo,"Variable");
+            TablaSimbolos.insertar(nombre, String.valueOf(valor));
+
+            //Crear relacion ciclo PARA con su variable asociada
+            TablaSimbolos.lista.push(nombre);         
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                      
+    :}|
+    Flag:tipo Identificador:nombre Signo_de_igual True:valor PuntoYComa 
+    {:
+        try{
+            TablaSimbolos.crear(nombre, tipo,"Variable");
+            TablaSimbolos.insertar(nombre, String.valueOf(valor));
+
+            //Crear relacion ciclo PARA con su variable asociada
+            TablaSimbolos.lista.push(nombre);         
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                      
+    :}|
+    Flag:tipo Identificador:nombre Signo_de_igual False:valor PuntoYComa 
+    {:
+        try{
+            TablaSimbolos.crear(nombre, tipo,"Variable");
+            TablaSimbolos.insertar(nombre, String.valueOf(valor));
+
+            //Crear relacion ciclo PARA con su variable asociada
+            TablaSimbolos.lista.push(nombre);         
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                      
+    :}|
     T_dato Corchete_Abre Corchete_Cierra Identificador Signo_de_igual T_dato Corchete_Abre Numero Corchete_Cierra PuntoYComa |
     T_dato Corchete_Abre Corchete_Cierra Identificador Signo_de_igual Llave_Abre Datos_Array Llave_Cierra PuntoYComa |
     Identificador Identificador Signo_de_igual New Identificador Parentesis_Abre PARAMETROSA Parentesis_Cierra PuntoYComa
 ;
 
+T_dato::= Broken|
+        Just |
+        Word |
+        Flag ;
 
 Expresion ::= Numero | Identificador | Parentesis_Abre  Expresion OP_ART Expresion Parentesis_Cierra;
 

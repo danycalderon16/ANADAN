@@ -13,6 +13,8 @@ espacio=[ ,\t,\r]+
 
 A=[/*]
 C=[*/]
+
+cadena = (\")~(\")
  
 %{
     public String lexeme;
@@ -111,9 +113,12 @@ C=[*/]
 <YYINITIAL> "]" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Corchete_Cierra;}
 
 
+<YYINITIAL> "\"" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return COMILLAS_DOBLES;}
+
 <YYINITIAL> ";" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return PuntoYComa;}
 
-<YYINITIAL> "\""[^]*"\"" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Cadena;} 
+
+<YYINITIAL> {cadena} {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Cadena;} 
 
 <YYINITIAL> {L}({L}|{D})* {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Identificador;}
 <YYINITIAL> ("+"|"-")?{D}+|("+"|"-")?{D}+ "." {D}+ {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Numero;}
