@@ -68,10 +68,10 @@ cadena = (\")~(\")
 <YYINITIAL> printerport {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Printerport;}
 <YYINITIAL> method {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Method;}
 <YYINITIAL> check {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Check;}
-<YYINITIAL> trap {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Trap;}
-<YYINITIAL> class {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Class;}
-<YYINITIAL> true {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return True;}
-<YYINITIAL> false {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return False;}
+<YYINITIAL> "trap" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Trap;}
+<YYINITIAL> "class" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Class;}
+<YYINITIAL> "true" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return True;}
+<YYINITIAL> "false" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return False;}
 <YYINITIAL> "main" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Main;}
 
 <YYINITIAL> "\," {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Coma;}

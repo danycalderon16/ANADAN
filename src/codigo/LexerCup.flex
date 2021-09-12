@@ -52,6 +52,9 @@ give {return new Symbol(sym.Give, yychar, yyline, yytext());}
 for {return new Symbol(sym.For, yychar, yyline, yytext());}
 if {return new Symbol(sym.If, yychar, yyline, yytext());}
 else {return new Symbol(sym.Else, yychar, yyline, yytext());}
+"true" {return new Symbol(sym.True, yychar, yyline, yytext());}
+"false" {return new Symbol(sym.False, yychar, yyline, yytext());}
+
 
 select {return new Symbol(sym.Select, yychar, yyline, yytext());}
 empty {return new Symbol(sym.Empty, yychar, yyline, yytext());}
