@@ -1347,7 +1347,7 @@ NumeroLinea lineatxtCodigo;
         }
         return true;
     }
-
+    public int abc;
     /**
      * @param args the command line arguments
      */
