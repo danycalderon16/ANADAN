@@ -9,7 +9,7 @@ import static codigo.Tokens.*;
 L=[a-z_]+
 D=[0-9]+
 CAP=[A-Z]+
-espacio=[ ,\t,\r]+
+espacio=[ ,\t,\r,\n]+
 
 A=[/*]
 C=[*/]
@@ -22,6 +22,10 @@ cadena = (\")~(\")
 %}
 
 %%
+
+{espacio} {/*Ignore*/}
+{A}[^]*{C} {/*Ignore*/}
+
 <YYINITIAL> "word" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Word;}
 <YYINITIAL> "setfilamenttype" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Setfilamenttype;}
 <YYINITIAL> "fillrectangle" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Fillrectangle;}
@@ -76,10 +80,6 @@ cadena = (\")~(\")
 
 <YYINITIAL> "\," {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Coma;}
 <YYINITIAL> "." {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Punto;}
-
-<YYINITIAL> {espacio} {/*Ignore*/}
-
-<YYINITIAL> {A}[^]*{C} {/*Ignore*/}
 
 <YYINITIAL> "\n" {return Linea;}
 

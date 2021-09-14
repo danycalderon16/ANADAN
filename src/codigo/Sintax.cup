@@ -43,8 +43,8 @@ parser code
 
 terminal String Identificador;
 terminal Integer Numero;
-terminal String Cadena,True, False;
-terminal String Broken,Just,Word,Flag;
+terminal String CADENA_TEXTO,True, False;
+terminal String Broken,Just, Word, Flag;
 terminal Setfilamenttype, Fillrectangle, Drawrectangle, Sleep, Fillcircle, Drawcircle,
 Filltriangle, Drawtriangle, Stop, Getextrusorx, Getextrusory, Getextrusorz, Getfilamenttype, Setnewfilament,
 Getfilament, Gettemperature, End, Same, Get, Give, For, If, Else, Select, Empty,
@@ -53,9 +53,8 @@ Printerport, Method, Check, Trap, Class, Main, Signo_de_igual, Signo_de_Suma, Si
 Signo_de_Multiplicación, Signo_de_División, Signo_de_Residuo, NOT, AND, OR, Mas_Mas,
 Menos_Menos, Menor_que, Mayor_que, Menor_o_igual_que, Mayor_o_igual_que, Diferente_que,
 Igual_que, Parentesis_Abre, Parentesis_Cierra, Llave_Abre, Llave_Cierra, Corchete_Abre,
-Corchete_Cierra, PuntoYComa,  Coma,  Punto, NUMERO_ERRONEO,
-ERROR,MAYUSCULAS_EN_CADENA, MAL_NOMBRE_PARA_IDENTIFICADOR,
-COMILLAS_DOBLES;
+Corchete_Cierra, PuntoYComa,  Coma,  Punto, 
+ERROR;
 
 non terminal String T_dato;
 non terminal INICIO, SENTENCIA, DECLARACION, DECLARACION_FOR, IF, IF_ELSE,
@@ -238,7 +237,7 @@ Declaracion ::=
             TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
         }                      
     :}|
-    Word:tipo Identificador:nombre Signo_de_igual Cadena:valor PuntoYComa 
+    Word:tipo Identificador:nombre Signo_de_igual CADENA_TEXTO:valor PuntoYComa 
     {:
         try{
             TablaSimbolos.crear(nombre, tipo,"Variable");
@@ -255,7 +254,7 @@ Declaracion ::=
     Flag:tipo Identificador:nombre Signo_de_igual True:valor PuntoYComa 
     {:
         try{
-            TablaSimbolos.crear(nombre, tipo,"Variable");
+            TablaSimbolos.crear(nombre, tipo,"Variable boolena");
             TablaSimbolos.insertar(nombre, String.valueOf(valor));
 
             //Crear relacion ciclo PARA con su variable asociada
@@ -269,7 +268,7 @@ Declaracion ::=
     Flag:tipo Identificador:nombre Signo_de_igual False:valor PuntoYComa 
     {:
         try{
-            TablaSimbolos.crear(nombre, tipo,"Variable");
+            TablaSimbolos.crear(nombre, tipo,"Variable booleana");
             TablaSimbolos.insertar(nombre, String.valueOf(valor));
 
             //Crear relacion ciclo PARA con su variable asociada
@@ -356,11 +355,11 @@ SENTENCIA_BOOLEANA::=
     Identificador OP_REL False |
     Identificador OP_REL Numero |
     Identificador OP_REL Identificador |
-    Identificador Punto Same Parentesis_Abre Cadena Parentesis_Cierra 
+    Identificador Punto Same Parentesis_Abre CADENA_TEXTO Parentesis_Cierra 
 ;
 
 TRYYCATCH::= Check Llave_Abre BloqueSentencias Llave_Cierra Trap Parentesis_Abre Identificador Identificador Parentesis_Cierra Llave_Abre BloqueSentencias Llave_Cierra;
     
-GET::= Get Parentesis_Abre Cadena Parentesis_Cierra PuntoYComa;
+GET::= Get Parentesis_Abre CADENA_TEXTO Parentesis_Cierra PuntoYComa;
 
 GIVE::= Give Parentesis_Abre Identificador Parentesis_Cierra PuntoYComa;

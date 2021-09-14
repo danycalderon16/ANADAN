@@ -945,46 +945,16 @@ NumeroLinea lineatxtCodigo;
                 }
 
                 switch (tokens) {
-
                     case MAYUSCULAS_EN_CADENA:
-                        tblTablaSimbolos.setValueAt(c.columna, i, 0);
-                        tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
-                        tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
-                        tblTablaSimbolos.setValueAt("ERROR:CADENA_NO_VALIDA", i, 3);
-
-                        errores += (">Linea: " + (c.linea + 1) + " Columna: " + (c.columna) + ", Error Léxico,    Error cadena no valida: " + lexer.yytext() + "\n");
-                        i++;
-
-                        break;
                     case MAL_NOMBRE_PARA_IDENTIFICADOR:
-                        tblTablaSimbolos.setValueAt(c.columna, i, 0);
-                        tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
-                        tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
-                        tblTablaSimbolos.setValueAt("ERROR:CADENA_NO_VALIDA", i, 3);
-
-                        errores += (">Linea: " + (c.linea + 1) + " Columna: " + (c.columna) + ", Error Léxico,    Error cadena no valida: " + lexer.yytext() + "\n");
-                        i++;
-
-                        break;
                     case NUMERO_ERRONEO:
-                        tblTablaSimbolos.setValueAt(c.columna, i, 0);
-                        tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
-                        tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
-                        tblTablaSimbolos.setValueAt("ERROR:CADENA_NO_VALIDA", i, 3);
-
-                        errores += (">Linea: " + (c.linea + 1) + " Columna: " + (c.columna) + ", Error Léxico,    Error cadena no valida: " + lexer.yytext() + "\n");
-                        i++;
-
-                        break;
                     case ERROR:
                         tblTablaSimbolos.setValueAt(c.columna, i, 0);
                         tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
                         tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
                         tblTablaSimbolos.setValueAt("ERROR:CADENA_NO_VALIDA", i, 3);
-
                         errores += (">Linea: " + (c.linea + 1) + " Columna: " + (c.columna) + ", Error Léxico,    Error cadena no valida:  " + lexer.yytext() + "\n");
                         i++;
-
                         break;
                     case Identificador:
                     case Numero:
@@ -995,13 +965,9 @@ NumeroLinea lineatxtCodigo;
                         i++;
                         break;
                     case Signo_de_igual:
-
                     case Signo_de_Suma:
-
                     case Signo_de_Resta:
-
                     case Signo_de_Multiplicación:
-
                     case Signo_de_División:
                         tblTablaSimbolos.setValueAt(c.columna, i, 0);
                         tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
@@ -1063,132 +1029,48 @@ NumeroLinea lineatxtCodigo;
                         i++;
 
                         break;
-                    case Stop:
-
-                        tblTablaSimbolos.setValueAt(c.columna, i, 0);
-                        tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
-                        tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
-                        tblTablaSimbolos.setValueAt("RESERVADA", i, 3);
-                        i++;
-
-                        break;
-
-                    case Getextrusorx:
-                        tblTablaSimbolos.setValueAt(c.columna, i, 0);
-                        tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
-                        tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
-                        tblTablaSimbolos.setValueAt("RESERVADA", i, 3);
-                        i++;
-                        break;
-
-                    case Getextrusory:
-
-                        tblTablaSimbolos.setValueAt(c.columna, i, 0);
-                        tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
-                        tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
-                        tblTablaSimbolos.setValueAt("RESERVADA", i, 3);
-                        i++;
-                        break;
-
-                    case Getextrusorz:
-
-                        tblTablaSimbolos.setValueAt(c.columna, i, 0);
-                        tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
-                        tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
-                        tblTablaSimbolos.setValueAt("RESERVADA", i, 3);
-                        i++;
-                        break;
-                    case Getfilamenttype:
-                        tblTablaSimbolos.setValueAt(c.columna, i, 0);
-                        tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
-                        tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
-                        tblTablaSimbolos.setValueAt("RESERVADA", i, 3);
-                        i++;
-                        break;
-
-                    case Setnewfilament:
-                        tblTablaSimbolos.setValueAt(c.columna, i, 0);
-                        tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
-                        tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
-                        tblTablaSimbolos.setValueAt("RESERVADA", i, 3);
-                        i++;
-
-                        break;
-
-                    case Getfilament:
-
-                        tblTablaSimbolos.setValueAt(c.columna, i, 0);
-                        tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
-                        tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
-                        tblTablaSimbolos.setValueAt("RESERVADA", i, 3);
-                        i++;
-                        break;
-
-                    case Gettemperature:
-                        tblTablaSimbolos.setValueAt(c.columna, i, 0);
-                        tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
-                        tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
-                        tblTablaSimbolos.setValueAt("RESERVADA", i, 3);
-                        i++;
-
-                        break;
-
-                    case Fillrectangle:
-                        tblTablaSimbolos.setValueAt(c.columna, i, 0);
-                        tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
-                        tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
-                        tblTablaSimbolos.setValueAt("RESERVADA", i, 3);
-                        i++;
-
-                        break;
-
-                    case Drawrectangle:
-                        tblTablaSimbolos.setValueAt(c.columna, i, 0);
-                        tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
-                        tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
-                        tblTablaSimbolos.setValueAt("RESERVADA", i, 3);
-                        i++;
-                        break;
-                    case Sleep:
-                        tblTablaSimbolos.setValueAt(c.columna, i, 0);
-                        tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
-                        tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
-                        tblTablaSimbolos.setValueAt("RESERVADA", i, 3);
-                        i++;
-                        break;
-
-                    case Drawcircle:
-                        tblTablaSimbolos.setValueAt(c.columna, i, 0);
-                        tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
-                        tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
-                        tblTablaSimbolos.setValueAt("RESERVADA", i, 3);
-                        i++;
-                        break;
-
-                    case Fillcircle:
-                        tblTablaSimbolos.setValueAt(c.columna, i, 0);
-                        tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
-                        tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
-                        tblTablaSimbolos.setValueAt("RESERVADA", i, 3);
-                        i++;
-                        break;
-
+                    case Else:
+                    case While:
+                    case End:
+                    case Same:
+                    case For:
+                    case If:
+                    case Get:
+                    case Give:
+                    case Select:
+                    case Empty:
+                    case Flag:
+                    case Cut:
+                    case Just:
+                    case Begin:
+                    case Model:
+                    case Defect:
+                    case New:
+                    case Do:
+                    case Goback:
+                    case Broken:
                     case Home:
-                        tblTablaSimbolos.setValueAt(c.columna, i, 0);
-                        tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
-                        tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
-                        tblTablaSimbolos.setValueAt("RESERVADA", i, 3);
-                        i++;
-                        break;
-
+                    case Sleep:
+                    case Method:
+                    case Check:
+                    case Trap:
+                    case Class:
+                    case Main:
+                    case Stop:
+                    case Getextrusorx:
+                    case Getextrusory:
+                    case Getextrusorz:
+                    case Getfilamenttype:
+                    case Setnewfilament:
+                    case Getfilament:
+                    case Gettemperature:
+                    case Fillrectangle:
+                    case Drawrectangle:
+                    case Drawcircle:
+                    case Fillcircle:
                     case Printerport:
-                        tblTablaSimbolos.setValueAt(c.columna, i, 0);
-                        tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
-                        tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
-                        tblTablaSimbolos.setValueAt("RESERVADA", i, 3);
-                        i++;
-                        break;
                     case Setfilamenttype:
+                    case Word:
                         tblTablaSimbolos.setValueAt(c.columna, i, 0);
                         tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
                         tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
@@ -1203,9 +1085,12 @@ NumeroLinea lineatxtCodigo;
                         i++;
                         break;
                     default:
-                        //   resultado+= lexer.yytext()+ ": Es un " + tokens+"\n";
+                        tblTablaSimbolos.setValueAt(c.columna, i, 0);
+                        tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
+                        tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
+                        tblTablaSimbolos.setValueAt("Identificador", i, 3);
+                        i++;
                         break;
-
                 }
             }
 
