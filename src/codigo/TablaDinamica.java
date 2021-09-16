@@ -75,6 +75,8 @@ public class TablaDinamica extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDinamica = new javax.swing.JTable();
 
+        setTitle("Tabla de simbolos");
+
         tblDinamica.setAutoCreateRowSorter(true);
         tblDinamica.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
