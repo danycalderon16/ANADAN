@@ -785,13 +785,14 @@ NumeroLinea lineatxtCodigo;
     }//GEN-LAST:event_mnuEditMouseReleased
 
     private void miDarkModeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_miDarkModeMouseReleased
+        Color darkColor = new Color(42,43,46);
         txtAreaEdit.setForeground(Color.white);
-        txtAreaEdit.setBackground(Color.black);
+        txtAreaEdit.setBackground(darkColor);
 
         tblTablaSimbolos.setForeground(Color.white);
-        tblTablaSimbolos.setBackground(Color.black);
+        tblTablaSimbolos.setBackground(darkColor);
         txtConsola.setForeground(Color.white);
-        txtConsola.setBackground(Color.black);
+        txtConsola.setBackground(darkColor);
     }//GEN-LAST:event_miDarkModeMouseReleased
 
     private void miRetroModeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_miRetroModeMouseReleased
