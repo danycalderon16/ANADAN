@@ -114,6 +114,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jplConsola.setLayout(null);
 
         txtConsola.setColumns(20);
+        txtConsola.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         txtConsola.setForeground(new java.awt.Color(255, 0, 0));
         txtConsola.setRows(5);
         jScrollPane3.setViewportView(txtConsola);
