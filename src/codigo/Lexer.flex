@@ -10,6 +10,7 @@ L=[a-z_]+
 D=[0-9]+
 CAP=[A-Z]+
 espacio=[ ,\t,\r,\n]+
+num = {D}+
 
 A=[/*]
 C=[*/]
@@ -124,6 +125,7 @@ cadena = (\")~(\")
 <YYINITIAL> ("+"|"-")?{D}+|("+"|"-")?{D}+ "." {D}+ {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Numero;}
 
 <YYINITIAL> (("+-")|("-+"))({D}+|{D}+ "." {D}+) {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return NUMERO_ERRONEO;}
+<YYINITIAL> (\.)*{num}?((\.*)|({num}))* {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return NUMERO_ERRONEO_MAS_PUNTOS;}
  
 <YYINITIAL> (("+"|"-")?{L}+|("+"|"-")?{D}+ "." {D}+)("."|{D}|{L})+ {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return MAL_NOMBRE_PARA_IDENTIFICADOR;} 
 
