@@ -5,20 +5,31 @@
  */
 package frames;
 
+import modelos.LabelError;
+
 /**
  *
  * @author danyc
  */
 public class ModalLexico extends javax.swing.JFrame {
+    
+    private boolean show;
 
-    /**
-     * Creates new form ModalLexico
-     */
-    public ModalLexico(String automata) {
+    public ModalLexico(LabelError automata) {
         initComponents();
-        jLabel1.setText(automata);
+        setLocationRelativeTo(this);
+        jLabel1.setText(automata.getError());
+        show = true;
     }
 
+    public void close(){
+        show = false;
+        dispose();
+    }
+    
+    public boolean isOpen(){
+        return show;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -86,7 +97,7 @@ public class ModalLexico extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ModalLexico("").setVisible(true);
+                new ModalLexico(null).setVisible(true);
             }
         });
     }

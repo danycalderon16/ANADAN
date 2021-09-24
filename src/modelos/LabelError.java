@@ -15,12 +15,15 @@ public class LabelError {
     
     private JLabel label;
     private String error;
+    private int linea;
 
-    public LabelError(JLabel label, String error) {
+    public LabelError(JLabel label, String error, int linea) {
         this.label = label;
         this.error = error;
+        this.linea = linea;
     }
 
+    
     public JLabel getLabel() {
         return label;
     }
@@ -35,6 +38,14 @@ public class LabelError {
 
     public void setError(String error) {
         this.error = error;
+    }
+
+    public int getLinea() {
+        return linea;
+    }
+
+    public void setLinea(int linea) {
+        this.linea = linea;
     }
     
     

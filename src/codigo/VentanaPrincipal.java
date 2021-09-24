@@ -160,7 +160,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             tblTablaSimbolos.getColumnModel().getColumn(2).setPreferredWidth(15);
         }
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 50, 430, 390));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 50, 430, 380));
 
         jScrollPaneConsole.setBackground(new java.awt.Color(255, 255, 204));
         jScrollPaneConsole.setViewportView(txtConsolaPane);
@@ -192,7 +192,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         icon_new.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         icon_new.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/play.png"))); // NOI18N
         icon_new.setToolTipText("Nuevo");
-        icon_new.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        icon_new.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         icon_new.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 icon_newMouseReleased(evt);
@@ -203,7 +203,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         icon_save.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         icon_save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/play.png"))); // NOI18N
         icon_save.setToolTipText("Guardar");
-        icon_save.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        icon_save.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         icon_save.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 icon_saveMouseReleased(evt);
@@ -214,7 +214,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         icon_save_as.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         icon_save_as.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/play.png"))); // NOI18N
         icon_save_as.setToolTipText("Guardar como");
-        icon_save_as.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        icon_save_as.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         icon_save_as.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 icon_save_asMouseReleased(evt);
@@ -225,7 +225,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         icon_table.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         icon_table.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/table.png"))); // NOI18N
         icon_table.setToolTipText("Tabla de Simbolos");
-        icon_table.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        icon_table.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         icon_table.setDisabledIcon(null);
         icon_table.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -237,7 +237,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         icon_lexico.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         icon_lexico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/analysis (1).png"))); // NOI18N
         icon_lexico.setToolTipText("Léxico");
-        icon_lexico.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        icon_lexico.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         icon_lexico.setDisabledIcon(null);
         icon_lexico.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -249,7 +249,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         icon_sintactic.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         icon_sintactic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Lexico.png"))); // NOI18N
         icon_sintactic.setToolTipText("Sintáctico");
-        icon_sintactic.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        icon_sintactic.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         icon_sintactic.setDisabledIcon(null);
         icon_sintactic.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -261,7 +261,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         icon_run.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         icon_run.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/play.png"))); // NOI18N
         icon_run.setToolTipText("Compilar");
-        icon_run.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        icon_run.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         icon_run.setDisabledIcon(null);
         icon_run.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -277,7 +277,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         icon_abrir.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         icon_abrir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/OpenFile.png"))); // NOI18N
         icon_abrir.setToolTipText("Abrir");
-        icon_abrir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        icon_abrir.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         icon_abrir.setDisabledIcon(null);
         icon_abrir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -289,7 +289,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         icon_undo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         icon_undo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Atras.png"))); // NOI18N
         icon_undo.setToolTipText("Deshacer");
-        icon_undo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        icon_undo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         icon_undo.setDisabledIcon(null);
         icon_undo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -301,7 +301,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         icon_redo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         icon_redo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Deltante.png"))); // NOI18N
         icon_redo.setToolTipText("Rehacer");
-        icon_redo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        icon_redo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         icon_redo.setDisabledIcon(null);
         icon_redo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -813,6 +813,7 @@ NumeroLinea lineatxtCodigo;
 
     private void miCompileLexicalMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_miCompileLexicalMouseReleased
         analisisLexico();
+        System.out.println("Lexico");
     }//GEN-LAST:event_miCompileLexicalMouseReleased
 
     private void mnuSaveMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuSaveMouseReleased
@@ -1032,7 +1033,7 @@ NumeroLinea lineatxtCodigo;
                         System.out.println("llenar");
                         int num = 0;
                         for (int j = 0;j<labelLexicoErrors.size();j++) {
-                            labelLexicoErrors.get(j).getLabel().setBounds(5, 5 + 10 * num, 50, 10 + 10 * num);
+                            labelLexicoErrors.get(j).getLabel().setBounds(5, 5 + 15 * num, 500, 15 + 15 * num);
                             clickLabel(labelLexicoErrors.get(j));
                             jPanel1.add(labelLexicoErrors.get(j).getLabel());
                             num++;
@@ -1041,8 +1042,10 @@ NumeroLinea lineatxtCodigo;
 
                     return;
                 }
-
                 JLabel btn = new JLabel(lexer.yytext());
+                btn.setForeground(color_error);
+                btn.setFont(new Font("Verdana", Font.PLAIN, 12));
+                btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
                 switch (tokens) {
                     case NUMERO_ERRONEO_MAS_PUNTOS:
                         tblTablaSimbolos.setValueAt(c.columna, i, 0);
@@ -1051,7 +1054,8 @@ NumeroLinea lineatxtCodigo;
                         tblTablaSimbolos.setValueAt("ERROR:CADENA_NO_VALIDA", i, 3);
                         errores += (">Linea: " + (c.linea + 1) + " Columna: " + (c.columna) + ", Error Léxico,    Error cadena no valida:  " + lexer.yytext() + "\n");
                         i++;
-                        labelLexicoErrors.add(new LabelError(btn,"NUMERO_ERRONEO_MAS_PUNTOS"));
+                        btn.setText("Error en la liena: "+(c.linea+1)+". El número tiene puntos de más.");
+                        labelLexicoErrors.add(new LabelError(btn,"NUMERO_ERRONEO_MAS_PUNTOS",c.linea+1));
                         counter++;
                         break;
                     case MAYUSCULAS_EN_CADENA:
@@ -1061,7 +1065,8 @@ NumeroLinea lineatxtCodigo;
                         tblTablaSimbolos.setValueAt("ERROR:CADENA_NO_VALIDA", i, 3);
                         errores += (">Linea: " + (c.linea + 1) + " Columna: " + (c.columna) + ", Error Léxico,    Error cadena no valida:  " + lexer.yytext() + "\n");
                         i++;
-                        labelLexicoErrors.add(new LabelError(btn,"MAYUSCULAS_EN_CADENA"));
+                        btn.setText("Error en la liena: "+(c.linea+1)+". Hay una mayuscula.");
+                        labelLexicoErrors.add(new LabelError(btn,"MAYUSCULAS_EN_CADENA",c.linea+1));
                         counter++;
                         break;
                     case MAL_NOMBRE_PARA_IDENTIFICADOR:
@@ -1071,7 +1076,8 @@ NumeroLinea lineatxtCodigo;
                         tblTablaSimbolos.setValueAt("ERROR:CADENA_NO_VALIDA", i, 3);
                         errores += (">Linea: " + (c.linea + 1) + " Columna: " + (c.columna) + ", Error Léxico,    Error cadena no valida:  " + lexer.yytext() + "\n");
                         i++;
-                        labelLexicoErrors.add(new LabelError(btn,"MAL_NOMBRE_PARA_IDENTIFICADOR"));
+                        btn.setText("Error en la liena: "+(c.linea+1)+". El identificador esta mal escrito.");
+                        labelLexicoErrors.add(new LabelError(btn,"MAL_NOMBRE_PARA_IDENTIFICADOR",c.linea+1));
                         counter++;
                         break;
                     case NUMERO_ERRONEO:
@@ -1081,7 +1087,8 @@ NumeroLinea lineatxtCodigo;
                         tblTablaSimbolos.setValueAt("ERROR:CADENA_NO_VALIDA", i, 3);
                         errores += (">Linea: " + (c.linea + 1) + " Columna: " + (c.columna) + ", Error Léxico,    Error cadena no valida:  " + lexer.yytext() + "\n");
                         i++;
-                        labelLexicoErrors.add(new LabelError(btn,"NUMERO_ERRONEO"));
+                        btn.setText("Error en la liena: "+(c.linea+1)+". El formato del numero es erroneo");
+                        labelLexicoErrors.add(new LabelError(btn,"NUMERO_ERRONEO",c.linea+1));
                         counter++;
                         break;
                     case ERROR:
@@ -1091,7 +1098,9 @@ NumeroLinea lineatxtCodigo;
                         tblTablaSimbolos.setValueAt("ERROR:CADENA_NO_VALIDA", i, 3);
                         errores += (">Linea: " + (c.linea + 1) + " Columna: " + (c.columna) + ", Error Léxico,    Error cadena no valida:  " + lexer.yytext() + "\n");
                         i++;
-                        labelLexicoErrors.add(new LabelError(btn,"ERROR"));
+                        
+                        btn.setText("Error en la liena: "+(c.linea+1)+". Error.");
+                        labelLexicoErrors.add(new LabelError(btn,"ERROR",c.linea+1));
                         counter++;
                         break;
                     case Identificador:
@@ -1480,8 +1489,11 @@ NumeroLinea lineatxtCodigo;
     private javax.swing.JEditorPane txtConsolaPane;
     // End of variables declaration//GEN-END:variables
 
-    private void showModalLexical(String automata) {
-        ModalLexico ml = new ModalLexico(automata);
+    private void showModalLexical(LabelError err) {
+        ModalLexico ml = new ModalLexico(err);
+        if(ml.isOpen()){
+            ml.close();
+        }
         ml.setVisible(true);
     }
 
@@ -1497,7 +1509,7 @@ NumeroLinea lineatxtCodigo;
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                showModalLexical(le.getError());
+                showModalLexical(le);
             }
 
             @Override
@@ -1623,9 +1635,9 @@ NumeroLinea lineatxtCodigo;
         Errores = "";
 
         mnuMinimize.setEnabled(true);
-        jplAreaEdit.setBounds(jplAreaEdit.getX(), jplAreaEdit.getY(), 1230, 370);
-        scPanAreaEdit.setBounds(jplAreaEdit.getX(), jplAreaEdit.getY(), 1230, 370);
-        txtAreaEdit.setBounds(jplAreaEdit.getX(), jplAreaEdit.getY(), 1230, 370);
+        //jplAreaEdit.setBounds(jplAreaEdit.getX(), jplAreaEdit.getY(), 1230, 370);
+        //scPanAreaEdit.setBounds(jplAreaEdit.getX(), jplAreaEdit.getY(), 1230, 370);
+        //txtAreaEdit.setBounds(jplAreaEdit.getX(), jplAreaEdit.getY(), 1230, 370);
 
         String ST = txtAreaEdit.getText();
         Sintax s = new Sintax(new codigo.LexerCup(new StringReader(ST)));
