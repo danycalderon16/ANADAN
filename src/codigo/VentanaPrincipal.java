@@ -771,13 +771,9 @@ NumeroLinea lineatxtCodigo;
         icon_save.setIcon(resizeIcon( new ImageIcon(getClass().getResource("/img/save.png")), icon_save.getWidth(), icon_save.getHeight()));
         icon_save_as.setIcon(resizeIcon( new ImageIcon(getClass().getResource("/img/save-as.png")), icon_save_as.getWidth(), icon_save_as.getHeight()));
         icon_new.setIcon(resizeIcon( new ImageIcon(getClass().getResource("/img/new_file.png")), icon_new.getWidth(), icon_new.getHeight()));
-      
+    
     }
-    private static Icon resizeIcon(ImageIcon icon, int resizedWidth, int resizedHeight) {
-        Image img = icon.getImage();  
-        Image resizedImage = img.getScaledInstance(resizedWidth, resizedHeight,  java.awt.Image.SCALE_SMOOTH);  
-        return new ImageIcon(resizedImage);
-    }
+    
 //private FileNameExtensionFilter filtro= new FileNameExtensionFilter ("Archivos de texto","txt");
     JFileChooser seleccionar = new JFileChooser();
     File archivo;
