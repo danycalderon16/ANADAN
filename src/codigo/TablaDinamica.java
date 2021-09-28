@@ -23,6 +23,9 @@ public class TablaDinamica extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         tblDinamica.setAutoCreateRowSorter(true);
         m = (DefaultTableModel) tblDinamica.getModel();
+        for (int i = 0; i < m.getRowCount(); i++) {
+            m.removeRow(i);
+        }
         ArrayList<Simbolos> nuevo = reorganizar(simbolos);
         for (Simbolos sim : nuevo) {
             m.addRow(new Object[]{sim.getLinea(), sim.getLexema(), "", ""});

@@ -6,10 +6,14 @@
 package codigo;
 
 import ds.desktop.notify.DesktopNotify;
+import frames.ModalLexico;
 import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -26,7 +30,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
@@ -34,12 +43,15 @@ import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.undo.UndoManager;
+import modelos.LabelError;
 import modelos.Simbolos;
 
+import static util.Utils.*;
+
 public class VentanaPrincipal extends javax.swing.JFrame {
-    
-    
+
     private ArrayList<String> identificadores = new ArrayList<String>();
+    private ArrayList<LabelError> labelLexicoErrors;
     private ArrayList<Simbolos> simbolos = new ArrayList<Simbolos>();
 
     public VentanaPrincipal() {
@@ -51,6 +63,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         m = (DefaultTableModel) tblTablaSimbolos.getModel();
         numeroLineas();
         mnuMinimize.setEnabled(false);
+
     }
 
     @SuppressWarnings("unchecked")
@@ -60,11 +73,24 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jplAreaEdit = new javax.swing.JPanel();
         scPanAreaEdit = new javax.swing.JScrollPane();
         txtAreaEdit = new javax.swing.JTextArea();
-        jplConsola = new javax.swing.JPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        txtConsola = new javax.swing.JTextArea();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblTablaSimbolos = new javax.swing.JTable();
+        jScrollPaneConsole = new javax.swing.JScrollPane();
+        txtConsolaPane = new javax.swing.JEditorPane();
+        jPanel1 = new javax.swing.JPanel();
+        panelToolBar = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        icon_new = new javax.swing.JLabel();
+        icon_save = new javax.swing.JLabel();
+        icon_save_as = new javax.swing.JLabel();
+        icon_table = new javax.swing.JLabel();
+        icon_lexico = new javax.swing.JLabel();
+        icon_sintactic = new javax.swing.JLabel();
+        icon_run = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        icon_abrir = new javax.swing.JLabel();
+        icon_undo = new javax.swing.JLabel();
+        icon_redo = new javax.swing.JLabel();
         barraMenu = new javax.swing.JMenuBar();
         mnufile = new javax.swing.JMenu();
         mnuNew = new javax.swing.JMenuItem();
@@ -86,8 +112,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         miCompileSyntax = new javax.swing.JMenuItem();
         miCompile = new javax.swing.JMenuItem();
         mnuMinimize = new javax.swing.JMenu();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        mnuUndo = new javax.swing.JMenu();
+        mnuRedo = new javax.swing.JMenu();
         btnayuda = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -102,26 +128,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jplAreaEdit.setLayout(jplAreaEditLayout);
         jplAreaEditLayout.setHorizontalGroup(
             jplAreaEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scPanAreaEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 1230, Short.MAX_VALUE)
+            .addComponent(scPanAreaEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
         );
         jplAreaEditLayout.setVerticalGroup(
             jplAreaEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scPanAreaEdit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE)
+            .addComponent(scPanAreaEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
         );
 
-        getContentPane().add(jplAreaEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1230, 630));
-
-        jplConsola.setLayout(null);
-
-        txtConsola.setColumns(20);
-        txtConsola.setForeground(new java.awt.Color(255, 0, 0));
-        txtConsola.setRows(5);
-        jScrollPane3.setViewportView(txtConsola);
-
-        jplConsola.add(jScrollPane3);
-        jScrollPane3.setBounds(0, 10, 1230, 250);
-
-        getContentPane().add(jplConsola, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 1230, 290));
+        getContentPane().add(jplAreaEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 800, 380));
 
         tblTablaSimbolos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -146,7 +160,157 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             tblTablaSimbolos.getColumnModel().getColumn(2).setPreferredWidth(15);
         }
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 0, 430, 370));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 50, 430, 380));
+
+        jScrollPaneConsole.setBackground(new java.awt.Color(255, 255, 204));
+        jScrollPaneConsole.setViewportView(txtConsolaPane);
+
+        getContentPane().add(jScrollPaneConsole, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, 570, 220));
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 660, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 220, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 430, 660, 220));
+
+        panelToolBar.setBackground(new java.awt.Color(255, 255, 255));
+        panelToolBar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/split.png"))); // NOI18N
+        panelToolBar.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 10, 20, 30));
+
+        icon_new.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        icon_new.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/play.png"))); // NOI18N
+        icon_new.setToolTipText("Nuevo");
+        icon_new.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        icon_new.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                icon_newMouseReleased(evt);
+            }
+        });
+        panelToolBar.add(icon_new, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 15, 20, 20));
+
+        icon_save.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        icon_save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/play.png"))); // NOI18N
+        icon_save.setToolTipText("Guardar");
+        icon_save.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        icon_save.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                icon_saveMouseReleased(evt);
+            }
+        });
+        panelToolBar.add(icon_save, new org.netbeans.lib.awtextra.AbsoluteConstraints(95, 15, 20, 20));
+
+        icon_save_as.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        icon_save_as.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/play.png"))); // NOI18N
+        icon_save_as.setToolTipText("Guardar como");
+        icon_save_as.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        icon_save_as.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                icon_save_asMouseReleased(evt);
+            }
+        });
+        panelToolBar.add(icon_save_as, new org.netbeans.lib.awtextra.AbsoluteConstraints(135, 15, 20, 20));
+
+        icon_table.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        icon_table.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/table.png"))); // NOI18N
+        icon_table.setToolTipText("Tabla de Simbolos");
+        icon_table.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        icon_table.setDisabledIcon(null);
+        icon_table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                icon_tableMouseReleased(evt);
+            }
+        });
+        panelToolBar.add(icon_table, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 10, 30, 30));
+
+        icon_lexico.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        icon_lexico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/analysis (1).png"))); // NOI18N
+        icon_lexico.setToolTipText("Léxico");
+        icon_lexico.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        icon_lexico.setDisabledIcon(null);
+        icon_lexico.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                icon_lexicoMouseReleased(evt);
+            }
+        });
+        panelToolBar.add(icon_lexico, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 30, 30));
+
+        icon_sintactic.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        icon_sintactic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Lexico.png"))); // NOI18N
+        icon_sintactic.setToolTipText("Sintáctico");
+        icon_sintactic.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        icon_sintactic.setDisabledIcon(null);
+        icon_sintactic.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                icon_sintacticMouseReleased(evt);
+            }
+        });
+        panelToolBar.add(icon_sintactic, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 30, 30));
+
+        icon_run.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        icon_run.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/play.png"))); // NOI18N
+        icon_run.setToolTipText("Compilar");
+        icon_run.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        icon_run.setDisabledIcon(null);
+        icon_run.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                icon_runMouseReleased(evt);
+            }
+        });
+        panelToolBar.add(icon_run, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, 30, 30));
+
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/split.png"))); // NOI18N
+        panelToolBar.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 10, 20, 30));
+
+        icon_abrir.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        icon_abrir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/OpenFile.png"))); // NOI18N
+        icon_abrir.setToolTipText("Abrir");
+        icon_abrir.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        icon_abrir.setDisabledIcon(null);
+        icon_abrir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                icon_abrirMouseReleased(evt);
+            }
+        });
+        panelToolBar.add(icon_abrir, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 30, 30));
+
+        icon_undo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        icon_undo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Atras.png"))); // NOI18N
+        icon_undo.setToolTipText("Deshacer");
+        icon_undo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        icon_undo.setDisabledIcon(null);
+        icon_undo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                icon_undoMouseReleased(evt);
+            }
+        });
+        panelToolBar.add(icon_undo, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 10, 30, 30));
+
+        icon_redo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        icon_redo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Deltante.png"))); // NOI18N
+        icon_redo.setToolTipText("Rehacer");
+        icon_redo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        icon_redo.setDisabledIcon(null);
+        icon_redo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                icon_redoMouseReleased(evt);
+            }
+        });
+        panelToolBar.add(icon_redo, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 10, 30, 30));
+
+        getContentPane().add(panelToolBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1230, 50));
 
         mnufile.setText("File");
 
@@ -189,11 +353,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         barraMenu.add(mnufile);
 
         mnuEdit.setText("Edit");
-        mnuEdit.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                mnuEditMouseReleased(evt);
-            }
-        });
 
         miNomalMode.setText("Normal mode");
         miNomalMode.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -269,7 +428,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         mnuCompile.setText("Compile");
         mnuCompile.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        miCompileLexical.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
+        miCompileLexical.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         miCompileLexical.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Lexico.png"))); // NOI18N
         miCompileLexical.setText("Lexical");
         miCompileLexical.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -308,22 +467,22 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         barraMenu.add(mnuMinimize);
 
-        jMenu1.setText("Undo");
-        jMenu1.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Atras.png"))); // NOI18N
-        jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
+        mnuUndo.setText("Undo");
+        mnuUndo.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Atras.png"))); // NOI18N
+        mnuUndo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jMenu1MousePressed(evt);
+                mnuUndoMousePressed(evt);
             }
         });
-        barraMenu.add(jMenu1);
+        barraMenu.add(mnuUndo);
 
-        jMenu2.setText("Redo");
-        jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
+        mnuRedo.setText("Redo");
+        mnuRedo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jMenu2MousePressed(evt);
+                mnuRedoMousePressed(evt);
             }
         });
-        barraMenu.add(jMenu2);
+        barraMenu.add(mnuRedo);
 
         btnayuda.setText("Ayuda");
         btnayuda.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -583,7 +742,6 @@ NumeroLinea lineatxtCodigo;
         for (int M = 0; M < ter; M++) {
 
             //System.out.println(arreglo[M][0] + "  " + arreglo[M][1] + "  " + arreglo[M][2]);
-
             obt[0] = arreglo[M][0];//metodo
             obt[1] = arreglo[M][1];
             obt[2] = arreglo[M][2];
@@ -609,8 +767,13 @@ NumeroLinea lineatxtCodigo;
     }
 
     public void seticon() {
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/logopro2.png")));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/logopro2.png")));   
+        icon_save.setIcon(resizeIcon( new ImageIcon(getClass().getResource("/img/save.png")), icon_save.getWidth(), icon_save.getHeight()));
+        icon_save_as.setIcon(resizeIcon( new ImageIcon(getClass().getResource("/img/save-as.png")), icon_save_as.getWidth(), icon_save_as.getHeight()));
+        icon_new.setIcon(resizeIcon( new ImageIcon(getClass().getResource("/img/new_file.png")), icon_new.getWidth(), icon_new.getHeight()));
+    
     }
+    
 //private FileNameExtensionFilter filtro= new FileNameExtensionFilter ("Archivos de texto","txt");
     JFileChooser seleccionar = new JFileChooser();
     File archivo;
@@ -646,98 +809,25 @@ NumeroLinea lineatxtCodigo;
 
     private void miCompileLexicalMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_miCompileLexicalMouseReleased
         analisisLexico();
+        System.out.println("Lexico");
     }//GEN-LAST:event_miCompileLexicalMouseReleased
 
     private void mnuSaveMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuSaveMouseReleased
-        if (name == null) {
-
-            if (seleccionar.showDialog(null, "Save") == JFileChooser.APPROVE_OPTION) {
-
-                archivo = seleccionar.getSelectedFile();
-                if (archivo.getName().endsWith("txt")) {
-                    String Documento = txtAreaEdit.getText();
-                    String mensaje = GuardarArchivo(archivo, Documento);
-                    if (mensaje != null) {
-                        showMessageDialog(null, mensaje);
-                    } else {
-                        showMessageDialog(null, "Archivo no compatible");
-                    }
-                } else {
-                    showMessageDialog(null, "Fallo al guardar, coloque extencion .txt");
-                }
-            }
-            name = archivo.getName();
-            return;
-        } else {
-        }
-
-        File archivo = new File(name);
-        PrintWriter escribir;
-        try {
-            escribir = new PrintWriter(archivo);
-            escribir.print(txtAreaEdit.getText());
-            escribir.close();
-
-            DesktopNotify.showDesktopMessage("ANADAN-INFORMATION", "Actualizaciones guardadas", DesktopNotify.SUCCESS, 5000L);
-            //   showMessageDialog(null,"Actualizaciones guardadas");
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        saveFile();
     }//GEN-LAST:event_mnuSaveMouseReleased
 
     private void mnuOpenMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuOpenMouseReleased
-        if (seleccionar.showDialog(null, "Abrir") == JFileChooser.APPROVE_OPTION) {
-            archivo = seleccionar.getSelectedFile();
-
-            name = archivo.getPath();
-            if (archivo.canRead()) {
-                if (archivo.getName().endsWith("txt")) {
-                    String documento = AbrirArchivo(archivo);
-                    txtAreaEdit.setText(documento);
-                } else {
-                    showMessageDialog(null, "Archivo no compatible");
-                }
-            }
-        }
+       openFile();
     }//GEN-LAST:event_mnuOpenMouseReleased
 
     private void mnuSaveAsMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuSaveAsMouseReleased
-        if (seleccionar.showDialog(null, "Guardar") == JFileChooser.APPROVE_OPTION) {
-            archivo = seleccionar.getSelectedFile();
-
-            if (archivo.getName().endsWith("txt")) {
-                String Documento = txtAreaEdit.getText();
-                String mensaje = GuardarArchivo(archivo, Documento);
-                if (mensaje != null) {
-                    showMessageDialog(null, mensaje);
-                } else {
-                    showMessageDialog(null, "Archivo no compatible");
-                }
-            } else {
-                showMessageDialog(null, "Fallo al guardar, coloque extencion .txt");
-            }
-        }
+        saveAsFile();
+        
     }//GEN-LAST:event_mnuSaveAsMouseReleased
 
     private void mnuNewMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuNewMouseReleased
 
-        if (seleccionar.showDialog(null, "Nuevo") == JFileChooser.APPROVE_OPTION) {
-            archivo = seleccionar.getSelectedFile();
-            name = archivo.getAbsolutePath();
-
-            if (archivo.getName().endsWith("txt")) {
-                String Documento = "";
-                txtAreaEdit.setText("");
-                String mensaje = GuardarArchivo(archivo, Documento);
-                if (mensaje != null) {
-
-                } else {
-                    showMessageDialog(null, "Archivo no compatible");
-                }
-            } else {
-                showMessageDialog(null, "Fallo al guardar, coloque extencion .txt");
-            }
-        }
+        newFile();
 
     }//GEN-LAST:event_mnuNewMouseReleased
 
@@ -757,41 +847,26 @@ NumeroLinea lineatxtCodigo;
         txtAreaEdit.setBackground(Color.white);
         tblTablaSimbolos.setForeground(Color.black);
         tblTablaSimbolos.setBackground(Color.white);
-        txtConsola.setForeground(Color.red);
-        txtConsola.setBackground(Color.white);
+        txtConsolaPane.setForeground(Color.red);
+        txtConsolaPane.setBackground(Color.white);
     }//GEN-LAST:event_miNomalModeMouseReleased
 
     private void miDynamicTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_miDynamicTableMouseReleased
         /*TablaDinamica.me.setRowCount(0);
         rquicksort();*/
-        
-        for(int i = 0; i< m.getRowCount()-1;i++){
-            int linea = Integer.parseInt(m.getValueAt(i,1).toString());
-            String lexema =  m.getValueAt(i,2).toString();
-            String componente =  m.getValueAt(i,3).toString();
-            if(componente.equals("Identificador"))
-                simbolos.add(new Simbolos(componente, linea, lexema, "", ""));                       
-        }
-        
-        Collections.sort(simbolos);
-        
-        TablaDinamica ts = new TablaDinamica(simbolos);
-        ts.setVisible(true);
+
+        showTD();
     }//GEN-LAST:event_miDynamicTableMouseReleased
 
-    private void mnuEditMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuEditMouseReleased
-
-
-    }//GEN-LAST:event_mnuEditMouseReleased
-
     private void miDarkModeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_miDarkModeMouseReleased
+        Color darkColor = new Color(42, 43, 46);
         txtAreaEdit.setForeground(Color.white);
-        txtAreaEdit.setBackground(Color.black);
+        txtAreaEdit.setBackground(darkColor);
 
         tblTablaSimbolos.setForeground(Color.white);
-        tblTablaSimbolos.setBackground(Color.black);
-        txtConsola.setForeground(Color.white);
-        txtConsola.setBackground(Color.black);
+        tblTablaSimbolos.setBackground(darkColor);
+        txtConsolaPane.setForeground(Color.white);
+        txtConsolaPane.setBackground(darkColor);
     }//GEN-LAST:event_miDarkModeMouseReleased
 
     private void miRetroModeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_miRetroModeMouseReleased
@@ -800,8 +875,8 @@ NumeroLinea lineatxtCodigo;
 
         tblTablaSimbolos.setForeground(Color.green);
         tblTablaSimbolos.setBackground(Color.black);
-        txtConsola.setForeground(Color.green);
-        txtConsola.setBackground(Color.black);
+        txtConsolaPane.setForeground(Color.green);
+        txtConsolaPane.setBackground(Color.black);
     }//GEN-LAST:event_miRetroModeMouseReleased
 
     private void miZoomInFontMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_miZoomInFontMouseReleased
@@ -843,34 +918,35 @@ NumeroLinea lineatxtCodigo;
     }
 
     //fin cosas de antonio
-    private void jMenu1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MousePressed
+    private void mnuUndoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuUndoMousePressed
         //UnDO
         deshacer();
-    }//GEN-LAST:event_jMenu1MousePressed
+    }//GEN-LAST:event_mnuUndoMousePressed
 
-    private void jMenu2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MousePressed
+    private void mnuRedoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuRedoMousePressed
         //
         rehacer();
-    }//GEN-LAST:event_jMenu2MousePressed
+    }//GEN-LAST:event_mnuRedoMousePressed
     public void mostrarErrores() {
-        if (txtConsola.getText().equals("El programa no contiene errores :)")) {
-            txtConsola.setText("");
+        if (txtConsolaPane.getText().equals("El programa no contiene errores :)")) {
+            txtConsolaPane.setForeground(color_success);
+            txtConsolaPane.setText("");
         }
-        txtConsola.setForeground(new Color(223, 24, 64));
-        txtConsola.setText(txtConsola.getText() + Errores);
-        if (!txtConsola.getText().equals("")) {
+        txtConsolaPane.setForeground(color_error);
+        txtConsolaPane.setText(txtConsolaPane.getText() + Errores);
+        if (!txtConsolaPane.getText().equals("")) {
             separaLineas();
         }
-        if (txtConsola.getText().equals("")) {
-            txtConsola.setForeground(new Color(25, 111, 61));
-            txtConsola.setText("Analisis realizado correctamente");
+        if (txtConsolaPane.getText().equals("")) {
+            txtConsolaPane.setForeground(color_success);
+            txtConsolaPane.setText("Analisis realizado correctamente");
         }
     }
 
     public void separaLineas() {
         int i = 0;
         String[] lineas;
-        String lin = txtConsola.getText();
+        String lin = txtConsolaPane.getText();
         lineas = lin.split("\n");
         //Linea: 5
         for (String linea : lineas) {
@@ -900,16 +976,19 @@ NumeroLinea lineatxtCodigo;
         for (int M = 0; M < ter; M++) {
             erroresv += A[M] + '\n';
         }
-        txtConsola.setText(erroresv);
+        txtConsolaPane.setText(erroresv);
     }
 
     public void analisisLexico() {
         InformacionLexema c = new InformacionLexema();
         mnuMinimize.setEnabled(true);
-        jplAreaEdit.setBounds(jplAreaEdit.getX(), jplAreaEdit.getY(), 800, 370);
-        scPanAreaEdit.setBounds(jplAreaEdit.getX(), jplAreaEdit.getY(), 800, 370);
-        txtAreaEdit.setBounds(jplAreaEdit.getX(), jplAreaEdit.getY(), 800, 370);
-
+        // jplAreaEdit.setBounds(jplAreaEdit.getX(), jplAreaEdit.getY(), 800, 630);
+        //scPanAreaEdit.setBounds(jplAreaEdit.getX(), jplAreaEdit.getY(), 800, 423);
+        //txtAreaEdit.setBounds(jplAreaEdit.getX(), jplAreaEdit.getY(), 800, 423);
+        //jScrollPaneConsole.setBounds(jScrollPaneConsole.getX(), jScrollPaneConsole.getY(),
+        //        jScrollPaneConsole.getX()+1200, jScrollPaneConsole.getY()+195);
+        jPanel1.removeAll();
+        labelLexicoErrors = new ArrayList<LabelError>();
         File fichero = new File("fichero.and");
         PrintWriter writer;
 
@@ -922,8 +1001,9 @@ NumeroLinea lineatxtCodigo;
         }
 
         int i = 0;
-        txtConsola.setText("");
+        txtConsolaPane.setText("");
         errores = "";
+        int counter = 0;
 
         try {
             Reader lector = new BufferedReader(new FileReader("fichero.and"));
@@ -935,19 +1015,78 @@ NumeroLinea lineatxtCodigo;
                 Tokens tokens = lexer.yylex();
 
                 if (tokens == null) {
-                    //System.out.println("fichero.and");
-                    txtConsola.setText(errores);
+                    txtConsolaPane.setText(errores);
                     if (errores.equals("")) {
-                        txtConsola.setForeground(new Color(0, 161, 56));
-                        txtConsola.setText("El programa no contiene errores :)");
+                        txtConsolaPane.setText("El programa no contiene errores :)\n");
+
+                        txtConsolaPane.setForeground(color_success);
+                    } else {
+                        txtConsolaPane.setForeground(color_error);
                     }
+
+                    System.out.println(labelLexicoErrors.size() + "");
+                    if (!labelLexicoErrors.isEmpty()) {
+                        System.out.println("llenar");
+                        int num = 0;
+                        for (int j = 0;j<labelLexicoErrors.size();j++) {
+                            labelLexicoErrors.get(j).getLabel().setBounds(5, 5 + 15 * num, 500, 15 + 15 * num);
+                            clickLabel(labelLexicoErrors.get(j));
+                            jPanel1.add(labelLexicoErrors.get(j).getLabel());
+                            num++;
+                        }
+                    }
+
                     return;
                 }
-
+                JLabel btn = new JLabel(lexer.yytext());
+                btn.setForeground(color_error);
+                btn.setFont(new Font("Verdana", Font.PLAIN, 12));
+                btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
                 switch (tokens) {
+                    case NUMERO_ERRONEO_MAS_PUNTOS:
+                        tblTablaSimbolos.setValueAt(c.columna, i, 0);
+                        tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
+                        tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
+                        tblTablaSimbolos.setValueAt("ERROR:CADENA_NO_VALIDA", i, 3);
+                        errores += (">Linea: " + (c.linea + 1) + " Columna: " + (c.columna) + ", Error Léxico,    Error cadena no valida:  " + lexer.yytext() + "\n");
+                        i++;
+                        btn.setText("Error en la liena: "+(c.linea+1)+". El número tiene puntos de más.");
+                        labelLexicoErrors.add(new LabelError(btn,"NUMERO_ERRONEO_MAS_PUNTOS",c.linea+1));
+                        counter++;
+                        break;
                     case MAYUSCULAS_EN_CADENA:
+                         tblTablaSimbolos.setValueAt(c.columna, i, 0);
+                        tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
+                        tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
+                        tblTablaSimbolos.setValueAt("ERROR:CADENA_NO_VALIDA", i, 3);
+                        errores += (">Linea: " + (c.linea + 1) + " Columna: " + (c.columna) + ", Error Léxico,    Error cadena no valida:  " + lexer.yytext() + "\n");
+                        i++;
+                        btn.setText("Error en la liena: "+(c.linea+1)+". Hay una mayuscula.");
+                        labelLexicoErrors.add(new LabelError(btn,"MAYUSCULAS_EN_CADENA",c.linea+1));
+                        counter++;
+                        break;
                     case MAL_NOMBRE_PARA_IDENTIFICADOR:
+                         tblTablaSimbolos.setValueAt(c.columna, i, 0);
+                        tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
+                        tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
+                        tblTablaSimbolos.setValueAt("ERROR:CADENA_NO_VALIDA", i, 3);
+                        errores += (">Linea: " + (c.linea + 1) + " Columna: " + (c.columna) + ", Error Léxico,    Error cadena no valida:  " + lexer.yytext() + "\n");
+                        i++;
+                        btn.setText("Error en la liena: "+(c.linea+1)+". El identificador esta mal escrito.");
+                        labelLexicoErrors.add(new LabelError(btn,"MAL_NOMBRE_PARA_IDENTIFICADOR",c.linea+1));
+                        counter++;
+                        break;
                     case NUMERO_ERRONEO:
+                         tblTablaSimbolos.setValueAt(c.columna, i, 0);
+                        tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
+                        tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
+                        tblTablaSimbolos.setValueAt("ERROR:CADENA_NO_VALIDA", i, 3);
+                        errores += (">Linea: " + (c.linea + 1) + " Columna: " + (c.columna) + ", Error Léxico,    Error cadena no valida:  " + lexer.yytext() + "\n");
+                        i++;
+                        btn.setText("Error en la liena: "+(c.linea+1)+". El formato del numero es erroneo");
+                        labelLexicoErrors.add(new LabelError(btn,"NUMERO_ERRONEO",c.linea+1));
+                        counter++;
+                        break;
                     case ERROR:
                         tblTablaSimbolos.setValueAt(c.columna, i, 0);
                         tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
@@ -955,6 +1094,10 @@ NumeroLinea lineatxtCodigo;
                         tblTablaSimbolos.setValueAt("ERROR:CADENA_NO_VALIDA", i, 3);
                         errores += (">Linea: " + (c.linea + 1) + " Columna: " + (c.columna) + ", Error Léxico,    Error cadena no valida:  " + lexer.yytext() + "\n");
                         i++;
+                        
+                        btn.setText("Error en la liena: "+(c.linea+1)+". Error.");
+                        labelLexicoErrors.add(new LabelError(btn,"ERROR",c.linea+1));
+                        counter++;
                         break;
                     case Identificador:
                     case Numero:
@@ -963,6 +1106,7 @@ NumeroLinea lineatxtCodigo;
                         tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
                         tblTablaSimbolos.setValueAt(tokens, i, 3);
                         i++;
+
                         break;
                     case Signo_de_igual:
                     case Signo_de_Suma:
@@ -1078,7 +1222,7 @@ NumeroLinea lineatxtCodigo;
                         i++;
                         break;
                     case Cadena:
-                       tblTablaSimbolos.setValueAt(c.columna, i, 0);
+                        tblTablaSimbolos.setValueAt(c.columna, i, 0);
                         tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
                         tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
                         tblTablaSimbolos.setValueAt("Constante de caracter", i, 3);
@@ -1093,7 +1237,6 @@ NumeroLinea lineatxtCodigo;
                         break;
                 }
             }
-
         } catch (FileNotFoundException ex) {
             Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -1104,27 +1247,7 @@ NumeroLinea lineatxtCodigo;
 
     static String Errores = "";
     private void miCompileSyntaxMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_miCompileSyntaxMouseReleased
-        analisisLexico();
-
-        Errores = "";
-
-        mnuMinimize.setEnabled(true);
-        jplAreaEdit.setBounds(jplAreaEdit.getX(), jplAreaEdit.getY(), 1230, 370);
-        scPanAreaEdit.setBounds(jplAreaEdit.getX(), jplAreaEdit.getY(), 1230, 370);
-        txtAreaEdit.setBounds(jplAreaEdit.getX(), jplAreaEdit.getY(), 1230, 370);
-
-        String ST = txtAreaEdit.getText();
-        Sintax s = new Sintax(new codigo.LexerCup(new StringReader(ST)));
-        try {
-            s.parse();
-        } catch (Exception ex) {
-            //Symbol sym = s.getS();
-            //Errores+=("    >Linea: "+(sym.right+1)+" Columna: "+(sym.left+1)+", Error en la estructura: "+ sym.value);
-            //txtConsola.setForeground(Color.red);
-
-            Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        mostrarErrores();
+       analisisSintactico();
     }//GEN-LAST:event_miCompileSyntaxMouseReleased
 
     private void miMethodMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_miMethodMouseReleased
@@ -1137,7 +1260,7 @@ NumeroLinea lineatxtCodigo;
     }//GEN-LAST:event_btnayudaMouseReleased
 
     private void btnayudaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnayudaMousePressed
-      
+
         try {
             Desktop d = Desktop.getDesktop();
             d.browse(URI.create("https://sites.google.com/ittepic.edu.mx/anadan"));
@@ -1149,6 +1272,46 @@ NumeroLinea lineatxtCodigo;
     private void miCompileSyntaxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miCompileSyntaxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_miCompileSyntaxActionPerformed
+
+    private void icon_newMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_newMouseReleased
+        newFile();
+    }//GEN-LAST:event_icon_newMouseReleased
+
+    private void icon_abrirMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_abrirMouseReleased
+       openFile();
+    }//GEN-LAST:event_icon_abrirMouseReleased
+
+    private void icon_saveMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_saveMouseReleased
+        saveFile();
+    }//GEN-LAST:event_icon_saveMouseReleased
+
+    private void icon_save_asMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_save_asMouseReleased
+        saveAsFile();
+    }//GEN-LAST:event_icon_save_asMouseReleased
+
+    private void icon_tableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_tableMouseReleased
+        showTD();
+    }//GEN-LAST:event_icon_tableMouseReleased
+
+    private void icon_lexicoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_lexicoMouseReleased
+        analisisLexico();
+    }//GEN-LAST:event_icon_lexicoMouseReleased
+
+    private void icon_sintacticMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_sintacticMouseReleased
+        analisisSintactico();
+    }//GEN-LAST:event_icon_sintacticMouseReleased
+
+    private void icon_runMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_runMouseReleased
+        analisisSintactico();
+    }//GEN-LAST:event_icon_runMouseReleased
+
+    private void icon_undoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_undoMouseReleased
+        deshacer();
+    }//GEN-LAST:event_icon_undoMouseReleased
+
+    private void icon_redoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_redoMouseReleased
+        rehacer();
+    }//GEN-LAST:event_icon_redoMouseReleased
 
     public void rquicksort() {
 
@@ -1200,7 +1363,6 @@ NumeroLinea lineatxtCodigo;
         for (int M = 0; M < ter; M++) {
 
             //System.out.println(arreglo[M][0] + "  " + arreglo[M][1] + "  " + arreglo[M][2]);
-
             object[0] = arreglo[M][0];//lexema
             obj[0] = arreglo[M][1]; //tipo 
             object[2] = arreglo[M][2]; //valor
@@ -1279,12 +1441,22 @@ NumeroLinea lineatxtCodigo;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar barraMenu;
     private javax.swing.JMenu btnayuda;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
+    private javax.swing.JLabel icon_abrir;
+    private javax.swing.JLabel icon_lexico;
+    private javax.swing.JLabel icon_new;
+    private javax.swing.JLabel icon_redo;
+    private javax.swing.JLabel icon_run;
+    private javax.swing.JLabel icon_save;
+    private javax.swing.JLabel icon_save_as;
+    private javax.swing.JLabel icon_sintactic;
+    private javax.swing.JLabel icon_table;
+    private javax.swing.JLabel icon_undo;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPaneConsole;
     private javax.swing.JPanel jplAreaEdit;
-    private javax.swing.JPanel jplConsola;
     private javax.swing.JMenuItem miCompile;
     private javax.swing.JMenuItem miCompileLexical;
     private javax.swing.JMenuItem miCompileSyntax;
@@ -1300,13 +1472,185 @@ NumeroLinea lineatxtCodigo;
     private javax.swing.JMenu mnuMinimize;
     private javax.swing.JMenuItem mnuNew;
     private javax.swing.JMenuItem mnuOpen;
+    private javax.swing.JMenu mnuRedo;
     private javax.swing.JMenuItem mnuSave;
     private javax.swing.JMenuItem mnuSaveAs;
     private javax.swing.JMenu mnuTablaS;
+    private javax.swing.JMenu mnuUndo;
     private javax.swing.JMenu mnufile;
+    private javax.swing.JPanel panelToolBar;
     private javax.swing.JScrollPane scPanAreaEdit;
     public static javax.swing.JTable tblTablaSimbolos;
     private javax.swing.JTextArea txtAreaEdit;
-    private static javax.swing.JTextArea txtConsola;
+    private javax.swing.JEditorPane txtConsolaPane;
     // End of variables declaration//GEN-END:variables
+
+    private void showModalLexical(LabelError err) {
+        ModalLexico ml = new ModalLexico(err);
+        if(ml.isOpen()){
+            ml.close();
+        }
+        ml.setVisible(true);
+    }
+
+    private void clickLabel(LabelError le) {
+        le.getLabel().addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+           }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+         }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                showModalLexical(le);
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                   }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                 }
+        });
+    }
+
+    private void newFile() {
+        if (seleccionar.showDialog(null, "Nuevo") == JFileChooser.APPROVE_OPTION) {
+            archivo = seleccionar.getSelectedFile();
+            name = archivo.getAbsolutePath();
+
+            if (archivo.getName().endsWith("txt")) {
+                String Documento = "";
+                txtAreaEdit.setText("");
+                String mensaje = GuardarArchivo(archivo, Documento);
+                if (mensaje != null) {
+
+                } else {
+                    showMessageDialog(null, "Archivo no compatible");
+                }
+            } else {
+                showMessageDialog(null, "Fallo al guardar, coloque extencion .txt");
+            }
+        }
+    }
+
+    private void openFile() {
+        if (seleccionar.showDialog(null, "Abrir") == JFileChooser.APPROVE_OPTION) {
+            archivo = seleccionar.getSelectedFile();
+
+            name = archivo.getPath();
+            if (archivo.canRead()) {
+                if (archivo.getName().endsWith("txt")) {
+                    String documento = AbrirArchivo(archivo);
+                    txtAreaEdit.setText(documento);
+                } else {
+                    showMessageDialog(null, "Archivo no compatible");
+                }
+            }
+        }
+    }
+
+    private void saveFile() {
+        if (name == null) {
+
+            if (seleccionar.showDialog(null, "Save") == JFileChooser.APPROVE_OPTION) {
+
+                archivo = seleccionar.getSelectedFile();
+                if (archivo.getName().endsWith("txt")) {
+                    String Documento = txtAreaEdit.getText();
+                    String mensaje = GuardarArchivo(archivo, Documento);
+                    if (mensaje != null) {
+                        showMessageDialog(null, mensaje);
+                    } else {
+                        showMessageDialog(null, "Archivo no compatible");
+                    }
+                } else {
+                    showMessageDialog(null, "Fallo al guardar, coloque extencion .txt");
+                }
+            }
+            name = archivo.getName();
+            return;
+        } else {
+        }
+
+        File archivo = new File(name);
+        PrintWriter escribir;
+        try {
+            escribir = new PrintWriter(archivo);
+            escribir.print(txtAreaEdit.getText());
+            escribir.close();
+
+            DesktopNotify.showDesktopMessage("ANADAN-INFORMATION", "Actualizaciones guardadas", DesktopNotify.SUCCESS, 5000L);
+            //   showMessageDialog(null,"Actualizaciones guardadas");
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void saveAsFile() {
+      if (seleccionar.showDialog(null, "Guardar") == JFileChooser.APPROVE_OPTION) {
+            archivo = seleccionar.getSelectedFile();
+
+            if (archivo.getName().endsWith("txt")) {
+                String Documento = txtAreaEdit.getText();
+                String mensaje = GuardarArchivo(archivo, Documento);
+                if (mensaje != null) {
+                    showMessageDialog(null, mensaje);
+                } else {
+                    showMessageDialog(null, "Archivo no compatible");
+                }
+            } else {
+                showMessageDialog(null, "Fallo al guardar, coloque extencion .txt");
+            }
+        }
+    }
+
+    private void showTD() {
+        System.out.println("¨**********"+simbolos.size());
+        for (int i = 0; i < simbolos.size(); i++) {
+            simbolos.remove(i);
+        }
+        System.out.println("¨**********"+simbolos.size());
+        for (int i = 0; i < m.getRowCount() - 1; i++) {
+            int linea = Integer.parseInt(m.getValueAt(i, 1).toString());
+            String lexema = m.getValueAt(i, 2).toString();
+            String componente = m.getValueAt(i, 3).toString();
+            if (componente.equals("Identificador")) {
+                simbolos.add(new Simbolos(componente, linea, lexema, "", ""));
+            }
+        }
+
+        Collections.sort(simbolos);
+
+        TablaDinamica ts = new TablaDinamica(simbolos);
+        ts.setVisible(true);
+    }
+
+    private void analisisSintactico() {
+        analisisLexico();
+
+        Errores = "";
+
+        mnuMinimize.setEnabled(true);
+        //jplAreaEdit.setBounds(jplAreaEdit.getX(), jplAreaEdit.getY(), 1230, 370);
+        //scPanAreaEdit.setBounds(jplAreaEdit.getX(), jplAreaEdit.getY(), 1230, 370);
+        //txtAreaEdit.setBounds(jplAreaEdit.getX(), jplAreaEdit.getY(), 1230, 370);
+
+        String ST = txtAreaEdit.getText();
+        Sintax s = new Sintax(new codigo.LexerCup(new StringReader(ST)));
+        try {
+            s.parse();
+        } catch (Exception ex) {
+            //Symbol sym = s.getS();
+            //Errores+=("    >Linea: "+(sym.right+1)+" Columna: "+(sym.left+1)+", Error en la estructura: "+ sym.value);
+            //txtConsola.setForeground(Color.red);
+
+            Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        mostrarErrores();
+    }
 }

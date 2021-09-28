@@ -41,72 +41,72 @@ parser code
 
 :};
 
-terminal String Identificador;
-terminal Integer Numero;
-terminal String CADENA_TEXTO,True, False;
-terminal String Broken,Just, Word, Flag;
-terminal Setfilamenttype, Fillrectangle, Drawrectangle, Sleep, Fillcircle, Drawcircle,
-Filltriangle, Drawtriangle, Stop, Getextrusorx, Getextrusory, Getextrusorz, Getfilamenttype, Setnewfilament,
-Getfilament, Gettemperature, End, Same, Get, Give, For, If, Else, Select, Empty,
-While, Case,  Cut, Begin, Model, Defect, New, Do, Goback,  Home,
-Printerport, Method, Check, Trap, Class, Main, Signo_de_igual, Signo_de_Suma, Signo_de_Resta,
-Signo_de_Multiplicación, Signo_de_División, Signo_de_Residuo, NOT, AND, OR, Mas_Mas,
-Menos_Menos, Menor_que, Mayor_que, Menor_o_igual_que, Mayor_o_igual_que, Diferente_que,
-Igual_que, Parentesis_Abre, Parentesis_Cierra, Llave_Abre, Llave_Cierra, Corchete_Abre,
-Corchete_Cierra, PuntoYComa,  Coma,  Punto, 
+terminal String IDENTIFICADOR;
+terminal Integer NUMERO;
+terminal String CADENA_TEXTO,TRUE, FALSE;
+terminal String BROKEN,JUST, WORD, FLAG;
+terminal SETFILAMENTTYPE, FILLRECTANGLE, DRAWRECTANGLE, SLEEP, FILLCIRCLE, DRAWCIRCLE,
+FILLTRIANGLE, DRAWTRIANGLE, STOP, GETEXTRUSORX, GETEXTRUSORY, GETEXTRUSORZ, GETFILAMENTTYPE, SETNEWFILAMENT,
+GETFILAMENT, GETTEMPERATURE, END, SAME, GET, GIVE, FOR, IF, ELSE, SELECT, EMPTY,
+WHILE, CASE,  CUT, BEGIN, MODEL, DEFECT, NEW, DO, GOBACK,  HOME,
+PRINTERPORT, METHOD, CHECK, TRAP, CLASS, MAIN, SIGNO_DE_IGUAL, SIGNO_DE_SUMA, SIGNO_DE_RESTA,
+SIGNO_DE_MULTIPLICACIÓN, SIGNO_DE_DIVISIÓN, SIGNO_DE_RESIDUO, NOT, AND, OR, MAS_MAS,
+MENOS_MENOS, MENOR_QUE, MAYOR_QUE, MENOR_O_IGUAL_QUE, MAYOR_O_IGUAL_QUE, DIFERENTE_QUE,
+IGUAL_QUE, PARENTESIS_ABRE, PARENTESIS_CIERRA, LLAVE_ABRE, LLAVE_CIERRA, CORCHETE_ABRE,
+CORCHETE_CIERRA, PUNTOYCOMA,  COMA,  PUNTO, 
 ERROR;
 
-non terminal String T_dato;
-non terminal INICIO, SENTENCIA, DECLARACION, DECLARACION_FOR, IF, IF_ELSE,
-    WHILE, DO_WHILE, FOR, SENTENCIA_BOOLEANA, SENTENCIA_FOR ,Datos_Array,Continua,Cuerpo,
-    Declaraciones,Declaracion,BloqueSentencias,Sentencias,Sentencia,Expresion,
-    SentIf,
-    SentElse,
-    SentWhile,
-    SentAsignacion,
-    SentCut,
-    Expresiondos,
-    Expresiontres,
-    Expresioncuatro,
-    OP_REL,
-    OP_ART,
-    OP_LOG,
-    Condicion,
-    Condiciondos,
-    FILLTRIANGLE,
-    SETFILAMENTTYPE,
-    STOP,
-    GETEXTRUSORX,
-    GETEXTRUSORY,
-    GETEXTRUSORZ,
-    GETFILAMENTTYPE,
-    SETNEWFILAMENT,
-    GETFILAMENT,
-    GETTEMPERATURE,
-    DRAWTRIANGLE,
-    FILLRECTANGLE,
-    DRAWRECTANGLE,
-    SLEEP,
-    DRAWCIRCLE,
-    FILLCIRCLE,
-    HOME,
-    PRINTERPORT,
-    CONSTRUCTOR,
-    METODO,
-    PARAMETROS,
-    PARAMETROSA,
-    Parametro,
-    MAIN,
-    LLAMAR,
-    TRYYCATCH,
-    GET,
-    GIVE,
+non terminal String t_dato;
+non terminal inicio, declaracion_for, if, if_else,
+    while, do_while, for, sentencia_booleana, sentencia_for ,datos_array,continua,cuerpo,
+    declaraciones,declaracion,bloquesentencias,sentencias,sentencia,expresion,
+    sentif,
+    sentelse,
+    sentwhile,
+    sentasignacion,
+    sentcut,
+    expresiondos,
+    expresiontres,
+    expresioncuatro,
+    op_rel,
+    op_art,
+    op_log,
+    condicion,
+    condiciondos, 
+    filltriangle,
+    setfilamenttype,
+    stop,
+    getextrusorx,
+    getextrusory,
+    getextrusorz,
+    getfilamenttype,
+    setnewfilament,
+    getfilament,
+    gettemperature,
+    drawtriangle,
+    fillrectangle,
+    drawrectangle,
+    sleep,
+    drawcircle,
+    fillcircle,
+    home,
+    printerport,
+    constructor,
+    metodo,
+    parametros,
+    parametrosa,
+    parametro,
+    main,
+    llamar,
+    tryycatch,
+    get,
+    give,
     parametroa,
-    Expresioncinco;
+    expresioncinco;
 
-start with INICIO;
-INICIO ::= 
-    Identificador:nombre Parentesis_Abre Parentesis_Cierra Begin BloqueSentencias End
+start with inicio;
+inicio ::= 
+    IDENTIFICADOR:nombre PARENTESIS_ABRE PARENTESIS_CIERRA BEGIN bloquesentencias END
     {:
         try{
             TablaSimbolos.crear(nombre, "--","Nombre");
@@ -120,7 +120,7 @@ INICIO ::=
             TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
         }                           
     :} |
-    Declaracion Identificador:nombre Parentesis_Abre Parentesis_Cierra Begin BloqueSentencias End 
+    declaracion IDENTIFICADOR:nombre PARENTESIS_ABRE PARENTESIS_CIERRA BEGIN bloquesentencias END 
     {:
         try{
             TablaSimbolos.crear(nombre, "--","Nombre");
@@ -134,7 +134,7 @@ INICIO ::=
             TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
         }                           
     :}|
-    Identificador:nombre Parentesis_Abre Parentesis_Cierra Begin BloqueSentencias End Identificador Parentesis_Abre Parentesis_Cierra Begin BloqueSentencias End 
+    IDENTIFICADOR:nombre PARENTESIS_ABRE PARENTESIS_CIERRA BEGIN bloquesentencias END IDENTIFICADOR PARENTESIS_ABRE PARENTESIS_CIERRA BEGIN bloquesentencias END 
     {:
         try{
             TablaSimbolos.crear(nombre, "--","Nombre");
@@ -148,43 +148,43 @@ INICIO ::=
             TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
         }                           
     :}|
-    error Begin;
+    error BEGIN;
 
-BloqueSentencias::= Sentencias |;
+bloquesentencias::= sentencias |;
 
-Sentencias::= Sentencia Sentencias | Sentencia;
+sentencias::= sentencia sentencias | sentencia;
 
-Sentencia::= Declaracion | SentIf | SentWhile | SentAsignacion | SentCut | METODO |
-            FILLTRIANGLE | 
-            SETFILAMENTTYPE |
-            STOP |
-            GETEXTRUSORX |
-            GETEXTRUSORY |
-            GETEXTRUSORZ |
-            GETFILAMENTTYPE |
-            SETNEWFILAMENT |
-            GETFILAMENT |
-            GETTEMPERATURE |
-            DRAWTRIANGLE |
-            FILLRECTANGLE |
-            DRAWRECTANGLE |
-            SLEEP |
-            DRAWCIRCLE |
-            FILLCIRCLE |
-            HOME |
-            CONSTRUCTOR |
-            MAIN |
-            FOR |
-            TRYYCATCH |
-            GET|
-            GIVE|
-            error PuntoYComa | error Llave_Cierra |
-            PRINTERPORT 
+sentencia::= declaracion | sentif | sentwhile | sentasignacion | sentcut | metodo |
+            filltriangle | 
+            setfilamenttype |
+            stop |
+            getextrusorx |
+            getextrusory |
+            getextrusorz |
+            getfilamenttype |
+            setnewfilament |
+            getfilament |
+            gettemperature |
+            drawtriangle |
+            fillrectangle |
+            drawrectangle |
+            sleep |
+            drawcircle |
+            fillcircle |
+            home |
+            constructor |
+            main |
+            for |
+            tryycatch |
+            get|
+            give|
+            error PUNTOYCOMA | error LLAVE_CIERRA |
+            printerport 
 ; 
 
-Declaracion ::= 
+declaracion ::= 
    
-    Just:nombre Identificador PuntoYComa   {:
+    JUST:nombre IDENTIFICADOR PUNTOYCOMA   {:
         try{
             TablaSimbolos.crear(nombre, "--","Nombre");
             TablaSimbolos.insertar(nombre, String.valueOf("--"));
@@ -197,7 +197,7 @@ Declaracion ::=
             TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
         }                           
     :}|
-    Word:nombre Identificador PuntoYComa   {:
+    WORD:nombre IDENTIFICADOR PUNTOYCOMA   {:
         try{
             TablaSimbolos.crear(nombre, "--","Nombre");
             TablaSimbolos.insertar(nombre, String.valueOf("--"));
@@ -210,7 +210,7 @@ Declaracion ::=
             TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
         }                           
     :}|
-    Flag:nombre Identificador PuntoYComa   {:
+    FLAG:nombre IDENTIFICADOR PUNTOYCOMA   {:
         try{
             TablaSimbolos.crear(nombre, "--","Nombre");
             TablaSimbolos.insertar(nombre, String.valueOf("--"));
@@ -223,7 +223,7 @@ Declaracion ::=
             TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
         }                           
     :}|
-    Just:tipo Identificador:nombre Signo_de_igual Numero:valor PuntoYComa 
+    JUST:tipo IDENTIFICADOR:nombre SIGNO_DE_IGUAL NUMERO:valor PUNTOYCOMA 
     {:
         try{
             TablaSimbolos.crear(nombre, tipo,"Variable numérica");
@@ -237,7 +237,7 @@ Declaracion ::=
             TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
         }                      
     :}|
-    Word:tipo Identificador:nombre Signo_de_igual CADENA_TEXTO:valor PuntoYComa 
+    WORD:tipo IDENTIFICADOR:nombre SIGNO_DE_IGUAL CADENA_TEXTO:valor PUNTOYCOMA 
     {:
         try{
             TablaSimbolos.crear(nombre, tipo,"Variable");
@@ -251,7 +251,7 @@ Declaracion ::=
             TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
         }                      
     :}|
-    Flag:tipo Identificador:nombre Signo_de_igual True:valor PuntoYComa 
+    FLAG:tipo IDENTIFICADOR:nombre SIGNO_DE_IGUAL TRUE:valor PUNTOYCOMA 
     {:
         try{
             TablaSimbolos.crear(nombre, tipo,"Variable boolena");
@@ -265,7 +265,7 @@ Declaracion ::=
             TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
         }                      
     :}|
-    Flag:tipo Identificador:nombre Signo_de_igual False:valor PuntoYComa 
+    FLAG:tipo IDENTIFICADOR:nombre SIGNO_DE_IGUAL FALSE:valor PUNTOYCOMA 
     {:
         try{
             TablaSimbolos.crear(nombre, tipo,"Variable booleana");
@@ -279,87 +279,87 @@ Declaracion ::=
             TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
         }                      
     :}|
-    T_dato Corchete_Abre Corchete_Cierra Identificador Signo_de_igual T_dato Corchete_Abre Numero Corchete_Cierra PuntoYComa |
-    T_dato Corchete_Abre Corchete_Cierra Identificador Signo_de_igual Llave_Abre Datos_Array Llave_Cierra PuntoYComa |
-    Identificador Identificador Signo_de_igual New Identificador Parentesis_Abre PARAMETROSA Parentesis_Cierra PuntoYComa
+    t_dato CORCHETE_ABRE CORCHETE_CIERRA IDENTIFICADOR SIGNO_DE_IGUAL t_dato CORCHETE_ABRE NUMERO CORCHETE_CIERRA PUNTOYCOMA |
+    t_dato CORCHETE_ABRE CORCHETE_CIERRA IDENTIFICADOR SIGNO_DE_IGUAL LLAVE_ABRE datos_array LLAVE_CIERRA PUNTOYCOMA |
+    IDENTIFICADOR IDENTIFICADOR SIGNO_DE_IGUAL NEW IDENTIFICADOR PARENTESIS_ABRE parametrosa PARENTESIS_CIERRA PUNTOYCOMA
 ;
 
-T_dato::= Broken|
-        Just |
-        Word |
-        Flag ;
+t_dato::= BROKEN|
+        JUST |
+        WORD |
+        FLAG ;
 
-Expresion ::= Numero | Identificador | Parentesis_Abre  Expresion OP_ART Expresion Parentesis_Cierra;
+expresion ::= NUMERO | IDENTIFICADOR | PARENTESIS_ABRE  expresion op_art expresion PARENTESIS_CIERRA;
 
-OP_REL ::= Mayor_que | Menor_que | Mayor_o_igual_que | Menor_o_igual_que | Diferente_que | Signo_de_igual;
-OP_ART ::= Signo_de_Suma | Signo_de_Resta | Signo_de_División | Signo_de_Multiplicación ;
-OP_LOG ::= OR | AND;
-
-
-SentIf::=  If Parentesis_Abre Condicion Parentesis_Cierra Llave_Abre BloqueSentencias Llave_Cierra SentElse;
-SentElse::= Else Llave_Abre BloqueSentencias Llave_Cierra |;
-SentWhile::= While Parentesis_Abre Condicion Parentesis_Cierra Llave_Abre BloqueSentencias Llave_Cierra;
-SentAsignacion::= Identificador Signo_de_igual Expresion PuntoYComa;
-SentCut::= Cut PuntoYComa;
-
-Condicion::= Expresion OP_REL Expresion;
-
-FILLTRIANGLE::= Filltriangle Parentesis_Abre Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Parentesis_Cierra PuntoYComa;
-SETFILAMENTTYPE::= Setfilamenttype Parentesis_Abre Numero Parentesis_Cierra PuntoYComa;
-STOP::= Stop Parentesis_Abre Parentesis_Cierra PuntoYComa;
-GETEXTRUSORX::= Getextrusorx Parentesis_Abre Parentesis_Cierra PuntoYComa;
-GETEXTRUSORY::= Getextrusory Parentesis_Abre Parentesis_Cierra PuntoYComa;
-GETEXTRUSORZ::= Getextrusorz Parentesis_Abre Parentesis_Cierra PuntoYComa;
-GETFILAMENTTYPE::= Getfilamenttype Parentesis_Abre Parentesis_Cierra PuntoYComa;
-SETNEWFILAMENT::= Setnewfilament Parentesis_Abre Numero Parentesis_Cierra PuntoYComa;
-GETFILAMENT::= Getfilament Parentesis_Abre Parentesis_Cierra PuntoYComa;
-GETTEMPERATURE::= Gettemperature Parentesis_Abre Parentesis_Cierra PuntoYComa;
-DRAWTRIANGLE::= Drawtriangle Parentesis_Abre Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Parentesis_Cierra PuntoYComa;
-FILLRECTANGLE::= Fillrectangle Parentesis_Abre Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Parentesis_Cierra PuntoYComa;
-DRAWRECTANGLE::= Drawrectangle Parentesis_Abre Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Parentesis_Cierra PuntoYComa;
-SLEEP::= Sleep Parentesis_Abre Parentesis_Cierra PuntoYComa;
-DRAWCIRCLE::= Drawcircle Parentesis_Abre Numero Coma Numero Coma Numero Coma Numero Parentesis_Cierra PuntoYComa;
-FILLCIRCLE::= Fillcircle Parentesis_Abre Numero Coma Numero Coma Numero Coma Numero Parentesis_Cierra PuntoYComa;
-HOME::= Home Parentesis_Abre Parentesis_Cierra PuntoYComa;
-PRINTERPORT::= Printerport Parentesis_Abre Numero Parentesis_Cierra PuntoYComa;
-
-METODO::= Method Identificador Parentesis_Abre PARAMETROS Parentesis_Cierra Llave_Abre BloqueSentencias Llave_Cierra | Model Identificador Parentesis_Abre Parentesis_Cierra PuntoYComa;
-CONSTRUCTOR::= Identificador Parentesis_Abre PARAMETROS Parentesis_Cierra Llave_Abre BloqueSentencias Llave_Cierra;
-MAIN::= Main Parentesis_Abre Parentesis_Cierra Llave_Abre BloqueSentencias Llave_Cierra;
-
-PARAMETROS::= Parametro Coma PARAMETROS 
-            | Parametro |;
-
-Parametro::= T_dato Identificador;
-
-PARAMETROSA::= parametroa | parametroa Coma PARAMETROSA;
-
-parametroa::= Identificador | Numero;
+op_rel ::= MAYOR_QUE | MENOR_QUE | MAYOR_O_IGUAL_QUE | MENOR_O_IGUAL_QUE | DIFERENTE_QUE | SIGNO_DE_IGUAL;
+op_art ::= SIGNO_DE_SUMA | SIGNO_DE_RESTA | SIGNO_DE_DIVISIÓN | SIGNO_DE_MULTIPLICACIÓN ;
+op_log ::= OR | AND;
 
 
-FOR::= For Parentesis_Abre SENTENCIA_FOR Parentesis_Cierra Llave_Abre BloqueSentencias Llave_Cierra ;
+sentif::=  IF PARENTESIS_ABRE condicion PARENTESIS_CIERRA LLAVE_ABRE bloquesentencias LLAVE_CIERRA sentelse;
+sentelse::= ELSE LLAVE_ABRE bloquesentencias LLAVE_CIERRA |;
+sentwhile::= WHILE PARENTESIS_ABRE condicion PARENTESIS_CIERRA LLAVE_ABRE bloquesentencias LLAVE_CIERRA;
+sentasignacion::= IDENTIFICADOR SIGNO_DE_IGUAL expresion PUNTOYCOMA;
+sentcut::= CUT PUNTOYCOMA;
+
+condicion::= expresion op_rel expresion;
+
+filltriangle::= FILLTRIANGLE PARENTESIS_ABRE NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO PARENTESIS_CIERRA PUNTOYCOMA;
+setfilamenttype::= SETFILAMENTTYPE PARENTESIS_ABRE NUMERO PARENTESIS_CIERRA PUNTOYCOMA;
+stop::= STOP PARENTESIS_ABRE PARENTESIS_CIERRA PUNTOYCOMA;
+getextrusorx::= GETEXTRUSORX PARENTESIS_ABRE PARENTESIS_CIERRA PUNTOYCOMA;
+getextrusory::= GETEXTRUSORY PARENTESIS_ABRE PARENTESIS_CIERRA PUNTOYCOMA;
+getextrusorz::= GETEXTRUSORZ PARENTESIS_ABRE PARENTESIS_CIERRA PUNTOYCOMA;
+getfilamenttype::= GETFILAMENTTYPE PARENTESIS_ABRE PARENTESIS_CIERRA PUNTOYCOMA;
+setnewfilament::= SETNEWFILAMENT PARENTESIS_ABRE NUMERO PARENTESIS_CIERRA PUNTOYCOMA;
+getfilament::= GETFILAMENT PARENTESIS_ABRE PARENTESIS_CIERRA PUNTOYCOMA;
+gettemperature::= GETTEMPERATURE PARENTESIS_ABRE PARENTESIS_CIERRA PUNTOYCOMA;
+drawtriangle::= DRAWTRIANGLE PARENTESIS_ABRE NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO PARENTESIS_CIERRA PUNTOYCOMA;
+fillrectangle::= FILLRECTANGLE PARENTESIS_ABRE NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO PARENTESIS_CIERRA PUNTOYCOMA;
+drawrectangle::= DRAWRECTANGLE PARENTESIS_ABRE NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO PARENTESIS_CIERRA PUNTOYCOMA;
+sleep::= SLEEP PARENTESIS_ABRE PARENTESIS_CIERRA PUNTOYCOMA;
+drawcircle::= DRAWCIRCLE PARENTESIS_ABRE NUMERO COMA NUMERO COMA NUMERO COMA NUMERO PARENTESIS_CIERRA PUNTOYCOMA;
+fillcircle::= FILLCIRCLE PARENTESIS_ABRE NUMERO COMA NUMERO COMA NUMERO COMA NUMERO PARENTESIS_CIERRA PUNTOYCOMA;
+home::= HOME PARENTESIS_ABRE PARENTESIS_CIERRA PUNTOYCOMA;
+printerport::= PRINTERPORT PARENTESIS_ABRE NUMERO PARENTESIS_CIERRA PUNTOYCOMA;
+
+metodo::= METHOD IDENTIFICADOR PARENTESIS_ABRE parametros PARENTESIS_CIERRA LLAVE_ABRE bloquesentencias LLAVE_CIERRA | MODEL IDENTIFICADOR PARENTESIS_ABRE PARENTESIS_CIERRA PUNTOYCOMA;
+constructor::= IDENTIFICADOR PARENTESIS_ABRE parametros PARENTESIS_CIERRA LLAVE_ABRE bloquesentencias LLAVE_CIERRA;
+main::= MAIN PARENTESIS_ABRE PARENTESIS_CIERRA LLAVE_ABRE bloquesentencias LLAVE_CIERRA;
+
+parametros::= parametro COMA parametros 
+            | parametro |;
+
+parametro::= t_dato IDENTIFICADOR;
+
+parametrosa::= parametroa | parametroa COMA parametrosa;
+
+parametroa::= IDENTIFICADOR | NUMERO;
 
 
-SENTENCIA_FOR::=
-   Identificador Signo_de_igual Numero PuntoYComa SENTENCIA_BOOLEANA PuntoYComa DECLARACION_FOR |
-   Just Identificador Signo_de_igual Numero PuntoYComa SENTENCIA_BOOLEANA PuntoYComa DECLARACION_FOR PuntoYComa ;
+for::= FOR PARENTESIS_ABRE sentencia_for PARENTESIS_CIERRA LLAVE_ABRE bloquesentencias LLAVE_CIERRA ;
 
-DECLARACION_FOR::= 
-    Identificador Signo_de_igual Numero |
-    Identificador Mas_Mas | 
-    Mas_Mas Identificador
+
+sentencia_for::=
+   IDENTIFICADOR SIGNO_DE_IGUAL NUMERO PUNTOYCOMA sentencia_booleana PUNTOYCOMA declaracion_for |
+   JUST IDENTIFICADOR SIGNO_DE_IGUAL NUMERO PUNTOYCOMA sentencia_booleana PUNTOYCOMA declaracion_for PUNTOYCOMA ;
+
+declaracion_for::= 
+    IDENTIFICADOR SIGNO_DE_IGUAL NUMERO |
+    IDENTIFICADOR MAS_MAS | 
+    MAS_MAS IDENTIFICADOR
 ;
 
-SENTENCIA_BOOLEANA::= 
-    Identificador OP_REL True |
-    Identificador OP_REL False |
-    Identificador OP_REL Numero |
-    Identificador OP_REL Identificador |
-    Identificador Punto Same Parentesis_Abre CADENA_TEXTO Parentesis_Cierra 
+sentencia_booleana::= 
+    IDENTIFICADOR op_rel TRUE |
+    IDENTIFICADOR op_rel FALSE |
+    IDENTIFICADOR op_rel NUMERO |
+    IDENTIFICADOR op_rel IDENTIFICADOR |
+    IDENTIFICADOR PUNTO SAME PARENTESIS_ABRE CADENA_TEXTO PARENTESIS_CIERRA 
 ;
 
-TRYYCATCH::= Check Llave_Abre BloqueSentencias Llave_Cierra Trap Parentesis_Abre Identificador Identificador Parentesis_Cierra Llave_Abre BloqueSentencias Llave_Cierra;
+tryycatch::= CHECK LLAVE_ABRE bloquesentencias LLAVE_CIERRA TRAP PARENTESIS_ABRE IDENTIFICADOR IDENTIFICADOR PARENTESIS_CIERRA LLAVE_ABRE bloquesentencias LLAVE_CIERRA;
     
-GET::= Get Parentesis_Abre CADENA_TEXTO Parentesis_Cierra PuntoYComa;
+get::= GET PARENTESIS_ABRE CADENA_TEXTO PARENTESIS_CIERRA PUNTOYCOMA;
 
-GIVE::= Give Parentesis_Abre Identificador Parentesis_Cierra PuntoYComa;
+give::= GIVE PARENTESIS_ABRE IDENTIFICADOR PARENTESIS_CIERRA PUNTOYCOMA;

@@ -1,0 +1,365 @@
+package codigo;
+
+import java.util.*;
+import java.io.*;
+import java_cup.runtime.Symbol;
+import java.util.logging.Level;
+import java.util.Stack;
+
+action code
+    {:
+        Hashtable table = new Hashtable();
+    :};
+
+parser code
+{:
+
+    static TablaSimbolos tablaSimbolos = new TablaSimbolos();
+    static int verificarTipo = 0;
+    static Stack <String> listaIdentificadores = new Stack <String>();
+	public static void main(String args[]) throws Exception{
+		new Sintax(new LexerCup(System.in)).parse();
+	}
+    
+    private Symbol s;
+    
+    //public void syntax_error(Symbol s){
+    //    this.s = s;
+    //}
+
+    public Symbol getS(){
+        return this.s;
+    }
+
+    public void syntax_error(Symbol s){
+        VentanaPrincipal.notificar_er(">Linea: "+(s.right+1)+" Error de sintaxis, cadena inesperada: "+ s.value );
+    }
+
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{ 
+        VentanaPrincipal.notificar_er(">Linea: "+(s.right+1)+" Error de sintaxis, cadena inesperada: "+ s.value );
+    }
+
+:};
+
+terminal String Identificador;
+terminal Integer Numero;
+terminal String CADENA_TEXTO,True, False;
+terminal String Broken,Just, Word, Flag;
+terminal Setfilamenttype, Fillrectangle, Drawrectangle, Sleep, Fillcircle, Drawcircle,
+Filltriangle, Drawtriangle, Stop, Getextrusorx, Getextrusory, Getextrusorz, Getfilamenttype, Setnewfilament,
+Getfilament, Gettemperature, End, Same, Get, Give, For, If, Else, Select, Empty,
+While, Case,  Cut, Begin, Model, Defect, New, Do, Goback,  Home,
+Printerport, Method, Check, Trap, Class, Main, Signo_de_igual, Signo_de_Suma, Signo_de_Resta,
+Signo_de_Multiplicación, Signo_de_División, Signo_de_Residuo, NOT, AND, OR, Mas_Mas,
+Menos_Menos, Menor_que, Mayor_que, Menor_o_igual_que, Mayor_o_igual_que, Diferente_que,
+Igual_que, Parentesis_Abre, Parentesis_Cierra, Llave_Abre, Llave_Cierra, Corchete_Abre,
+Corchete_Cierra, PuntoYComa,  Coma,  Punto, 
+ERROR;
+
+non terminal String T_dato;
+non terminal INICIO, SENTENCIA, DECLARACION, DECLARACION_FOR, IF, IF_ELSE,
+    WHILE, DO_WHILE, FOR, SENTENCIA_BOOLEANA, SENTENCIA_FOR ,Datos_Array,Continua,Cuerpo,
+    Declaraciones,Declaracion,BloqueSentencias,Sentencias,Sentencia,Expresion,
+    SentIf,
+    SentElse,
+    SentWhile,
+    SentAsignacion,
+    SentCut,
+    Expresiondos,
+    Expresiontres,
+    Expresioncuatro,
+    OP_REL,
+    OP_ART,
+    OP_LOG,
+    Condicion,
+    Condiciondos, 
+    FILLTRIANGLE,
+    SETFILAMENTTYPE,
+    STOP,
+    GETEXTRUSORX,
+    GETEXTRUSORY,
+    GETEXTRUSORZ,
+    GETFILAMENTTYPE,
+    SETNEWFILAMENT,
+    GETFILAMENT,
+    GETTEMPERATURE,
+    DRAWTRIANGLE,
+    FILLRECTANGLE,
+    DRAWRECTANGLE,
+    SLEEP,
+    DRAWCIRCLE,
+    FILLCIRCLE,
+    HOME,
+    PRINTERPORT,
+    CONSTRUCTOR,
+    METODO,
+    PARAMETROS,
+    PARAMETROSA,
+    Parametro,
+    MAIN,
+    LLAMAR,
+    TRYYCATCH,
+    GET,
+    GIVE,
+    parametroa,
+    Expresioncinco;
+
+start with INICIO;
+INICIO ::= 
+    Identificador:nombre Parentesis_Abre Parentesis_Cierra Begin BloqueSentencias End
+    {:
+        try{
+            TablaSimbolos.crear(nombre, "--","Nombre");
+            TablaSimbolos.insertar(nombre, String.valueOf("--"));
+
+            //Crear relacion ciclo PARA con su variable asociada
+            TablaSimbolos.lista.push(nombre);          
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                           
+    :} |
+    Declaracion Identificador:nombre Parentesis_Abre Parentesis_Cierra Begin BloqueSentencias End 
+    {:
+        try{
+            TablaSimbolos.crear(nombre, "--","Nombre");
+            TablaSimbolos.insertar(nombre, String.valueOf("--"));
+
+            //Crear relacion ciclo PARA con su variable asociada
+            TablaSimbolos.lista.push(nombre);          
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                           
+    :}|
+    Identificador:nombre Parentesis_Abre Parentesis_Cierra Begin BloqueSentencias End Identificador Parentesis_Abre Parentesis_Cierra Begin BloqueSentencias End 
+    {:
+        try{
+            TablaSimbolos.crear(nombre, "--","Nombre");
+            TablaSimbolos.insertar(nombre, String.valueOf("--"));
+
+            //Crear relacion ciclo PARA con su variable asociada
+            TablaSimbolos.lista.push(nombre);          
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                           
+    :}|
+    error Begin;
+
+BloqueSentencias::= Sentencias |;
+
+Sentencias::= Sentencia Sentencias | Sentencia;
+
+Sentencia::= Declaracion | SentIf | SentWhile | SentAsignacion | SentCut | METODO |
+            FILLTRIANGLE | 
+            SETFILAMENTTYPE |
+            STOP |
+            GETEXTRUSORX |
+            GETEXTRUSORY |
+            GETEXTRUSORZ |
+            GETFILAMENTTYPE |
+            SETNEWFILAMENT |
+            GETFILAMENT |
+            GETTEMPERATURE |
+            DRAWTRIANGLE |
+            FILLRECTANGLE |
+            DRAWRECTANGLE |
+            SLEEP |
+            DRAWCIRCLE |
+            FILLCIRCLE |
+            HOME |
+            CONSTRUCTOR |
+            MAIN |
+            FOR |
+            TRYYCATCH |
+            GET|
+            GIVE|
+            error PuntoYComa | error Llave_Cierra |
+            PRINTERPORT 
+; 
+
+Declaracion ::= 
+   
+    Just:nombre Identificador PuntoYComa   {:
+        try{
+            TablaSimbolos.crear(nombre, "--","Nombre");
+            TablaSimbolos.insertar(nombre, String.valueOf("--"));
+
+            //Crear relacion ciclo PARA con su variable asociada
+            TablaSimbolos.lista.push(nombre);          
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                           
+    :}|
+    Word:nombre Identificador PuntoYComa   {:
+        try{
+            TablaSimbolos.crear(nombre, "--","Nombre");
+            TablaSimbolos.insertar(nombre, String.valueOf("--"));
+
+            //Crear relacion ciclo PARA con su variable asociada
+            TablaSimbolos.lista.push(nombre);          
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                           
+    :}|
+    Flag:nombre Identificador PuntoYComa   {:
+        try{
+            TablaSimbolos.crear(nombre, "--","Nombre");
+            TablaSimbolos.insertar(nombre, String.valueOf("--"));
+
+            //Crear relacion ciclo PARA con su variable asociada
+            TablaSimbolos.lista.push(nombre);          
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                           
+    :}|
+    Just:tipo Identificador:nombre Signo_de_igual Numero:valor PuntoYComa 
+    {:
+        try{
+            TablaSimbolos.crear(nombre, tipo,"Variable numérica");
+            TablaSimbolos.insertar(nombre, String.valueOf(valor));
+
+            //Crear relacion ciclo PARA con su variable asociada
+            TablaSimbolos.lista.push(nombre);         
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                      
+    :}|
+    Word:tipo Identificador:nombre Signo_de_igual CADENA_TEXTO:valor PuntoYComa 
+    {:
+        try{
+            TablaSimbolos.crear(nombre, tipo,"Variable");
+            TablaSimbolos.insertar(nombre, String.valueOf(valor));
+
+            //Crear relacion ciclo PARA con su variable asociada
+            TablaSimbolos.lista.push(nombre);         
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                      
+    :}|
+    Flag:tipo Identificador:nombre Signo_de_igual True:valor PuntoYComa 
+    {:
+        try{
+            TablaSimbolos.crear(nombre, tipo,"Variable boolena");
+            TablaSimbolos.insertar(nombre, String.valueOf(valor));
+
+            //Crear relacion ciclo PARA con su variable asociada
+            TablaSimbolos.lista.push(nombre);         
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                      
+    :}|
+    Flag:tipo Identificador:nombre Signo_de_igual False:valor PuntoYComa 
+    {:
+        try{
+            TablaSimbolos.crear(nombre, tipo,"Variable booleana");
+            TablaSimbolos.insertar(nombre, String.valueOf(valor));
+
+            //Crear relacion ciclo PARA con su variable asociada
+            TablaSimbolos.lista.push(nombre);         
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                      
+    :}|
+    T_dato Corchete_Abre Corchete_Cierra Identificador Signo_de_igual T_dato Corchete_Abre Numero Corchete_Cierra PuntoYComa |
+    T_dato Corchete_Abre Corchete_Cierra Identificador Signo_de_igual Llave_Abre Datos_Array Llave_Cierra PuntoYComa |
+    Identificador Identificador Signo_de_igual New Identificador Parentesis_Abre PARAMETROSA Parentesis_Cierra PuntoYComa
+;
+
+T_dato::= Broken|
+        Just |
+        Word |
+        Flag ;
+
+Expresion ::= Numero | Identificador | Parentesis_Abre  Expresion OP_ART Expresion Parentesis_Cierra;
+
+OP_REL ::= Mayor_que | Menor_que | Mayor_o_igual_que | Menor_o_igual_que | Diferente_que | Signo_de_igual;
+OP_ART ::= Signo_de_Suma | Signo_de_Resta | Signo_de_División | Signo_de_Multiplicación ;
+OP_LOG ::= OR | AND;
+
+
+SentIf::=  If Parentesis_Abre Condicion Parentesis_Cierra Llave_Abre BloqueSentencias Llave_Cierra SentElse;
+SentElse::= Else Llave_Abre BloqueSentencias Llave_Cierra |;
+SentWhile::= While Parentesis_Abre Condicion Parentesis_Cierra Llave_Abre BloqueSentencias Llave_Cierra;
+SentAsignacion::= Identificador Signo_de_igual Expresion PuntoYComa;
+SentCut::= Cut PuntoYComa;
+
+Condicion::= Expresion OP_REL Expresion;
+
+FILLTRIANGLE::= Filltriangle Parentesis_Abre Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Parentesis_Cierra PuntoYComa;
+SETFILAMENTTYPE::= Setfilamenttype Parentesis_Abre Numero Parentesis_Cierra PuntoYComa;
+STOP::= Stop Parentesis_Abre Parentesis_Cierra PuntoYComa;
+GETEXTRUSORX::= Getextrusorx Parentesis_Abre Parentesis_Cierra PuntoYComa;
+GETEXTRUSORY::= Getextrusory Parentesis_Abre Parentesis_Cierra PuntoYComa;
+GETEXTRUSORZ::= Getextrusorz Parentesis_Abre Parentesis_Cierra PuntoYComa;
+GETFILAMENTTYPE::= Getfilamenttype Parentesis_Abre Parentesis_Cierra PuntoYComa;
+SETNEWFILAMENT::= Setnewfilament Parentesis_Abre Numero Parentesis_Cierra PuntoYComa;
+GETFILAMENT::= Getfilament Parentesis_Abre Parentesis_Cierra PuntoYComa;
+GETTEMPERATURE::= Gettemperature Parentesis_Abre Parentesis_Cierra PuntoYComa;
+DRAWTRIANGLE::= Drawtriangle Parentesis_Abre Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Parentesis_Cierra PuntoYComa;
+FILLRECTANGLE::= Fillrectangle Parentesis_Abre Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Parentesis_Cierra PuntoYComa;
+DRAWRECTANGLE::= Drawrectangle Parentesis_Abre Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Coma Numero Parentesis_Cierra PuntoYComa;
+SLEEP::= Sleep Parentesis_Abre Parentesis_Cierra PuntoYComa;
+DRAWCIRCLE::= Drawcircle Parentesis_Abre Numero Coma Numero Coma Numero Coma Numero Parentesis_Cierra PuntoYComa;
+FILLCIRCLE::= Fillcircle Parentesis_Abre Numero Coma Numero Coma Numero Coma Numero Parentesis_Cierra PuntoYComa;
+HOME::= Home Parentesis_Abre Parentesis_Cierra PuntoYComa;
+PRINTERPORT::= Printerport Parentesis_Abre Numero Parentesis_Cierra PuntoYComa;
+
+METODO::= Method Identificador Parentesis_Abre PARAMETROS Parentesis_Cierra Llave_Abre BloqueSentencias Llave_Cierra | Model Identificador Parentesis_Abre Parentesis_Cierra PuntoYComa;
+CONSTRUCTOR::= Identificador Parentesis_Abre PARAMETROS Parentesis_Cierra Llave_Abre BloqueSentencias Llave_Cierra;
+MAIN::= Main Parentesis_Abre Parentesis_Cierra Llave_Abre BloqueSentencias Llave_Cierra;
+
+PARAMETROS::= Parametro Coma PARAMETROS 
+            | Parametro |;
+
+Parametro::= T_dato Identificador;
+
+PARAMETROSA::= parametroa | parametroa Coma PARAMETROSA;
+
+parametroa::= Identificador | Numero;
+
+
+FOR::= For Parentesis_Abre SENTENCIA_FOR Parentesis_Cierra Llave_Abre BloqueSentencias Llave_Cierra ;
+
+
+SENTENCIA_FOR::=
+   Identificador Signo_de_igual Numero PuntoYComa SENTENCIA_BOOLEANA PuntoYComa DECLARACION_FOR |
+   Just Identificador Signo_de_igual Numero PuntoYComa SENTENCIA_BOOLEANA PuntoYComa DECLARACION_FOR PuntoYComa ;
+
+DECLARACION_FOR::= 
+    Identificador Signo_de_igual Numero |
+    Identificador Mas_Mas | 
+    Mas_Mas Identificador
+;
+
+SENTENCIA_BOOLEANA::= 
+    Identificador OP_REL True |
+    Identificador OP_REL False |
+    Identificador OP_REL Numero |
+    Identificador OP_REL Identificador |
+    Identificador Punto Same Parentesis_Abre CADENA_TEXTO Parentesis_Cierra 
+;
+
+TRYYCATCH::= Check Llave_Abre BloqueSentencias Llave_Cierra Trap Parentesis_Abre Identificador Identificador Parentesis_Cierra Llave_Abre BloqueSentencias Llave_Cierra;
+    
+GET::= Get Parentesis_Abre CADENA_TEXTO Parentesis_Cierra PuntoYComa;
+
+GIVE::= Give Parentesis_Abre Identificador Parentesis_Cierra PuntoYComa;

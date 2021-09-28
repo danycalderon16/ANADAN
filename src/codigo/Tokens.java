@@ -10,7 +10,7 @@ package codigo;
  * @author adria
  */
 public enum Tokens {
-    
+    NUMERO_ERRONEO_MAS_PUNTOS,
     NUMERO_ERRONEO,
     MAL_NOMBRE_PARA_IDENTIFICADOR,
     MAYUSCULAS_EN_CADENA,
