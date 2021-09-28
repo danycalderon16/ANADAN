@@ -145,7 +145,7 @@ inicio ::=
         try{
             TablaSimbolos.crear(nombre, "--","Nombre");
             TablaSimbolos.insertar(nombre, String.valueOf("--"));
-
+            
             //Crear relacion ciclo PARA con su variable asociada
             TablaSimbolos.lista.push(nombre);          
         }
@@ -190,39 +190,36 @@ sentencia::= declaracion | sentif | sentwhile | sentasignacion | sentcut | metod
 
 declaracion ::= 
    
-    JUST:nombre IDENTIFICADOR PUNTOYCOMA   {:
+    JUST IDENTIFICADOR:id PUNTOYCOMA   {:
         try{
-            TablaSimbolos.crear(nombre, "--","Nombre");
-            TablaSimbolos.insertar(nombre, String.valueOf("--"));
+            TablaSimbolos.crear(id, "just","Variable númerica");
 
             //Crear relacion ciclo PARA con su variable asociada
-            TablaSimbolos.lista.push(nombre);          
+            TablaSimbolos.lista.push(id);          
         }
         catch(Exception e){                                    
             e.printStackTrace();
             TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
         }                           
     :}|
-    WORD:nombre IDENTIFICADOR PUNTOYCOMA   {:
+    WORD IDENTIFICADOR:id PUNTOYCOMA   {:
         try{
-            TablaSimbolos.crear(nombre, "--","Nombre");
-            TablaSimbolos.insertar(nombre, String.valueOf("--"));
+            TablaSimbolos.crear(id, "word","Variable de texto");
 
             //Crear relacion ciclo PARA con su variable asociada
-            TablaSimbolos.lista.push(nombre);          
+            TablaSimbolos.lista.push(id);          
         }
         catch(Exception e){                                    
             e.printStackTrace();
             TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
         }                           
     :}|
-    FLAG:nombre IDENTIFICADOR PUNTOYCOMA   {:
+    FLAG IDENTIFICADOR:id PUNTOYCOMA   {:
         try{
-            TablaSimbolos.crear(nombre, "--","Nombre");
-            TablaSimbolos.insertar(nombre, String.valueOf("--"));
+            TablaSimbolos.crear(id, "flag","Variable boolean");
 
             //Crear relacion ciclo PARA con su variable asociada
-            TablaSimbolos.lista.push(nombre);          
+            TablaSimbolos.lista.push(id);        
         }
         catch(Exception e){                                    
             e.printStackTrace();
@@ -246,7 +243,7 @@ declaracion ::=
     WORD:tipo IDENTIFICADOR:nombre SIGNO_DE_IGUAL CADENA_TEXTO:valor PUNTOYCOMA 
     {:
         try{
-            TablaSimbolos.crear(nombre, tipo,"Variable");
+            TablaSimbolos.crear(nombre, tipo,"Variable de texto");
             TablaSimbolos.insertar(nombre, String.valueOf(valor));
 
             //Crear relacion ciclo PARA con su variable asociada
@@ -305,7 +302,20 @@ op_log ::= OR | AND;
 sentif::=  IF PARENTESIS_ABRE condicion PARENTESIS_CIERRA LLAVE_ABRE bloquesentencias LLAVE_CIERRA sentelse;
 sentelse::= ELSE LLAVE_ABRE bloquesentencias LLAVE_CIERRA |;
 sentwhile::= WHILE PARENTESIS_ABRE condicion PARENTESIS_CIERRA LLAVE_ABRE bloquesentencias LLAVE_CIERRA;
-sentasignacion::= IDENTIFICADOR SIGNO_DE_IGUAL expresion PUNTOYCOMA;
+sentasignacion::= IDENTIFICADOR:identificador SIGNO_DE_IGUAL expresion PUNTOYCOMA{:
+        //Buscar variable en la tabla de simbolos
+        Simbolo sim = TablaSimbolos.buscar(identificador);
+        //Si es nulo, devuelvo un error
+        if (sim == null) {
+            //Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
+            //RESULT = 0;
+            System.out.println("El:"+identificador+" Variable no existe");
+        }
+        else{
+            //RESULT = sim.valor;
+        }
+    :};
+
 sentcut::= CUT PUNTOYCOMA;
 
 condicion::= expresion op_rel expresion;

@@ -1610,11 +1610,9 @@ NumeroLinea lineatxtCodigo;
     }
 
     private void showTD() {
-        System.out.println("¨**********"+simbolos.size());
         for (int i = 0; i < simbolos.size(); i++) {
             simbolos.remove(i);
         }
-        System.out.println("¨**********"+simbolos.size());
         for (int i = 0; i < m.getRowCount() - 1; i++) {
             int linea = Integer.parseInt(m.getValueAt(i, 1).toString());
             String lexema = m.getValueAt(i, 2).toString();

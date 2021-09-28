@@ -14,11 +14,13 @@ public class TablaDinamica extends javax.swing.JFrame {
     private DefaultTableModel m = new DefaultTableModel();
 
     static Map<String, TablaSimbolos> tablaSimbolos;
+
     static Stack<String> lista;
 
     public TablaDinamica(ArrayList<Simbolos> simbolo) {
         this.simbolos = simbolo;
         limpiar();
+        TablaSimbolos.mostrar();
         initComponents();
         setLocationRelativeTo(null);
         tblDinamica.setAutoCreateRowSorter(true);
@@ -26,32 +28,43 @@ public class TablaDinamica extends javax.swing.JFrame {
         for (int i = 0; i < m.getRowCount(); i++) {
             m.removeRow(i);
         }
-        ArrayList<Simbolos> nuevo = reorganizar(simbolos);
-        for (Simbolos sim : nuevo) {
-            m.addRow(new Object[]{sim.getLinea(), sim.getLexema(), "", ""});
-        }
-        Collection<codigo.Simbolo> sim =  TablaSimbolos.enviarLista();
+        ArrayList<Simbolos> solo_ids = reorganizar(simbolos);
+        Collection<codigo.Simbolo> simbolosTS = TablaSimbolos.enviarLista();
+        for (Simbolos sim : solo_ids) {
+            String id = sim.getLexema();//lexema del id
+            boolean agregado = false;
+            for (codigo.Simbolo symbol : simbolosTS) {
+                System.out.println("Linea 38: " + symbol);
+                if (id.equals(symbol.nombre)) {                  
+                    m.addRow(new Object[]{sim.getLinea(), sim.getLexema(),symbol.valor , symbol.clase});
+                    agregado = true;
+                }
+            }
+            if(!agregado)
+                m.addRow(new Object[]{sim.getLinea(), sim.getLexema(), "Identificador no definido",""});
+        }/*
         for (int i = 0; i < m.getRowCount(); i++) {
-            for (codigo.Simbolo symbol : sim) {
-                  
-            System.out.println(symbol);
-                if(symbol.nombre.equals(m.getValueAt(i, 1).toString())){
+            for (codigo.Simbolo symbol : simbolosTS) {
+                System.out.println("Linea 38: " + symbol);
+                if (symbol.nombre.equals(m.getValueAt(i, 1).toString())) {
                     m.setValueAt(symbol.nombre, i, 1); //identificador - lexema
                     m.setValueAt(symbol.tipo, i, 2);// tipo  de dato
                     m.setValueAt(symbol.valor, i, 3); //vaor variable
                     m.setValueAt(symbol.clase, i, 4); // tipo de varibale
                 }
             }
-        }
+        }*/
 
     }
 
     private ArrayList<Simbolos> reorganizar(ArrayList<Simbolos> array) {
         ArrayList<Simbolos> n_simbolos = new ArrayList<>();
         for (Simbolos sim : array) {
-            boolean agregar = true;
             if (sim.getComponente().equalsIgnoreCase("Identificador")) {
-                for (int j = 0; j < n_simbolos.size(); j++) {
+                System.out.println("Linea 55:" + sim);
+                n_simbolos.add(sim);
+            }
+            /*         for (int j = 0; j < n_simbolos.size(); j++) {
                     if (sim.getLexema().equals(n_simbolos.get(j).getLexema())) {
                         agregar = false;
                     }
@@ -59,7 +72,7 @@ public class TablaDinamica extends javax.swing.JFrame {
             }
             if (agregar) {
                 n_simbolos.add(sim);
-            }
+            }*/
         }
         return n_simbolos;
     }
