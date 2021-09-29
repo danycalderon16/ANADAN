@@ -122,7 +122,7 @@ cadena = (\")~(\")
 <YYINITIAL> {cadena} {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Cadena;} 
 
 <YYINITIAL> {L}({L}|{D})* {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Identificador;}
-<YYINITIAL> ("+"|"-")?{D}+|("+"|"-")?{D}+ "." {D}+ {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Numero;}
+<YYINITIAL> {D}+|("+"|"-")?{D}+ "." {D}+ {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Numero;}
 
 <YYINITIAL> (("+-")|("-+"))({D}+|{D}+ "." {D}+) {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return NUMERO_ERRONEO;}
 <YYINITIAL> (\.)*{num}?((\.*)|({num}))* {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return NUMERO_ERRONEO_MAS_PUNTOS;}

@@ -1116,7 +1116,7 @@ NumeroLinea lineatxtCodigo;
                         tblTablaSimbolos.setValueAt(c.columna, i, 0);
                         tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
                         tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
-                        tblTablaSimbolos.setValueAt(" Signo aritmetico: " + tokens, i, 3);
+                        tblTablaSimbolos.setValueAt("Signo aritmetico: " + tokens, i, 3);
                         i++;
                         break;
                     case Parentesis_Abre:
@@ -1128,7 +1128,7 @@ NumeroLinea lineatxtCodigo;
                         tblTablaSimbolos.setValueAt(c.columna, i, 0);
                         tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
                         tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
-                        tblTablaSimbolos.setValueAt(" Signo agrupacion: " + tokens, i, 3);
+                        tblTablaSimbolos.setValueAt("Signo agrupacion: " + tokens, i, 3);
                         i++;
 
                         break;
@@ -1142,7 +1142,7 @@ NumeroLinea lineatxtCodigo;
                         tblTablaSimbolos.setValueAt(c.columna, i, 0);
                         tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
                         tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
-                        tblTablaSimbolos.setValueAt(" Operador relacional: " + tokens, i, 3);
+                        tblTablaSimbolos.setValueAt("Operador relacional: " + tokens, i, 3);
                         i++;
 
                         break;
@@ -1152,7 +1152,7 @@ NumeroLinea lineatxtCodigo;
                         tblTablaSimbolos.setValueAt(c.columna, i, 0);
                         tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
                         tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
-                        tblTablaSimbolos.setValueAt(" Operador incremental: " + tokens, i, 3);
+                        tblTablaSimbolos.setValueAt("Operador incremental: " + tokens, i, 3);
                         i++;
                         break;
 
@@ -1169,7 +1169,7 @@ NumeroLinea lineatxtCodigo;
                         tblTablaSimbolos.setValueAt(c.columna, i, 0);
                         tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
                         tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
-                        tblTablaSimbolos.setValueAt(" Fin de sentencia: " + tokens, i, 3);
+                        tblTablaSimbolos.setValueAt("Fin de sentencia: " + tokens, i, 3);
                         i++;
 
                         break;
@@ -1618,7 +1618,9 @@ NumeroLinea lineatxtCodigo;
             String lexema = m.getValueAt(i, 2).toString();
             String componente = m.getValueAt(i, 3).toString();
             if (componente.equals("Identificador")) {
-                simbolos.add(new Simbolos(componente, linea, lexema, "", ""));
+                if(!existe(lexema)){
+                    simbolos.add(new Simbolos(componente, linea, lexema, "", ""));
+                }
             }
         }
 
@@ -1626,6 +1628,14 @@ NumeroLinea lineatxtCodigo;
 
         TablaDinamica ts = new TablaDinamica(simbolos);
         ts.setVisible(true);
+    }
+    
+    private boolean existe(String lexema){
+        for (int i = 0; i < simbolos.size(); i++) {
+            if(lexema.equals(simbolos.get(i).getLexema()))
+                return true;
+        }
+        return false;
     }
 
     private void analisisSintactico() {

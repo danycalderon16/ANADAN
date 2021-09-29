@@ -131,7 +131,7 @@ public class TablaSimbolos {
             tablaSimbolos.remove(nombre);//Elimino para actualizar
             tablaSimbolos.put(nombre, simbolo);
             
-//            System.out.println("Variable actualizada");
+            System.out.println("Variable '"+nombre+"' actualizada" );
 //            imprimir();
 //            System.out.println("Saliendo de insertar de TablaSimbolos\n");
             return simbolo;

@@ -18,6 +18,7 @@ parser code
     static int verificarTipo = 0;
     static Stack <String> listaIdentificadores = new Stack <String>();
 	public static void main(String args[]) throws Exception{
+        System.out.println("EMPEZAMOS");
 		new Sintax(new LexerCup(System.in)).parse();
 	}
     
@@ -60,6 +61,8 @@ non terminal String t_dato;
 non terminal inicio, declaracion_for, if, if_else,
     while, do_while, for, sentencia_booleana, sentencia_for ,datos_array,continua,cuerpo,
     declaraciones,declaracion,bloquesentencias,sentencias,sentencia,expresion,
+    termino,
+    factor,
     sentif,
     sentelse,
     sentwhile,
@@ -292,8 +295,24 @@ t_dato::= BROKEN|
         WORD |
         FLAG ;
 
-expresion ::= NUMERO | IDENTIFICADOR | PARENTESIS_ABRE  expresion op_art expresion PARENTESIS_CIERRA;
+expresion ::= 
+    termino SIGNO_DE_SUMA expresion |
+    termino SIGNO_DE_RESTA expresion |
+    PARENTESIS_ABRE expresion PARENTESIS_CIERRA |
+    termino:t {:RESULT = t; :} ;
+    
+termino ::= factor SIGNO_DE_MULTIPLICACIÓN factor |
+    factor SIGNO_DE_DIVISIÓN factor |
+    factor:f {:RESULT = f; :}  ;
 
+factor ::= IDENTIFICADOR:f  {:RESULT = f; :}  | 
+    CADENA_TEXTO:f {:RESULT = f; :}   | 
+    NUMERO:f {:RESULT = f; :}   | 
+    FALSE:f {:RESULT = f; :}   | 
+    TRUE:f {:RESULT = f; :}  ;
+/*
+expresion ::= NUMERO | IDENTIFICADOR | PARENTESIS_ABRE  expresion op_art expresion PARENTESIS_CIERRA;
+*/
 op_rel ::= MAYOR_QUE | MENOR_QUE | MAYOR_O_IGUAL_QUE | MENOR_O_IGUAL_QUE | DIFERENTE_QUE | SIGNO_DE_IGUAL;
 op_art ::= SIGNO_DE_SUMA | SIGNO_DE_RESTA | SIGNO_DE_DIVISIÓN | SIGNO_DE_MULTIPLICACIÓN ;
 op_log ::= OR | AND;
@@ -309,7 +328,7 @@ sentasignacion::= IDENTIFICADOR:identificador SIGNO_DE_IGUAL expresion PUNTOYCOM
         if (sim == null) {
             //Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
             //RESULT = 0;
-            System.out.println("El:"+identificador+" Variable no existe");
+            System.out.println("El identificador '"+identificador+"' no existe");
         }
         else{
             //RESULT = sim.valor;

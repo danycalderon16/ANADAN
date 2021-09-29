@@ -28,24 +28,15 @@ public class TablaDinamica extends javax.swing.JFrame {
         for (int i = 0; i < m.getRowCount(); i++) {
             m.removeRow(i);
         }
-        ArrayList<Simbolos> solo_ids = reorganizar(simbolos);
-        Collection<codigo.Simbolo> simbolosTS = TablaSimbolos.enviarLista();
-        for (Simbolos sim : solo_ids) {
-            String id = sim.getLexema();//lexema del id
-            boolean agregado = false;
-            for (codigo.Simbolo symbol : simbolosTS) {
-                System.out.println("Linea 38: " + symbol);
-                if (id.equals(symbol.nombre)) {                  
-                    m.addRow(new Object[]{sim.getLinea(), sim.getLexema(),symbol.valor , symbol.clase});
-                    agregado = true;
-                }
-            }
-            if(!agregado)
-                m.addRow(new Object[]{sim.getLinea(), sim.getLexema(), "Identificador no definido",""});
-        }/*
+        ArrayList<Simbolos> nuevo = reorganizar(simbolos);
+        
+       
+        for (Simbolos sim : nuevo) {
+            m.addRow(new Object[]{sim.getLinea(), sim.getLexema(), "", ""});
+        }
+        Collection<codigo.Simbolo> sim = TablaSimbolos.enviarLista();
         for (int i = 0; i < m.getRowCount(); i++) {
-            for (codigo.Simbolo symbol : simbolosTS) {
-                System.out.println("Linea 38: " + symbol);
+            for (codigo.Simbolo symbol : sim) {
                 if (symbol.nombre.equals(m.getValueAt(i, 1).toString())) {
                     m.setValueAt(symbol.nombre, i, 1); //identificador - lexema
                     m.setValueAt(symbol.tipo, i, 2);// tipo  de dato
@@ -53,15 +44,13 @@ public class TablaDinamica extends javax.swing.JFrame {
                     m.setValueAt(symbol.clase, i, 4); // tipo de varibale
                 }
             }
-        }*/
-
+        }
     }
 
     private ArrayList<Simbolos> reorganizar(ArrayList<Simbolos> array) {
-        ArrayList<Simbolos> n_simbolos = new ArrayList<>();
-        for (Simbolos sim : array) {
+        ArrayList<Simbolos> n_simbolos = array;
+       /* for (Simbolos sim : array) {
             if (sim.getComponente().equalsIgnoreCase("Identificador")) {
-                System.out.println("Linea 55:" + sim);
                 n_simbolos.add(sim);
             }
             /*         for (int j = 0; j < n_simbolos.size(); j++) {
@@ -73,7 +62,7 @@ public class TablaDinamica extends javax.swing.JFrame {
             if (agregar) {
                 n_simbolos.add(sim);
             }*/
-        }
+        //}
         return n_simbolos;
     }
 
