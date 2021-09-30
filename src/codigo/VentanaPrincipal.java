@@ -110,7 +110,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         txtAreaEdit.putClientProperty("Nimbus.Overrides", defaults);
         txtAreaEdit.putClientProperty("Nimbus.Overrides.InheritDefaults", true);
         txtAreaEdit.setBackground(bgColor);
+        
+        //bgColor = new Color(42, 43, 46);
+        //UIDefaults defaults1 = new UIDefaults();
+        //defaults1.put("EditorPane.background", new ColorUIResource(bgColor));
+        //defaults1.put("EditorPane[Enabled].backgroundPainter", bgColor);
+        //txtConsolaPane.putClientProperty("Nimbus.Overrides", defaults1);
+        //txtConsolaPane.putClientProperty("Nimbus.Overrides.InheritDefaults", true);
+        //txtConsolaPane.setBackground(bgColor);
+        
+        Color darkColor = new Color(153,153,153);
+        tblTablaSimbolos.setForeground(Color.WHITE);
+        tblTablaSimbolos.setBackground(darkColor);
         //---------------------------------------------------------------------------------------------
+        
+ 
         
         
         Font fuente2 = new Font("Consolas", 1, tamanioletra+5);
@@ -252,7 +266,47 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         tblTablaSimbolos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
                 "COLUMN", "LINE", "LEXEME", "LEXICAL COMPONENT"
@@ -276,6 +330,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 50, 430, 580));
 
         jScrollPaneConsole.setBackground(new java.awt.Color(255, 255, 204));
+
+        txtConsolaPane.setBackground(new java.awt.Color(42, 43, 46));
+        txtConsolaPane.setBorder(null);
+        txtConsolaPane.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
         jScrollPaneConsole.setViewportView(txtConsolaPane);
 
         getContentPane().add(jScrollPaneConsole, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 630, 570, 220));
@@ -295,7 +353,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 630, 660, 220));
 
-        panelToolBar.setBackground(new java.awt.Color(255, 255, 255));
+        panelToolBar.setBackground(new java.awt.Color(153, 153, 153));
         panelToolBar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
