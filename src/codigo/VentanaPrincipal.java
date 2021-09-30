@@ -39,12 +39,21 @@ import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
+import javax.swing.UIDefaults;
+import javax.swing.UIManager;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
+import javax.swing.plaf.ColorUIResource;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.undo.UndoManager;
 import modelos.LabelError;
 import modelos.Simbolos;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultStyledDocument;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyleContext;
 
 import static util.Utils.*;
 
@@ -54,6 +63,28 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private ArrayList<LabelError> labelLexicoErrors;
     private ArrayList<Simbolos> simbolos = new ArrayList<Simbolos>();
 
+    //ESTO ES PARA MARCAR CON COLORES LAS PALABRAS////////////////////////////////////////////////////////////////////////
+        private int findLastNonWordChar (String text, int index) {
+        while (--index >= 0) {
+            if (String.valueOf(text.charAt(index)).matches("\\W")) {
+                break;
+            }
+        }
+        return index;
+    }
+
+    private int findFirstNonWordChar (String text, int index) {
+        while (index < text.length()) {
+            if (String.valueOf(text.charAt(index)).matches("\\W")) {
+                break;
+            }
+            index++;
+        }
+        return index;
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    
     public VentanaPrincipal() {
         initComponents();
         seticon();
@@ -63,8 +94,90 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         m = (DefaultTableModel) tblTablaSimbolos.getModel();
         numeroLineas();
         mnuMinimize.setEnabled(false);
+        
+        
+        //UIDefaults defs = UIManager.getDefaults();
+        //defs.put("TextPane.background", new ColorUIResource(Color.BLACK));
+        //defs.put("TextPane.inactiveBackground", new ColorUIResource(Color.BLACK));
+        //txtAreaEdit.updateUI(defs);
+        
+        
+        //CAMBIAR COLOR DEL JTEXTPANE-----------------------------------------------------------------
+        Color bgColor = new Color(42, 43, 46);
+        UIDefaults defaults = new UIDefaults();
+        defaults.put("TextPane.background", new ColorUIResource(bgColor));
+        defaults.put("TextPane[Enabled].backgroundPainter", bgColor);
+        txtAreaEdit.putClientProperty("Nimbus.Overrides", defaults);
+        txtAreaEdit.putClientProperty("Nimbus.Overrides.InheritDefaults", true);
+        txtAreaEdit.setBackground(bgColor);
+        //---------------------------------------------------------------------------------------------
+        
+        
+        Font fuente2 = new Font("Consolas", 1, tamanioletra+5);
+        tamanioletra++;
+        txtAreaEdit.setFont(fuente2);
+        ///ESTO ES PARA MARCAR CON COLORES LAS PALABRAS////////////////////////////////////////////////////////////////////////
+        final StyleContext cont = StyleContext.getDefaultStyleContext();
+        final AttributeSet attr = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, new Color(174, 71, 178));
+        final AttributeSet attrBlue = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, new Color(13, 72, 233));
+        final AttributeSet attrOrange = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, new Color(234, 76, 0));
+        final AttributeSet attrPink = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, new Color(234, 0, 91));
+        final AttributeSet attrWhite = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, new Color(248, 243, 245));
+        final AttributeSet attrCom = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, new Color(192, 197, 211));
+        DefaultStyledDocument doc = new DefaultStyledDocument() {
+            public void insertString (int offset, String str, AttributeSet a) throws BadLocationException {
+                super.insertString(offset, str, a);
 
+                String text = getText(0, getLength());
+                int before = findLastNonWordChar(text, offset);
+                if (before < 0) before = 0;
+                int after = findFirstNonWordChar(text, offset + str.length());
+                int wordL = before;
+                int wordR = before;
+
+                while (wordR <= after) {
+                    if (wordR == after || String.valueOf(text.charAt(wordR)).matches("\\W")) {
+                        if (text.substring(wordL, wordR).matches("(\\W)*(just|broken|word|flag|word)")){
+                            //setCharacterAttributes(wordL, wordL+1, attrWhite, false);
+                            setCharacterAttributes(wordL+1, wordR - wordL, attr, false);
+                    }else if(text.substring(wordL, wordR).matches("(\\W)*(begin|end|setfilamenttype|fillrectangle|drawrectangle|sleep|fillcircle|drawcircle|drawtriangle|filltriangle|stop|getextrusorx|getextrusory|getextrusorz|getfilamenttype|setnewfilament|getfilament|gettemperatura|same|get|give|select|empty|cut|model|defect|new|goback|home|sleep|printerport|check|trap)")){
+                        setCharacterAttributes(wordL+1, wordR - wordL, attrBlue, false);
+                    }else if(text.substring(wordL, wordR).matches("(\\W)*(method|class|main)")){
+                        setCharacterAttributes(wordL+1, wordR - wordL, attrOrange, false);
+                    }else if(text.substring(wordL, wordR).matches("(\\W)*(if|else|while|for|switch|do)")){
+                        setCharacterAttributes(wordL+1, wordR - wordL, attrPink, false);   
+                    }else{
+                            setCharacterAttributes(wordL, wordR - wordL, attrWhite, false);
+                    }
+                        wordL = wordR;
+                    }
+                    wordR++;
+                }
+            }
+
+            public void remove (int offs, int len) throws BadLocationException {
+                super.remove(offs, len);
+
+                String text = getText(0, getLength());
+                int before = findLastNonWordChar(text, offs);
+                if (before < 0) before = 0;
+                int after = findFirstNonWordChar(text, offs);
+
+                if (text.substring(before, after).matches("(\\W)*(private|public|protected)")) {
+                    setCharacterAttributes(before, after - before, attr, false);
+                } else {
+                    setCharacterAttributes(before, after - before, attrWhite, false);
+                }
+            }
+        };
+        txtAreaEdit.setDocument(doc);
+        
+         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
     }
+    
+        
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -72,7 +185,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jplAreaEdit = new javax.swing.JPanel();
         scPanAreaEdit = new javax.swing.JScrollPane();
-        txtAreaEdit = new javax.swing.JTextArea();
+        txtAreaEdit = new javax.swing.JTextPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblTablaSimbolos = new javax.swing.JTable();
         jScrollPaneConsole = new javax.swing.JScrollPane();
@@ -119,9 +232,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txtAreaEdit.setColumns(20);
-        txtAreaEdit.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
-        txtAreaEdit.setRows(5);
+        txtAreaEdit.setForeground(new java.awt.Color(248, 243, 245));
         scPanAreaEdit.setViewportView(txtAreaEdit);
 
         javax.swing.GroupLayout jplAreaEditLayout = new javax.swing.GroupLayout(jplAreaEdit);
@@ -132,10 +243,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         );
         jplAreaEditLayout.setVerticalGroup(
             jplAreaEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scPanAreaEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+            .addGroup(jplAreaEditLayout.createSequentialGroup()
+                .addComponent(scPanAreaEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jplAreaEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 800, 380));
+        getContentPane().add(jplAreaEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 800, 580));
 
         tblTablaSimbolos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -160,12 +273,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             tblTablaSimbolos.getColumnModel().getColumn(2).setPreferredWidth(15);
         }
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 50, 430, 380));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 50, 430, 580));
 
         jScrollPaneConsole.setBackground(new java.awt.Color(255, 255, 204));
         jScrollPaneConsole.setViewportView(txtConsolaPane);
 
-        getContentPane().add(jScrollPaneConsole, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, 570, 220));
+        getContentPane().add(jScrollPaneConsole, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 630, 570, 220));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -180,7 +293,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             .addGap(0, 220, Short.MAX_VALUE)
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 430, 660, 220));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 630, 660, 220));
 
         panelToolBar.setBackground(new java.awt.Color(255, 255, 255));
         panelToolBar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -406,7 +519,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         mnuTablaS.add(mnuFija);
 
-        miDynamicTable.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        miDynamicTable.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_MASK));
         miDynamicTable.setText("Dynamic");
         miDynamicTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -428,7 +541,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         mnuCompile.setText("Compile");
         mnuCompile.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        miCompileLexical.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        miCompileLexical.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
         miCompileLexical.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Lexico.png"))); // NOI18N
         miCompileLexical.setText("Lexical");
         miCompileLexical.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -438,7 +551,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         mnuCompile.add(miCompileLexical);
 
-        miCompileSyntax.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        miCompileSyntax.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
         miCompileSyntax.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/analysis (1).png"))); // NOI18N
         miCompileSyntax.setText("Syntax");
         miCompileSyntax.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -843,12 +956,25 @@ NumeroLinea lineatxtCodigo;
     }//GEN-LAST:event_mnuFijaMouseReleased
 
     private void miNomalModeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_miNomalModeMouseReleased
-        txtAreaEdit.setForeground(Color.black);
-        txtAreaEdit.setBackground(Color.white);
+        //txtAreaEdit.setForeground(Color.black);
+        //txtAreaEdit.setBackground(Color.white);
         tblTablaSimbolos.setForeground(Color.black);
         tblTablaSimbolos.setBackground(Color.white);
         txtConsolaPane.setForeground(Color.red);
         txtConsolaPane.setBackground(Color.white);
+        
+        
+        //CAMBIAR COLOR DEL JTEXTPANE-----------------------------------------------------------------
+        //Color bgColor = new Color(255, 255, 255);
+        //UIDefaults defaults = new UIDefaults();
+        //defaults.put("TextPane.background", new ColorUIResource(bgColor));
+        //defaults.put("TextPane[Enabled].backgroundPainter", bgColor);
+        //txtAreaEdit.putClientProperty("Nimbus.Overrides", defaults);
+        //txtAreaEdit.putClientProperty("Nimbus.Overrides.InheritDefaults", true);
+        //txtAreaEdit.setBackground(bgColor);
+        //---------------------------------------------------------------------------------------------
+        //txtAreaEdit.setForeground(Color.black);
+        
     }//GEN-LAST:event_miNomalModeMouseReleased
 
     private void miDynamicTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_miDynamicTableMouseReleased
@@ -859,14 +985,17 @@ NumeroLinea lineatxtCodigo;
     }//GEN-LAST:event_miDynamicTableMouseReleased
 
     private void miDarkModeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_miDarkModeMouseReleased
-        Color darkColor = new Color(42, 43, 46);
-        txtAreaEdit.setForeground(Color.white);
-        txtAreaEdit.setBackground(darkColor);
-
-        tblTablaSimbolos.setForeground(Color.white);
-        tblTablaSimbolos.setBackground(darkColor);
-        txtConsolaPane.setForeground(Color.white);
-        txtConsolaPane.setBackground(darkColor);
+        //Color darkColor = new Color(42, 43, 46);
+        //txtAreaEdit.setForeground(Color.white);
+        //txtAreaEdit.setBackground(darkColor);
+        
+        
+        
+        
+        //tblTablaSimbolos.setForeground(Color.white);
+        //tblTablaSimbolos.setBackground(darkColor);
+        //txtConsolaPane.setForeground(Color.white);
+        //txtConsolaPane.setBackground(darkColor);
     }//GEN-LAST:event_miDarkModeMouseReleased
 
     private void miRetroModeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_miRetroModeMouseReleased
@@ -1481,7 +1610,7 @@ NumeroLinea lineatxtCodigo;
     private javax.swing.JPanel panelToolBar;
     private javax.swing.JScrollPane scPanAreaEdit;
     public static javax.swing.JTable tblTablaSimbolos;
-    private javax.swing.JTextArea txtAreaEdit;
+    private javax.swing.JTextPane txtAreaEdit;
     private javax.swing.JEditorPane txtConsolaPane;
     // End of variables declaration//GEN-END:variables
 
