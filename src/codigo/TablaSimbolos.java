@@ -105,6 +105,7 @@ public class TablaSimbolos {
         if(simbolo == null) // La variable no existe
         {
             simbolo = new Simbolo(nombre, tipo, null, clase);
+          
             System.out.println("Agregando a tabla de simbolos con nombre: " + nombre);
             tablaSimbolos.put(nombre, simbolo);            
             //System.out.println("Variable creada exitosamente!!!");
@@ -120,8 +121,7 @@ public class TablaSimbolos {
         }
     }
         
-    static public Simbolo insertar(String nombre, Object valor)            
-    {
+    static public Simbolo insertar(String nombre, Object valor){
 //        System.out.println("\nIngreso a insertar valor a variable.");
         Simbolo simbolo = buscar(nombre);
         if(simbolo != null) //La variable existe
@@ -131,7 +131,7 @@ public class TablaSimbolos {
             tablaSimbolos.remove(nombre);//Elimino para actualizar
             tablaSimbolos.put(nombre, simbolo);
             
-//            System.out.println("Variable actualizada");
+            System.out.println("Variable '"+nombre+"' actualizada" );
 //            imprimir();
 //            System.out.println("Saliendo de insertar de TablaSimbolos\n");
             return simbolo;
@@ -156,8 +156,12 @@ public class TablaSimbolos {
     }
     
     static public void mostrar(){
-        for (Simbolo s  : tablaSimbolos.values()) {
-            System.out.println("Tipo: "+s.tipo+" | Nombre: "+s.nombre+" | Valor: "+s.valor.toString());
+        try {
+            for (Simbolo s  : tablaSimbolos.values()) {
+                System.out.println("Tipo: "+s.tipo+" | Nombre: "+s.nombre+" | Valor: "+s.valor.toString());
+            }            
+        } catch (Exception e) {
+            System.out.println("Error");
         }
     }
     public static Collection<Simbolo> enviarLista(){

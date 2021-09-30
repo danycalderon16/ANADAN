@@ -14,11 +14,13 @@ public class TablaDinamica extends javax.swing.JFrame {
     private DefaultTableModel m = new DefaultTableModel();
 
     static Map<String, TablaSimbolos> tablaSimbolos;
+
     static Stack<String> lista;
 
     public TablaDinamica(ArrayList<Simbolos> simbolo) {
         this.simbolos = simbolo;
         limpiar();
+        TablaSimbolos.mostrar();
         initComponents();
         setLocationRelativeTo(null);
         tblDinamica.setAutoCreateRowSorter(true);
@@ -27,15 +29,15 @@ public class TablaDinamica extends javax.swing.JFrame {
             m.removeRow(i);
         }
         ArrayList<Simbolos> nuevo = reorganizar(simbolos);
+        
+       
         for (Simbolos sim : nuevo) {
             m.addRow(new Object[]{sim.getLinea(), sim.getLexema(), "", ""});
         }
-        Collection<codigo.Simbolo> sim =  TablaSimbolos.enviarLista();
+        Collection<codigo.Simbolo> sim = TablaSimbolos.enviarLista();
         for (int i = 0; i < m.getRowCount(); i++) {
             for (codigo.Simbolo symbol : sim) {
-                  
-            System.out.println(symbol);
-                if(symbol.nombre.equals(m.getValueAt(i, 1).toString())){
+                if (symbol.nombre.equals(m.getValueAt(i, 1).toString())) {
                     m.setValueAt(symbol.nombre, i, 1); //identificador - lexema
                     m.setValueAt(symbol.tipo, i, 2);// tipo  de dato
                     m.setValueAt(symbol.valor, i, 3); //vaor variable
@@ -43,15 +45,15 @@ public class TablaDinamica extends javax.swing.JFrame {
                 }
             }
         }
-
     }
 
     private ArrayList<Simbolos> reorganizar(ArrayList<Simbolos> array) {
-        ArrayList<Simbolos> n_simbolos = new ArrayList<>();
-        for (Simbolos sim : array) {
-            boolean agregar = true;
+        ArrayList<Simbolos> n_simbolos = array;
+       /* for (Simbolos sim : array) {
             if (sim.getComponente().equalsIgnoreCase("Identificador")) {
-                for (int j = 0; j < n_simbolos.size(); j++) {
+                n_simbolos.add(sim);
+            }
+            /*         for (int j = 0; j < n_simbolos.size(); j++) {
                     if (sim.getLexema().equals(n_simbolos.get(j).getLexema())) {
                         agregar = false;
                     }
@@ -59,8 +61,8 @@ public class TablaDinamica extends javax.swing.JFrame {
             }
             if (agregar) {
                 n_simbolos.add(sim);
-            }
-        }
+            }*/
+        //}
         return n_simbolos;
     }
 
