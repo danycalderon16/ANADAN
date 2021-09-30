@@ -164,31 +164,19 @@ bloquesentencias::= sentencias |;
 sentencias::= sentencia sentencias | sentencia;
 
 sentencia::= declaracion | sentif | sentwhile | sentasignacion | sentcut | metodo |
-            filltriangle | 
-            setfilamenttype |
-            stop |
-            getextrusorx |
-            getextrusory |
-            getextrusorz |
-            getfilamenttype |
-            setnewfilament |
-            getfilament |
-            gettemperature |
-            drawtriangle |
-            fillrectangle |
-            drawrectangle |
-            sleep |
-            drawcircle |
-            fillcircle |
             home |
-            constructor |
             main |
+            metodos_parametros|
+            metodo_sin_parametros|
+            metodo_un_parametro|
+            metodo_cuatro_parametros|
+            metodo_nueve_parametros|
+            metodo_doce_parametros|
             for |
             tryycatch |
             get|
             give|
-            error PUNTOYCOMA | error LLAVE_CIERRA |
-            printerport 
+            error PUNTOYCOMA | error LLAVE_CIERRA 
 ; 
 
 declaracion ::= 

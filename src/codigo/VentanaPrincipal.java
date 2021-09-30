@@ -258,11 +258,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jplAreaEditLayout.setVerticalGroup(
             jplAreaEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jplAreaEditLayout.createSequentialGroup()
-                .addComponent(scPanAreaEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scPanAreaEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jplAreaEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 800, 580));
+        getContentPane().add(jplAreaEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 800, 420));
 
         tblTablaSimbolos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -336,7 +336,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         txtConsolaPane.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
         jScrollPaneConsole.setViewportView(txtConsolaPane);
 
-        getContentPane().add(jScrollPaneConsole, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 630, 570, 220));
+        getContentPane().add(jScrollPaneConsole, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 470, 570, 220));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -577,7 +577,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         mnuTablaS.add(mnuFija);
 
-        miDynamicTable.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_MASK));
+        miDynamicTable.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         miDynamicTable.setText("Dynamic");
         miDynamicTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -599,7 +599,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         mnuCompile.setText("Compile");
         mnuCompile.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        miCompileLexical.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
+        miCompileLexical.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         miCompileLexical.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Lexico.png"))); // NOI18N
         miCompileLexical.setText("Lexical");
         miCompileLexical.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -609,7 +609,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         mnuCompile.add(miCompileLexical);
 
-        miCompileSyntax.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
+        miCompileSyntax.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         miCompileSyntax.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/analysis (1).png"))); // NOI18N
         miCompileSyntax.setText("Syntax");
         miCompileSyntax.addMouseListener(new java.awt.event.MouseAdapter() {
