@@ -5,6 +5,10 @@ import java.io.*;
 import java_cup.runtime.Symbol;
 import java.util.logging.Level;
 import java.util.Stack;
+import java.awt.Font;
+import javax.swing.JLabel;
+import modelos.LabelError;
+import java.awt.Color;
 
 action code
     {:
@@ -16,6 +20,8 @@ parser code
 
     static TablaSimbolos tablaSimbolos = new TablaSimbolos();
     static int verificarTipo = 0;
+    private final int SINTACTICO = 232;
+    
     static Stack <String> listaIdentificadores = new Stack <String>();
 	public static void main(String args[]) throws Exception{
         System.out.println("EMPEZAMOS");
@@ -33,10 +39,22 @@ parser code
     }
 
     public void syntax_error(Symbol s){
+        JLabel lb = new JLabel();
+        lb.setForeground(new Color(217, 33, 51));
+        lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+        lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lb.setText("Error en la línea " + (s.right+1) + ". Error sintáctico, cadena inesperada: "+ s.value );                       
+        VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico", s.right+1,SINTACTICO));
         VentanaPrincipal.notificar_er(">Linea: "+(s.right+1)+" Error de sintaxis, cadena inesperada: "+ s.value );
     }
 
     public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{ 
+        JLabel lb = new JLabel();
+        lb.setForeground(new Color(217, 33, 51));
+        lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+        lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lb.setText("Error en la línea " + (s.right+1) + ". Error sintáctico, cadena inesperada: "+ s.value );                       
+        VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico", s.right+1,SINTACTICO));
         VentanaPrincipal.notificar_er(">Linea: "+(s.right+1)+" Error de sintaxis, cadena inesperada: "+ s.value );
     }
 

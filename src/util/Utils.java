@@ -19,6 +19,9 @@ public class Utils {
     public static Color color_error = new Color(217, 33, 51);
     public static Color color_success = new Color(10, 191, 0);
     
+    public static final int SINTACTICO = 232;
+    public static final int LEXICO = 233;
+    
     
     public static Icon resizeIcon(ImageIcon icon, int resizedWidth, int resizedHeight) {
         Image img = icon.getImage();  
