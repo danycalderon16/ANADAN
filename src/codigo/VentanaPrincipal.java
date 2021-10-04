@@ -193,7 +193,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         txtAreaEdit = new javax.swing.JTextPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblTablaSimbolos = new javax.swing.JTable();
-        jPanel1 = new javax.swing.JPanel();
         panelToolBar = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         icon_new = new javax.swing.JLabel();
@@ -207,6 +206,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         icon_abrir = new javax.swing.JLabel();
         icon_undo = new javax.swing.JLabel();
         icon_redo = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jPanel1 = new javax.swing.JPanel();
         barraMenu = new javax.swing.JMenuBar();
         mnufile = new javax.swing.JMenu();
         mnuNew = new javax.swing.JMenuItem();
@@ -246,10 +247,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         );
         jplAreaEditLayout.setVerticalGroup(
             jplAreaEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scPanAreaEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+            .addGroup(jplAreaEditLayout.createSequentialGroup()
+                .addComponent(scPanAreaEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jplAreaEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 800, 420));
+        getContentPane().add(jplAreaEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 800, 390));
 
         tblTablaSimbolos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -314,22 +317,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             tblTablaSimbolos.getColumnModel().getColumn(2).setPreferredWidth(15);
         }
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 50, 430, 420));
-
-        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1230, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 220, Short.MAX_VALUE)
-        );
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 470, 1230, 220));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 50, 430, 390));
 
         panelToolBar.setBackground(new java.awt.Color(153, 153, 153));
         panelToolBar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -460,6 +448,29 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         panelToolBar.add(icon_redo, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 10, 30, 30));
 
         getContentPane().add(panelToolBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1230, 50));
+
+        jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane2.setPreferredSize(new java.awt.Dimension(100, 900));
+
+        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1228, 1000));
+        jPanel1.setRequestFocusEnabled(false);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1228, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1000, Short.MAX_VALUE)
+        );
+
+        jScrollPane2.setViewportView(jPanel1);
+
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 440, 1230, 230));
+        jScrollPane2.getAccessibleContext().setAccessibleName("");
 
         mnufile.setText("File");
 
@@ -1609,6 +1620,7 @@ NumeroLinea lineatxtCodigo;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel jplAreaEdit;
     private javax.swing.JMenuItem miCompile;
     private javax.swing.JMenuItem miCompileLexical;
