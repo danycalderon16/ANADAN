@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Stack;
-import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 import modelos.Simbolos;
 
@@ -23,18 +22,24 @@ public class TablaDinamica extends javax.swing.JFrame {
         TablaSimbolos.mostrar();
         initComponents();
         setLocationRelativeTo(null);
+            System.out.println("Simbolos en TD");
+        for (Simbolos simbolos : simbolo) {
+            System.out.println(simbolos.toString());
+        }
         tblDinamica.setAutoCreateRowSorter(true);
         m = (DefaultTableModel) tblDinamica.getModel();
         for (int i = 0; i < m.getRowCount(); i++) {
             m.removeRow(i);
         }
-        ArrayList<Simbolos> nuevo = reorganizar(simbolos);
-        
        
-        for (Simbolos sim : nuevo) {
+        for (Simbolos sim : simbolos) {
             m.addRow(new Object[]{sim.getLinea(), sim.getLexema(), "", ""});
         }
         Collection<codigo.Simbolo> sim = TablaSimbolos.enviarLista();
+        System.out.println("Simbolos obtenido de TS");
+        for (codigo.Simbolo sym : sim) {
+            System.out.println(sym.toString());
+        }
         for (int i = 0; i < m.getRowCount(); i++) {
             for (codigo.Simbolo symbol : sim) {
                 if (symbol.nombre.equals(m.getValueAt(i, 1).toString())) {

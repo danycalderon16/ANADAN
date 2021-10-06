@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package codigo;
 
 import ds.desktop.notify.DesktopNotify;
@@ -53,15 +49,12 @@ import static util.Utils.*;
 
 public class VentanaPrincipal extends javax.swing.JFrame {
 
-    private ArrayList<String> identificadores = new ArrayList<String>();
     public static ArrayList<LabelError> labelsErrores;
     private ArrayList<Simbolos> simbolos = new ArrayList<Simbolos>();
     
     public static boolean errores_lexicos = false;
     public static boolean errores_sintacticos = false;
-    
-    
-
+       
     private int coor_7 = 0;
     private int height = 0;
     //ESTO ES PARA MARCAR CON COLORES LAS PALABRAS////////////////////////////////////////////////////////////////////////
@@ -672,10 +665,6 @@ NumeroLinea lineatxtCodigo;
         lineatxtCodigo.setFont(fuente);
     }
 
-    public static void notificar_er(String cad) {
-        Errores += cad + "\n";
-    }
-
     //----------------------------------------BUSCAR METODOS-----------------------
     public void buscaMethod() {
         tblMetodos.metod.setRowCount(0);
@@ -690,156 +679,112 @@ NumeroLinea lineatxtCodigo;
                         O[1] = "1";
                         O[2] = "x<just>";
                         tblMetodos.metod.addRow(O);
-
                         break;
-
                     case "stop":
                         O[0] = "stop";
                         O[1] = "0";
                         O[2] = "<>";
                         tblMetodos.metod.addRow(O);
-
                         break;
-
                     case "getextrusorx":
                         O[0] = "getextrusorx";
                         O[1] = "0";
                         O[2] = "<>";
                         tblMetodos.metod.addRow(O);
-
                         break;
-
                     case "getextrusory":
                         O[0] = "getextrusory";
                         O[1] = "0";
                         O[2] = "<>";
                         tblMetodos.metod.addRow(O);
-
                         break;
-
                     case "getextrusorz":
                         O[0] = "getextrusorz";
                         O[1] = "0";
                         O[2] = "<>";
                         tblMetodos.metod.addRow(O);
-
                         break;
-
                     case "getfilamenttype":
                         O[0] = "getfilamenttype";
                         O[1] = "0";
                         O[2] = "<>";
                         tblMetodos.metod.addRow(O);
-
                         break;
-
                     case "setnewfilament":
-
                         O[0] = "setnewfilament";
                         O[1] = "0";
                         O[2] = "<>";
                         tblMetodos.metod.addRow(O);
-
                         break;
-
                     case "getfilament":
-
                         O[0] = "getfilament";
                         O[1] = "0";
                         O[2] = "<>";
                         tblMetodos.metod.addRow(O);
-
                         break;
-
                     case "gettemperature":
-
                         O[0] = "gettemperature";
                         O[1] = "0";
                         O[2] = "<>";
                         tblMetodos.metod.addRow(O);
-
                         break;
-
                     case "filltriangule":
-
                         O[0] = "filltriangule";
                         O[1] = "9";
                         O[2] = "x1<just>,y1<just>,z1<just>, x2<just>,y2<just>, z2<just>, x3<just>,y3<just>, z3<just>";
                         tblMetodos.metod.addRow(O);
-
                         break;
-
                     case "drawtriangule":
                         O[0] = "drawtriangule";
                         O[1] = "9";
                         O[2] = "x1<just>,y1<just>,z1<just>, x2<just>,y2<just>, z2<just>, x3<just>,y3<just>, z3<just>";
                         tblMetodos.metod.addRow(O);
-
                     case "fillrectangle":
-
                         O[0] = "fillrectangle";
                         O[1] = "12";
                         O[2] = "x1<just>,y1<just>,z1<just>, x2<just>,y2<just>,z2<just>, x3<just>,y3<just>,z3<just>, x4<just>,y4<just>,z4<just>";
                         tblMetodos.metod.addRow(O);
-
                         break;
-
                     case "drawrectangle":
                         O[0] = "drawrectangle";
                         O[1] = "12";
                         O[2] = "x1<just>,y1<just>,z1<just>, x2<just>,y2<just>,z2<just>, x3<just>,y3<just>,z3<just>, x4<just>,y4<just>,z4<just>";
                         tblMetodos.metod.addRow(O);
-
                         break;
                     case "sleep":
                         O[0] = "sleep";
                         O[1] = "0";
                         O[2] = "<>";
                         tblMetodos.metod.addRow(O);
-
                         break;
-
                     case "drawcircle":
                         O[0] = "drawcircle";
                         O[1] = "4";
                         O[2] = "x<just>,y<just>, z<just>, radio<just>";
                         tblMetodos.metod.addRow(O);
-
                         break;
-
                     case "fillcircle":
                         O[0] = "fillcircle";
                         O[1] = "4";
                         O[2] = "x<just>,y<just>, z<just>, radio<just>";
                         tblMetodos.metod.addRow(O);
-
                         break;
-
                     case "home":
-
                         O[0] = "home";
                         O[1] = "0";
                         O[2] = "<>";
                         tblMetodos.metod.addRow(O);
-
                         break;
-
                     case "printerport":
-
                         O[0] = "printerport";
                         O[1] = "1";
                         O[2] = "x<just>";
                         tblMetodos.metod.addRow(O);
-
                         break;
-
                     default:
-
                         break;
-
                 }//switch
             }//if
-
         }
         rt();
     }
@@ -859,13 +804,10 @@ NumeroLinea lineatxtCodigo;
             return;
         }
         for (int i = 0; i < ren; i++) {
-
             arreglo[i][0] = tblMetodos.metod.getValueAt(i, 0).toString();
             arreglo[i][1] = tblMetodos.metod.getValueAt(i, 1).toString();
             arreglo[i][2] = tblMetodos.metod.getValueAt(i, 2).toString();
-
         }
-
         bav(arreglo, 0, ren);
     }
 
@@ -984,13 +926,10 @@ NumeroLinea lineatxtCodigo;
 
     private void mnuSaveAsMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuSaveAsMouseReleased
         saveAsFile();
-
     }//GEN-LAST:event_mnuSaveAsMouseReleased
 
     private void mnuNewMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuNewMouseReleased
-
         newFile();
-
     }//GEN-LAST:event_mnuNewMouseReleased
 
     private void mnuMinimizeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuMinimizeMousePressed
@@ -1179,29 +1118,9 @@ NumeroLinea lineatxtCodigo;
 
                 if (tokens == null) {
                     if (counter==0) {
-                        System.out.println("no hay errores");
-//                        JLabel lb = new JLabel("El programa no contiene errores léxicos.\n");
-//                        lb.setForeground(color_success);
-//                        lb.setBounds(5, 5, 500, 20);
-//                        lb.setFont(new Font("Verdana", Font.PLAIN, 14));
-//                        //lb.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 5));
-//                        jPanel1.add(lb);
                         errores_lexicos = false;
                     }else
                         errores_lexicos = true;
-
-//                    System.out.println(labelLexicoErrors.size() + "");
-//                    if (!labelLexicoErrors.isEmpty()) {
-//                        int num = 0;
-//                        errores_lexicos = true;
-//                        for (int j = 0; j < labelLexicoErrors.size(); j++) {
-//                            //labelLexicoErrors.get(j).getLabel().setBounds(5, 5 + 15 * num, 500, 15 + 15 * num);
-//                            labelLexicoErrors.get(j).getLabel().setBounds(5, 5 + 25 * num, 500, 20);
-//                            clickLabel(labelLexicoErrors.get(j));
-//                            jPanel1.add(labelLexicoErrors.get(j).getLabel());
-//                            num++;
-//                        }
-//                    }
                     return;
                 }
                 JLabel lb = new JLabel(lexer.yytext());
@@ -1214,7 +1133,6 @@ NumeroLinea lineatxtCodigo;
                         tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
                         tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
                         tblTablaSimbolos.setValueAt("ERROR:CADENA_NO_VALIDA", i, 3);
-                        // errores += (">Linea: " + (c.linea + 1) + " Columna: " + (c.columna) + ", Error Léxico,    Error cadena no valida:  " + lexer.yytext() + "\n");
                         i++;
                         lb.setText("Error en la línea " + (c.linea + 1) + ". Error léxico. El número '" + lexer.yytext() + "' tiene puntos de más.");
                         labelsErrores.add(new LabelError(lb, "NUMERO_ERRONEO_MAS_PUNTOS", c.linea + 1, LEXICO));
@@ -1225,9 +1143,7 @@ NumeroLinea lineatxtCodigo;
                         tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
                         tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
                         tblTablaSimbolos.setValueAt("ERROR:CADENA_NO_VALIDA", i, 3);
-                        //errores += (">Linea: " + (c.linea + 1) + " Columna: " + (c.columna) + ", Error Léxico,    Error cadena no valida:  " + lexer.yytext() + "\n");
                         i++;
-                        lb.setText("Error en la línea " + (c.linea + 1) + ". Error léxico. Hay una mayuscula en '" + lexer.yytext() + "'.");
                         labelsErrores.add(new LabelError(lb, "MAYUSCULAS_EN_CADENA", c.linea + 1, LEXICO));
                         counter++;
                         break;
@@ -1236,7 +1152,6 @@ NumeroLinea lineatxtCodigo;
                         tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
                         tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
                         tblTablaSimbolos.setValueAt("ERROR:CADENA_NO_VALIDA", i, 3);
-                        //errores += (">Linea: " + (c.linea + 1) + " Columna: " + (c.columna) + ", Error Léxico,    Error cadena no valida:  " + lexer.yytext() + "\n");
                         i++;
                         lb.setText("Error en la línea " + (c.linea + 1) + ". Error léxico. El identificador '" + lexer.yytext() + "' está mal escrito.");
                         labelsErrores.add(new LabelError(lb, "MAL_NOMBRE_PARA_IDENTIFICADOR", c.linea + 1, LEXICO));
@@ -1247,7 +1162,6 @@ NumeroLinea lineatxtCodigo;
                         tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
                         tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
                         tblTablaSimbolos.setValueAt("ERROR:CADENA_NO_VALIDA", i, 3);
-                        //errores += (">Linea: " + (c.linea + 1) + " Columna: " + (c.columna) + ", Error Léxico,    Error cadena no valida:  " + lexer.yytext() + "\n");
                         i++;
                         lb.setText("Error en la línea " + (c.linea + 1) + ". Error léxico. El formato del número '" + lexer.yytext() + "' es erroneo");
                         labelsErrores.add(new LabelError(lb, "NUMERO_ERRONEO", c.linea + 1, LEXICO));
@@ -1258,7 +1172,6 @@ NumeroLinea lineatxtCodigo;
                         tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
                         tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
                         tblTablaSimbolos.setValueAt("ERROR:CADENA_NO_VALIDA", i, 3);
-                        //errores += (">Linea: " + (c.linea + 1) + " Columna: " + (c.columna) + ", Error Léxico,    Error cadena no valida:  " + lexer.yytext() + "\n");
                         i++;
 
                         lb.setText("Error en la línea " + (c.linea + 1) + ". Error léxico. Error '" + lexer.yytext() + "'");
@@ -1411,7 +1324,6 @@ NumeroLinea lineatxtCodigo;
 
     }
 
-    static String Errores = "";
     private void miCompileSyntaxMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_miCompileSyntaxMouseReleased
         analisisSintactico();
     }//GEN-LAST:event_miCompileSyntaxMouseReleased
@@ -1894,13 +1806,7 @@ NumeroLinea lineatxtCodigo;
     private void analisisSintactico() {
         analisisLexico();
 
-        Errores = "";
-
         mnuMinimize.setEnabled(true);
-        //jplAreaEdit.setBounds(jplAreaEdit.getX(), jplAreaEdit.getY(), 1230, 370);
-        //scPanAreaEdit.setBounds(jplAreaEdit.getX(), jplAreaEdit.getY(), 1230, 370);
-        //txtAreaEdit.setBounds(jplAreaEdit.getX(), jplAreaEdit.getY(), 1230, 370);
-
         String ST = txtAreaEdit.getText();
         Sintax s = new Sintax(new codigo.LexerCup(new StringReader(ST)));
         try {
