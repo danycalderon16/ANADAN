@@ -8,6 +8,7 @@ import java.util.Stack;
 import java.awt.Font;
 import javax.swing.JLabel;
 import modelos.LabelError;
+import modelos.Gramatica;
 import java.awt.Color;
 //import static javax.swing.JOptionPane.*;
 
@@ -219,7 +220,8 @@ declaracion ::=
                 lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. La variable: '"
                 +id+"' ya esta declarada." );   
                 VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. La variable: '"
-                +id+"' ya esta declarada.", idright+1,SINTACTICO));
+                +id+"' ya esta declarada.", idright+1,SINTACTICO, 
+                new Gramatica("declaracion ::= JUST IDENTIFICADOR PUNTOYCOMA ", "indetificador repetido")));
             }else{
                 TablaSimbolos.crear(id, "just","Variable númerica");
                 //Crear relacion ciclo PARA con su variable asociada
@@ -247,7 +249,8 @@ declaracion ::=
                 lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. La variable: '"
                 +id+"' ya esta declarada." );   
                 VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. La variable: '"
-                +id+"' ya esta declarada.", idright+1,SINTACTICO));
+                +id+"' ya esta declarada.", idright+1,SINTACTICO,
+                new Gramatica("declaracion ::= BROKEN IDENTIFICADOR PUNTOYCOMA ", "indetificador repetido")));
             }else{
                 TablaSimbolos.crear(id, "broken","Variable flotante");
                 //Crear relacion ciclo PARA con su variable asociada
@@ -274,7 +277,8 @@ declaracion ::=
                 lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. La variable: '"
                 +id+"' ya esta declarada." );   
                 VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. La variable: '"
-                +id+"' ya esta declarada.", idright+1,SINTACTICO));
+                +id+"' ya esta declarada.", idright+1,SINTACTICO,
+                new Gramatica("declaracion ::= WORD IDENTIFICADOR PUNTOYCOMA ", "indetificador repetido")));
             }else{
                 TablaSimbolos.crear(id, "word","Variable tipo cadena");
                 //Crear relacion ciclo PARA con su variable asociada
@@ -301,7 +305,8 @@ declaracion ::=
                 lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. La variable: '"
                 +id+"' ya esta declarada." );   
                 VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. La variable: '"
-                +id+"' ya esta declarada.", idright+1,SINTACTICO));
+                +id+"' ya esta declarada.", idright+1,SINTACTICO,
+                new Gramatica("declaracion ::= FLAG IDENTIFICADOR PUNTOYCOMA ", "indetificador repetido")));
             }else{
                 TablaSimbolos.crear(id, "flag","Variable booleana");
                 //Crear relacion ciclo PARA con su variable asociada
@@ -329,7 +334,8 @@ declaracion ::=
                 lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. La variable: '"
                 +id+"' ya esta declarada." );   
                 VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. La variable: '"
-                +id+"' ya esta declarada.", idright+1,SINTACTICO));
+                +id+"' ya esta declarada.", idright+1,SINTACTICO,
+                new Gramatica("declaracion ::= JUST IDENTIFICADOR = NUMEOR PUNTOYCOMA ", "Variable repetida")));
             }else{
                 TablaSimbolos.crear(id, "just","Variable númerica");
                 TablaSimbolos.insertar(id, String.valueOf(valor));
@@ -358,7 +364,7 @@ declaracion ::=
                 lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. La variable: '"
                 +id+"' ya esta declarada." );   
                 VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. La variable: '"
-                +id+"' ya esta declarada.", idright+1,SINTACTICO));
+                +id+"' ya esta declarada.", idright+1,SINTACTICO, new Gramatica("declaracion ::= BROKEN IDENTIFICADOR SIGNO_DE_IGUAL DECIMAL PUNTOYCOMA ", "Variable repetido")));
             }else{
                 TablaSimbolos.crear(id, "broken","Variable flotante");
                 TablaSimbolos.insertar(id, String.valueOf(valor));
@@ -387,7 +393,8 @@ declaracion ::=
                 lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. La variable: '"
                 +id+"' ya esta declarada." );   
                 VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. La variable: '"
-                +id+"' ya esta declarada.", idright+1,SINTACTICO));
+                +id+"' ya esta declarada.", idright+1,SINTACTICO,
+                new Gramatica("declaracion ::= WORD IDENTIFICADOR = CADENA_TEXTO PUNTOYCOMA ", "Variable repetida")));
             }else{
                 TablaSimbolos.crear(id, "word","Variable tipo cadena");
                 TablaSimbolos.insertar(id, String.valueOf(valor));
@@ -416,7 +423,8 @@ declaracion ::=
                 lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. La variable: '"
                 +id+"' ya esta declarada." );   
                 VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. La variable: '"
-                +id+"' ya esta declarada.", idright+1,SINTACTICO));
+                +id+"' ya esta declarada.", idright+1,SINTACTICO,
+                new Gramatica("declaracion ::= FLAG IDENTIFICADOR = TRUE PUNTOYCOMA ", "Variable repetida")));
             }else{
                 TablaSimbolos.crear(id, "flag","Variable tipo booleana");
                 TablaSimbolos.insertar(id, String.valueOf(valor));
@@ -445,7 +453,8 @@ declaracion ::=
                 lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. La variable: '"
                 +id+"' ya esta declarada." );   
                 VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. La variable: '"
-                +id+"' ya esta declarada.", idright+1,SINTACTICO));
+                +id+"' ya esta declarada.", idright+1,SINTACTICO,
+                new Gramatica("declaracion ::= FLAG IDENTIFICADOR = FALSE PUNTOYCOMA ", "Variable repetida")));
             }else{
                 TablaSimbolos.crear(id, "flag","Variable tipo booleana");
                 TablaSimbolos.insertar(id, String.valueOf(valor));
@@ -492,6 +501,18 @@ expresion ::=
 termino ::= factor:f1 SIGNO_DE_MULTIPLICACIÓN factor:f2 {:
     System.out.println("EMPIEZA TERMINO");
         RESULT = f1+"*"+f2;
+         if (f1 instanceof Integer){
+            if(f2 instanceof String){
+                 System.out.println("*****No se pueden multiplicar int * str");
+            }
+            if (f2 instanceof Double){
+                 System.out.println("*****Sí se pueden multiplicar int * decimal");
+
+            }
+            if (f2 instanceof Integer){
+                 System.out.println("*****Sí se pueden multiplicar int * int");
+            }
+        }
         System.out.println("factor1 "+f1);
         System.out.println("factor2 "+f2);
     :} |
@@ -503,7 +524,8 @@ termino ::= factor:f1 SIGNO_DE_MULTIPLICACIÓN factor:f2 {:
     :} |
     factor:f {:RESULT = f; 
         System.out.println("EMPIEZA TERMINO");
-        System.out.println("factor "+f);:} 
+        System.out.println("factor "+f);
+    :} 
 ;
     
 factor ::= 

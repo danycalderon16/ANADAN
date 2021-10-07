@@ -1692,7 +1692,9 @@ NumeroLinea lineatxtCodigo;
     }
 
     private void showModalSintaxtic(LabelError err) {
-        showMessageDialog(null, "Estamos trabajando en modal de gramáticas");
+        System.out.println(err);
+        showMessageDialog(null, "Estamos trabajando en modal de gramáticas\n"+
+                err.getGramatica().getProduccion()+"\n"+err.getGramatica().getError());
     }
 
     private void clickLabel(LabelError le) {
