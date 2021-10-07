@@ -1,4 +1,3 @@
-
 package codigo;
 
 import ds.desktop.notify.DesktopNotify;
@@ -51,12 +50,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     public static ArrayList<LabelError> labelsErrores;
     private ArrayList<Simbolos> simbolos = new ArrayList<Simbolos>();
-    
+
     public static boolean errores_lexicos = false;
     public static boolean errores_sintacticos = false;
-       
+
     private int coor_7 = 0;
     private int height = 0;
+
     //ESTO ES PARA MARCAR CON COLORES LAS PALABRAS////////////////////////////////////////////////////////////////////////
     private int findLastNonWordChar(String text, int index) {
         while (--index >= 0) {
@@ -238,7 +238,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jplAreaEdit.setLayout(jplAreaEditLayout);
         jplAreaEditLayout.setHorizontalGroup(
             jplAreaEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scPanAreaEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
+            .addGroup(jplAreaEditLayout.createSequentialGroup()
+                .addComponent(scPanAreaEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 694, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jplAreaEditLayout.setVerticalGroup(
             jplAreaEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -247,7 +249,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jplAreaEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 800, 390));
+        getContentPane().add(jplAreaEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 700, 390));
 
         tblTablaSimbolos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -312,7 +314,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             tblTablaSimbolos.getColumnModel().getColumn(2).setPreferredWidth(15);
         }
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 50, 430, 390));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 50, 430, 390));
 
         panelToolBar.setBackground(new java.awt.Color(153, 153, 153));
         panelToolBar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -442,7 +444,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         panelToolBar.add(icon_redo, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 10, 30, 30));
 
-        getContentPane().add(panelToolBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1230, 50));
+        getContentPane().add(panelToolBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1130, 50));
 
         jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane2.setPreferredSize(new java.awt.Dimension(100, 900));
@@ -464,7 +466,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jScrollPane2.setViewportView(jPanel1);
 
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 440, 1230, 230));
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 440, 1130, 250));
         jScrollPane2.getAccessibleContext().setAccessibleName("");
 
         mnufile.setText("File");
@@ -1038,16 +1040,56 @@ NumeroLinea lineatxtCodigo;
     }//GEN-LAST:event_mnuRedoMousePressed
     public void mostrarErrores() {
         Collections.sort(labelsErrores);
+        for (LabelError labelsErrore : labelsErrores) {
+            if (labelsErrore.getTipo() == SINTACTICO) {
+                errores_sintacticos = true;
+            }
+        }
         
-        if(!errores_lexicos){
+        if (!errores_lexicos ) {
             JLabel lb = new JLabel("El programa no contiene errores léxicos.\n");
             lb.setForeground(color_success);
-            lb.setBounds(5, 5, 500, 20);
+            lb.setBounds(5, 5, 700, 20);
             lb.setFont(new Font("Verdana", Font.PLAIN, 14));
             jPanel1.add(lb);
+            System.out.println("Sin errores lexicos");
             if(!errores_sintacticos){
-                lb.setText("El programa no contiene errores léxicos.\n");
-                lb.setBounds(5, 25, 500, 20);
+                System.out.println("Sin errores sintacticos");
+                lb.setText("El programa no contiene errores sintacticos.\n");
+                lb.setBounds(5, 25, 700, 20);
+                lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+                jLabel1.add(lb);
+            }else{
+                int num = 1;
+                errores_lexicos = true;
+                for (int j = 0; j < labelsErrores.size(); j++) {
+                    labelsErrores.get(j).getLabel().setBounds(5, 5 + 25 * num, 700, 20);
+                    clickLabel(labelsErrores.get(j));
+                    jPanel1.add(labelsErrores.get(j).getLabel());
+                    num++;
+                }
+            }
+        }else{
+            int num = 0;
+            errores_lexicos = true;
+            for (int j = 0; j < labelsErrores.size(); j++) {
+                //labelLexicoErrors.get(j).getLabel().setBounds(5, 5 + 15 * num, 500, 15 + 15 * num);
+                labelsErrores.get(j).getLabel().setBounds(5, 5 + 25 * num, 700, 20);
+                clickLabel(labelsErrores.get(j));
+                jPanel1.add(labelsErrores.get(j).getLabel());
+                num++;
+            }
+         }
+        /*if(!errores_lexicos){
+            JLabel lb = new JLabel("El programa no contiene errores léxicos.\n");
+            lb.setForeground(color_success);
+            lb.setBounds(5, 5, 700, 20);
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            jPanel1.add(lb);
+            System.out.println("Sin errores lexicos");
+            if(!errores_sintacticos){
+                lb.setText("El programa no contiene errores sintacticos.\n");
+                lb.setBounds(5, 25, 700, 20);
                 lb.setFont(new Font("Verdana", Font.PLAIN, 14));
                 jLabel1.add(lb);
             }
@@ -1056,11 +1098,12 @@ NumeroLinea lineatxtCodigo;
             errores_lexicos = true;
             for (int j = 0; j < labelsErrores.size(); j++) {
                 //labelLexicoErrors.get(j).getLabel().setBounds(5, 5 + 15 * num, 500, 15 + 15 * num);
-                labelsErrores.get(j).getLabel().setBounds(5, 5 + 25 * num, 500, 20);
+                labelsErrores.get(j).getLabel().setBounds(5, 5 + 25 * num, 700, 20);
                 clickLabel(labelsErrores.get(j));
                 jPanel1.add(labelsErrores.get(j).getLabel());
                 num++;                        }
-        }
+            System.out.println("con errores");
+        }*/
     }
 
     public void buja(String[] A, int ini, int ter) {
@@ -1117,10 +1160,11 @@ NumeroLinea lineatxtCodigo;
                 Tokens tokens = lexer.yylex();
 
                 if (tokens == null) {
-                    if (counter==0) {
+                    if (counter == 0) {
                         errores_lexicos = false;
-                    }else
+                    } else {
                         errores_lexicos = true;
+                    }
                     return;
                 }
                 JLabel lb = new JLabel(lexer.yytext());
@@ -1144,6 +1188,7 @@ NumeroLinea lineatxtCodigo;
                         tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
                         tblTablaSimbolos.setValueAt("ERROR:CADENA_NO_VALIDA", i, 3);
                         i++;
+                        lb.setText("Error en la línea " + (c.linea + 1) + ". Error léxico. Las mayúsculas no están definidas en el lenguaje: '" + lexer.yytext() + "'");
                         labelsErrores.add(new LabelError(lb, "MAYUSCULAS_EN_CADENA", c.linea + 1, LEXICO));
                         counter++;
                         break;
@@ -1563,95 +1608,90 @@ NumeroLinea lineatxtCodigo;
     private javax.swing.JTextPane txtAreaEdit;
     // End of variables declaration//GEN-END:variables
 
- 
-      ImageIcon imgENum1 = new ImageIcon("C:/ANADAN/src/Automatas/NumeroErroneo.jpg");
-      public Icon NumErr1 = new ImageIcon(imgENum1.getImage().getScaledInstance(385, 333, Image.SCALE_DEFAULT));
-    
-      ImageIcon imgENum2 = new ImageIcon("C:/ANADAN/src/Automatas/NumeroErroneoMasSignosAlPrincipio.jpg");
-      public Icon NumErr2 = new ImageIcon(imgENum2.getImage().getScaledInstance(362, 315, Image.SCALE_DEFAULT));
-     
-      ImageIcon imgEId1 = new ImageIcon("C:/ANADAN/src/Automatas/Identificador_inicio_mal.jpg");
-      public Icon IdErr2 = new ImageIcon(imgEId1.getImage().getScaledInstance(481, 141, Image.SCALE_DEFAULT));
-           
-      ImageIcon imgECad1 = new ImageIcon("C:/ANADAN/src/Automatas/Cadena.jpg");
-      public Icon CadErr1 = new ImageIcon(imgECad1.getImage().getScaledInstance(406, 136, Image.SCALE_DEFAULT));
-            
- 
-  
+    ImageIcon imgENum1 = new ImageIcon("C:/ANADAN/src/Automatas/NumeroErroneo.jpg");
+    public Icon NumErr1 = new ImageIcon(imgENum1.getImage().getScaledInstance(385, 333, Image.SCALE_DEFAULT));
+
+    ImageIcon imgENum2 = new ImageIcon("C:/ANADAN/src/Automatas/NumeroErroneoMasSignosAlPrincipio.jpg");
+    public Icon NumErr2 = new ImageIcon(imgENum2.getImage().getScaledInstance(362, 315, Image.SCALE_DEFAULT));
+
+    ImageIcon imgEId1 = new ImageIcon("C:/ANADAN/src/Automatas/Identificador_inicio_mal.jpg");
+    public Icon IdErr2 = new ImageIcon(imgEId1.getImage().getScaledInstance(481, 141, Image.SCALE_DEFAULT));
+
+    ImageIcon imgECad1 = new ImageIcon("C:/ANADAN/src/Automatas/Cadena.jpg");
+    public Icon CadErr1 = new ImageIcon(imgECad1.getImage().getScaledInstance(406, 136, Image.SCALE_DEFAULT));
+
     private void showModalLexical(LabelError err) {
         ModalLexico ml = new ModalLexico(err);
- 
-          
-        switch (err.getError()) {
-                   
-                    case "NUMERO_ERRONEO_MAS_PUNTOS":
-                          ModalLexico.jlbAutomata.setIcon(NumErr1);
-                            if(ml.isOpen()){
-                                ml.close();
-                            }
-                            
-                            for (int i = 0; i < 10; i++) {
-                            
-                        }
-                       ModalLexico.jlbEstados.setText("Q={q1,q2,q3,q4,q5,q6,q7,q8,q9}");
-                       ModalLexico.jlbInicial.setText("S=q1");
-                       ModalLexico.jlbFinal.setText("F={q2,q4,q7,q9}");        
-                       ModalLexico.txtAlfabeto.setText("Σ={0, 1, 2, 3, 4, 5, 6, 7,8, 9, +, -, *, /, ^, e, .}");
-                       ModalLexico.InfoError.setText("El error se provoca al intentar salir del estado (q4) con un punto");
-                       ml.setVisible(true);
-                        break;
-                        
-                     case "NUMERO_ERRONEO":
-                          ModalLexico.jlbAutomata.setIcon(NumErr2);
-                            if(ml.isOpen()){
-                                ml.close();
-                            }
-                       ModalLexico.jlbEstados.setText("Q={q1,q2,q3,q4,q5,q6,q7,q8,q9}");
-                       ModalLexico.jlbInicial.setText("S=q1");
-                       ModalLexico.jlbFinal.setText("F={q2,q4,q7,q9}");        
-                       ModalLexico.txtAlfabeto.setText("Σ={0, 1, 2, 3, 4, 5, 6, 7,8, 9, +, -, *, /, ^, e, .}");
-                       ModalLexico.InfoError.setText("El error se provoca al intentar salir del estado (q2) con otra cosa que no sea un punto un digito o una 'e'");
-                       ml.setVisible(true);                         
-                         break;
-                     case "MAL_NOMBRE_PARA_IDENTIFICADOR":
-                           ModalLexico.jlbAutomata.setIcon(IdErr2);
-                            if(ml.isOpen()){
-                                ml.close();
-                            }
-                       ModalLexico.jlbEstados.setText("Q={q1,q2}");
-                       ModalLexico.jlbInicial.setText("S=q1");
-                       ModalLexico.jlbFinal.setText("F={q2}");        
-                       ModalLexico.txtAlfabeto.setText("Σ={0, 1, 2, 3, 4, 5, 6, 7,8, 9,a,b,c,d,e,f,g,h,i,j,k,l,n,m,o,p,q,r,s,t,u,v,w,x,y,z,_}");
-                       ModalLexico.InfoError.setText("Los identificadores solo pueden iniciar con una letra y/o guion bajo");
-                       ml.setVisible(true);    
-                        break;                
-                     case "MAYUSCULAS_EN_CADENA":
-                     ModalLexico.jlbAutomata.setIcon(CadErr1);
-                            if(ml.isOpen()){
-                                ml.close();
-                            }
-                       ModalLexico.jlbEstados.setText("Q={q1}");
-                       ModalLexico.jlbInicial.setText("S=q1");
-                       ModalLexico.jlbFinal.setText("F={q1}");        
-                       ModalLexico.txtAlfabeto.setText("Σ={a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, 0, 1, 2, 3,\n" +
-                                                          "4, 5, 6, 7, 8, 9, !,\n" +
-                                                          "%, ^, &, *, (, ), -, +, =, {, }, [, ], \\, |, ;, :, ”, <, ,, >, ., ?, /, \n" +
-                                                          "tabulador, espacio en blanco, nueva\n" +
-                                                          "línea, retorno de carro}");
-                       ModalLexico.InfoError.setText("Las mayusculas no se reconocen en este lenguaje");                       
-                       ml.setVisible(true); 
-                       break;
 
-                    default:
-     
-                        break;
+        switch (err.getError()) {
+
+            case "NUMERO_ERRONEO_MAS_PUNTOS":
+                ModalLexico.jlbAutomata.setIcon(NumErr1);
+                if (ml.isOpen()) {
+                    ml.close();
                 }
+
+                for (int i = 0; i < 10; i++) {
+
+                }
+                ModalLexico.jlbEstados.setText("Q={q1,q2,q3,q4,q5,q6,q7,q8,q9}");
+                ModalLexico.jlbInicial.setText("S=q1");
+                ModalLexico.jlbFinal.setText("F={q2,q4,q7,q9}");
+                ModalLexico.txtAlfabeto.setText("Σ={0, 1, 2, 3, 4, 5, 6, 7,8, 9, +, -, *, /, ^, e, .}");
+                ModalLexico.InfoError.setText("El error se provoca al intentar salir del estado (q4) con un punto");
+                ml.setVisible(true);
+                break;
+
+            case "NUMERO_ERRONEO":
+                ModalLexico.jlbAutomata.setIcon(NumErr2);
+                if (ml.isOpen()) {
+                    ml.close();
+                }
+                ModalLexico.jlbEstados.setText("Q={q1,q2,q3,q4,q5,q6,q7,q8,q9}");
+                ModalLexico.jlbInicial.setText("S=q1");
+                ModalLexico.jlbFinal.setText("F={q2,q4,q7,q9}");
+                ModalLexico.txtAlfabeto.setText("Σ={0, 1, 2, 3, 4, 5, 6, 7,8, 9, +, -, *, /, ^, e, .}");
+                ModalLexico.InfoError.setText("El error se provoca al intentar salir del estado (q2) con otra cosa que no sea un punto un digito o una 'e'");
+                ml.setVisible(true);
+                break;
+            case "MAL_NOMBRE_PARA_IDENTIFICADOR":
+                ModalLexico.jlbAutomata.setIcon(IdErr2);
+                if (ml.isOpen()) {
+                    ml.close();
+                }
+                ModalLexico.jlbEstados.setText("Q={q1,q2}");
+                ModalLexico.jlbInicial.setText("S=q1");
+                ModalLexico.jlbFinal.setText("F={q2}");
+                ModalLexico.txtAlfabeto.setText("Σ={0, 1, 2, 3, 4, 5, 6, 7,8, 9,a,b,c,d,e,f,g,h,i,j,k,l,n,m,o,p,q,r,s,t,u,v,w,x,y,z,_}");
+                ModalLexico.InfoError.setText("Los identificadores solo pueden iniciar con una letra y/o guion bajo");
+                ml.setVisible(true);
+                break;
+            case "MAYUSCULAS_EN_CADENA":
+                ModalLexico.jlbAutomata.setIcon(CadErr1);
+                if (ml.isOpen()) {
+                    ml.close();
+                }
+                ModalLexico.jlbEstados.setText("Q={q1}");
+                ModalLexico.jlbInicial.setText("S=q1");
+                ModalLexico.jlbFinal.setText("F={q1}");
+                ModalLexico.txtAlfabeto.setText("Σ={a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, 0, 1, 2, 3,\n"
+                        + "4, 5, 6, 7, 8, 9, !,\n"
+                        + "%, ^, &, *, (, ), -, +, =, {, }, [, ], \\, |, ;, :, ”, <, ,, >, ., ?, /, \n"
+                        + "tabulador, espacio en blanco, nueva\n"
+                        + "línea, retorno de carro}");
+                ModalLexico.InfoError.setText("Las mayusculas no se reconocen en este lenguaje");
+                ml.setVisible(true);
+                break;
+
+            default:
+
+                break;
+        }
 
     }
 
-    
-     private void showModalSintaxtic(LabelError err) {
-         showMessageDialog(null, "Estamos trabajando en modal de gramáticas");
+    private void showModalSintaxtic(LabelError err) {
+        showMessageDialog(null, "Estamos trabajando en modal de gramáticas");
     }
 
     private void clickLabel(LabelError le) {
@@ -1666,10 +1706,11 @@ NumeroLinea lineatxtCodigo;
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                if(le.getTipo() == LEXICO)
+                if (le.getTipo() == LEXICO) {
                     showModalLexical(le);
-                else
+                } else {
                     showModalSintaxtic(le);
+                }
             }
 
             @Override
@@ -1805,6 +1846,7 @@ NumeroLinea lineatxtCodigo;
 
     private void analisisSintactico() {
         analisisLexico();
+        TablaSimbolos.limpiar();
 
         mnuMinimize.setEnabled(true);
         String ST = txtAreaEdit.getText();

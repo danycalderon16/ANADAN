@@ -22,9 +22,9 @@ public class TablaDinamica extends javax.swing.JFrame {
         TablaSimbolos.mostrar();
         initComponents();
         setLocationRelativeTo(null);
-            System.out.println("Simbolos en TD");
+           // System.out.println("Simbolos en TD");
         for (Simbolos simbolos : simbolo) {
-            System.out.println(simbolos.toString());
+           // System.out.println(simbolos.toString());
         }
         tblDinamica.setAutoCreateRowSorter(true);
         m = (DefaultTableModel) tblDinamica.getModel();
@@ -51,26 +51,6 @@ public class TablaDinamica extends javax.swing.JFrame {
             }
         }
     }
-
-    private ArrayList<Simbolos> reorganizar(ArrayList<Simbolos> array) {
-        ArrayList<Simbolos> n_simbolos = array;
-       /* for (Simbolos sim : array) {
-            if (sim.getComponente().equalsIgnoreCase("Identificador")) {
-                n_simbolos.add(sim);
-            }
-            /*         for (int j = 0; j < n_simbolos.size(); j++) {
-                    if (sim.getLexema().equals(n_simbolos.get(j).getLexema())) {
-                        agregar = false;
-                    }
-                }
-            }
-            if (agregar) {
-                n_simbolos.add(sim);
-            }*/
-        //}
-        return n_simbolos;
-    }
-
     private void limpiar() {
         int r = m.getRowCount();
         for (int i = 0; i < r; i++) {
