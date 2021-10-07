@@ -53,6 +53,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     public static boolean errores_lexicos = false;
     public static boolean errores_sintacticos = false;
+    public static String exp = "";
 
     private int coor_7 = 0;
     private int height = 0;
@@ -1860,5 +1861,6 @@ NumeroLinea lineatxtCodigo;
             Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
         mostrarErrores();
+        showMessageDialog(null, exp);
     }
 }

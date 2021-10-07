@@ -9,6 +9,7 @@ import java.awt.Font;
 import javax.swing.JLabel;
 import modelos.LabelError;
 import java.awt.Color;
+//import static javax.swing.JOptionPane.*;
 
 action code
     {:
@@ -61,6 +62,7 @@ parser code
 
 terminal String IDENTIFICADOR;
 terminal Integer NUMERO;
+terminal Double DECIMAL;
 terminal String CADENA_TEXTO,TRUE, FALSE;
 terminal String BROKEN,JUST, WORD, FLAG;
 terminal SETFILAMENTTYPE, FILLRECTANGLE, DRAWRECTANGLE, SLEEP, FILLCIRCLE, DRAWCIRCLE,
@@ -78,7 +80,9 @@ non terminal String t_dato;
 non terminal inicio, declaracion_for, if, if_else,
     while, do_while, for, sentencia_booleana, sentencia_for ,datos_array,continua,cuerpo,
     declaraciones,declaracion,bloquesentencias,sentencias,sentencia,expresion,
+    expresion_prima,
     termino,
+    termino_prima,
     factor,
     sentif,
     sentelse,
@@ -227,6 +231,34 @@ declaracion ::=
             TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
         }                           
     :}|
+    BROKEN IDENTIFICADOR:id PUNTOYCOMA   {:
+        System.out.println(id+" en la linea: "+(idright+1));
+        try{
+            Simbolo sim = TablaSimbolos.buscar(id);
+        //Si es nulo, devuelvo un error
+            if (sim != null) {
+                //Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
+                //RESULT = 0;
+                System.out.println("El identificador '"+id+"' ya existe");                             
+                
+                lb.setForeground(new Color(217, 33, 51));
+                lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+                lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. La variable: '"
+                +id+"' ya esta declarada." );   
+                VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. La variable: '"
+                +id+"' ya esta declarada.", idright+1,SINTACTICO));
+            }else{
+                TablaSimbolos.crear(id, "broken","Variable flotante");
+                //Crear relacion ciclo PARA con su variable asociada
+                TablaSimbolos.lista.push(id);          
+            }
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                           
+    :}|
     WORD IDENTIFICADOR:id PUNTOYCOMA   {:
         try{
             Simbolo sim = TablaSimbolos.buscar(id);
@@ -300,6 +332,35 @@ declaracion ::=
                 +id+"' ya esta declarada.", idright+1,SINTACTICO));
             }else{
                 TablaSimbolos.crear(id, "just","Variable númerica");
+                TablaSimbolos.insertar(id, String.valueOf(valor));
+                //Crear relacion ciclo PARA con su variable asociada
+                TablaSimbolos.lista.push(id);          
+            }
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                      
+    :}|
+    BROKEN:tipo IDENTIFICADOR:id SIGNO_DE_IGUAL DECIMAL:valor PUNTOYCOMA 
+    {:
+        try{
+            Simbolo sim = TablaSimbolos.buscar(id);
+             //Si es nulo, devuelvo un error
+            if (sim != null) {
+                //Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
+                //RESULT = 0;
+                System.out.println("El identificador '"+id+"' ya existe");                             
+                
+                lb.setForeground(new Color(217, 33, 51));
+                lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+                lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. La variable: '"
+                +id+"' ya esta declarada." );   
+                VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. La variable: '"
+                +id+"' ya esta declarada.", idright+1,SINTACTICO));
+            }else{
+                TablaSimbolos.crear(id, "broken","Variable flotante");
                 TablaSimbolos.insertar(id, String.valueOf(valor));
                 //Crear relacion ciclo PARA con su variable asociada
                 TablaSimbolos.lista.push(id);          
@@ -410,36 +471,65 @@ t_dato::= BROKEN|
 
 expresion ::= 
     expresion:e SIGNO_DE_SUMA termino:t {:
+        System.out.println("EMPIEZA EXPRESION");
         RESULT = e+"+"+t;
-        System.out.println(t);
+        System.out.println("termino: "+t);
+        System.out.println("exp: "+e);
     :} |
     expresion:e SIGNO_DE_RESTA termino:t {:
+        System.out.println("EMPIEZA EXPRESION");
         RESULT = e+"-"+t;
-        System.out.println(t);
+        System.out.println("termino: "+t);
+        System.out.println("exp: "+e);
     :} |
-    termino:t {:RESULT = t; :} 
+    termino:t {:
+        RESULT = t; 
+        System.out.println("EMPIEZA EXPRESION");        
+        System.out.println("termino: "+t);
+        :} 
 ;
     
 termino ::= factor:f1 SIGNO_DE_MULTIPLICACIÓN factor:f2 {:
+    System.out.println("EMPIEZA TERMINO");
         RESULT = f1+"*"+f2;
+        System.out.println("factor1 "+f1);
+        System.out.println("factor2 "+f2);
     :} |
     factor:f1 SIGNO_DE_DIVISIÓN factor:f2 {:
+    System.out.println("EMPIEZA TERMINO");
         RESULT = f1+"/"+f2;
+        System.out.println("factor1 "+f1);
+        System.out.println("factor2 "+f2);
     :} |
     factor:f {:RESULT = f; 
-        System.out.println(f);:} 
+        System.out.println("EMPIEZA TERMINO");
+        System.out.println("factor "+f);:} 
 ;
-
+    
 factor ::= 
     PARENTESIS_ABRE expresion:e PARENTESIS_CIERRA {:
+        System.out.println("EMPIEZA FACTOR");
         RESULT =  "("+e+")";
-        System.out.println(e);
+        System.out.println("exp: "+e);
     :} |
-    IDENTIFICADOR:f  {:RESULT = f; :}  | 
-    CADENA_TEXTO:f {:RESULT = f; :}   | 
-    NUMERO:f {:RESULT = f; :}   | 
-    FALSE:f {:RESULT = f; :}   | 
-    TRUE:f {:RESULT = f; :} ;
+    IDENTIFICADOR:f  {:RESULT = f; 
+        System.out.println("EMPIEZA FACTOR");
+        System.out.println("factor "+f);:}   | 
+    CADENA_TEXTO:f {:RESULT = f; 
+        System.out.println("EMPIEZA FACTOR");
+        System.out.println("factor "+f);:}    | 
+    NUMERO:f {:RESULT = f; 
+        System.out.println("EMPIEZA FACTOR");
+        System.out.println("factor "+f);:}   | 
+    DECIMAL:f {:RESULT = f; 
+        System.out.println("EMPIEZA FACTOR");
+        System.out.println("factor "+f);:}   | 
+    FALSE:f {:RESULT = f; 
+        System.out.println("EMPIEZA FACTOR");
+        System.out.println("factor "+f);:}   | 
+    TRUE:f {:RESULT = f; 
+        System.out.println("EMPIEZA FACTOR");
+        System.out.println("factor "+f);:}  ;
 /*
 expresion ::= NUMERO | IDENTIFICADOR | PARENTESIS_ABRE  expresion op_art expresion PARENTESIS_CIERRA;
 */
@@ -452,7 +542,8 @@ sentif::=  IF PARENTESIS_ABRE condicion PARENTESIS_CIERRA LLAVE_ABRE bloquesente
 sentelse::= ELSE LLAVE_ABRE bloquesentencias LLAVE_CIERRA |;
 sentwhile::= WHILE PARENTESIS_ABRE condicion PARENTESIS_CIERRA LLAVE_ABRE bloquesentencias LLAVE_CIERRA;
 sentasignacion::= IDENTIFICADOR:identificador SIGNO_DE_IGUAL expresion:e PUNTOYCOMA{:
-        System.out.println(identificador+" - "+e);
+        System.out.println(identificador+" = "+e);
+        VentanaPrincipal.exp =(String) e;
         //Buscar variable en la tabla de simbolos
         Simbolo sim = TablaSimbolos.buscar(identificador);
         //Si es nulo, devuelvo un error
