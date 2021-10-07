@@ -15,7 +15,6 @@ import java.awt.Color;
 action code
     {:
         Hashtable table = new Hashtable();
-        JLabel lb = new JLabel();
         private final int SINTACTICO = 232;
     :};
 
@@ -212,8 +211,8 @@ declaracion ::=
             if (sim != null) {
                 //Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
                 //RESULT = 0;
-                System.out.println("El identificador '"+id+"' ya existe");                             
-                
+                System.out.println("El identificador '"+id+"' ya existe");
+                JLabel lb = new JLabel();
                 lb.setForeground(new Color(217, 33, 51));
                 lb.setFont(new Font("Verdana", Font.PLAIN, 14));
                 lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -241,8 +240,8 @@ declaracion ::=
             if (sim != null) {
                 //Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
                 //RESULT = 0;
-                System.out.println("El identificador '"+id+"' ya existe");                             
-                
+                System.out.println("El identificador '"+id+"' ya existe");    
+                JLabel lb = new JLabel();
                 lb.setForeground(new Color(217, 33, 51));
                 lb.setFont(new Font("Verdana", Font.PLAIN, 14));
                 lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -269,8 +268,8 @@ declaracion ::=
             if (sim != null) {
                 //Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
                 //RESULT = 0;
-                System.out.println("El identificador '"+id+"' ya existe");                             
-                
+                System.out.println("El identificador '"+id+"' ya existe");    
+                JLabel lb = new JLabel();
                 lb.setForeground(new Color(217, 33, 51));
                 lb.setFont(new Font("Verdana", Font.PLAIN, 14));
                 lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -297,8 +296,8 @@ declaracion ::=
             if (sim != null) {
                 //Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
                 //RESULT = 0;
-                System.out.println("El identificador '"+id+"' ya existe");                             
-                
+                System.out.println("El identificador '"+id+"' ya existe");    
+                JLabel lb = new JLabel();
                 lb.setForeground(new Color(217, 33, 51));
                 lb.setFont(new Font("Verdana", Font.PLAIN, 14));
                 lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -326,8 +325,8 @@ declaracion ::=
             if (sim != null) {
                 //Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
                 //RESULT = 0;
-                System.out.println("El identificador '"+id+"' ya existe");                             
-                
+                System.out.println("El identificador '"+id+"' ya existe");   
+                JLabel lb = new JLabel();
                 lb.setForeground(new Color(217, 33, 51));
                 lb.setFont(new Font("Verdana", Font.PLAIN, 14));
                 lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -356,8 +355,8 @@ declaracion ::=
             if (sim != null) {
                 //Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
                 //RESULT = 0;
-                System.out.println("El identificador '"+id+"' ya existe");                             
-                
+                System.out.println("El identificador '"+id+"' ya existe");     
+                JLabel lb = new JLabel();
                 lb.setForeground(new Color(217, 33, 51));
                 lb.setFont(new Font("Verdana", Font.PLAIN, 14));
                 lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -385,8 +384,8 @@ declaracion ::=
             if (sim != null) {
                 //Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
                 //RESULT = 0;
-                System.out.println("El identificador '"+id+"' ya existe");                             
-                
+                System.out.println("El identificador '"+id+"' ya existe");   
+                JLabel lb = new JLabel();
                 lb.setForeground(new Color(217, 33, 51));
                 lb.setFont(new Font("Verdana", Font.PLAIN, 14));
                 lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -415,8 +414,8 @@ declaracion ::=
             if (sim != null) {
                 //Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
                 //RESULT = 0;
-                System.out.println("El identificador '"+id+"' ya existe");                             
-                
+                System.out.println("El identificador '"+id+"' ya existe");     
+                JLabel lb = new JLabel();
                 lb.setForeground(new Color(217, 33, 51));
                 lb.setFont(new Font("Verdana", Font.PLAIN, 14));
                 lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -445,8 +444,8 @@ declaracion ::=
             if (sim != null) {
                 //Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
                 //RESULT = 0;
-                System.out.println("El identificador '"+id+"' ya existe");                             
-                
+                System.out.println("El identificador '"+id+"' ya existe");       
+                JLabel lb = new JLabel();
                 lb.setForeground(new Color(217, 33, 51));
                 lb.setFont(new Font("Verdana", Font.PLAIN, 14));
                 lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));

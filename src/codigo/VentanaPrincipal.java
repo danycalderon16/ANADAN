@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -1040,6 +1041,9 @@ NumeroLinea lineatxtCodigo;
         rehacer();
     }//GEN-LAST:event_mnuRedoMousePressed
     public void mostrarErrores() {
+        jPanel1.removeAll();
+        jPanel1.revalidate();
+        jPanel1.repaint();
         Collections.sort(labelsErrores);
         for (LabelError labelsErrore : labelsErrores) {
             if (labelsErrore.getTipo() == SINTACTICO) {
@@ -1047,64 +1051,73 @@ NumeroLinea lineatxtCodigo;
             }
         }
         
-        if (!errores_lexicos ) {
-            JLabel lb = new JLabel("El programa no contiene errores léxicos.\n");
+        if(labelsErrores.isEmpty()){
+            JLabel lb = new JLabel("El programa no contiene errores léxicos.");
+            lb.setForeground(color_success);
+            lb.setBounds(5, 5, 700, 20);
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            jPanel1.add(lb);            
+        }
+        else{
+           int num = 0;
+                int y = 0;
+                for (LabelError le : labelsErrores) {
+                    y = 5 +30*num;
+                    le.getLabel().setBounds(5, y, 700, 20);
+                    System.out.println(le);
+                    clickLabel(le);
+                    jPanel1.add(le.getLabel());
+                    num++;
+            }
+        }
+        
+       
+       /* if (!errores_lexicos ) {
             lb.setForeground(color_success);
             lb.setBounds(5, 5, 700, 20);
             lb.setFont(new Font("Verdana", Font.PLAIN, 14));
             jPanel1.add(lb);
             System.out.println("Sin errores lexicos");
+                System.out.println(lb.getText());
+                showMessageDialog(null, "1");
             if(!errores_sintacticos){
                 System.out.println("Sin errores sintacticos");
-                lb.setText("El programa no contiene errores sintacticos.\n");
+                lb.setText("El programa no contiene errores sintacticos.");
                 lb.setBounds(5, 25, 700, 20);
                 lb.setFont(new Font("Verdana", Font.PLAIN, 14));
                 jLabel1.add(lb);
+                System.out.println(lb.getText());
+                showMessageDialog(null, "2");
             }else{
-                int num = 1;
-                errores_lexicos = true;
-                for (int j = 0; j < labelsErrores.size(); j++) {
-                    labelsErrores.get(j).getLabel().setBounds(5, 5 + 25 * num, 700, 20);
-                    clickLabel(labelsErrores.get(j));
-                    jPanel1.add(labelsErrores.get(j).getLabel());
+                int num = 0;
+                int y = 0;
+                for (LabelError le : labelsErrores) {
+                    y = 5 +30*num;
+                    System.out.println("y:"+y);
+                    le.getLabel().setBounds(5, y, 700, 20);
+                    System.out.println(le.getLabel().getY());
+                    clickLabel(le);
+                    jPanel1.add(le.getLabel());
                     num++;
+                    System.out.println("Mostrando errores lexicos y sintacticos");
+                showMessageDialog(null, "3");
                 }
             }
         }else{
             int num = 0;
-            errores_lexicos = true;
-            for (int j = 0; j < labelsErrores.size(); j++) {
-                //labelLexicoErrors.get(j).getLabel().setBounds(5, 5 + 15 * num, 500, 15 + 15 * num);
-                labelsErrores.get(j).getLabel().setBounds(5, 5 + 25 * num, 700, 20);
-                clickLabel(labelsErrores.get(j));
-                jPanel1.add(labelsErrores.get(j).getLabel());
+            int y = 0;
+            for (LabelError le : labelsErrores) {
+                y = 5 +30*num;
+                System.out.println("y:"+y);
+                le.getLabel().setBounds(5, y, 700, 20);
+                System.out.println(le.getLabel().getY());
+                clickLabel(le);
+                jPanel1.add(le.getLabel());
                 num++;
-            }
-         }
-        /*if(!errores_lexicos){
-            JLabel lb = new JLabel("El programa no contiene errores léxicos.\n");
-            lb.setForeground(color_success);
-            lb.setBounds(5, 5, 700, 20);
-            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
-            jPanel1.add(lb);
-            System.out.println("Sin errores lexicos");
-            if(!errores_sintacticos){
-                lb.setText("El programa no contiene errores sintacticos.\n");
-                lb.setBounds(5, 25, 700, 20);
-                lb.setFont(new Font("Verdana", Font.PLAIN, 14));
-                jLabel1.add(lb);
-            }
-        }else{
-            int num = 0;
-            errores_lexicos = true;
-            for (int j = 0; j < labelsErrores.size(); j++) {
-                //labelLexicoErrors.get(j).getLabel().setBounds(5, 5 + 15 * num, 500, 15 + 15 * num);
-                labelsErrores.get(j).getLabel().setBounds(5, 5 + 25 * num, 700, 20);
-                clickLabel(labelsErrores.get(j));
-                jPanel1.add(labelsErrores.get(j).getLabel());
-                num++;                        }
-            System.out.println("con errores");
-        }*/
+                System.out.println("Mostrando errores lexicos y sintacticos");
+                showMessageDialog(null, "4");
+            }            
+         }     */
     }
 
     public void buja(String[] A, int ini, int ter) {
@@ -1127,14 +1140,10 @@ NumeroLinea lineatxtCodigo;
     }
 
     public void analisisLexico() {
-        jPanel1.removeAll();
-        jPanel1.revalidate();
-        jPanel1.repaint();
         errores_lexicos = false;
         errores_sintacticos = false;
         InformacionLexema c = new InformacionLexema();
         mnuMinimize.setEnabled(true);
-        jPanel1.removeAll();
         labelsErrores = new ArrayList<LabelError>();
         File fichero = new File("fichero.and");
         PrintWriter writer;
@@ -1693,8 +1702,6 @@ NumeroLinea lineatxtCodigo;
 
     private void showModalSintaxtic(LabelError err) {
         System.out.println(err);
-        showMessageDialog(null, "Estamos trabajando en modal de gramáticas\n"+
-                err.getGramatica().getProduccion()+"\n"+err.getGramatica().getError());
     }
 
     private void clickLabel(LabelError le) {
@@ -1709,10 +1716,16 @@ NumeroLinea lineatxtCodigo;
 
             @Override
             public void mouseReleased(MouseEvent e) {
+                System.out.println("Desde 1719: "+le);
                 if (le.getTipo() == LEXICO) {
                     showModalLexical(le);
                 } else {
-                    showModalSintaxtic(le);
+                    if(le.getGramatica()!=null){
+                     showMessageDialog(null, "Estamos trabajando en modal de gramáticas\n"+
+                     le.getGramatica().getProduccion()+"\n"+le.getGramatica().getError());
+                    }
+                    else
+                        showMessageDialog(null, "Estamos trabajando en modal de gramáticas\n");
                 }
             }
 
@@ -1863,6 +1876,7 @@ NumeroLinea lineatxtCodigo;
             Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
         mostrarErrores();
-        showMessageDialog(null, exp);
+        if(!exp.isEmpty())
+            showMessageDialog(null, exp);
     }
 }
