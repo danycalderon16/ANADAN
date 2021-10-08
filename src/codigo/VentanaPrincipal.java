@@ -1902,9 +1902,9 @@ NumeroLinea lineatxtCodigo;
                 }
             }
         }
+        //System.out.println(newStr);
 
         //Creado pila con operadores y operandos en notacion infija
-        pila.push(s1[0]);
         pila.push("=");
         newStr = newStr + ")";
         String s2[] = newStr.split("");
@@ -1912,11 +1912,27 @@ NumeroLinea lineatxtCodigo;
             pila.push(s2[i]);
         }
         Pila newPila = new Pila();
+        String termino = "";
         while (!pila.isEmpty()) {
-            newPila.push(pila.pop());
+            String character = pila.pop();
+            if ("*".equals(character)
+                    || "/".equals(character)
+                    || "+".equals(character)
+                    || "-".equals(character)
+                    || "(".equals(character)
+                    || ")".equals(character)
+                    || "=".equals(character)) {
+                newPila.push(termino);
+                newPila.push(character);
+                termino = "";
+            } else {
+                termino = character +termino;
+            }
         }
 
-        newPila.imprimir();
+        newPila.push(s1[0]);
+        //System.out.print("154 newPila: ");
+        //newPila.imprimir();
         //Haciendo notacion postfija
         String postfija = "";
         Pila operadores = new Pila();
@@ -1934,23 +1950,91 @@ NumeroLinea lineatxtCodigo;
                 if (")".equals(character)) {
                     String op = operadores.pop();
                     while (!"(".equals(op)) {
-                        postfija += op;
+                        postfija += op + " ";
                         op = operadores.pop();
                     }
-                }else
-                    postfija += character;
+                } else {
+                    //System.out.println(character);
+                    postfija += character + " ";
+                    //System.out.println(postfija);
+                }
             }
         }
 
-        if (!operadores.isEmpty()) {
+        //System.out.print("183 pilaOp: ");
+        //operadores.imprimir();
+        while (!operadores.isEmpty()) {
             String op = operadores.pop();
-            while (!"(".equals(op)) {
-                postfija += op;
-                op = operadores.pop();
+            //System.out.println("187 op: "+op);
+            postfija += op + " ";
+            //op = operadores.pop();
+
+        }
+
+        //System.out.println("189 Postfija: "+postfija);
+        String post[] = postfija.split(" ");
+
+        int i = 0;
+        for (String string : post) {
+            if (!string.isEmpty()) {
+                i++;
             }
         }
-        
-        System.out.println(postfija);
+        //System.out.println(i);
+        String post_sin_espacios[] = new String[i];
+        int j = 0;
+        for (String string : post) {
+            if (!string.isEmpty()) {
+                post_sin_espacios[j++] = string;
+            }
+        }
+
+        Pila pila_exp = new Pila();
+       
+        for (String exp : post_sin_espacios) {
+            pila_exp.imprimir();
+            if ("*".equals(exp)) {
+                double op1 = Double.parseDouble(pila_exp.pop());
+                double op2 = Double.parseDouble(pila_exp.pop());
+                System.out.println(op1+"*"+op2+"="+(op1*op2));
+                pila_exp.push((op1 * op2) + "");
+                continue;
+            }
+            if ("/".equals(exp)) {
+                double op1 = Double.parseDouble(pila_exp.pop());
+                double op2 = Double.parseDouble(pila_exp.pop());
+                System.out.println(op2+"/"+op1+"="+(op2/op1));
+                pila_exp.push((op2 / op1) + "");
+                continue;
+            }
+            if ("+".equals(exp)) {
+                double op1 = Double.parseDouble(pila_exp.pop());
+                double op2 = Double.parseDouble(pila_exp.pop());
+                System.out.println(op1+"+"+op2+"="+(op1+op2));
+                pila_exp.push((op1 + op2) + "");
+                continue;
+            }
+            if ("-".equals(exp)) {
+                double op1 = Double.parseDouble(pila_exp.pop());
+                double op2 = Double.parseDouble(pila_exp.pop());
+                System.out.println(op1+"-"+op2+"="+(op1-op2));
+                pila_exp.push((op2 - op1) + "");
+                continue;
+            }
+            if ("=".equals(exp)) {/*
+                double op1 = Double.parseDouble(pila_exp.pop());
+                double op2 = Double.parseDouble(pila_exp.pop());
+                pila_exp.push((op1 * op2) + "");*/
+                continue;
+            }
+
+        //    System.out.println(exp);
+            pila_exp.push(exp);
+        }
+        pila_exp.imprimir();
+        String resutl = pila_exp.pop();
+        String id = pila_exp.pop();
+        showMessageDialog(null, id+" = "+resutl);
 
     }
 }

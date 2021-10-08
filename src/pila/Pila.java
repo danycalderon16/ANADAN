@@ -84,7 +84,7 @@ public class Pila {
 
     public void imprimir() {
         Nodo nodos = raiz;
-        // System.out.println("------------------------");
+        System.out.println("------------------------");
         while (nodos != null) {
             System.out.print(nodos.info+",");
             nodos = nodos.sig;
@@ -101,7 +101,7 @@ public class Pila {
         }
         pila.pop();
         pila.imprimir();*/
-        String str = "id = 1+2*3-4/5";
+        String str = "id = 4+3*(3+4*9.2)-8/3.2";
         String s1[] = str.split("=");
         str = s1[1];
         String newStr = "(";
@@ -121,7 +121,7 @@ public class Pila {
                 }
             }
         }
-        System.out.println(newStr);
+        //System.out.println(newStr);
 
         //Creado pila con operadores y operandos en notacion infija
         pila.push("=");
@@ -145,13 +145,13 @@ public class Pila {
                 newPila.push(character);
                 termino = "";
             } else {
-                termino += character;
+                termino = character +termino;
             }
         }
 
         newPila.push(s1[0]);
-        System.out.print("154 newPila: ");
-        newPila.imprimir();
+        //System.out.print("154 newPila: ");
+        //newPila.imprimir();
         //Haciendo notacion postfija
         String postfija = "";
         Pila operadores = new Pila();
@@ -164,9 +164,7 @@ public class Pila {
                     || "-".equals(character)
                     || "(".equals(character)
                     || "=".equals(character)) {
-                System.out.print("169 pilaOp: ");
                 operadores.push(character);
-                operadores.imprimir();
             } else {
                 if (")".equals(character)) {
                     String op = operadores.pop();
@@ -182,14 +180,17 @@ public class Pila {
             }
         }
 
+        //System.out.print("183 pilaOp: ");
+        //operadores.imprimir();
         while (!operadores.isEmpty()) {
             String op = operadores.pop();
+            //System.out.println("187 op: "+op);
             postfija += op + " ";
-            op = operadores.pop();
+            //op = operadores.pop();
 
         }
 
-        System.out.println("189 Postfija: "+postfija);
+        //System.out.println("189 Postfija: "+postfija);
         String post[] = postfija.split(" ");
 
         int i = 0;
@@ -208,36 +209,34 @@ public class Pila {
         }
 
         Pila pila_exp = new Pila();
-        for (String post_sin_espacio : post_sin_espacios) {
-            System.out.print(post_sin_espacio+", ");
-        }
+       
         for (String exp : post_sin_espacios) {
-            //pila_exp.imprimir();
+            pila_exp.imprimir();
             if ("*".equals(exp)) {
                 double op1 = Double.parseDouble(pila_exp.pop());
                 double op2 = Double.parseDouble(pila_exp.pop());
-                //System.out.println(op1+"*"+op2+"="+(op1*op2));
+                System.out.println(op1+"*"+op2+"="+(op1*op2));
                 pila_exp.push((op1 * op2) + "");
                 continue;
             }
             if ("/".equals(exp)) {
                 double op1 = Double.parseDouble(pila_exp.pop());
                 double op2 = Double.parseDouble(pila_exp.pop());
-                //System.out.println(op2+"/"+op1+"="+(op2/op1));
+                System.out.println(op2+"/"+op1+"="+(op2/op1));
                 pila_exp.push((op2 / op1) + "");
                 continue;
             }
             if ("+".equals(exp)) {
                 double op1 = Double.parseDouble(pila_exp.pop());
                 double op2 = Double.parseDouble(pila_exp.pop());
-                //System.out.println(op1+"+"+op2+"="+(op1+op2));
+                System.out.println(op1+"+"+op2+"="+(op1+op2));
                 pila_exp.push((op1 + op2) + "");
                 continue;
             }
             if ("-".equals(exp)) {
                 double op1 = Double.parseDouble(pila_exp.pop());
                 double op2 = Double.parseDouble(pila_exp.pop());
-                //System.out.println(op1+"-"+op2+"="+(op1-op2));
+                System.out.println(op1+"-"+op2+"="+(op1-op2));
                 pila_exp.push((op2 - op1) + "");
                 continue;
             }
@@ -251,7 +250,7 @@ public class Pila {
         //    System.out.println(exp);
             pila_exp.push(exp);
         }
-        //pila_exp.imprimir();
+        pila_exp.imprimir();
 
     }
 }
