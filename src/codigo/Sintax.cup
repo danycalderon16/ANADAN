@@ -500,7 +500,7 @@ expresion ::=
 termino ::= factor:f1 SIGNO_DE_MULTIPLICACIÓN factor:f2 {:
         RESULT = f1+"*"+f2;
         if (f1 instanceof Integer){
-            if(f2 instanceof String){
+           /* if(f2 instanceof String){
                 JLabel lb = new JLabel();
                 lb.setForeground(new Color(217, 33, 51));
                 lb.setFont(new Font("Verdana", Font.PLAIN, 14));
@@ -508,10 +508,10 @@ termino ::= factor:f1 SIGNO_DE_MULTIPLICACIÓN factor:f2 {:
                 lb.setText("Error en la línea " + (f2right+1) + ". Error sintáctico. No se puede multiplicar una variable 'just' una 'word'" );   
                 VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. No se puede multiplicar una variable 'just' una 'word'", f2right+1,SINTACTICO,
                 new Gramatica("termino ::= factor: SIGNO_DE_MULTIPLICACIÓN factor", "No se puede multiplicar una variable 'just' una 'word'")));
-            }
+            }*/
         }
         if (f1 instanceof String){
-            if(f2 instanceof Integer){
+           /* if(f2 instanceof Integer){
                 JLabel lb = new JLabel();
                 lb.setForeground(new Color(217, 33, 51));
                 lb.setFont(new Font("Verdana", Font.PLAIN, 14));
@@ -519,7 +519,7 @@ termino ::= factor:f1 SIGNO_DE_MULTIPLICACIÓN factor:f2 {:
                 lb.setText("Error en la línea " + (f2right+1) + ". Error sintáctico. No se puede multiplicar una variable 'word' una 'just'" );   
                 VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. No se puede multiplicar una variable 'word' una 'just'", f2right+1,SINTACTICO,
                 new Gramatica("termino ::= factor: SIGNO_DE_MULTIPLICACIÓN factor", "No se puede multiplicar una variable 'word' una 'just'")));
-            }
+            }*/
         }
         System.out.println("factor1 "+f1);
         System.out.println("factor2 "+f2);
@@ -528,7 +528,7 @@ termino ::= factor:f1 SIGNO_DE_MULTIPLICACIÓN factor:f2 {:
     System.out.println("EMPIEZA TERMINO");
         RESULT = f1+"/"+f2;
         if (f1 instanceof Integer){
-            if(f2 instanceof String){
+            /*if(f2 instanceof String){
                 JLabel lb = new JLabel();
                 lb.setForeground(new Color(217, 33, 51));
                 lb.setFont(new Font("Verdana", Font.PLAIN, 14));
@@ -536,10 +536,10 @@ termino ::= factor:f1 SIGNO_DE_MULTIPLICACIÓN factor:f2 {:
                 lb.setText("Error en la línea " + (f2right+1) + ". Error sintáctico. No se puede dividir una variable 'just' una 'word'" );   
                 VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. No se puede dividir una variable 'just' una 'word'", f2right+1,SINTACTICO,
                 new Gramatica("termino ::= factor: SIGNO_DE_MULTIPLICACIÓN factor", "No se puede dividir una variable 'just' una 'word'")));
-            }
+            }*/
         }
         if (f1 instanceof String){
-            if(f2 instanceof Integer){
+            /*if(f2 instanceof Integer){
                 JLabel lb = new JLabel();
                 lb.setForeground(new Color(217, 33, 51));
                 lb.setFont(new Font("Verdana", Font.PLAIN, 14));
@@ -547,7 +547,7 @@ termino ::= factor:f1 SIGNO_DE_MULTIPLICACIÓN factor:f2 {:
                 lb.setText("Error en la línea " + (f2right+1) + ". Error sintáctico. No se puede dividir una variable 'word' una 'just'" );   
                 VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. No se puede dividir una variable 'word' una 'just'", f2right+1,SINTACTICO,
                 new Gramatica("termino ::= factor: SIGNO_DE_MULTIPLICACIÓN factor", "No se puede dividir una variable 'word' una 'just'")));
-            }
+            }*/
         }
         System.out.println("factor1 "+f1);
         System.out.println("factor2 "+f2);
@@ -564,7 +564,25 @@ factor ::=
         RESULT =  "("+e+")";
         System.out.println("exp: "+e);
     :} |
-    IDENTIFICADOR:f  {:RESULT = f; 
+    IDENTIFICADOR:f  {:
+        Simbolo sim = TablaSimbolos.buscar(f);
+        //Si es nulo, devuelvo un error
+        if (sim == null) {
+            JLabel lb = new JLabel();
+                lb.setForeground(new Color(217, 33, 51));
+                lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+                lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                lb.setText("Error en la línea " + (fright+1) + ". Error sintáctico. La variable '"+f+"' no existe" );   
+                VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. La variable '"+f+"' no existe", fright+1,SINTACTICO,
+                new Gramatica("sentasignacion::= IDENTIFICADOR SIGNO_DE_IGUAL expresion PUNTOYCOMA","Error sintáctico. La variable '"+f+"' no existe")));
+                System.out.println("El identificador '"+f+"' no existe");
+                 
+                RESULT = 0; 
+        }
+        else{
+            System.out.println("*****id: "+sim.valor);  
+            RESULT = sim.valor; 
+        }
         System.out.println("EMPIEZA FACTOR");
         System.out.println("factor "+f);:}   | 
     CADENA_TEXTO:f {:RESULT = f; 
@@ -600,8 +618,13 @@ sentasignacion::= IDENTIFICADOR:identificador SIGNO_DE_IGUAL expresion:e PUNTOYC
         Simbolo sim = TablaSimbolos.buscar(identificador);
         //Si es nulo, devuelvo un error
         if (sim == null) {
-            //Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
-            //RESULT = 0;
+            JLabel lb = new JLabel();
+                lb.setForeground(new Color(217, 33, 51));
+                lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+                lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                lb.setText("Error en la línea " + (identificadorright+1) + ". Error sintáctico. La variable '"+identificador+"' no existe" );   
+                VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. La variable '"+identificador+"' no existe", identificadorright+1,SINTACTICO,
+                new Gramatica("sentasignacion::= IDENTIFICADOR SIGNO_DE_IGUAL expresion PUNTOYCOMA","Error sintáctico. La variable '"+identificador+"' no existe")));
             System.out.println("El identificador '"+identificador+"' no existe");
         }
         else{
