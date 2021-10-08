@@ -19,6 +19,7 @@ public class Pila {
         raiz = null;
     }
 
+    /*
     public void push(String x) {
         if (x.equals("*")) {
             float op1 = Float.parseFloat(pop());
@@ -56,6 +57,20 @@ public class Pila {
         }
 
     }
+     */
+    public boolean isEmpty() {
+        return raiz == null;
+    }
+
+    public void push(String s) {
+        Nodo n = new Nodo(s);
+        if (raiz == null) {
+            raiz = n;
+        } else {
+            n.sig = raiz;
+            raiz = n;
+        }
+    }
 
     public String pop() {
         if (raiz != null) {
@@ -68,22 +83,175 @@ public class Pila {
     }
 
     public void imprimir() {
-        Nodo reco = raiz;
-        System.out.println("Listado de todos los elementos de la pila.");
-        while (reco != null) {
-            System.out.println(reco.info + "-");
-            reco = reco.sig;
+        Nodo nodos = raiz;
+        // System.out.println("------------------------");
+        while (nodos != null) {
+            System.out.print(nodos.info+",");
+            nodos = nodos.sig;
         }
         System.out.println();
     }
 
     public static void main(String[] ar) {
-        String exp = "123*+45/-";
+        /* String exp = "123";
         String[] arb = exp.split("");
         Pila pila = new Pila();
         for(int i = 0;i<exp.length();i++){
             pila.push(arb[i]);
         }
-        pila.imprimir();
+        pila.pop();
+        pila.imprimir();*/
+        String str = "id = 1+2*3-4/5";
+        String s1[] = str.split("=");
+        str = s1[1];
+        String newStr = "(";
+        str = str.replace(" ", "");
+        Pila pila = new Pila();
+
+        //Agregando parentesis entre terminos de suma y resta
+        String c[] = str.split("");
+        for (int i = 0; i < c.length; i++) {
+            if ("-".equals(c[i])) {
+                newStr += ")-(";
+            } else {
+                if ("+".equals(c[i])) {
+                    newStr += ")+(";
+                } else {
+                    newStr += c[i];
+                }
+            }
+        }
+        System.out.println(newStr);
+
+        //Creado pila con operadores y operandos en notacion infija
+        pila.push("=");
+        newStr = newStr + ")";
+        String s2[] = newStr.split("");
+        for (int i = 0; i < s2.length; i++) {
+            pila.push(s2[i]);
+        }
+        Pila newPila = new Pila();
+        String termino = "";
+        while (!pila.isEmpty()) {
+            String character = pila.pop();
+            if ("*".equals(character)
+                    || "/".equals(character)
+                    || "+".equals(character)
+                    || "-".equals(character)
+                    || "(".equals(character)
+                    || ")".equals(character)
+                    || "=".equals(character)) {
+                newPila.push(termino);
+                newPila.push(character);
+                termino = "";
+            } else {
+                termino += character;
+            }
+        }
+
+        newPila.push(s1[0]);
+        System.out.print("154 newPila: ");
+        newPila.imprimir();
+        //Haciendo notacion postfija
+        String postfija = "";
+        Pila operadores = new Pila();
+
+        while (!newPila.isEmpty()) {
+            String character = newPila.pop();
+            if ("*".equals(character)
+                    || "/".equals(character)
+                    || "+".equals(character)
+                    || "-".equals(character)
+                    || "(".equals(character)
+                    || "=".equals(character)) {
+                System.out.print("169 pilaOp: ");
+                operadores.push(character);
+                operadores.imprimir();
+            } else {
+                if (")".equals(character)) {
+                    String op = operadores.pop();
+                    while (!"(".equals(op)) {
+                        postfija += op + " ";
+                        op = operadores.pop();
+                    }
+                } else {
+                    //System.out.println(character);
+                    postfija += character + " ";
+                    //System.out.println(postfija);
+                }
+            }
+        }
+
+        while (!operadores.isEmpty()) {
+            String op = operadores.pop();
+            postfija += op + " ";
+            op = operadores.pop();
+
+        }
+
+        System.out.println("189 Postfija: "+postfija);
+        String post[] = postfija.split(" ");
+
+        int i = 0;
+        for (String string : post) {
+            if (!string.isEmpty()) {
+                i++;
+            }
+        }
+        //System.out.println(i);
+        String post_sin_espacios[] = new String[i];
+        int j = 0;
+        for (String string : post) {
+            if (!string.isEmpty()) {
+                post_sin_espacios[j++] = string;
+            }
+        }
+
+        Pila pila_exp = new Pila();
+        for (String post_sin_espacio : post_sin_espacios) {
+            System.out.print(post_sin_espacio+", ");
+        }
+        for (String exp : post_sin_espacios) {
+            //pila_exp.imprimir();
+            if ("*".equals(exp)) {
+                double op1 = Double.parseDouble(pila_exp.pop());
+                double op2 = Double.parseDouble(pila_exp.pop());
+                //System.out.println(op1+"*"+op2+"="+(op1*op2));
+                pila_exp.push((op1 * op2) + "");
+                continue;
+            }
+            if ("/".equals(exp)) {
+                double op1 = Double.parseDouble(pila_exp.pop());
+                double op2 = Double.parseDouble(pila_exp.pop());
+                //System.out.println(op2+"/"+op1+"="+(op2/op1));
+                pila_exp.push((op2 / op1) + "");
+                continue;
+            }
+            if ("+".equals(exp)) {
+                double op1 = Double.parseDouble(pila_exp.pop());
+                double op2 = Double.parseDouble(pila_exp.pop());
+                //System.out.println(op1+"+"+op2+"="+(op1+op2));
+                pila_exp.push((op1 + op2) + "");
+                continue;
+            }
+            if ("-".equals(exp)) {
+                double op1 = Double.parseDouble(pila_exp.pop());
+                double op2 = Double.parseDouble(pila_exp.pop());
+                //System.out.println(op1+"-"+op2+"="+(op1-op2));
+                pila_exp.push((op2 - op1) + "");
+                continue;
+            }
+            if ("=".equals(exp)) {/*
+                double op1 = Double.parseDouble(pila_exp.pop());
+                double op2 = Double.parseDouble(pila_exp.pop());
+                pila_exp.push((op1 * op2) + "");*/
+                continue;
+            }
+
+        //    System.out.println(exp);
+            pila_exp.push(exp);
+        }
+        //pila_exp.imprimir();
+
     }
 }

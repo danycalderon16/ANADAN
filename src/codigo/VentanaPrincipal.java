@@ -44,6 +44,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
+import pila.Pila;
 
 import static util.Utils.*;
 
@@ -1050,29 +1051,30 @@ NumeroLinea lineatxtCodigo;
                 errores_sintacticos = true;
             }
         }
-        
-        if(labelsErrores.isEmpty()){
+
+        if (labelsErrores.isEmpty()) {
             JLabel lb = new JLabel("El programa no contiene errores léxicos.");
             lb.setForeground(color_success);
             lb.setBounds(5, 5, 700, 20);
             lb.setFont(new Font("Verdana", Font.PLAIN, 14));
-            jPanel1.add(lb);            
-        }
-        else{
-           int num = 0;
-                int y = 0;
-                for (LabelError le : labelsErrores) {
-                    y = 5 +30*num;
-                    le.getLabel().setBounds(5, y, 700, 20);
-                    System.out.println(le);
-                    clickLabel(le);
-                    jPanel1.add(le.getLabel());
-                    num++;
+            jPanel1.add(lb);
+        } else {
+            int num = 0;
+            int y = 0;
+            for (LabelError le : labelsErrores) {
+                y = 5 + 30 * num;
+                le.getLabel().setBounds(5, y, 700, 20);
+                System.out.println(le);
+                clickLabel(le);
+                jPanel1.add(le.getLabel());
+                num++;
             }
         }
-        
-       
-       /* if (!errores_lexicos ) {
+        if (!exp.isEmpty() && !errores_sintacticos) {
+            resolverExp(exp);
+        }
+
+        /* if (!errores_lexicos ) {
             lb.setForeground(color_success);
             lb.setBounds(5, 5, 700, 20);
             lb.setFont(new Font("Verdana", Font.PLAIN, 14));
@@ -1716,16 +1718,16 @@ NumeroLinea lineatxtCodigo;
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                System.out.println("Desde 1719: "+le);
+                System.out.println("Desde 1719: " + le);
                 if (le.getTipo() == LEXICO) {
                     showModalLexical(le);
                 } else {
-                    if(le.getGramatica()!=null){
-                     showMessageDialog(null, "Estamos trabajando en modal de gramáticas\n"+
-                     le.getGramatica().getProduccion()+"\n"+le.getGramatica().getError());
-                    }
-                    else
+                    if (le.getGramatica() != null) {
+                        showMessageDialog(null, "Estamos trabajando en modal de gramáticas\n"
+                                + le.getGramatica().getProduccion() + "\n" + le.getGramatica().getError());
+                    } else {
                         showMessageDialog(null, "Estamos trabajando en modal de gramáticas\n");
+                    }
                 }
             }
 
@@ -1876,7 +1878,79 @@ NumeroLinea lineatxtCodigo;
             Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
         mostrarErrores();
-        if(!exp.isEmpty())
-            showMessageDialog(null, exp);
+
+    }
+
+    private void resolverExp(String str) {
+        str = str.replace(" ", "");
+        String s1[] = str.split("=");
+        str = s1[1];
+        String newStr = "(";
+        str = str.replace(" ", "");
+        Pila pila = new Pila();
+
+        //Agregando parentesis entre terminos de suma y resta
+        String c[] = str.split("");
+        for (int i = 0; i < c.length; i++) {
+            if ("-".equals(c[i])) {
+                newStr += ")-(";
+            } else {
+                if ("+".equals(c[i])) {
+                    newStr += ")+(";
+                } else {
+                    newStr += c[i];
+                }
+            }
+        }
+
+        //Creado pila con operadores y operandos en notacion infija
+        pila.push(s1[0]);
+        pila.push("=");
+        newStr = newStr + ")";
+        String s2[] = newStr.split("");
+        for (int i = 0; i < s2.length; i++) {
+            pila.push(s2[i]);
+        }
+        Pila newPila = new Pila();
+        while (!pila.isEmpty()) {
+            newPila.push(pila.pop());
+        }
+
+        newPila.imprimir();
+        //Haciendo notacion postfija
+        String postfija = "";
+        Pila operadores = new Pila();
+
+        while (!newPila.isEmpty()) {
+            String character = newPila.pop();
+            if ("*".equals(character)
+                    || "/".equals(character)
+                    || "+".equals(character)
+                    || "-".equals(character)
+                    || "(".equals(character)
+                    || "=".equals(character)) {
+                operadores.push(character);
+            } else {
+                if (")".equals(character)) {
+                    String op = operadores.pop();
+                    while (!"(".equals(op)) {
+                        postfija += op;
+                        op = operadores.pop();
+                    }
+                }else
+                    postfija += character;
+            }
+        }
+
+        if (!operadores.isEmpty()) {
+            String op = operadores.pop();
+            while (!"(".equals(op)) {
+                postfija += op;
+                op = operadores.pop();
+            }
+        }
+        
+        System.out.println(postfija);
+
     }
 }

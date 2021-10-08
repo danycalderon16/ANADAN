@@ -479,90 +479,163 @@ t_dato::= BROKEN|
 
 expresion ::= 
     expresion:e SIGNO_DE_SUMA termino:t {:
-        System.out.println("EMPIEZA EXPRESION");
+        if (e instanceof Integer){
+            if(t instanceof String){
+                String str = ((String) t).substring(0, 1);
+                if(str.equals("\"")){
+                    JLabel lb = new JLabel();
+                    lb.setForeground(new Color(217, 33, 51));
+                    lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+                    lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                    lb.setText("Error en la línea " + (tright+1) + ". Error sintáctico. No se puede sumar una variable 'just' y una 'word'" );   
+                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. No se puede sumar una variable 'just' y una 'word'", tright+1,SINTACTICO,
+                    new Gramatica("expresion ::= expresion SIGNO_DE_SUMA termino", "No se puede sumar una variable 'just' y una 'word'")));                          
+                }
+            }
+        }
+        if (t instanceof Integer){
+            if(e instanceof String){
+                String str = ((String) e).substring(0, 1);
+                if(str.equals("\"")){
+                    JLabel lb = new JLabel();
+                    lb.setForeground(new Color(217, 33, 51));
+                    lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+                    lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                    lb.setText("Error en la línea " + (eright+1) + ". Error sintáctico. No se puede sumar una variable 'word' y una 'just'" );   
+                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. No se puede sumar una variable 'word' y una 'just'", eright+1,SINTACTICO,
+                    new Gramatica("expresion ::= expresion SIGNO_DE_SUMA termino", "No se puede sumar una variable 'word' y una 'just'")));                          
+                }
+            }
+        }
+
+        //System.out.println("EMPIEZA EXPRESION");
         RESULT = e+"+"+t;
-        System.out.println("termino: "+t);
-        System.out.println("exp: "+e);
+        //System.out.println("termino: "+t);
+        //System.out.println("exp: "+e);
     :} |
     expresion:e SIGNO_DE_RESTA termino:t {:
-        System.out.println("EMPIEZA EXPRESION");
+        if (e instanceof Integer){
+            if(t instanceof String){
+                String str = ((String) t).substring(0, 1);
+                if(str.equals("\"")){
+                    JLabel lb = new JLabel();
+                    lb.setForeground(new Color(217, 33, 51));
+                    lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+                    lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                    lb.setText("Error en la línea " + (tright+1) + ". Error sintáctico. No se puede restar una variable 'just' y una 'word'" );   
+                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. No se puede restar una variable 'just' y una 'word'", tright+1,SINTACTICO,
+                    new Gramatica("expresion ::= expresion SIGNO_DE_SUMA termino", "No se puede restar una variable 'just' y una 'word'")));                          
+                }
+            }
+        }
+        if (t instanceof Integer){
+            if(e instanceof String){
+                String str = ((String) e).substring(0, 1);
+                if(str.equals("\"")){
+                    JLabel lb = new JLabel();
+                    lb.setForeground(new Color(217, 33, 51));
+                    lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+                    lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                    lb.setText("Error en la línea " + (eright+1) + ". Error sintáctico. No se puede restar una variable 'word' y una 'just'" );   
+                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. No se puede restar una variable 'word' y una 'just'", eright+1,SINTACTICO,
+                    new Gramatica("expresion ::= expresion SIGNO_DE_SUMA termino", "No se puede restar una variable 'word' y una 'just'")));                          
+                }
+            }
+        }
+        //System.out.println("EMPIEZA EXPRESION");
         RESULT = e+"-"+t;
-        System.out.println("termino: "+t);
-        System.out.println("exp: "+e);
+        //System.out.println("termino: "+t);
+        //System.out.println("exp: "+e);
     :} |
     termino:t {:
         RESULT = t; 
-        System.out.println("EMPIEZA EXPRESION");        
-        System.out.println("termino: "+t);
+        //System.out.println("EMPIEZA EXPRESION");        
+        //System.out.println("termino: "+t);
         :} 
 ;
     
 termino ::= factor:f1 SIGNO_DE_MULTIPLICACIÓN factor:f2 {:
         RESULT = f1+"*"+f2;
         if (f1 instanceof Integer){
-           /* if(f2 instanceof String){
-                JLabel lb = new JLabel();
-                lb.setForeground(new Color(217, 33, 51));
-                lb.setFont(new Font("Verdana", Font.PLAIN, 14));
-                lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-                lb.setText("Error en la línea " + (f2right+1) + ". Error sintáctico. No se puede multiplicar una variable 'just' una 'word'" );   
-                VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. No se puede multiplicar una variable 'just' una 'word'", f2right+1,SINTACTICO,
-                new Gramatica("termino ::= factor: SIGNO_DE_MULTIPLICACIÓN factor", "No se puede multiplicar una variable 'just' una 'word'")));
-            }*/
+            if(f2 instanceof String){
+                String str = ((String) f2).substring(0, 1);
+                if(str.equals("\"")){
+                    JLabel lb = new JLabel();
+                    lb.setForeground(new Color(217, 33, 51));
+                    lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+                    lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                    lb.setText("Error en la línea " + (f2right+1) + ". Error sintáctico. No se puede multiplicar una variable 'just' y una 'word'" );   
+                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. No se puede multiplicar una variable 'just' y  una 'word'", f2right+1,SINTACTICO,
+                    new Gramatica("termino ::= factor: SIGNO_DE_MULTIPLICACIÓN factor", "No se puede multiplicar una variable 'just' y una 'word'")));          
+                }
+                else
+                    System.out.println("**"+f2+": f2  es varibale");                    
+            }
         }
         if (f1 instanceof String){
-           /* if(f2 instanceof Integer){
+           if(f2 instanceof Integer){
+                String str = ((String) f1).substring(0, 1);
+                if(str.equals("\"")){
                 JLabel lb = new JLabel();
-                lb.setForeground(new Color(217, 33, 51));
-                lb.setFont(new Font("Verdana", Font.PLAIN, 14));
-                lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-                lb.setText("Error en la línea " + (f2right+1) + ". Error sintáctico. No se puede multiplicar una variable 'word' una 'just'" );   
-                VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. No se puede multiplicar una variable 'word' una 'just'", f2right+1,SINTACTICO,
-                new Gramatica("termino ::= factor: SIGNO_DE_MULTIPLICACIÓN factor", "No se puede multiplicar una variable 'word' una 'just'")));
-            }*/
+                    lb.setForeground(new Color(217, 33, 51));
+                    lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+                    lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                    lb.setText("Error en la línea " + (f2right+1) + ". Error sintáctico. No se puede multiplicar una variable 'word' una 'just'" );   
+                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. No se puede multiplicar una variable 'word' una 'just'", f2right+1,SINTACTICO,
+                    new Gramatica("termino ::= factor: SIGNO_DE_MULTIPLICACIÓN factor", "No se puede multiplicar una variable 'word' una 'just'")));
+                }
+            }
         }
-        System.out.println("factor1 "+f1);
-        System.out.println("factor2 "+f2);
+        //System.out.println("factor1 "+f1);
+        //System.out.println("factor2 "+f2);
     :} |
     factor:f1 SIGNO_DE_DIVISIÓN factor:f2 {:
     System.out.println("EMPIEZA TERMINO");
         RESULT = f1+"/"+f2;
         if (f1 instanceof Integer){
-            /*if(f2 instanceof String){
-                JLabel lb = new JLabel();
-                lb.setForeground(new Color(217, 33, 51));
-                lb.setFont(new Font("Verdana", Font.PLAIN, 14));
-                lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-                lb.setText("Error en la línea " + (f2right+1) + ". Error sintáctico. No se puede dividir una variable 'just' una 'word'" );   
-                VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. No se puede dividir una variable 'just' una 'word'", f2right+1,SINTACTICO,
-                new Gramatica("termino ::= factor: SIGNO_DE_MULTIPLICACIÓN factor", "No se puede dividir una variable 'just' una 'word'")));
-            }*/
+            if(f2 instanceof String){
+                String str = ((String) f2).substring(0, 1);
+                if(str.equals("\"")){
+                    JLabel lb = new JLabel();
+                    lb.setForeground(new Color(217, 33, 51));
+                    lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+                    lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                    lb.setText("Error en la línea " + (f2right+1) + ". Error sintáctico. No se puede dividir una variable 'just' y una 'word'" );   
+                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. No se puede dividir una variable 'just' y una 'word'", f2right+1,SINTACTICO,
+                    new Gramatica("termino ::= factor: SIGNO_DE_MULTIPLICACIÓN factor", "No se puede dividir una variable 'just' y una 'word'")));
+                }
+                else
+                    System.out.println("**"+f2+": f2  es varibale");
+            }
         }
         if (f1 instanceof String){
-            /*if(f2 instanceof Integer){
-                JLabel lb = new JLabel();
-                lb.setForeground(new Color(217, 33, 51));
-                lb.setFont(new Font("Verdana", Font.PLAIN, 14));
-                lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-                lb.setText("Error en la línea " + (f2right+1) + ". Error sintáctico. No se puede dividir una variable 'word' una 'just'" );   
-                VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. No se puede dividir una variable 'word' una 'just'", f2right+1,SINTACTICO,
-                new Gramatica("termino ::= factor: SIGNO_DE_MULTIPLICACIÓN factor", "No se puede dividir una variable 'word' una 'just'")));
-            }*/
+            if(f2 instanceof Integer){
+                String str = ((String) f1).substring(0, 1);
+                if(str.equals("\"")){
+                    JLabel lb = new JLabel();
+                    lb.setForeground(new Color(217, 33, 51));
+                    lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+                    lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                    lb.setText("Error en la línea " + (f2right+1) + ". Error sintáctico. No se puede dividir una variable 'word' y una 'just'" );   
+                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. No se puede dividir una variable 'word' y una 'just'", f2right+1,SINTACTICO,
+                    new Gramatica("termino ::= factor: SIGNO_DE_MULTIPLICACIÓN factor", "No se puede dividir una variable 'word' y una 'just'")));
+                }
+            }
         }
-        System.out.println("factor1 "+f1);
-        System.out.println("factor2 "+f2);
+        //System.out.println("factor1 "+f1);
+        //System.out.println("factor2 "+f2);
     :} |
     factor:f {:RESULT = f; 
-        System.out.println("EMPIEZA TERMINO");
-        System.out.println("factor "+f);
+        //System.out.println("EMPIEZA TERMINO");
+        //System.out.println("factor "+f);
     :} 
 ;
     
 factor ::= 
     PARENTESIS_ABRE expresion:e PARENTESIS_CIERRA {:
-        System.out.println("EMPIEZA FACTOR");
+        //System.out.println("EMPIEZA FACTOR");
         RESULT =  "("+e+")";
-        System.out.println("exp: "+e);
+        //System.out.println("exp: "+e);
     :} |
     IDENTIFICADOR:f  {:
         Simbolo sim = TablaSimbolos.buscar(f);
@@ -583,23 +656,23 @@ factor ::=
             System.out.println("*****id: "+sim.valor);  
             RESULT = sim.valor; 
         }
-        System.out.println("EMPIEZA FACTOR");
-        System.out.println("factor "+f);:}   | 
+        //System.out.println("EMPIEZA FACTOR");
+        //System.out.println("factor "+f);:}   | 
     CADENA_TEXTO:f {:RESULT = f; 
-        System.out.println("EMPIEZA FACTOR");
-        System.out.println("factor "+f);:}    | 
+        //System.out.println("EMPIEZA FACTOR");
+        //System.out.println("factor "+f);:}    | 
     NUMERO:f {:RESULT = f; 
-        System.out.println("EMPIEZA FACTOR");
-        System.out.println("factor "+f);:}   | 
+        //System.out.println("EMPIEZA FACTOR");
+        //System.out.println("factor "+f);:}   | 
     DECIMAL:f {:RESULT = f; 
-        System.out.println("EMPIEZA FACTOR");
-        System.out.println("factor "+f);:}   | 
+        //System.out.println("EMPIEZA FACTOR");
+        //System.out.println("factor "+f);:}   | 
     FALSE:f {:RESULT = f; 
-        System.out.println("EMPIEZA FACTOR");
-        System.out.println("factor "+f);:}   | 
+        //System.out.println("EMPIEZA FACTOR");
+        //System.out.println("factor "+f);:}   | 
     TRUE:f {:RESULT = f; 
-        System.out.println("EMPIEZA FACTOR");
-        System.out.println("factor "+f);:}  ;
+        //System.out.println("EMPIEZA FACTOR");
+        //System.out.println("factor "+f);:}  ;
 /*
 expresion ::= NUMERO | IDENTIFICADOR | PARENTESIS_ABRE  expresion op_art expresion PARENTESIS_CIERRA;
 */
@@ -613,7 +686,7 @@ sentelse::= ELSE LLAVE_ABRE bloquesentencias LLAVE_CIERRA |;
 sentwhile::= WHILE PARENTESIS_ABRE condicion PARENTESIS_CIERRA LLAVE_ABRE bloquesentencias LLAVE_CIERRA;
 sentasignacion::= IDENTIFICADOR:identificador SIGNO_DE_IGUAL expresion:e PUNTOYCOMA{:
         System.out.println(identificador+" = "+e);
-        VentanaPrincipal.exp =(String) e;
+        VentanaPrincipal.exp = identificador +"="+(String) e;
         //Buscar variable en la tabla de simbolos
         Simbolo sim = TablaSimbolos.buscar(identificador);
         //Si es nulo, devuelvo un error
