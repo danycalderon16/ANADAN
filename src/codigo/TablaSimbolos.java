@@ -52,6 +52,41 @@ class Simbolo
         this.clase = clase;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public Object getValor() {
+        return valor;
+    }
+
+    public void setValor(Object valor) {
+        this.valor = valor;
+    }
+
+    public String getClase() {
+        return clase;
+    }
+
+    public void setClase(String clase) {
+        this.clase = clase;
+    }
+    
+    
+    
+    
     @Override
     public String toString() {
         return "Simbolo{" + "nombre=" + nombre + ", tipo=" + tipo + ", valor=" + valor + ", clase=" + clase + '}';

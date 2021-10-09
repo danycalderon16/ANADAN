@@ -5,6 +5,7 @@
  */
 package pila;
 
+import javax.swing.JOptionPane;
 import pila.Nodo;
 
 /**
@@ -101,7 +102,7 @@ public class Pila {
         }
         pila.pop();
         pila.imprimir();*/
-        String str = "id = 4+3*(3+4*9.2)-8/3.2";
+        String str = "id = 4+3*(3+4)";
         String s1[] = str.split("=");
         str = s1[1];
         String newStr = "(";
@@ -251,6 +252,10 @@ public class Pila {
             pila_exp.push(exp);
         }
         pila_exp.imprimir();
+        String result = pila_exp.pop();
+        String id = pila_exp.pop();
+        int r_int = (int) Double.parseDouble(result);
+        JOptionPane.showMessageDialog(null, r_int);
 
     }
 }

@@ -685,8 +685,6 @@ sentif::=  IF PARENTESIS_ABRE condicion PARENTESIS_CIERRA LLAVE_ABRE bloquesente
 sentelse::= ELSE LLAVE_ABRE bloquesentencias LLAVE_CIERRA |;
 sentwhile::= WHILE PARENTESIS_ABRE condicion PARENTESIS_CIERRA LLAVE_ABRE bloquesentencias LLAVE_CIERRA;
 sentasignacion::= IDENTIFICADOR:identificador SIGNO_DE_IGUAL expresion:e PUNTOYCOMA{:
-        System.out.println(identificador+" = "+e);
-        VentanaPrincipal.exp = identificador +"="+(String) e;
         //Buscar variable en la tabla de simbolos
         Simbolo sim = TablaSimbolos.buscar(identificador);
         //Si es nulo, devuelvo un error
@@ -701,7 +699,17 @@ sentasignacion::= IDENTIFICADOR:identificador SIGNO_DE_IGUAL expresion:e PUNTOYC
             System.out.println("El identificador '"+identificador+"' no existe");
         }
         else{
-            //RESULT = sim.valor;
+            if(sim.tipo.equals("just") || sim.tipo.equals("broken"))
+                VentanaPrincipal.exp = identificador +"="+(String) e;
+            else{ 
+                JLabel lb = new JLabel();
+                lb.setForeground(new Color(217, 33, 51));
+                lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+                lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                lb.setText("Error en la línea " + (identificadorright+1) + ". Error semantico. La variable '"+identificador+"' no de algun tipo numérico" );   
+                VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semantico. La variable '"+identificador+"' no de algun tipo numérico", identificadorright+1,SINTACTICO,
+                new Gramatica("sentasignacion::= IDENTIFICADOR SIGNO_DE_IGUAL expresion PUNTOYCOMA","Error semantico. La variable '"+identificador+"' no de algun tipo numérico")));           
+            }
         }
     :};
 

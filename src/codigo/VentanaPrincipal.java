@@ -2032,9 +2032,20 @@ NumeroLinea lineatxtCodigo;
             pila_exp.push(exp);
         }
         pila_exp.imprimir();
-        String resutl = pila_exp.pop();
+        String result = pila_exp.pop();
         String id = pila_exp.pop();
-        showMessageDialog(null, id+" = "+resutl);
+        Simbolo sim = TablaSimbolos.buscar(id);
+        System.out.println(sim);
+        if(sim.getTipo().equals("just")){            
+            int r_int = (int) Double.parseDouble(result);
+            sim.setValor(r_int);
+        }else{
+            float r_floar = (float) Double.parseDouble(result);
+            sim.setValor(r_floar);
+        }
+        System.out.println(sim);
+        
+        
 
     }
 }
