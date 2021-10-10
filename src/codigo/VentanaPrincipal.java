@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package codigo;
 
 import ds.desktop.notify.DesktopNotify;
@@ -25,22 +20,18 @@ import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.StringReader;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.UIDefaults;
-import javax.swing.UIManager;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
 import javax.swing.plaf.ColorUIResource;
@@ -51,20 +42,26 @@ import modelos.Simbolos;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
-import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
+import pila.Pila;
 
 import static util.Utils.*;
 
 public class VentanaPrincipal extends javax.swing.JFrame {
 
-    private ArrayList<String> identificadores = new ArrayList<String>();
-    private ArrayList<LabelError> labelLexicoErrors;
+    public static ArrayList<LabelError> labelsErrores;
     private ArrayList<Simbolos> simbolos = new ArrayList<Simbolos>();
 
+    public static boolean errores_lexicos = false;
+    public static boolean errores_sintacticos = false;
+    public static String exp = "";
+
+    private int coor_7 = 0;
+    private int height = 0;
+
     //ESTO ES PARA MARCAR CON COLORES LAS PALABRAS////////////////////////////////////////////////////////////////////////
-        private int findLastNonWordChar (String text, int index) {
+    private int findLastNonWordChar(String text, int index) {
         while (--index >= 0) {
             if (String.valueOf(text.charAt(index)).matches("\\W")) {
                 break;
@@ -73,7 +70,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         return index;
     }
 
-    private int findFirstNonWordChar (String text, int index) {
+    private int findFirstNonWordChar(String text, int index) {
         while (index < text.length()) {
             if (String.valueOf(text.charAt(index)).matches("\\W")) {
                 break;
@@ -83,8 +80,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         return index;
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    
-    
+
     public VentanaPrincipal() {
         initComponents();
         seticon();
@@ -94,14 +90,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         m = (DefaultTableModel) tblTablaSimbolos.getModel();
         numeroLineas();
         mnuMinimize.setEnabled(false);
-        
-        
+
         //UIDefaults defs = UIManager.getDefaults();
         //defs.put("TextPane.background", new ColorUIResource(Color.BLACK));
         //defs.put("TextPane.inactiveBackground", new ColorUIResource(Color.BLACK));
         //txtAreaEdit.updateUI(defs);
-        
-        
         //CAMBIAR COLOR DEL JTEXTPANE-----------------------------------------------------------------
         Color bgColor = new Color(42, 43, 46);
         UIDefaults defaults = new UIDefaults();
@@ -110,7 +103,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         txtAreaEdit.putClientProperty("Nimbus.Overrides", defaults);
         txtAreaEdit.putClientProperty("Nimbus.Overrides.InheritDefaults", true);
         txtAreaEdit.setBackground(bgColor);
-        
+
         //bgColor = new Color(42, 43, 46);
         //UIDefaults defaults1 = new UIDefaults();
         //defaults1.put("EditorPane.background", new ColorUIResource(bgColor));
@@ -118,16 +111,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         //txtConsolaPane.putClientProperty("Nimbus.Overrides", defaults1);
         //txtConsolaPane.putClientProperty("Nimbus.Overrides.InheritDefaults", true);
         //txtConsolaPane.setBackground(bgColor);
-        
-        Color darkColor = new Color(153,153,153);
+        Color darkColor = new Color(153, 153, 153);
         tblTablaSimbolos.setForeground(Color.WHITE);
         tblTablaSimbolos.setBackground(darkColor);
         //---------------------------------------------------------------------------------------------
-        
- 
-        
-        
-        Font fuente2 = new Font("Consolas", 1, tamanioletra+5);
+
+        Font fuente2 = new Font("Consolas", 1, tamanioletra + 5);
         tamanioletra++;
         txtAreaEdit.setFont(fuente2);
         ///ESTO ES PARA MARCAR CON COLORES LAS PALABRAS////////////////////////////////////////////////////////////////////////
@@ -139,42 +128,46 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         final AttributeSet attrWhite = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, new Color(248, 243, 245));
         final AttributeSet attrCom = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, new Color(192, 197, 211));
         DefaultStyledDocument doc = new DefaultStyledDocument() {
-            public void insertString (int offset, String str, AttributeSet a) throws BadLocationException {
+            public void insertString(int offset, String str, AttributeSet a) throws BadLocationException {
                 super.insertString(offset, str, a);
 
                 String text = getText(0, getLength());
                 int before = findLastNonWordChar(text, offset);
-                if (before < 0) before = 0;
+                if (before < 0) {
+                    before = 0;
+                }
                 int after = findFirstNonWordChar(text, offset + str.length());
                 int wordL = before;
                 int wordR = before;
 
                 while (wordR <= after) {
                     if (wordR == after || String.valueOf(text.charAt(wordR)).matches("\\W")) {
-                        if (text.substring(wordL, wordR).matches("(\\W)*(just|broken|word|flag|word)")){
+                        if (text.substring(wordL, wordR).matches("(\\W)*(just|broken|word|flag|word)")) {
                             //setCharacterAttributes(wordL, wordL+1, attrWhite, false);
-                            setCharacterAttributes(wordL+1, wordR - wordL, attr, false);
-                    }else if(text.substring(wordL, wordR).matches("(\\W)*(begin|end|setfilamenttype|fillrectangle|drawrectangle|sleep|fillcircle|drawcircle|drawtriangle|filltriangle|stop|getextrusorx|getextrusory|getextrusorz|getfilamenttype|setnewfilament|getfilament|gettemperatura|same|get|give|select|empty|cut|model|defect|new|goback|home|sleep|printerport|check|trap)")){
-                        setCharacterAttributes(wordL+1, wordR - wordL, attrBlue, false);
-                    }else if(text.substring(wordL, wordR).matches("(\\W)*(method|class|main)")){
-                        setCharacterAttributes(wordL+1, wordR - wordL, attrOrange, false);
-                    }else if(text.substring(wordL, wordR).matches("(\\W)*(if|else|while|for|switch|do)")){
-                        setCharacterAttributes(wordL+1, wordR - wordL, attrPink, false);   
-                    }else{
+                            setCharacterAttributes(wordL + 1, wordR - wordL, attr, false);
+                        } else if (text.substring(wordL, wordR).matches("(\\W)*(begin|end|setfilamenttype|fillrectangle|drawrectangle|sleep|fillcircle|drawcircle|drawtriangle|filltriangle|stop|getextrusorx|getextrusory|getextrusorz|getfilamenttype|setnewfilament|getfilament|gettemperatura|same|get|give|select|empty|cut|model|defect|new|goback|home|sleep|printerport|check|trap)")) {
+                            setCharacterAttributes(wordL + 1, wordR - wordL, attrBlue, false);
+                        } else if (text.substring(wordL, wordR).matches("(\\W)*(method|class|main)")) {
+                            setCharacterAttributes(wordL + 1, wordR - wordL, attrOrange, false);
+                        } else if (text.substring(wordL, wordR).matches("(\\W)*(if|else|while|for|switch|do)")) {
+                            setCharacterAttributes(wordL + 1, wordR - wordL, attrPink, false);
+                        } else {
                             setCharacterAttributes(wordL, wordR - wordL, attrWhite, false);
-                    }
+                        }
                         wordL = wordR;
                     }
                     wordR++;
                 }
             }
 
-            public void remove (int offs, int len) throws BadLocationException {
+            public void remove(int offs, int len) throws BadLocationException {
                 super.remove(offs, len);
 
                 String text = getText(0, getLength());
                 int before = findLastNonWordChar(text, offs);
-                if (before < 0) before = 0;
+                if (before < 0) {
+                    before = 0;
+                }
                 int after = findFirstNonWordChar(text, offs);
 
                 if (text.substring(before, after).matches("(\\W)*(private|public|protected)")) {
@@ -185,13 +178,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         };
         txtAreaEdit.setDocument(doc);
-        
-         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
-    
-        
-    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -202,9 +191,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         txtAreaEdit = new javax.swing.JTextPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblTablaSimbolos = new javax.swing.JTable();
-        jScrollPaneConsole = new javax.swing.JScrollPane();
-        txtConsolaPane = new javax.swing.JEditorPane();
-        jPanel1 = new javax.swing.JPanel();
         panelToolBar = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         icon_new = new javax.swing.JLabel();
@@ -218,6 +204,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         icon_abrir = new javax.swing.JLabel();
         icon_undo = new javax.swing.JLabel();
         icon_redo = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jPanel1 = new javax.swing.JPanel();
         barraMenu = new javax.swing.JMenuBar();
         mnufile = new javax.swing.JMenu();
         mnuNew = new javax.swing.JMenuItem();
@@ -258,16 +246,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jplAreaEdit.setLayout(jplAreaEditLayout);
         jplAreaEditLayout.setHorizontalGroup(
             jplAreaEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scPanAreaEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
+            .addGroup(jplAreaEditLayout.createSequentialGroup()
+                .addComponent(scPanAreaEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 694, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jplAreaEditLayout.setVerticalGroup(
             jplAreaEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jplAreaEditLayout.createSequentialGroup()
-                .addComponent(scPanAreaEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scPanAreaEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jplAreaEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 800, 580));
+        getContentPane().add(jplAreaEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 700, 390));
 
         tblTablaSimbolos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -332,31 +322,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             tblTablaSimbolos.getColumnModel().getColumn(2).setPreferredWidth(15);
         }
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 50, 430, 580));
-
-        jScrollPaneConsole.setBackground(new java.awt.Color(255, 255, 204));
-
-        txtConsolaPane.setBackground(new java.awt.Color(42, 43, 46));
-        txtConsolaPane.setBorder(null);
-        txtConsolaPane.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
-        jScrollPaneConsole.setViewportView(txtConsolaPane);
-
-        getContentPane().add(jScrollPaneConsole, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 630, 570, 220));
-
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 660, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 220, Short.MAX_VALUE)
-        );
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 630, 660, 220));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 50, 430, 390));
 
         panelToolBar.setBackground(new java.awt.Color(153, 153, 153));
         panelToolBar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -486,7 +452,30 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         panelToolBar.add(icon_redo, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 10, 30, 30));
 
-        getContentPane().add(panelToolBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1230, 50));
+        getContentPane().add(panelToolBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1130, 50));
+
+        jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane2.setPreferredSize(new java.awt.Dimension(100, 900));
+
+        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1228, 1000));
+        jPanel1.setRequestFocusEnabled(false);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1228, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1000, Short.MAX_VALUE)
+        );
+
+        jScrollPane2.setViewportView(jPanel1);
+
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 440, 1130, 250));
+        jScrollPane2.getAccessibleContext().setAccessibleName("");
 
         mnufile.setText("File");
 
@@ -582,7 +571,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         mnuTablaS.add(mnuFija);
 
-        miDynamicTable.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_MASK));
+        miDynamicTable.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         miDynamicTable.setText("Dynamic");
         miDynamicTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -604,7 +593,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         mnuCompile.setText("Compile");
         mnuCompile.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        miCompileLexical.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
+        miCompileLexical.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         miCompileLexical.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Lexico.png"))); // NOI18N
         miCompileLexical.setText("Lexical");
         miCompileLexical.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -614,7 +603,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         mnuCompile.add(miCompileLexical);
 
-        miCompileSyntax.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
+        miCompileSyntax.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         miCompileSyntax.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/analysis (1).png"))); // NOI18N
         miCompileSyntax.setText("Syntax");
         miCompileSyntax.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -686,10 +675,6 @@ NumeroLinea lineatxtCodigo;
         lineatxtCodigo.setFont(fuente);
     }
 
-    public static void notificar_er(String cad) {
-        Errores += cad + "\n";
-    }
-
     //----------------------------------------BUSCAR METODOS-----------------------
     public void buscaMethod() {
         tblMetodos.metod.setRowCount(0);
@@ -704,156 +689,112 @@ NumeroLinea lineatxtCodigo;
                         O[1] = "1";
                         O[2] = "x<just>";
                         tblMetodos.metod.addRow(O);
-
                         break;
-
                     case "stop":
                         O[0] = "stop";
                         O[1] = "0";
                         O[2] = "<>";
                         tblMetodos.metod.addRow(O);
-
                         break;
-
                     case "getextrusorx":
                         O[0] = "getextrusorx";
                         O[1] = "0";
                         O[2] = "<>";
                         tblMetodos.metod.addRow(O);
-
                         break;
-
                     case "getextrusory":
                         O[0] = "getextrusory";
                         O[1] = "0";
                         O[2] = "<>";
                         tblMetodos.metod.addRow(O);
-
                         break;
-
                     case "getextrusorz":
                         O[0] = "getextrusorz";
                         O[1] = "0";
                         O[2] = "<>";
                         tblMetodos.metod.addRow(O);
-
                         break;
-
                     case "getfilamenttype":
                         O[0] = "getfilamenttype";
                         O[1] = "0";
                         O[2] = "<>";
                         tblMetodos.metod.addRow(O);
-
                         break;
-
                     case "setnewfilament":
-
                         O[0] = "setnewfilament";
                         O[1] = "0";
                         O[2] = "<>";
                         tblMetodos.metod.addRow(O);
-
                         break;
-
                     case "getfilament":
-
                         O[0] = "getfilament";
                         O[1] = "0";
                         O[2] = "<>";
                         tblMetodos.metod.addRow(O);
-
                         break;
-
                     case "gettemperature":
-
                         O[0] = "gettemperature";
                         O[1] = "0";
                         O[2] = "<>";
                         tblMetodos.metod.addRow(O);
-
                         break;
-
                     case "filltriangule":
-
                         O[0] = "filltriangule";
                         O[1] = "9";
                         O[2] = "x1<just>,y1<just>,z1<just>, x2<just>,y2<just>, z2<just>, x3<just>,y3<just>, z3<just>";
                         tblMetodos.metod.addRow(O);
-
                         break;
-
                     case "drawtriangule":
                         O[0] = "drawtriangule";
                         O[1] = "9";
                         O[2] = "x1<just>,y1<just>,z1<just>, x2<just>,y2<just>, z2<just>, x3<just>,y3<just>, z3<just>";
                         tblMetodos.metod.addRow(O);
-
                     case "fillrectangle":
-
                         O[0] = "fillrectangle";
                         O[1] = "12";
                         O[2] = "x1<just>,y1<just>,z1<just>, x2<just>,y2<just>,z2<just>, x3<just>,y3<just>,z3<just>, x4<just>,y4<just>,z4<just>";
                         tblMetodos.metod.addRow(O);
-
                         break;
-
                     case "drawrectangle":
                         O[0] = "drawrectangle";
                         O[1] = "12";
                         O[2] = "x1<just>,y1<just>,z1<just>, x2<just>,y2<just>,z2<just>, x3<just>,y3<just>,z3<just>, x4<just>,y4<just>,z4<just>";
                         tblMetodos.metod.addRow(O);
-
                         break;
                     case "sleep":
                         O[0] = "sleep";
                         O[1] = "0";
                         O[2] = "<>";
                         tblMetodos.metod.addRow(O);
-
                         break;
-
                     case "drawcircle":
                         O[0] = "drawcircle";
                         O[1] = "4";
                         O[2] = "x<just>,y<just>, z<just>, radio<just>";
                         tblMetodos.metod.addRow(O);
-
                         break;
-
                     case "fillcircle":
                         O[0] = "fillcircle";
                         O[1] = "4";
                         O[2] = "x<just>,y<just>, z<just>, radio<just>";
                         tblMetodos.metod.addRow(O);
-
                         break;
-
                     case "home":
-
                         O[0] = "home";
                         O[1] = "0";
                         O[2] = "<>";
                         tblMetodos.metod.addRow(O);
-
                         break;
-
                     case "printerport":
-
                         O[0] = "printerport";
                         O[1] = "1";
                         O[2] = "x<just>";
                         tblMetodos.metod.addRow(O);
-
                         break;
-
                     default:
-
                         break;
-
                 }//switch
             }//if
-
         }
         rt();
     }
@@ -873,13 +814,10 @@ NumeroLinea lineatxtCodigo;
             return;
         }
         for (int i = 0; i < ren; i++) {
-
             arreglo[i][0] = tblMetodos.metod.getValueAt(i, 0).toString();
             arreglo[i][1] = tblMetodos.metod.getValueAt(i, 1).toString();
             arreglo[i][2] = tblMetodos.metod.getValueAt(i, 2).toString();
-
         }
-
         bav(arreglo, 0, ren);
     }
 
@@ -943,13 +881,13 @@ NumeroLinea lineatxtCodigo;
     }
 
     public void seticon() {
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/logopro2.png")));   
-        icon_save.setIcon(resizeIcon( new ImageIcon(getClass().getResource("/img/save.png")), icon_save.getWidth(), icon_save.getHeight()));
-        icon_save_as.setIcon(resizeIcon( new ImageIcon(getClass().getResource("/img/save-as.png")), icon_save_as.getWidth(), icon_save_as.getHeight()));
-        icon_new.setIcon(resizeIcon( new ImageIcon(getClass().getResource("/img/new_file.png")), icon_new.getWidth(), icon_new.getHeight()));
-    
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/logopro2.png")));
+        icon_save.setIcon(resizeIcon(new ImageIcon(getClass().getResource("/img/save.png")), icon_save.getWidth(), icon_save.getHeight()));
+        icon_save_as.setIcon(resizeIcon(new ImageIcon(getClass().getResource("/img/save-as.png")), icon_save_as.getWidth(), icon_save_as.getHeight()));
+        icon_new.setIcon(resizeIcon(new ImageIcon(getClass().getResource("/img/new_file.png")), icon_new.getWidth(), icon_new.getHeight()));
+
     }
-    
+
 //private FileNameExtensionFilter filtro= new FileNameExtensionFilter ("Archivos de texto","txt");
     JFileChooser seleccionar = new JFileChooser();
     File archivo;
@@ -993,25 +931,22 @@ NumeroLinea lineatxtCodigo;
     }//GEN-LAST:event_mnuSaveMouseReleased
 
     private void mnuOpenMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuOpenMouseReleased
-       openFile();
+        openFile();
     }//GEN-LAST:event_mnuOpenMouseReleased
 
     private void mnuSaveAsMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuSaveAsMouseReleased
         saveAsFile();
-        
     }//GEN-LAST:event_mnuSaveAsMouseReleased
 
     private void mnuNewMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuNewMouseReleased
-
         newFile();
-
     }//GEN-LAST:event_mnuNewMouseReleased
 
     private void mnuMinimizeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuMinimizeMousePressed
-        mnuMinimize.setEnabled(false);
+        /*mnuMinimize.setEnabled(false);
         jplAreaEdit.setBounds(jplAreaEdit.getX(), jplAreaEdit.getY(), 1230, 630);
         scPanAreaEdit.setBounds(jplAreaEdit.getX(), jplAreaEdit.getY(), 1230, 630);
-        txtAreaEdit.setBounds(jplAreaEdit.getX(), jplAreaEdit.getY(), 1230, 630);
+        txtAreaEdit.setBounds(jplAreaEdit.getX(), jplAreaEdit.getY(), 1230, 630);*/
     }//GEN-LAST:event_mnuMinimizeMousePressed
 
     private void mnuFijaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuFijaMouseReleased
@@ -1023,10 +958,7 @@ NumeroLinea lineatxtCodigo;
         //txtAreaEdit.setBackground(Color.white);
         tblTablaSimbolos.setForeground(Color.black);
         tblTablaSimbolos.setBackground(Color.white);
-        txtConsolaPane.setForeground(Color.red);
-        txtConsolaPane.setBackground(Color.white);
-        
-        
+
         //CAMBIAR COLOR DEL JTEXTPANE-----------------------------------------------------------------
         //Color bgColor = new Color(255, 255, 255);
         //UIDefaults defaults = new UIDefaults();
@@ -1037,7 +969,7 @@ NumeroLinea lineatxtCodigo;
         //txtAreaEdit.setBackground(bgColor);
         //---------------------------------------------------------------------------------------------
         //txtAreaEdit.setForeground(Color.black);
-        
+
     }//GEN-LAST:event_miNomalModeMouseReleased
 
     private void miDynamicTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_miDynamicTableMouseReleased
@@ -1051,10 +983,7 @@ NumeroLinea lineatxtCodigo;
         //Color darkColor = new Color(42, 43, 46);
         //txtAreaEdit.setForeground(Color.white);
         //txtAreaEdit.setBackground(darkColor);
-        
-        
-        
-        
+
         //tblTablaSimbolos.setForeground(Color.white);
         //tblTablaSimbolos.setBackground(darkColor);
         //txtConsolaPane.setForeground(Color.white);
@@ -1067,8 +996,6 @@ NumeroLinea lineatxtCodigo;
 
         tblTablaSimbolos.setForeground(Color.green);
         tblTablaSimbolos.setBackground(Color.black);
-        txtConsolaPane.setForeground(Color.green);
-        txtConsolaPane.setBackground(Color.black);
     }//GEN-LAST:event_miRetroModeMouseReleased
 
     private void miZoomInFontMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_miZoomInFontMouseReleased
@@ -1120,35 +1047,84 @@ NumeroLinea lineatxtCodigo;
         rehacer();
     }//GEN-LAST:event_mnuRedoMousePressed
     public void mostrarErrores() {
-        if (txtConsolaPane.getText().equals("El programa no contiene errores :)")) {
-            txtConsolaPane.setForeground(color_success);
-            txtConsolaPane.setText("");
-        }
-        txtConsolaPane.setForeground(color_error);
-        txtConsolaPane.setText(txtConsolaPane.getText() + Errores);
-        if (!txtConsolaPane.getText().equals("")) {
-            separaLineas();
-        }
-        if (txtConsolaPane.getText().equals("")) {
-            txtConsolaPane.setForeground(color_success);
-            txtConsolaPane.setText("Analisis realizado correctamente");
-        }
-    }
-
-    public void separaLineas() {
-        int i = 0;
-        String[] lineas;
-        String lin = txtConsolaPane.getText();
-        lineas = lin.split("\n");
-        //Linea: 5
-        for (String linea : lineas) {
-            String combinacion = linea.substring(8, 10);
-            String replaceAll = combinacion.replaceAll("\\s", "");
-            //System.out.println("q" + replaceAll + combinacion + linea);
-
+        jPanel1.removeAll();
+        jPanel1.revalidate();
+        jPanel1.repaint();
+        Collections.sort(labelsErrores);
+        for (LabelError labelsErrore : labelsErrores) {
+            if (labelsErrore.getTipo() == SINTACTICO) {
+                errores_sintacticos = true;
+            }
         }
 
-        buja(lineas, 0, lineas.length);
+        if (labelsErrores.isEmpty()) {
+            JLabel lb = new JLabel("El programa no contiene errores léxicos.");
+            lb.setForeground(color_success);
+            lb.setBounds(5, 5, 700, 20);
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            jPanel1.add(lb);
+        } else {
+            int num = 0;
+            int y = 0;
+            for (LabelError le : labelsErrores) {
+                y = 5 + 30 * num;
+                le.getLabel().setBounds(5, y, 700, 20);
+                System.out.println(le);
+                clickLabel(le);
+                jPanel1.add(le.getLabel());
+                num++;
+            }
+        }
+        if (!exp.isEmpty() && !errores_sintacticos) {
+            resolverExp(exp);
+        }
+
+        /* if (!errores_lexicos ) {
+            lb.setForeground(color_success);
+            lb.setBounds(5, 5, 700, 20);
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            jPanel1.add(lb);
+            System.out.println("Sin errores lexicos");
+                System.out.println(lb.getText());
+                showMessageDialog(null, "1");
+            if(!errores_sintacticos){
+                System.out.println("Sin errores sintacticos");
+                lb.setText("El programa no contiene errores sintacticos.");
+                lb.setBounds(5, 25, 700, 20);
+                lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+                jLabel1.add(lb);
+                System.out.println(lb.getText());
+                showMessageDialog(null, "2");
+            }else{
+                int num = 0;
+                int y = 0;
+                for (LabelError le : labelsErrores) {
+                    y = 5 +30*num;
+                    System.out.println("y:"+y);
+                    le.getLabel().setBounds(5, y, 700, 20);
+                    System.out.println(le.getLabel().getY());
+                    clickLabel(le);
+                    jPanel1.add(le.getLabel());
+                    num++;
+                    System.out.println("Mostrando errores lexicos y sintacticos");
+                showMessageDialog(null, "3");
+                }
+            }
+        }else{
+            int num = 0;
+            int y = 0;
+            for (LabelError le : labelsErrores) {
+                y = 5 +30*num;
+                System.out.println("y:"+y);
+                le.getLabel().setBounds(5, y, 700, 20);
+                System.out.println(le.getLabel().getY());
+                clickLabel(le);
+                jPanel1.add(le.getLabel());
+                num++;
+                System.out.println("Mostrando errores lexicos y sintacticos");
+                showMessageDialog(null, "4");
+            }            
+         }     */
     }
 
     public void buja(String[] A, int ini, int ter) {
@@ -1168,19 +1144,14 @@ NumeroLinea lineatxtCodigo;
         for (int M = 0; M < ter; M++) {
             erroresv += A[M] + '\n';
         }
-        txtConsolaPane.setText(erroresv);
     }
 
     public void analisisLexico() {
+        errores_lexicos = false;
+        errores_sintacticos = false;
         InformacionLexema c = new InformacionLexema();
         mnuMinimize.setEnabled(true);
-        // jplAreaEdit.setBounds(jplAreaEdit.getX(), jplAreaEdit.getY(), 800, 630);
-        //scPanAreaEdit.setBounds(jplAreaEdit.getX(), jplAreaEdit.getY(), 800, 423);
-        //txtAreaEdit.setBounds(jplAreaEdit.getX(), jplAreaEdit.getY(), 800, 423);
-        //jScrollPaneConsole.setBounds(jScrollPaneConsole.getX(), jScrollPaneConsole.getY(),
-        //        jScrollPaneConsole.getX()+1200, jScrollPaneConsole.getY()+195);
-        jPanel1.removeAll();
-        labelLexicoErrors = new ArrayList<LabelError>();
+        labelsErrores = new ArrayList<LabelError>();
         File fichero = new File("fichero.and");
         PrintWriter writer;
 
@@ -1193,7 +1164,6 @@ NumeroLinea lineatxtCodigo;
         }
 
         int i = 0;
-        txtConsolaPane.setText("");
         errores = "";
         int counter = 0;
 
@@ -1207,76 +1177,56 @@ NumeroLinea lineatxtCodigo;
                 Tokens tokens = lexer.yylex();
 
                 if (tokens == null) {
-                    txtConsolaPane.setText(errores);
-                    if (errores.equals("")) {
-                        txtConsolaPane.setText("El programa no contiene errores :)\n");
-
-                        txtConsolaPane.setForeground(color_success);
+                    if (counter == 0) {
+                        errores_lexicos = false;
                     } else {
-                        txtConsolaPane.setForeground(color_error);
+                        errores_lexicos = true;
                     }
-
-                    System.out.println(labelLexicoErrors.size() + "");
-                    if (!labelLexicoErrors.isEmpty()) {
-                        System.out.println("llenar");
-                        int num = 0;
-                        for (int j = 0;j<labelLexicoErrors.size();j++) {
-                            labelLexicoErrors.get(j).getLabel().setBounds(5, 5 + 15 * num, 500, 15 + 15 * num);
-                            clickLabel(labelLexicoErrors.get(j));
-                            jPanel1.add(labelLexicoErrors.get(j).getLabel());
-                            num++;
-                        }
-                    }
-
                     return;
                 }
-                JLabel btn = new JLabel(lexer.yytext());
-                btn.setForeground(color_error);
-                btn.setFont(new Font("Verdana", Font.PLAIN, 12));
-                btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                JLabel lb = new JLabel(lexer.yytext());
+                lb.setForeground(color_error);
+                lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+                lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
                 switch (tokens) {
                     case NUMERO_ERRONEO_MAS_PUNTOS:
                         tblTablaSimbolos.setValueAt(c.columna, i, 0);
                         tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
                         tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
                         tblTablaSimbolos.setValueAt("ERROR:CADENA_NO_VALIDA", i, 3);
-                        errores += (">Linea: " + (c.linea + 1) + " Columna: " + (c.columna) + ", Error Léxico,    Error cadena no valida:  " + lexer.yytext() + "\n");
                         i++;
-                        btn.setText("Error en la liena: "+(c.linea+1)+". El número tiene puntos de más.");
-                        labelLexicoErrors.add(new LabelError(btn,"NUMERO_ERRONEO_MAS_PUNTOS",c.linea+1));
+                        lb.setText("Error en la línea " + (c.linea + 1) + ". Error léxico. El número '" + lexer.yytext() + "' tiene puntos de más.");
+                        labelsErrores.add(new LabelError(lb, "NUMERO_ERRONEO_MAS_PUNTOS", c.linea + 1, LEXICO));
                         counter++;
                         break;
                     case MAYUSCULAS_EN_CADENA:
-                         tblTablaSimbolos.setValueAt(c.columna, i, 0);
+                        tblTablaSimbolos.setValueAt(c.columna, i, 0);
                         tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
                         tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
                         tblTablaSimbolos.setValueAt("ERROR:CADENA_NO_VALIDA", i, 3);
-                        errores += (">Linea: " + (c.linea + 1) + " Columna: " + (c.columna) + ", Error Léxico,    Error cadena no valida:  " + lexer.yytext() + "\n");
                         i++;
-                        btn.setText("Error en la liena: "+(c.linea+1)+". Hay una mayuscula.");
-                        labelLexicoErrors.add(new LabelError(btn,"MAYUSCULAS_EN_CADENA",c.linea+1));
+                        lb.setText("Error en la línea " + (c.linea + 1) + ". Error léxico. Las mayúsculas no están definidas en el lenguaje: '" + lexer.yytext() + "'");
+                        labelsErrores.add(new LabelError(lb, "MAYUSCULAS_EN_CADENA", c.linea + 1, LEXICO));
                         counter++;
                         break;
                     case MAL_NOMBRE_PARA_IDENTIFICADOR:
-                         tblTablaSimbolos.setValueAt(c.columna, i, 0);
+                        tblTablaSimbolos.setValueAt(c.columna, i, 0);
                         tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
                         tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
                         tblTablaSimbolos.setValueAt("ERROR:CADENA_NO_VALIDA", i, 3);
-                        errores += (">Linea: " + (c.linea + 1) + " Columna: " + (c.columna) + ", Error Léxico,    Error cadena no valida:  " + lexer.yytext() + "\n");
                         i++;
-                        btn.setText("Error en la liena: "+(c.linea+1)+". El identificador esta mal escrito.");
-                        labelLexicoErrors.add(new LabelError(btn,"MAL_NOMBRE_PARA_IDENTIFICADOR",c.linea+1));
+                        lb.setText("Error en la línea " + (c.linea + 1) + ". Error léxico. El identificador '" + lexer.yytext() + "' está mal escrito.");
+                        labelsErrores.add(new LabelError(lb, "MAL_NOMBRE_PARA_IDENTIFICADOR", c.linea + 1, LEXICO));
                         counter++;
                         break;
                     case NUMERO_ERRONEO:
-                         tblTablaSimbolos.setValueAt(c.columna, i, 0);
+                        tblTablaSimbolos.setValueAt(c.columna, i, 0);
                         tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
                         tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
                         tblTablaSimbolos.setValueAt("ERROR:CADENA_NO_VALIDA", i, 3);
-                        errores += (">Linea: " + (c.linea + 1) + " Columna: " + (c.columna) + ", Error Léxico,    Error cadena no valida:  " + lexer.yytext() + "\n");
                         i++;
-                        btn.setText("Error en la liena: "+(c.linea+1)+". El formato del numero es erroneo");
-                        labelLexicoErrors.add(new LabelError(btn,"NUMERO_ERRONEO",c.linea+1));
+                        lb.setText("Error en la línea " + (c.linea + 1) + ". Error léxico. El formato del número '" + lexer.yytext() + "' es erroneo");
+                        labelsErrores.add(new LabelError(lb, "NUMERO_ERRONEO", c.linea + 1, LEXICO));
                         counter++;
                         break;
                     case ERROR:
@@ -1284,11 +1234,10 @@ NumeroLinea lineatxtCodigo;
                         tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
                         tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
                         tblTablaSimbolos.setValueAt("ERROR:CADENA_NO_VALIDA", i, 3);
-                        errores += (">Linea: " + (c.linea + 1) + " Columna: " + (c.columna) + ", Error Léxico,    Error cadena no valida:  " + lexer.yytext() + "\n");
                         i++;
-                        
-                        btn.setText("Error en la liena: "+(c.linea+1)+". Error.");
-                        labelLexicoErrors.add(new LabelError(btn,"ERROR",c.linea+1));
+
+                        lb.setText("Error en la línea " + (c.linea + 1) + ". Error léxico. Error '" + lexer.yytext() + "'");
+                        labelsErrores.add(new LabelError(lb, "ERROR", c.linea + 1, LEXICO));
                         counter++;
                         break;
                     case Identificador:
@@ -1437,9 +1386,8 @@ NumeroLinea lineatxtCodigo;
 
     }
 
-    static String Errores = "";
     private void miCompileSyntaxMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_miCompileSyntaxMouseReleased
-       analisisSintactico();
+        analisisSintactico();
     }//GEN-LAST:event_miCompileSyntaxMouseReleased
 
     private void miMethodMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_miMethodMouseReleased
@@ -1470,7 +1418,7 @@ NumeroLinea lineatxtCodigo;
     }//GEN-LAST:event_icon_newMouseReleased
 
     private void icon_abrirMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_abrirMouseReleased
-       openFile();
+        openFile();
     }//GEN-LAST:event_icon_abrirMouseReleased
 
     private void icon_saveMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_saveMouseReleased
@@ -1591,6 +1539,7 @@ NumeroLinea lineatxtCodigo;
         return true;
     }
     public int abc;
+
     /**
      * @param args the command line arguments
      */
@@ -1651,7 +1600,7 @@ NumeroLinea lineatxtCodigo;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPaneConsole;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel jplAreaEdit;
     private javax.swing.JMenuItem miCompile;
     private javax.swing.JMenuItem miCompileLexical;
@@ -1678,39 +1627,126 @@ NumeroLinea lineatxtCodigo;
     private javax.swing.JScrollPane scPanAreaEdit;
     public static javax.swing.JTable tblTablaSimbolos;
     private javax.swing.JTextPane txtAreaEdit;
-    private javax.swing.JEditorPane txtConsolaPane;
     // End of variables declaration//GEN-END:variables
+
+    ImageIcon imgENum1 = new ImageIcon("C:/ANADAN/src/Automatas/NumeroErroneo.jpg");
+    public Icon NumErr1 = new ImageIcon(imgENum1.getImage().getScaledInstance(385, 333, Image.SCALE_DEFAULT));
+
+    ImageIcon imgENum2 = new ImageIcon("C:/ANADAN/src/Automatas/NumeroErroneoMasSignosAlPrincipio.jpg");
+    public Icon NumErr2 = new ImageIcon(imgENum2.getImage().getScaledInstance(362, 315, Image.SCALE_DEFAULT));
+
+    ImageIcon imgEId1 = new ImageIcon("C:/ANADAN/src/Automatas/Identificador_inicio_mal.jpg");
+    public Icon IdErr2 = new ImageIcon(imgEId1.getImage().getScaledInstance(481, 141, Image.SCALE_DEFAULT));
+
+    ImageIcon imgECad1 = new ImageIcon("C:/ANADAN/src/Automatas/Cadena.jpg");
+    public Icon CadErr1 = new ImageIcon(imgECad1.getImage().getScaledInstance(406, 136, Image.SCALE_DEFAULT));
 
     private void showModalLexical(LabelError err) {
         ModalLexico ml = new ModalLexico(err);
-        if(ml.isOpen()){
-            ml.close();
+
+        switch (err.getError()) {
+
+            case "NUMERO_ERRONEO_MAS_PUNTOS":
+                ModalLexico.jlbAutomata.setIcon(NumErr1);
+                if (ml.isOpen()) {
+                    ml.close();
+                }
+
+                for (int i = 0; i < 10; i++) {
+
+                }
+                ModalLexico.jlbEstados.setText("Q={q1,q2,q3,q4,q5,q6,q7,q8,q9}");
+                ModalLexico.jlbInicial.setText("S=q1");
+                ModalLexico.jlbFinal.setText("F={q2,q4,q7,q9}");
+                ModalLexico.txtAlfabeto.setText("Σ={0, 1, 2, 3, 4, 5, 6, 7,8, 9, +, -, *, /, ^, e, .}");
+                ModalLexico.InfoError.setText("El error se provoca al intentar salir del estado (q4) con un punto");
+                ml.setVisible(true);
+                break;
+
+            case "NUMERO_ERRONEO":
+                ModalLexico.jlbAutomata.setIcon(NumErr2);
+                if (ml.isOpen()) {
+                    ml.close();
+                }
+                ModalLexico.jlbEstados.setText("Q={q1,q2,q3,q4,q5,q6,q7,q8,q9}");
+                ModalLexico.jlbInicial.setText("S=q1");
+                ModalLexico.jlbFinal.setText("F={q2,q4,q7,q9}");
+                ModalLexico.txtAlfabeto.setText("Σ={0, 1, 2, 3, 4, 5, 6, 7,8, 9, +, -, *, /, ^, e, .}");
+                ModalLexico.InfoError.setText("El error se provoca al intentar salir del estado (q2) con otra cosa que no sea un punto un digito o una 'e'");
+                ml.setVisible(true);
+                break;
+            case "MAL_NOMBRE_PARA_IDENTIFICADOR":
+                ModalLexico.jlbAutomata.setIcon(IdErr2);
+                if (ml.isOpen()) {
+                    ml.close();
+                }
+                ModalLexico.jlbEstados.setText("Q={q1,q2}");
+                ModalLexico.jlbInicial.setText("S=q1");
+                ModalLexico.jlbFinal.setText("F={q2}");
+                ModalLexico.txtAlfabeto.setText("Σ={0, 1, 2, 3, 4, 5, 6, 7,8, 9,a,b,c,d,e,f,g,h,i,j,k,l,n,m,o,p,q,r,s,t,u,v,w,x,y,z,_}");
+                ModalLexico.InfoError.setText("Los identificadores solo pueden iniciar con una letra y/o guion bajo");
+                ml.setVisible(true);
+                break;
+            case "MAYUSCULAS_EN_CADENA":
+                ModalLexico.jlbAutomata.setIcon(CadErr1);
+                if (ml.isOpen()) {
+                    ml.close();
+                }
+                ModalLexico.jlbEstados.setText("Q={q1}");
+                ModalLexico.jlbInicial.setText("S=q1");
+                ModalLexico.jlbFinal.setText("F={q1}");
+                ModalLexico.txtAlfabeto.setText("Σ={a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, 0, 1, 2, 3,\n"
+                        + "4, 5, 6, 7, 8, 9, !,\n"
+                        + "%, ^, &, *, (, ), -, +, =, {, }, [, ], \\, |, ;, :, ”, <, ,, >, ., ?, /, \n"
+                        + "tabulador, espacio en blanco, nueva\n"
+                        + "línea, retorno de carro}");
+                ModalLexico.InfoError.setText("Las mayusculas no se reconocen en este lenguaje");
+                ml.setVisible(true);
+                break;
+
+            default:
+
+                break;
         }
-        ml.setVisible(true);
+
+    }
+
+    private void showModalSintaxtic(LabelError err) {
+        System.out.println(err);
     }
 
     private void clickLabel(LabelError le) {
         le.getLabel().addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-           }
+            }
 
             @Override
             public void mousePressed(MouseEvent e) {
-         }
+            }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                showModalLexical(le);
+                System.out.println("Desde 1719: " + le);
+                if (le.getTipo() == LEXICO) {
+                    showModalLexical(le);
+                } else {
+                    if (le.getGramatica() != null) {
+                        showMessageDialog(null, "Estamos trabajando en modal de gramáticas\n"
+                                + le.getGramatica().getProduccion() + "\n" + le.getGramatica().getError());
+                    } else {
+                        showMessageDialog(null, "Estamos trabajando en modal de gramáticas\n");
+                    }
+                }
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                   }
+            }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                 }
+            }
         });
     }
 
@@ -1788,7 +1824,7 @@ NumeroLinea lineatxtCodigo;
     }
 
     private void saveAsFile() {
-      if (seleccionar.showDialog(null, "Guardar") == JFileChooser.APPROVE_OPTION) {
+        if (seleccionar.showDialog(null, "Guardar") == JFileChooser.APPROVE_OPTION) {
             archivo = seleccionar.getSelectedFile();
 
             if (archivo.getName().endsWith("txt")) {
@@ -1814,7 +1850,7 @@ NumeroLinea lineatxtCodigo;
             String lexema = m.getValueAt(i, 2).toString();
             String componente = m.getValueAt(i, 3).toString();
             if (componente.equals("Identificador")) {
-                if(!existe(lexema)){
+                if (!existe(lexema)) {
                     simbolos.add(new Simbolos(componente, linea, lexema, "", ""));
                 }
             }
@@ -1825,25 +1861,21 @@ NumeroLinea lineatxtCodigo;
         TablaDinamica ts = new TablaDinamica(simbolos);
         ts.setVisible(true);
     }
-    
-    private boolean existe(String lexema){
+
+    private boolean existe(String lexema) {
         for (int i = 0; i < simbolos.size(); i++) {
-            if(lexema.equals(simbolos.get(i).getLexema()))
+            if (lexema.equals(simbolos.get(i).getLexema())) {
                 return true;
+            }
         }
         return false;
     }
 
     private void analisisSintactico() {
         analisisLexico();
-
-        Errores = "";
+        TablaSimbolos.limpiar();
 
         mnuMinimize.setEnabled(true);
-        //jplAreaEdit.setBounds(jplAreaEdit.getX(), jplAreaEdit.getY(), 1230, 370);
-        //scPanAreaEdit.setBounds(jplAreaEdit.getX(), jplAreaEdit.getY(), 1230, 370);
-        //txtAreaEdit.setBounds(jplAreaEdit.getX(), jplAreaEdit.getY(), 1230, 370);
-
         String ST = txtAreaEdit.getText();
         Sintax s = new Sintax(new codigo.LexerCup(new StringReader(ST)));
         try {
@@ -1852,9 +1884,177 @@ NumeroLinea lineatxtCodigo;
             //Symbol sym = s.getS();
             //Errores+=("    >Linea: "+(sym.right+1)+" Columna: "+(sym.left+1)+", Error en la estructura: "+ sym.value);
             //txtConsola.setForeground(Color.red);
-
             Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
         mostrarErrores();
+
+    }
+
+    private void resolverExp(String str) {
+        str = str.replace(" ", "");
+        String s1[] = str.split("=");
+        str = s1[1];
+        String newStr = "(";
+        str = str.replace(" ", "");
+        Pila pila = new Pila();
+
+        //Agregando parentesis entre terminos de suma y resta
+        String c[] = str.split("");
+        for (int i = 0; i < c.length; i++) {
+            if ("-".equals(c[i])) {
+                newStr += ")-(";
+            } else {
+                if ("+".equals(c[i])) {
+                    newStr += ")+(";
+                } else {
+                    newStr += c[i];
+                }
+            }
+        }
+        //System.out.println(newStr);
+
+        //Creado pila con operadores y operandos en notacion infija
+        pila.push("=");
+        newStr = newStr + ")";
+        String s2[] = newStr.split("");
+        for (int i = 0; i < s2.length; i++) {
+            pila.push(s2[i]);
+        }
+        Pila newPila = new Pila();
+        String termino = "";
+        while (!pila.isEmpty()) {
+            String character = pila.pop();
+            if ("*".equals(character)
+                    || "/".equals(character)
+                    || "+".equals(character)
+                    || "-".equals(character)
+                    || "(".equals(character)
+                    || ")".equals(character)
+                    || "=".equals(character)) {
+                newPila.push(termino);
+                newPila.push(character);
+                termino = "";
+            } else {
+                termino = character +termino;
+            }
+        }
+
+        newPila.push(s1[0]);
+        //System.out.print("154 newPila: ");
+        //newPila.imprimir();
+        //Haciendo notacion postfija
+        String postfija = "";
+        Pila operadores = new Pila();
+
+        while (!newPila.isEmpty()) {
+            String character = newPila.pop();
+            if ("*".equals(character)
+                    || "/".equals(character)
+                    || "+".equals(character)
+                    || "-".equals(character)
+                    || "(".equals(character)
+                    || "=".equals(character)) {
+                operadores.push(character);
+            } else {
+                if (")".equals(character)) {
+                    String op = operadores.pop();
+                    while (!"(".equals(op)) {
+                        postfija += op + " ";
+                        op = operadores.pop();
+                    }
+                } else {
+                    //System.out.println(character);
+                    postfija += character + " ";
+                    //System.out.println(postfija);
+                }
+            }
+        }
+
+        //System.out.print("183 pilaOp: ");
+        //operadores.imprimir();
+        while (!operadores.isEmpty()) {
+            String op = operadores.pop();
+            //System.out.println("187 op: "+op);
+            postfija += op + " ";
+            //op = operadores.pop();
+
+        }
+
+        //System.out.println("189 Postfija: "+postfija);
+        String post[] = postfija.split(" ");
+
+        int i = 0;
+        for (String string : post) {
+            if (!string.isEmpty()) {
+                i++;
+            }
+        }
+        //System.out.println(i);
+        String post_sin_espacios[] = new String[i];
+        int j = 0;
+        for (String string : post) {
+            if (!string.isEmpty()) {
+                post_sin_espacios[j++] = string;
+            }
+        }
+
+        Pila pila_exp = new Pila();
+       
+        for (String exp : post_sin_espacios) {
+            pila_exp.imprimir();
+            if ("*".equals(exp)) {
+                double op1 = Double.parseDouble(pila_exp.pop());
+                double op2 = Double.parseDouble(pila_exp.pop());
+                System.out.println(op1+"*"+op2+"="+(op1*op2));
+                pila_exp.push((op1 * op2) + "");
+                continue;
+            }
+            if ("/".equals(exp)) {
+                double op1 = Double.parseDouble(pila_exp.pop());
+                double op2 = Double.parseDouble(pila_exp.pop());
+                System.out.println(op2+"/"+op1+"="+(op2/op1));
+                pila_exp.push((op2 / op1) + "");
+                continue;
+            }
+            if ("+".equals(exp)) {
+                double op1 = Double.parseDouble(pila_exp.pop());
+                double op2 = Double.parseDouble(pila_exp.pop());
+                System.out.println(op1+"+"+op2+"="+(op1+op2));
+                pila_exp.push((op1 + op2) + "");
+                continue;
+            }
+            if ("-".equals(exp)) {
+                double op1 = Double.parseDouble(pila_exp.pop());
+                double op2 = Double.parseDouble(pila_exp.pop());
+                System.out.println(op1+"-"+op2+"="+(op1-op2));
+                pila_exp.push((op2 - op1) + "");
+                continue;
+            }
+            if ("=".equals(exp)) {/*
+                double op1 = Double.parseDouble(pila_exp.pop());
+                double op2 = Double.parseDouble(pila_exp.pop());
+                pila_exp.push((op1 * op2) + "");*/
+                continue;
+            }
+
+        //    System.out.println(exp);
+            pila_exp.push(exp);
+        }
+        pila_exp.imprimir();
+        String result = pila_exp.pop();
+        String id = pila_exp.pop();
+        Simbolo sim = TablaSimbolos.buscar(id);
+        System.out.println(sim);
+        if(sim.getTipo().equals("just")){            
+            int r_int = (int) Double.parseDouble(result);
+            sim.setValor(r_int);
+        }else{
+            float r_floar = (float) Double.parseDouble(result);
+            sim.setValor(r_floar);
+        }
+        System.out.println(sim);
+        
+        
+
     }
 }

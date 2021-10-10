@@ -5,24 +5,35 @@
  */
 package modelos;
 
+import java.util.Comparator;
 import javax.swing.JLabel;
 
 /**
  *
  * @author danyc
  */
-public class LabelError {
+public class LabelError implements Comparable<LabelError>{
     
     private JLabel label;
     private String error;
     private int linea;
+    private int tipo;
+    private Gramatica gramatica;
 
-    public LabelError(JLabel label, String error, int linea) {
+    public LabelError(JLabel label, String error, int linea, int tipo) {
         this.label = label;
         this.error = error;
         this.linea = linea;
+        this.tipo = tipo;
     }
 
+    public LabelError(JLabel label, String error, int linea, int tipo, Gramatica gramatica) {
+        this.label = label;
+        this.error = error;
+        this.linea = linea;
+        this.tipo = tipo;
+        this.gramatica = gramatica;
+    }
     
     public JLabel getLabel() {
         return label;
@@ -47,7 +58,34 @@ public class LabelError {
     public void setLinea(int linea) {
         this.linea = linea;
     }
+
+    @Override
+    public String toString() {
+        return "LabelError{" + "label=" + label.getText() + ", error=" + error + ", linea=" + linea + ", tipo=" + tipo + ", gramatica=" + gramatica + '}';
+    }
+    
+    public int getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(int tipo) {
+        this.tipo = tipo;
+    }
+
+    public Gramatica getGramatica() {
+        return gramatica;
+    }
+
+    public void setGramatica(Gramatica gramatica) {
+        this.gramatica = gramatica;
+    }
     
     
+
     
+    @Override
+    public int compareTo(LabelError o) {
+        return (this.getLinea()< o.getLinea()? -1 : 
+            (this.getLinea()== o.getLinea()? 0 : 1));     
+    }
 }

@@ -56,8 +56,16 @@ public class ModalLexico extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         icon_close_btn = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        jlbAutomata = new javax.swing.JLabel();
         lb_info_error = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jlbEstados = new javax.swing.JLabel();
+        jlbInicial = new javax.swing.JLabel();
+        jlbFinal = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtAlfabeto = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        InfoError = new javax.swing.JTextArea();
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -74,43 +82,76 @@ public class ModalLexico extends javax.swing.JFrame {
         setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, java.awt.Color.gray, java.awt.Color.gray));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jLabel1.setText("Ayuda sobre error léxico");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 470, 60));
 
-        icon_close_btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        icon_close_btn.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         icon_close_btn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 icon_close_btnMouseReleased(evt);
             }
         });
-        jPanel1.add(icon_close_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 20, 20, 20));
+        jPanel1.add(icon_close_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 10, 20, 20));
 
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Automata");
-        jLabel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, 270, 180));
+        jlbAutomata.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbAutomata.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.add(jlbAutomata, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 420, 370));
 
         lb_info_error.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lb_info_error.setForeground(new java.awt.Color(255, 51, 51));
-        jPanel1.add(lb_info_error, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 570, 30));
+        jPanel1.add(lb_info_error, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 610, 40));
+
+        jLabel2.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 320, 240, 30));
+
+        jlbEstados.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jlbEstados.setForeground(new java.awt.Color(0, 0, 0));
+        jlbEstados.setText("Q={q1,q2,q3,q4,q5,q6,q7,q8,q9}");
+        jPanel1.add(jlbEstados, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 230, 210, 30));
+
+        jlbInicial.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jlbInicial.setForeground(new java.awt.Color(0, 0, 0));
+        jlbInicial.setText("S=q1");
+        jPanel1.add(jlbInicial, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 260, 210, 30));
+
+        jlbFinal.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jlbFinal.setForeground(new java.awt.Color(0, 0, 0));
+        jlbFinal.setText("F={q2,q4,q7,q9}");
+        jPanel1.add(jlbFinal, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 290, 210, 30));
+
+        txtAlfabeto.setColumns(20);
+        txtAlfabeto.setRows(5);
+        txtAlfabeto.setText("Σ={0, 1, 2, 3, 4, 5, 6, 7,8, 9, +, -, *, /, ^, e, .}");
+        jScrollPane1.setViewportView(txtAlfabeto);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 330, 290, 60));
+
+        InfoError.setColumns(20);
+        InfoError.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        InfoError.setForeground(new java.awt.Color(204, 0, 0));
+        InfoError.setRows(5);
+        jScrollPane2.setViewportView(InfoError);
+
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 140, 290, 60));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -156,12 +197,20 @@ public class ModalLexico extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public static javax.swing.JTextArea InfoError;
     private javax.swing.JLabel icon_close_btn;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    public static javax.swing.JLabel jlbAutomata;
+    public static javax.swing.JLabel jlbEstados;
+    public static javax.swing.JLabel jlbFinal;
+    public static javax.swing.JLabel jlbInicial;
     private javax.swing.JLabel lb_info_error;
+    public static javax.swing.JTextArea txtAlfabeto;
     // End of variables declaration//GEN-END:variables
 
    
