@@ -30,6 +30,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.UIDefaults;
 import javax.swing.event.UndoableEditEvent;
@@ -1058,7 +1059,7 @@ NumeroLinea lineatxtCodigo;
         }
 
         if (labelsErrores.isEmpty()) {
-            JLabel lb = new JLabel("El programa no contiene errores léxicos.");
+            JLabel lb = new JLabel("El programa no contiene errores sintacticos.");
             lb.setForeground(color_success);
             lb.setBounds(5, 5, 700, 20);
             lb.setFont(new Font("Verdana", Font.PLAIN, 14));
@@ -1066,10 +1067,18 @@ NumeroLinea lineatxtCodigo;
         } else {
             int num = 0;
             int y = 0;
+            if (!errores_lexicos) {
+                JLabel lb = new JLabel("El programa no contiene errores lexicos.");
+                lb.setForeground(color_success);
+                lb.setBounds(5, 5, 700, 20);
+                lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+                jPanel1.add(lb);
+                num=1;
+            }
+
             for (LabelError le : labelsErrores) {
                 y = 5 + 30 * num;
                 le.getLabel().setBounds(5, y, 700, 20);
-                System.out.println(le);
                 clickLabel(le);
                 jPanel1.add(le.getLabel());
                 num++;
@@ -1629,81 +1638,22 @@ NumeroLinea lineatxtCodigo;
     private javax.swing.JTextPane txtAreaEdit;
     // End of variables declaration//GEN-END:variables
       ImageIcon imgENum1 = new ImageIcon("C:/ANADAN/src/Automatas/NumeroErroneo.jpg");
-      public Icon NumErr1 = new ImageIcon(imgENum1.getImage().getScaledInstance(467, 318, Image.SCALE_DEFAULT));
-    
-      ImageIcon imgENum2 = new ImageIcon("C:/ANADAN/src/Automatas/NumeroErroneoMasSignosAlPrincipio.jpg");
-      public Icon NumErr2 = new ImageIcon(imgENum2.getImage().getScaledInstance(362, 315, Image.SCALE_DEFAULT));
-     
-      ImageIcon imgEId1 = new ImageIcon("C:/ANADAN/src/Automatas/Identificador_inicio_mal.jpg");
-      public Icon IdErr2 = new ImageIcon(imgEId1.getImage().getScaledInstance(481, 141, Image.SCALE_DEFAULT));
-           
-      ImageIcon imgECad1 = new ImageIcon("C:/ANADAN/src/Automatas/Cadena.jpg");
-      public Icon CadErr1 = new ImageIcon(imgECad1.getImage().getScaledInstance(406, 136, Image.SCALE_DEFAULT));
-            
- 
-  
+    public Icon NumErr1 = new ImageIcon(imgENum1.getImage().getScaledInstance(467, 318, Image.SCALE_DEFAULT));
+
+    ImageIcon imgENum2 = new ImageIcon("C:/ANADAN/src/Automatas/NumeroErroneoMasSignosAlPrincipio.jpg");
+    public Icon NumErr2 = new ImageIcon(imgENum2.getImage().getScaledInstance(362, 315, Image.SCALE_DEFAULT));
+
+    ImageIcon imgEId1 = new ImageIcon("C:/ANADAN/src/Automatas/Identificador_inicio_mal.jpg");
+    public Icon IdErr2 = new ImageIcon(imgEId1.getImage().getScaledInstance(481, 141, Image.SCALE_DEFAULT));
+
+    ImageIcon imgECad1 = new ImageIcon("C:/ANADAN/src/Automatas/Cadena.jpg");
+    public Icon CadErr1 = new ImageIcon(imgECad1.getImage().getScaledInstance(406, 136, Image.SCALE_DEFAULT));
+
     private void showModalLexical(LabelError err) {
         ModalLexico ml = new ModalLexico(err);
- 
+
         //  err.get
         switch (err.getError()) {
-                   
-                    case "NUMERO_ERRONEO_MAS_PUNTOS":
-                          ModalLexico.jlbAutomata.setIcon(NumErr1);
-                            if(ml.isOpen()){
-                                ml.close();
-                            }
-                            
-                  
-                           //  System.out.println(err.getLabel().get);
-                       ModalLexico.jlbEstados.setText("Q={q1,q2,q3,q4,q5,q6,q7,q8,q9}");
-                       ModalLexico.jlbInicial.setText("S=q1");
-                       ModalLexico.jlbFinal.setText("F={q2,q4,q7,q9}");        
-                       ModalLexico.txtAlfabeto.setText("Σ={0, 1, 2, 3, 4, 5, 6, 7,8, 9, +, -, *, /, ^, e, .}");
-                       ModalLexico.InfoError.setText("El error se provoca al intentar salir del estado (q4) con un punto");
-                       ml.setVisible(true);
-                        break;
-                        
-                     case "NUMERO_ERRONEO":
-                          ModalLexico.jlbAutomata.setIcon(NumErr2);
-                            if(ml.isOpen()){
-                                ml.close();
-                            }
-                       ModalLexico.jlbEstados.setText("Q={q1,q2,q3,q4,q5,q6,q7,q8,q9}");
-                       ModalLexico.jlbInicial.setText("S=q1");
-                       ModalLexico.jlbFinal.setText("F={q2,q4,q7,q9}");        
-                       ModalLexico.txtAlfabeto.setText("Σ={0, 1, 2, 3, 4, 5, 6, 7,8, 9, +, -, *, /, ^, e, .}");
-                       ModalLexico.InfoError.setText("El error se provoca al intentar salir del estado (q2) con otra cosa que no sea un punto un digito o una 'e'");
-                       ml.setVisible(true);                         
-                         break;
-                     case "MAL_NOMBRE_PARA_IDENTIFICADOR":
-                           ModalLexico.jlbAutomata.setIcon(IdErr2);
-                            if(ml.isOpen()){
-                                ml.close();
-                            }
-                       ModalLexico.jlbEstados.setText("Q={q1,q2}");
-                       ModalLexico.jlbInicial.setText("S=q1");
-                       ModalLexico.jlbFinal.setText("F={q2}");        
-                       ModalLexico.txtAlfabeto.setText("Σ={0, 1, 2, 3, 4, 5, 6, 7,8, 9,a,b,c,d,e,f,g,h,i,j,k,l,n,m,o,p,q,r,s,t,u,v,w,x,y,z,_}");
-                       ModalLexico.InfoError.setText("Los identificadores solo pueden iniciar con una letra y/o guion bajo");
-                       ml.setVisible(true);    
-                        break;                
-                     case "MAYUSCULAS_EN_CADENA":
-                     ModalLexico.jlbAutomata.setIcon(CadErr1);
-                            if(ml.isOpen()){
-                                ml.close();
-                            }
-                       ModalLexico.jlbEstados.setText("Q={q1}");
-                       ModalLexico.jlbInicial.setText("S=q1");
-                       ModalLexico.jlbFinal.setText("F={q1}");        
-                       ModalLexico.txtAlfabeto.setText("Σ={a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, 0, 1, 2, 3,\n" +
-                                                          "4, 5, 6, 7, 8, 9, !,\n" +
-                                                          "%, ^, &, *, (, ), -, +, =, {, }, [, ], \\, |, ;, :, ”, <, ,, >, ., ?, /, \n" +
-                                                          "tabulador, espacio en blanco, nueva\n" +
-                                                          "línea, retorno de carro}");
-                       ModalLexico.InfoError.setText("Las mayusculas no se reconocen en este lenguaje");                       
-                       ml.setVisible(true); 
-                       break;
 
             case "NUMERO_ERRONEO_MAS_PUNTOS":
                 ModalLexico.jlbAutomata.setIcon(NumErr1);
@@ -1711,9 +1661,7 @@ NumeroLinea lineatxtCodigo;
                     ml.close();
                 }
 
-                for (int i = 0; i < 10; i++) {
-
-                }
+                //  System.out.println(err.getLabel().get);
                 ModalLexico.jlbEstados.setText("Q={q1,q2,q3,q4,q5,q6,q7,q8,q9}");
                 ModalLexico.jlbInicial.setText("S=q1");
                 ModalLexico.jlbFinal.setText("F={q2,q4,q7,q9}");
@@ -1764,7 +1712,6 @@ NumeroLinea lineatxtCodigo;
                 break;
 
             default:
-
                 break;
         }
 
@@ -1810,7 +1757,7 @@ NumeroLinea lineatxtCodigo;
     }
 
     private void newFile() {
-        if (seleccionar.showDialog(null, "Nuevo") == JFileChooser.APPROVE_OPTION) {
+        /* if (seleccionar.showDialog(null, "Nuevo") == JFileChooser.APPROVE_OPTION) {
             archivo = seleccionar.getSelectedFile();
             name = archivo.getAbsolutePath();
 
@@ -1819,13 +1766,25 @@ NumeroLinea lineatxtCodigo;
                 txtAreaEdit.setText("");
                 String mensaje = GuardarArchivo(archivo, Documento);
                 if (mensaje != null) {
-
+                    jPanel1.removeAll();
+                    jPanel1.revalidate();
+                    jPanel1.repaint();
                 } else {
                     showMessageDialog(null, "Archivo no compatible");
                 }
             } else {
                 showMessageDialog(null, "Fallo al guardar, coloque extencion .txt");
             }
+        }*/
+        int resp = JOptionPane.showConfirmDialog(null,
+                "¿Desea guardar el Archivo?", "Advertencia", JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.INFORMATION_MESSAGE);
+        if (resp == 0) {
+            mnuSave.doClick();
+            limpiar();
+        }
+        if (resp == 1) {
+            limpiar();
         }
     }
 
@@ -1838,6 +1797,9 @@ NumeroLinea lineatxtCodigo;
                 if (archivo.getName().endsWith("txt")) {
                     String documento = AbrirArchivo(archivo);
                     txtAreaEdit.setText(documento);
+                    jPanel1.removeAll();
+                    jPanel1.revalidate();
+                    jPanel1.repaint();
                 } else {
                     showMessageDialog(null, "Archivo no compatible");
                 }
@@ -1994,7 +1956,7 @@ NumeroLinea lineatxtCodigo;
                 newPila.push(character);
                 termino = "";
             } else {
-                termino = character +termino;
+                termino = character + termino;
             }
         }
 
@@ -2058,34 +2020,34 @@ NumeroLinea lineatxtCodigo;
         }
 
         Pila pila_exp = new Pila();
-       
+
         for (String exp : post_sin_espacios) {
             pila_exp.imprimir();
             if ("*".equals(exp)) {
                 double op1 = Double.parseDouble(pila_exp.pop());
                 double op2 = Double.parseDouble(pila_exp.pop());
-                System.out.println(op1+"*"+op2+"="+(op1*op2));
+                System.out.println(op1 + "*" + op2 + "=" + (op1 * op2));
                 pila_exp.push((op1 * op2) + "");
                 continue;
             }
             if ("/".equals(exp)) {
                 double op1 = Double.parseDouble(pila_exp.pop());
                 double op2 = Double.parseDouble(pila_exp.pop());
-                System.out.println(op2+"/"+op1+"="+(op2/op1));
+                System.out.println(op2 + "/" + op1 + "=" + (op2 / op1));
                 pila_exp.push((op2 / op1) + "");
                 continue;
             }
             if ("+".equals(exp)) {
                 double op1 = Double.parseDouble(pila_exp.pop());
                 double op2 = Double.parseDouble(pila_exp.pop());
-                System.out.println(op1+"+"+op2+"="+(op1+op2));
+                System.out.println(op1 + "+" + op2 + "=" + (op1 + op2));
                 pila_exp.push((op1 + op2) + "");
                 continue;
             }
             if ("-".equals(exp)) {
                 double op1 = Double.parseDouble(pila_exp.pop());
                 double op2 = Double.parseDouble(pila_exp.pop());
-                System.out.println(op1+"-"+op2+"="+(op1-op2));
+                System.out.println(op1 + "-" + op2 + "=" + (op1 - op2));
                 pila_exp.push((op2 - op1) + "");
                 continue;
             }
@@ -2096,7 +2058,7 @@ NumeroLinea lineatxtCodigo;
                 continue;
             }
 
-        //    System.out.println(exp);
+            //    System.out.println(exp);
             pila_exp.push(exp);
         }
         pila_exp.imprimir();
@@ -2104,16 +2066,26 @@ NumeroLinea lineatxtCodigo;
         String id = pila_exp.pop();
         Simbolo sim = TablaSimbolos.buscar(id);
         System.out.println(sim);
-        if(sim.getTipo().equals("just")){            
+        if (sim.getTipo().equals("just")) {
             int r_int = (int) Double.parseDouble(result);
             sim.setValor(r_int);
-        }else{
+        } else {
             float r_floar = (float) Double.parseDouble(result);
             sim.setValor(r_floar);
         }
         System.out.println(sim);
-        
-        
 
+    }
+
+    private void limpiar() {
+        int rowCount = m.getRowCount();
+        //Remove rows one by one from the end of the table
+        for (int i = rowCount - 1; i >= 0; i--) {
+            m.removeRow(i);
+        }
+        jPanel1.removeAll();
+        jPanel1.revalidate();
+        jPanel1.repaint();
+        txtAreaEdit.setText("");
     }
 }
