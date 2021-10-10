@@ -247,6 +247,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtAreaEdit.setForeground(new java.awt.Color(248, 243, 245));
+        txtAreaEdit.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtAreaEditKeyTyped(evt);
+            }
+        });
         scPanAreaEdit.setViewportView(txtAreaEdit);
 
         javax.swing.GroupLayout jplAreaEditLayout = new javax.swing.GroupLayout(jplAreaEdit);
@@ -1499,6 +1504,10 @@ NumeroLinea lineatxtCodigo;
     private void icon_redoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_redoMouseReleased
         rehacer();
     }//GEN-LAST:event_icon_redoMouseReleased
+
+    private void txtAreaEditKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAreaEditKeyTyped
+        txtAreaEdit.setForeground(new Color(248, 243, 245));
+    }//GEN-LAST:event_txtAreaEditKeyTyped
 
     public void rquicksort() {
 
