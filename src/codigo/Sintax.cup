@@ -132,8 +132,7 @@ non terminal inicio, declaracion_for, if, if_else,
     expresioncinco;
 
 start with inicio;
-inicio ::= 
-    IDENTIFICADOR:nombre PARENTESIS_ABRE PARENTESIS_CIERRA BEGIN bloquesentencias END
+inicio ::=  IDENTIFICADOR:nombre PARENTESIS_ABRE PARENTESIS_CIERRA BEGIN bloquesentencias END
     {:
         try{
             TablaSimbolos.crear(nombre, "--","Nombre");

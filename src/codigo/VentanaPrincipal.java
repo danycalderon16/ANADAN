@@ -1653,7 +1653,7 @@ NumeroLinea lineatxtCodigo;
 
  
       ImageIcon imgENum1 = new ImageIcon("C:/ANADAN/src/Automatas/NumeroErroneo.jpg");
-      public Icon NumErr1 = new ImageIcon(imgENum1.getImage().getScaledInstance(385, 333, Image.SCALE_DEFAULT));
+      public Icon NumErr1 = new ImageIcon(imgENum1.getImage().getScaledInstance(467, 318, Image.SCALE_DEFAULT));
     
       ImageIcon imgENum2 = new ImageIcon("C:/ANADAN/src/Automatas/NumeroErroneoMasSignosAlPrincipio.jpg");
       public Icon NumErr2 = new ImageIcon(imgENum2.getImage().getScaledInstance(362, 315, Image.SCALE_DEFAULT));
@@ -1669,7 +1669,7 @@ NumeroLinea lineatxtCodigo;
     private void showModalLexical(LabelError err) {
         ModalLexico ml = new ModalLexico(err);
  
-          
+        //  err.get
         switch (err.getError()) {
                    
                     case "NUMERO_ERRONEO_MAS_PUNTOS":
@@ -1678,9 +1678,8 @@ NumeroLinea lineatxtCodigo;
                                 ml.close();
                             }
                             
-                            for (int i = 0; i < 10; i++) {
-                            
-                        }
+                  
+                           //  System.out.println(err.getLabel().get);
                        ModalLexico.jlbEstados.setText("Q={q1,q2,q3,q4,q5,q6,q7,q8,q9}");
                        ModalLexico.jlbInicial.setText("S=q1");
                        ModalLexico.jlbFinal.setText("F={q2,q4,q7,q9}");        
