@@ -8,7 +8,9 @@ import java_cup.runtime.Symbol;
 %line
 %char
 L=[a-z_]+
-D=[0-9]+
+D = [0-9]
+num = {D}+
+S = \+|\-
 CAP=[A-Z]+
 espacio=[ \t\r\n]
 
@@ -16,6 +18,8 @@ A=[/*]
 C=[*/]
 
 cadena = (\")~(\")
+enteros = {S}?{num}
+numDec =  {S}?{num}?\.{num}
  
 %{
     private Symbol symbol(int type, Object value){
@@ -120,6 +124,7 @@ setfilamenttype {return new Symbol(sym.SETFILAMENTTYPE, yychar, yyline, yytext()
 
 {L}({L}|{D})* {return new Symbol(sym.IDENTIFICADOR, yychar, yyline, yytext());}
 
-("+"|"-")?{D}+|("+"|"-")?{D}+"." {D}+ {return new Symbol(sym.NUMERO, yychar, yyline,new Integer(yytext()));}
+({enteros})       {return new Symbol(sym.NUMERO, yychar, yyline,new Integer(yytext()));}
+({numDec})       {return new Symbol(sym.DECIMAL, yychar, yyline, new Double(yytext()));}
 
 . {return new Symbol(sym.ERROR, yychar, yyline, yytext());}
