@@ -1628,9 +1628,6 @@ NumeroLinea lineatxtCodigo;
     public static javax.swing.JTable tblTablaSimbolos;
     private javax.swing.JTextPane txtAreaEdit;
     // End of variables declaration//GEN-END:variables
-
-<<<<<<< HEAD
- 
       ImageIcon imgENum1 = new ImageIcon("C:/ANADAN/src/Automatas/NumeroErroneo.jpg");
       public Icon NumErr1 = new ImageIcon(imgENum1.getImage().getScaledInstance(467, 318, Image.SCALE_DEFAULT));
     
@@ -1707,24 +1704,6 @@ NumeroLinea lineatxtCodigo;
                        ModalLexico.InfoError.setText("Las mayusculas no se reconocen en este lenguaje");                       
                        ml.setVisible(true); 
                        break;
-=======
-    ImageIcon imgENum1 = new ImageIcon("C:/ANADAN/src/Automatas/NumeroErroneo.jpg");
-    public Icon NumErr1 = new ImageIcon(imgENum1.getImage().getScaledInstance(385, 333, Image.SCALE_DEFAULT));
-
-    ImageIcon imgENum2 = new ImageIcon("C:/ANADAN/src/Automatas/NumeroErroneoMasSignosAlPrincipio.jpg");
-    public Icon NumErr2 = new ImageIcon(imgENum2.getImage().getScaledInstance(362, 315, Image.SCALE_DEFAULT));
-
-    ImageIcon imgEId1 = new ImageIcon("C:/ANADAN/src/Automatas/Identificador_inicio_mal.jpg");
-    public Icon IdErr2 = new ImageIcon(imgEId1.getImage().getScaledInstance(481, 141, Image.SCALE_DEFAULT));
-
-    ImageIcon imgECad1 = new ImageIcon("C:/ANADAN/src/Automatas/Cadena.jpg");
-    public Icon CadErr1 = new ImageIcon(imgECad1.getImage().getScaledInstance(406, 136, Image.SCALE_DEFAULT));
-
-    private void showModalLexical(LabelError err) {
-        ModalLexico ml = new ModalLexico(err);
-
-        switch (err.getError()) {
->>>>>>> b7f4e840cb7b1942837d48cd3a5de878920e998a
 
             case "NUMERO_ERRONEO_MAS_PUNTOS":
                 ModalLexico.jlbAutomata.setIcon(NumErr1);
