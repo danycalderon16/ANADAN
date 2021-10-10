@@ -80,12 +80,8 @@ public class TablaDinamica extends javax.swing.JFrame {
         if (tblDinamica.getColumnModel().getColumnCount() > 0) {
             tblDinamica.getColumnModel().getColumn(0).setMinWidth(50);
             tblDinamica.getColumnModel().getColumn(0).setMaxWidth(70);
-            tblDinamica.getColumnModel().getColumn(1).setResizable(false);
-            tblDinamica.getColumnModel().getColumn(2).setMinWidth(50);
-            tblDinamica.getColumnModel().getColumn(2).setMaxWidth(100);
-            tblDinamica.getColumnModel().getColumn(3).setResizable(false);
-            tblDinamica.getColumnModel().getColumn(5).setMinWidth(50);
-            tblDinamica.getColumnModel().getColumn(5).setMaxWidth(100);
+            tblDinamica.getColumnModel().getColumn(2).setMinWidth(100);
+            tblDinamica.getColumnModel().getColumn(2).setMaxWidth(120);
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

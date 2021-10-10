@@ -23,7 +23,6 @@ parser code
 
     static TablaSimbolos tablaSimbolos = new TablaSimbolos();
     static int verificarTipo = 0;
-    JLabel lb = new JLabel();
     private final int SINTACTICO = 232;
     
     static Stack <String> listaIdentificadores = new Stack <String>();
@@ -38,7 +37,8 @@ parser code
         return this.s;
     }
 
-    public void syntax_error(Symbol s){                            
+    public void syntax_error(Symbol s){     
+        JLabel lb = new JLabel();                       
         lb.setForeground(new Color(217, 33, 51));
         lb.setFont(new Font("Verdana", Font.PLAIN, 14));
         lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -46,7 +46,8 @@ parser code
         VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico", s.right+1,SINTACTICO));
     }
 
-    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{       
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{
+        JLabel lb = new JLabel();       
         lb.setForeground(new Color(217, 33, 51));
         lb.setFont(new Font("Verdana", Font.PLAIN, 14));
         lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -470,10 +471,10 @@ declaracion ::=
     IDENTIFICADOR IDENTIFICADOR SIGNO_DE_IGUAL NEW IDENTIFICADOR PARENTESIS_ABRE parametrosa PARENTESIS_CIERRA PUNTOYCOMA
 ;
 
-t_dato::= BROKEN|
-        JUST |
-        WORD |
-        FLAG 
+t_dato::= BROKEN:td{: RESULT =  td;:}|
+        JUST:td{: RESULT =  td;:}|
+        WORD:td{: RESULT =  td;:}|
+        FLAG:td{: RESULT =  td;:}
 ;
 
 expresion ::= 
@@ -898,7 +899,42 @@ main::= MAIN PARENTESIS_ABRE PARENTESIS_CIERRA LLAVE_ABRE bloquesentencias LLAVE
 parametros::= parametro COMA parametros 
             | parametro |;
 
-parametro::= t_dato IDENTIFICADOR;
+parametro::= t_dato:td IDENTIFICADOR:id {:
+        try{
+            Simbolo sim = TablaSimbolos.buscar(id);
+             //Si es nulo, devuelvo un error
+            if (sim != null) {
+                //Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
+                //RESULT = 0;
+                JLabel lb = new JLabel();
+                lb.setForeground(new Color(217, 33, 51));
+                lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+                lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                lb.setText("Error en la línea " + (idright+1) + ". Error semantico. La variable: '"
+                +id+"' ya está declarada." );   
+                VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semantico. La variable: '"
+                +id+"' ya está declarada.", idright+1,SINTACTICO,
+                new Gramatica("declaracion ::= WORD IDENTIFICADOR PUNTOYCOMA ", "semantico repetido")));
+            }else{
+                if(td.equals("word"))
+                    TablaSimbolos.crear(id, "word","Variable tipo cadena en parmetro");
+                if(td.equals("just"))
+                    TablaSimbolos.crear(id, "just","Variable tipo númerica en parmetro");
+                if(td.equals("flag"))
+                    TablaSimbolos.crear(id, "word","Variable tipo booleana en parmetro");
+                if(td.equals("broken"))
+                    TablaSimbolos.crear(id, "word","Variable tipo flotante en parmetro");
+                //Crear relacion ciclo PARA con su variable asociada
+                TablaSimbolos.lista.push(id);      
+            }
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                           
+    
+    :}
+;
 
 parametrosa::= parametroa | parametroa COMA parametrosa;
 

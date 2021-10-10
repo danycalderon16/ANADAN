@@ -1056,6 +1056,7 @@ NumeroLinea lineatxtCodigo;
             if (labelsErrore.getTipo() == SINTACTICO) {
                 errores_sintacticos = true;
             }
+            System.out.println(labelsErrore);
         }
 
         if (labelsErrores.isEmpty()) {
