@@ -1074,7 +1074,7 @@ NumeroLinea lineatxtCodigo;
                 lb.setBounds(5, 5, 700, 20);
                 lb.setFont(new Font("Verdana", Font.PLAIN, 14));
                 jPanel1.add(lb);
-                num=1;
+                num = 1;
             }
 
             for (LabelError le : labelsErrores) {
@@ -1640,86 +1640,8 @@ NumeroLinea lineatxtCodigo;
     public static javax.swing.JTable tblTablaSimbolos;
     private javax.swing.JTextPane txtAreaEdit;
     // End of variables declaration//GEN-END:variables
-<<<<<<< HEAD
 
-
- 
-      ImageIcon imgENum1 = new ImageIcon("C:/ANADAN/src/Automatas/NumeroErroneo.jpg");
-      public Icon NumErr1 = new ImageIcon(imgENum1.getImage().getScaledInstance(467, 318, Image.SCALE_DEFAULT));
-    
-      ImageIcon imgENum2 = new ImageIcon("C:/ANADAN/src/Automatas/NumeroErroneoMasSignosAlPrincipio.jpg");
-      public Icon NumErr2 = new ImageIcon(imgENum2.getImage().getScaledInstance(362, 315, Image.SCALE_DEFAULT));
-     
-      ImageIcon imgEId1 = new ImageIcon("C:/ANADAN/src/Automatas/Identificador_inicio_mal.jpg");
-      public Icon IdErr2 = new ImageIcon(imgEId1.getImage().getScaledInstance(481, 141, Image.SCALE_DEFAULT));
-           
-      ImageIcon imgECad1 = new ImageIcon("C:/ANADAN/src/Automatas/Cadena.jpg");
-      public Icon CadErr1 = new ImageIcon(imgECad1.getImage().getScaledInstance(406, 136, Image.SCALE_DEFAULT));
-            
- 
-  
-    private void showModalLexical(LabelError err) {
-        ModalLexico ml = new ModalLexico(err);
- 
-        //  err.get
-        switch (err.getError()) {
-                   
-                    case "NUMERO_ERRONEO_MAS_PUNTOS":
-                          ModalLexico.jlbAutomata.setIcon(NumErr1);
-                            if(ml.isOpen()){
-                                ml.close();
-                            }
-                            
-                  
-                           //  System.out.println(err.getLabel().get);
-                       ModalLexico.jlbEstados.setText("Q={q1,q2,q3,q4,q5,q6,q7,q8,q9,q10,q11,q12,q13}");
-                       ModalLexico.jlbInicial.setText("S=q1");
-                       ModalLexico.jlbFinal.setText("F={q3,q5,q8,q11,q13}");        
-                       ModalLexico.txtAlfabeto.setText("Σ={0, 1, 2, 3, 4, 5, 6, 7,8, 9, +, -, *, /, ^, e, .}");
-                      ml.setVisible(true);
-                        break;
-                        
-                     case "NUMERO_ERRONEO":
-                          ModalLexico.jlbAutomata.setIcon(NumErr1);
-                            if(ml.isOpen()){
-                                ml.close();
-                            }
-                       ModalLexico.jlbEstados.setText("Q={q1,q2,q3,q4,q5,q6,q7,q8,q9,q10,q11,q12,q13}");
-                       ModalLexico.jlbInicial.setText("S=q1");
-                       ModalLexico.jlbFinal.setText("F={q3,q5,q8,q11,q13}");        
-                       ModalLexico.txtAlfabeto.setText("Σ={0, 1, 2, 3, 4, 5, 6, 7,8, 9, +, -, *, /, ^, e, .}");
-                       ml.setVisible(true);                         
-                         break;
-                     case "MAL_NOMBRE_PARA_IDENTIFICADOR":
-                           ModalLexico.jlbAutomata.setIcon(IdErr2);
-                            if(ml.isOpen()){
-                                ml.close();
-                            }
-                       ModalLexico.jlbEstados.setText("Q={q1,q2}");
-                       ModalLexico.jlbInicial.setText("S=q1");
-                       ModalLexico.jlbFinal.setText("F={q2}");        
-                       ModalLexico.txtAlfabeto.setText("Σ={0, 1, 2, 3, 4, 5, 6, 7,8, 9,a,b,c,d,e,f,g,h,i,j,k,l,n,m,o,p,q,r,s,t,u,v,w,x,y,z,_}");
-                       ModalLexico.InfoError.setText("Los identificadores solo pueden iniciar con una letra y/o guion bajo");
-                       ml.setVisible(true);    
-                        break;                
-                     case "MAYUSCULAS_EN_CADENA":
-                     ModalLexico.jlbAutomata.setIcon(CadErr1);
-                            if(ml.isOpen()){
-                                ml.close();
-                            }
-                       ModalLexico.jlbEstados.setText("Q={q1}");
-                       ModalLexico.jlbInicial.setText("S=q1");
-                       ModalLexico.jlbFinal.setText("F={q1}");        
-                       ModalLexico.txtAlfabeto.setText("Σ={a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, 0, 1, 2, 3,\n" +
-                                                          "4, 5, 6, 7, 8, 9, !,\n" +
-                                                          "%, ^, &, *, (, ), -, +, =, {, }, [, ], \\, |, ;, :, ”, <, ,, >, ., ?, /, \n" +
-                                                          "tabulador, espacio en blanco, nueva\n" +
-                                                          "línea, retorno de carro}");
-                       ModalLexico.InfoError.setText("Las mayusculas no se reconocen en este lenguaje");                       
-                       ml.setVisible(true); 
-                       break;
-=======
-      ImageIcon imgENum1 = new ImageIcon("C:/ANADAN/src/Automatas/NumeroErroneo.jpg");
+    ImageIcon imgENum1 = new ImageIcon("C:/ANADAN/src/Automatas/NumeroErroneo.jpg");
     public Icon NumErr1 = new ImageIcon(imgENum1.getImage().getScaledInstance(467, 318, Image.SCALE_DEFAULT));
 
     ImageIcon imgENum2 = new ImageIcon("C:/ANADAN/src/Automatas/NumeroErroneoMasSignosAlPrincipio.jpg");
@@ -1744,24 +1666,22 @@ NumeroLinea lineatxtCodigo;
                 }
 
                 //  System.out.println(err.getLabel().get);
-                ModalLexico.jlbEstados.setText("Q={q1,q2,q3,q4,q5,q6,q7,q8,q9}");
+                ModalLexico.jlbEstados.setText("Q={q1,q2,q3,q4,q5,q6,q7,q8,q9,q10,q11,q12,q13}");
                 ModalLexico.jlbInicial.setText("S=q1");
-                ModalLexico.jlbFinal.setText("F={q2,q4,q7,q9}");
+                ModalLexico.jlbFinal.setText("F={q3,q5,q8,q11,q13}");
                 ModalLexico.txtAlfabeto.setText("Σ={0, 1, 2, 3, 4, 5, 6, 7,8, 9, +, -, *, /, ^, e, .}");
-                ModalLexico.InfoError.setText("El error se provoca al intentar salir del estado (q4) con un punto");
                 ml.setVisible(true);
                 break;
 
             case "NUMERO_ERRONEO":
-                ModalLexico.jlbAutomata.setIcon(NumErr2);
+                ModalLexico.jlbAutomata.setIcon(NumErr1);
                 if (ml.isOpen()) {
                     ml.close();
                 }
-                ModalLexico.jlbEstados.setText("Q={q1,q2,q3,q4,q5,q6,q7,q8,q9}");
+                ModalLexico.jlbEstados.setText("Q={q1,q2,q3,q4,q5,q6,q7,q8,q9,q10,q11,q12,q13}");
                 ModalLexico.jlbInicial.setText("S=q1");
-                ModalLexico.jlbFinal.setText("F={q2,q4,q7,q9}");
+                ModalLexico.jlbFinal.setText("F={q3,q5,q8,q11,q13}");
                 ModalLexico.txtAlfabeto.setText("Σ={0, 1, 2, 3, 4, 5, 6, 7,8, 9, +, -, *, /, ^, e, .}");
-                ModalLexico.InfoError.setText("El error se provoca al intentar salir del estado (q2) con otra cosa que no sea un punto un digito o una 'e'");
                 ml.setVisible(true);
                 break;
             case "MAL_NOMBRE_PARA_IDENTIFICADOR":
@@ -1792,10 +1712,6 @@ NumeroLinea lineatxtCodigo;
                 ModalLexico.InfoError.setText("Las mayusculas no se reconocen en este lenguaje");
                 ml.setVisible(true);
                 break;
-
-            default:
-                break;
->>>>>>> 5bf16a80e3f4b9aa1e3c4d18dd972a99769d201a
         }
 
     }
@@ -2151,15 +2067,15 @@ NumeroLinea lineatxtCodigo;
         //System.out.println(sim);
         if (sim.getTipo().equals("just")) {
             double r = Double.parseDouble(result);
-            if( r%1 != 0){
-                int r_int = (int) r;
-                sim.setValor(r_int);
+            if (r % 1 != 0) {
+                sim.setValor(r);
                 sim.setTipo("broken");
                 System.out.println("Cambio el tipo");
+            } else {
+                int r_int = (int) r;
+                sim.setValor(r_int);
             }
-            else
-                sim.setValor(r);
-            
+
         } else {
             float r_floar = (float) Double.parseDouble(result);
             sim.setValor(r_floar);
