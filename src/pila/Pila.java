@@ -102,6 +102,7 @@ public class Pila {
         }
         pila.pop();
         pila.imprimir();*/
+        /*
         String str = "id = 4+3*(3+4)";
         String s1[] = str.split("=");
         str = s1[1];
@@ -244,7 +245,7 @@ public class Pila {
             if ("=".equals(exp)) {/*
                 double op1 = Double.parseDouble(pila_exp.pop());
                 double op2 = Double.parseDouble(pila_exp.pop());
-                pila_exp.push((op1 * op2) + "");*/
+                pila_exp.push((op1 * op2) + "");
                 continue;
             }
 
@@ -255,7 +256,13 @@ public class Pila {
         String result = pila_exp.pop();
         String id = pila_exp.pop();
         int r_int = (int) Double.parseDouble(result);
-        JOptionPane.showMessageDialog(null, r_int);
+        JOptionPane.showMessageDialog(null, r_int);*/
+        
+        double d = 8;
+        if(d%1==0)
+            System.out.println("Entero");
+        else
+            System.out.println("Flotane");
 
     }
 }
