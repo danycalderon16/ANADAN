@@ -1366,6 +1366,8 @@ NumeroLinea lineatxtCodigo;
                     case Printerport:
                     case Setfilamenttype:
                     case Word:
+                    case True:
+                    case False:
                         tblTablaSimbolos.setValueAt(c.columna, i, 0);
                         tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
                         tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
@@ -2066,15 +2068,23 @@ NumeroLinea lineatxtCodigo;
         String result = pila_exp.pop();
         String id = pila_exp.pop();
         Simbolo sim = TablaSimbolos.buscar(id);
-        System.out.println(sim);
+        //System.out.println(sim);
         if (sim.getTipo().equals("just")) {
-            int r_int = (int) Double.parseDouble(result);
-            sim.setValor(r_int);
+            double r = Double.parseDouble(result);
+            if( r%1 != 0){
+                int r_int = (int) r;
+                sim.setValor(r_int);
+                sim.setTipo("broken");
+                System.out.println("Cambio el tipo");
+            }
+            else
+                sim.setValor(r);
+            
         } else {
             float r_floar = (float) Double.parseDouble(result);
             sim.setValor(r_floar);
         }
-        System.out.println(sim);
+        //System.out.println(sim);
 
     }
 

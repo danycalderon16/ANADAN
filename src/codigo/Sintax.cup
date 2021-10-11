@@ -770,12 +770,12 @@ condicion::= IDENTIFICADOR:id IGUAL_QUE FALSE {:
         
             if (sim == null) {
                 JLabel lb = new JLabel();
-                    lb.setForeground(new Color(217, 33, 51));
-                    lb.setFont(new Font("Verdana", Font.PLAIN, 14));
-                    lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-                    lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. La variable '"+id+"' no existe" );   
-                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. La variable '"+id+"' no existe", idright+1,SINTACTICO,
-                    new Gramatica("condicion::= FALSE IGUAL_QUE IDENTIFICADOR","Error sintáctico. La variable '"+id+"' no existe")));
+                lb.setForeground(new Color(217, 33, 51));
+                lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+                lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. La variable '"+id+"' no existe" );   
+                VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. La variable '"+id+"' no existe", idright+1,SINTACTICO,
+                new Gramatica("condicion::= FALSE IGUAL_QUE IDENTIFICADOR","Error sintáctico. La variable '"+id+"' no existe")));
                 System.out.println("El identificador '"+id+"' no existe");
             }
             else{
