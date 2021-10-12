@@ -219,6 +219,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         miRetroMode = new javax.swing.JMenuItem();
         miZoomInFont = new javax.swing.JMenuItem();
         javax.swing.JMenuItem miZoomOutFont = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         mnuTablaS = new javax.swing.JMenu();
         mnuFija = new javax.swing.JMenuItem();
         miDynamicTable = new javax.swing.JMenuItem();
@@ -560,6 +561,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         mnuEdit.add(miZoomOutFont);
 
+        jMenuItem1.setText("Prueba");
+        jMenuItem1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jMenuItem1MouseReleased(evt);
+            }
+        });
+        mnuEdit.add(jMenuItem1);
+
         barraMenu.add(mnuEdit);
 
         mnuTablaS.setText("Symbol Table");
@@ -572,7 +581,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         mnuTablaS.add(mnuFija);
 
-        miDynamicTable.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        miDynamicTable.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_MASK));
         miDynamicTable.setText("Dynamic");
         miDynamicTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -594,7 +603,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         mnuCompile.setText("Compile");
         mnuCompile.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        miCompileLexical.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        miCompileLexical.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
         miCompileLexical.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Lexico.png"))); // NOI18N
         miCompileLexical.setText("Lexical");
         miCompileLexical.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -604,7 +613,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         mnuCompile.add(miCompileLexical);
 
-        miCompileSyntax.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        miCompileSyntax.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
         miCompileSyntax.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/analysis (1).png"))); // NOI18N
         miCompileSyntax.setText("Syntax");
         miCompileSyntax.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1469,6 +1478,11 @@ NumeroLinea lineatxtCodigo;
         txtAreaEdit.setForeground(new Color(248, 243, 245));
     }//GEN-LAST:event_txtAreaEditKeyTyped
 
+    private void jMenuItem1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MouseReleased
+        //new ErroresSinSem(this,true).setVisible(true);
+            
+    }//GEN-LAST:event_jMenuItem1MouseReleased
+    
     public void rquicksort() {
 
         int col = m.getColumnCount();
@@ -1610,6 +1624,7 @@ NumeroLinea lineatxtCodigo;
     private javax.swing.JLabel icon_undo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -1741,10 +1756,16 @@ NumeroLinea lineatxtCodigo;
                     showModalLexical(le);
                 } else {
                     if (le.getGramatica() != null) {
-                        showMessageDialog(null, "Estamos trabajando en modal de gramáticas\n"
-                                + le.getGramatica().getProduccion() + "\n" + le.getGramatica().getError());
+                        //showMessageDialog(null, "Estamos trabajando en modal de gramáticas\n"
+                        //        + le.getGramatica().getProduccion() + "\n" + le.getGramatica().getError());
+                        
+                        //VENTANA MODAL-----------------------------------------------------------------------------------
+                        new ErroresSinSem(null,true,le.getGramatica().getProduccion(),le.getGramatica().getError()).setVisible(true);
+                        
+                        
                     } else {
                         showMessageDialog(null, "Estamos trabajando en modal de gramáticas\n");
+                        //new ErroresSinSem(null,true,le.getGramatica().getProduccion(),le.getGramatica().getError()).setVisible(true);
                     }
                 }
             }
@@ -1759,6 +1780,7 @@ NumeroLinea lineatxtCodigo;
         });
     }
 
+    
     private void newFile() {
         /* if (seleccionar.showDialog(null, "Nuevo") == JFileChooser.APPROVE_OPTION) {
             archivo = seleccionar.getSelectedFile();
