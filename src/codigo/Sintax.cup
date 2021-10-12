@@ -700,7 +700,7 @@ sentasignacion::= IDENTIFICADOR:identificador SIGNO_DE_IGUAL expresion:e PUNTOYC
         }
         else{
             if(sim.tipo.equals("just") || sim.tipo.equals("broken"))
-                VentanaPrincipal.exp = identificador +"="+(String) e;
+                VentanaPrincipal.exp = identificador +"="+ String.valueOf(e);
             else{ 
                 JLabel lb = new JLabel();
                 lb.setForeground(new Color(217, 33, 51));

@@ -127,9 +127,9 @@ cadena = (\")~(\")
 <YYINITIAL> (("+-")|("-+"))({D}+|{D}+ "." {D}+) {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return NUMERO_ERRONEO;}
 <YYINITIAL> (\.)*{num}?((\.*)|({num}))* {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return NUMERO_ERRONEO_MAS_PUNTOS;}
  
-<YYINITIAL> (("+"|"-")?{L}+|("+"|"-")?{D}+ "." {D}+)("."|{D}|{L})+ {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return MAL_NOMBRE_PARA_IDENTIFICADOR;} 
+<YYINITIAL> (("+"|"-")?{L}+|("+"|"-")?{D}+ "." {D}+)("."|{D}|{L})+ {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return NUMERO_ERRONEO;} 
 
-<YYINITIAL> (("+"|"-")?{D}+|("+"|"-")?{D}+ "." {D}+){L}({L}|{D})* {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return MAL_NOMBRE_PARA_IDENTIFICADOR;}
+<YYINITIAL> (("+"|"-")?{D}+|("+"|"-")?{D}+ "." {D}+){L}({L}|{D})* {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return NUMERO_ERRONEO;}
 
 <YYINITIAL> {CAP}{L}({L}|{D})* {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return MAL_NOMBRE_PARA_IDENTIFICADOR;}
 
