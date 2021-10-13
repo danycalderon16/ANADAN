@@ -83,14 +83,17 @@ public class Pila {
         }
     }
 
-    public void imprimir() {
+    public String imprimir() {
+        String str = "";
         Nodo nodos = raiz;
-        System.out.println("------------------------");
+        //System.out.println("------------------------");
         while (nodos != null) {
-            System.out.print(nodos.info+",");
+            str += nodos.info+",";
+          //  System.out.print(nodos.info+",");
             nodos = nodos.sig;
         }
-        System.out.println();
+        //System.out.println();
+        return str;
     }
 
     public static void main(String[] ar) {
