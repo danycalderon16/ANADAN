@@ -1226,21 +1226,22 @@ NumeroLinea lineatxtCodigo;
                         tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
                         tblTablaSimbolos.setValueAt("ERROR:CADENA_NO_VALIDA", i, 3);
                         i++;
-                        lb.setText("Error en la línea " + (c.linea + 1) + ". Error léxico. El número '" + lexer.yytext() + "' tiene puntos de más.");
+                        lb.setText("Error en la línea " + (c.linea + 1) + ". Error léxico. El formato del número '" + lexer.yytext() + "' es erroneo.");
                         labelsErrores.add(new LabelError(lb, "NUMERO_ERRONEO_MAS_PUNTOS", c.linea + 1, LEXICO));
                         counter++;
                         break;
-                    case MAYUSCULAS_EN_CADENA:
-                        tblTablaSimbolos.setValueAt(c.columna, i, 0);
-                        tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
-                        tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
-                        tblTablaSimbolos.setValueAt("ERROR:CADENA_NO_VALIDA", i, 3);
-                        i++;
-                        lb.setText("Error en la línea " + (c.linea + 1) + ". Error léxico. Las mayúsculas no están definidas en el lenguaje: '" + lexer.yytext() + "'");
-                        labelsErrores.add(new LabelError(lb, "MAYUSCULAS_EN_CADENA", c.linea + 1, LEXICO));
-                        counter++;
-                        break;
+//                    case MAYUSCULAS_EN_CADENA:
+//                        tblTablaSimbolos.setValueAt(c.columna, i, 0);
+//                        tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
+//                        tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
+//                        tblTablaSimbolos.setValueAt("ERROR:CADENA_NO_VALIDA", i, 3);
+//                        i++;
+//                        lb.setText("Error en la línea " + (c.linea + 1) + ". Error léxico. Las mayúsculas no están definidas en el lenguaje: '" + lexer.yytext() + "'");
+//                        labelsErrores.add(new LabelError(lb, "MAYUSCULAS_EN_CADENA", c.linea + 1, LEXICO));
+//                        counter++;
+//                        break;
                     case MAL_NOMBRE_PARA_IDENTIFICADOR:
+                    case MAYUSCULAS_EN_CADENA:
                         tblTablaSimbolos.setValueAt(c.columna, i, 0);
                         tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
                         tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
@@ -1695,7 +1696,7 @@ NumeroLinea lineatxtCodigo;
     private void showModalLexical(LabelError err) {
         ModalLexico ml = new ModalLexico(err);
  
-        //  err.get
+     
         switch (err.getError()) {
                    
                     case "NUMERO_ERRONEO_MAS_PUNTOS":
@@ -1703,13 +1704,11 @@ NumeroLinea lineatxtCodigo;
                             if(ml.isOpen()){
                                 ml.close();
                             }
-                            
-                  
-                           //  System.out.println(err.getLabel().get);
                        ModalLexico.jlbEstados.setText("Q={q1,q2,q3,q4,q5,q6,q7,q8,q9,q10,q11,q12,q13}");
                        ModalLexico.jlbInicial.setText("S=q1");
                        ModalLexico.jlbFinal.setText("F={q3,q5,q8,q11,q13}");        
-                       ModalLexico.txtAlfabeto.setText("Σ={0, 1, 2, 3, 4, 5, 6, 7,8, 9, +, -, *, /, ^, e, .}");
+                       ModalLexico.txtAlfabeto.setText("Σ={0, 1, 2, 3, 4, 5, 6, 7,8, 9, +, -, *, /, ^, e, ., E}");
+                       ModalLexico.InfoError.setText("numeros");
                        ml.setVisible(true);
                         break;
                         
@@ -1721,7 +1720,8 @@ NumeroLinea lineatxtCodigo;
                        ModalLexico.jlbEstados.setText("Q={q1,q2,q3,q4,q5,q6,q7,q8,q9,q10,q11,q12,q13}");
                        ModalLexico.jlbInicial.setText("S=q1");
                        ModalLexico.jlbFinal.setText("F={q3,q5,q8,q11,q13}");        
-                       ModalLexico.txtAlfabeto.setText("Σ={0, 1, 2, 3, 4, 5, 6, 7,8, 9, +, -, *, /, ^, e, .}");
+                       ModalLexico.txtAlfabeto.setText("Σ={0, 1, 2, 3, 4, 5, 6, 7,8, 9, +, -, *, /, ^, e, ., E}");
+                       ModalLexico.InfoError.setText("numeros");
                        ml.setVisible(true);                         
                          break;
                      case "MAL_NOMBRE_PARA_IDENTIFICADOR":
@@ -1733,7 +1733,7 @@ NumeroLinea lineatxtCodigo;
                        ModalLexico.jlbInicial.setText("S=q1");
                        ModalLexico.jlbFinal.setText("F={q2}");        
                        ModalLexico.txtAlfabeto.setText("Σ={0, 1, 2, 3, 4, 5, 6, 7,8, 9,a,b,c,d,e,f,g,h,i,j,k,l,n,m,o,p,q,r,s,t,u,v,w,x,y,z,_}");
-                       ModalLexico.InfoError.setText("Los identificadores solo pueden iniciar con una letra y/o guion bajo");
+                       ModalLexico.InfoError.setText("identificadores");
                        ml.setVisible(true);    
                         break;                
                      case "MAYUSCULAS_EN_CADENA":
