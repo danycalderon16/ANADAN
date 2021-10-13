@@ -414,7 +414,7 @@ public class ModalLexico extends javax.swing.JFrame {
         jLabel1.setText("Ayuda sobre error léxico");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 470, 60));
 
-        icon_close_btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        icon_close_btn.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         icon_close_btn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 icon_close_btnMouseReleased(evt);
@@ -424,7 +424,7 @@ public class ModalLexico extends javax.swing.JFrame {
 
         jlbAutomata.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbAutomata.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel1.add(jlbAutomata, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 480, 370));
+        jPanel1.add(jlbAutomata, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 480, 380));
 
         lb_info_error.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lb_info_error.setForeground(new java.awt.Color(255, 51, 51));
@@ -449,12 +449,17 @@ public class ModalLexico extends javax.swing.JFrame {
         jlbFinal.setText("F={q2,q4,q7,q9}");
         jPanel1.add(jlbFinal, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 430, 250, 30));
 
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+
         txtAlfabeto.setColumns(20);
         txtAlfabeto.setRows(5);
         txtAlfabeto.setText("Σ={0, 1, 2, 3, 4, 5, 6, 7,8, 9, +, -, *, /, ^, e, .}");
         jScrollPane1.setViewportView(txtAlfabeto);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 470, 330, 60));
+
+        jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         InfoError.setColumns(20);
         InfoError.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
@@ -470,7 +475,7 @@ public class ModalLexico extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 120, 240, -1));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 120, 330, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
