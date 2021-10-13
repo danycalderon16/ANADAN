@@ -80,7 +80,7 @@ public class ModalLexico extends javax.swing.JFrame {
                         default:
                             cadenaRecorrido+="de q1 no existe salida a otro estado con el caracter: '"+error.charAt(c)+"'";
                             InfoError.setText("");
-        InfoError.setText(cadenaRecorrido);
+                            InfoError.setText(cadenaRecorrido);
                             return;
                     }
                    break;
@@ -100,7 +100,7 @@ public class ModalLexico extends javax.swing.JFrame {
                         default:
                             cadenaRecorrido+="de q2 no existe salida a otro estado con el caracter:'"+error.charAt(c)+"'";
                       InfoError.setText("");
-        InfoError.setText(cadenaRecorrido);
+                      InfoError.setText(cadenaRecorrido);
                             return;
                     }
                     break;
@@ -128,7 +128,7 @@ public class ModalLexico extends javax.swing.JFrame {
                         default:
                             cadenaRecorrido+="de q3 no existe salida a otro estado con el caracter:'"+error.charAt(c)+"'";
                             InfoError.setText("");
-        InfoError.setText(cadenaRecorrido);
+                            InfoError.setText(cadenaRecorrido);
                             return;
                         }
                    break;
@@ -148,7 +148,7 @@ public class ModalLexico extends javax.swing.JFrame {
                         default:
                             cadenaRecorrido+="de q4 no existe salida a otro estado con el caracter:'"+error.charAt(c)+"'";
                             InfoError.setText("");
-        InfoError.setText(cadenaRecorrido);
+                            InfoError.setText(cadenaRecorrido);
                             return;
                         }
                     break;
@@ -173,7 +173,7 @@ public class ModalLexico extends javax.swing.JFrame {
                         default:
                             cadenaRecorrido+="de q5 no existe salida a otro estado con el caracter:'"+error.charAt(c)+"'";
                             InfoError.setText("");
-        InfoError.setText(cadenaRecorrido);
+                            InfoError.setText(cadenaRecorrido);
                             return;
                         }
                     break;
@@ -200,7 +200,7 @@ public class ModalLexico extends javax.swing.JFrame {
                         default:
                             cadenaRecorrido+="de q6 no existe salida a otro estado con el caracter:'"+error.charAt(c)+"'";
                             InfoError.setText("");
-        InfoError.setText(cadenaRecorrido);
+                            InfoError.setText(cadenaRecorrido);
                             return;
                     }
                     break;
@@ -220,7 +220,7 @@ public class ModalLexico extends javax.swing.JFrame {
                         default:
                             cadenaRecorrido+="de q7 no existe salida a otro estado con el caracter:'"+error.charAt(c)+"'";
                             InfoError.setText("");
-        InfoError.setText(cadenaRecorrido);
+                            InfoError.setText(cadenaRecorrido);
                       return;
                     }
                     break;
@@ -232,7 +232,7 @@ public class ModalLexico extends javax.swing.JFrame {
                         default:
                             cadenaRecorrido+="de q8 no existe salida a otro estado con el caracter:'"+error.charAt(c)+"'";
                             InfoError.setText("");
-        InfoError.setText(cadenaRecorrido);
+                            InfoError.setText(cadenaRecorrido);
                       return;
                     }
                     break;
@@ -259,7 +259,7 @@ public class ModalLexico extends javax.swing.JFrame {
                         default:
                             cadenaRecorrido+="de q9 no existe salida a otro estado con el caracter:'"+error.charAt(c)+"'";
                             InfoError.setText("");
-        InfoError.setText(cadenaRecorrido);
+                            InfoError.setText(cadenaRecorrido);
                             return;
                     }
                     break;    
@@ -279,7 +279,7 @@ public class ModalLexico extends javax.swing.JFrame {
                         default:
                             cadenaRecorrido+="de q10 no existe salida a otro estado con el caracter:'"+error.charAt(c)+"'";
                             InfoError.setText("");
-        InfoError.setText(cadenaRecorrido);
+                            InfoError.setText(cadenaRecorrido);
                       return;
                     }
                     break;
@@ -303,7 +303,7 @@ public class ModalLexico extends javax.swing.JFrame {
                         default:
                             cadenaRecorrido+="de q11 no existe salida a otro estado con el caracter:'"+error.charAt(c)+"'";
                             InfoError.setText("");
-        InfoError.setText(cadenaRecorrido);
+                            InfoError.setText(cadenaRecorrido);
                       return;
                     }
                     break;
@@ -344,7 +344,7 @@ public class ModalLexico extends javax.swing.JFrame {
                         default:
                             cadenaRecorrido+="de q7 no existe salida a otro estado con el caracter:'"+error.charAt(c)+"'";
                             InfoError.setText("");
-        InfoError.setText(cadenaRecorrido);
+                            InfoError.setText(cadenaRecorrido);
                       return;
                     }
                     break;
@@ -414,13 +414,13 @@ public class ModalLexico extends javax.swing.JFrame {
         jLabel1.setText("Ayuda sobre error léxico");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 470, 60));
 
-        icon_close_btn.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        icon_close_btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         icon_close_btn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 icon_close_btnMouseReleased(evt);
             }
         });
-        jPanel1.add(icon_close_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 10, 20, 20));
+        jPanel1.add(icon_close_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 10, 20, 20));
 
         jlbAutomata.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbAutomata.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));

@@ -86,17 +86,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         initComponents();
         seticon();
         undoManager();
-        this.setTitle("ANADAN");
+        this.setTitle("Sin título - ANADAN");
         setLocationRelativeTo(null);
         m = (DefaultTableModel) tblTablaSimbolos.getModel();
         numeroLineas();
         mnuMinimize.setEnabled(false);
 
-        //UIDefaults defs = UIManager.getDefaults();
-        //defs.put("TextPane.background", new ColorUIResource(Color.BLACK));
-        //defs.put("TextPane.inactiveBackground", new ColorUIResource(Color.BLACK));
-        //txtAreaEdit.updateUI(defs);
-        //CAMBIAR COLOR DEL JTEXTPANE-----------------------------------------------------------------
         Color bgColor = new Color(42, 43, 46);
         UIDefaults defaults = new UIDefaults();
         defaults.put("TextPane.background", new ColorUIResource(bgColor));
@@ -105,13 +100,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         txtAreaEdit.putClientProperty("Nimbus.Overrides.InheritDefaults", true);
         txtAreaEdit.setBackground(bgColor);
 
-        //bgColor = new Color(42, 43, 46);
-        //UIDefaults defaults1 = new UIDefaults();
-        //defaults1.put("EditorPane.background", new ColorUIResource(bgColor));
-        //defaults1.put("EditorPane[Enabled].backgroundPainter", bgColor);
-        //txtConsolaPane.putClientProperty("Nimbus.Overrides", defaults1);
-        //txtConsolaPane.putClientProperty("Nimbus.Overrides.InheritDefaults", true);
-        //txtConsolaPane.setBackground(bgColor);
         Color darkColor = new Color(153, 153, 153);
         tblTablaSimbolos.setForeground(Color.WHITE);
         tblTablaSimbolos.setBackground(darkColor);
@@ -219,6 +207,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         miRetroMode = new javax.swing.JMenuItem();
         miZoomInFont = new javax.swing.JMenuItem();
         javax.swing.JMenuItem miZoomOutFont = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         mnuTablaS = new javax.swing.JMenu();
         mnuFija = new javax.swing.JMenuItem();
         miDynamicTable = new javax.swing.JMenuItem();
@@ -247,9 +236,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jplAreaEdit.setLayout(jplAreaEditLayout);
         jplAreaEditLayout.setHorizontalGroup(
             jplAreaEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jplAreaEditLayout.createSequentialGroup()
-                .addComponent(scPanAreaEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 694, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(scPanAreaEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
         );
         jplAreaEditLayout.setVerticalGroup(
             jplAreaEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -318,9 +305,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblTablaSimbolos);
         if (tblTablaSimbolos.getColumnModel().getColumnCount() > 0) {
+            tblTablaSimbolos.getColumnModel().getColumn(0).setResizable(false);
             tblTablaSimbolos.getColumnModel().getColumn(0).setPreferredWidth(1);
+            tblTablaSimbolos.getColumnModel().getColumn(1).setResizable(false);
             tblTablaSimbolos.getColumnModel().getColumn(1).setPreferredWidth(10);
+            tblTablaSimbolos.getColumnModel().getColumn(2).setResizable(false);
             tblTablaSimbolos.getColumnModel().getColumn(2).setPreferredWidth(15);
+            tblTablaSimbolos.getColumnModel().getColumn(3).setResizable(false);
         }
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 50, 430, 390));
@@ -346,7 +337,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         icon_save.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         icon_save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/play.png"))); // NOI18N
         icon_save.setToolTipText("Guardar");
-        icon_save.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        icon_save.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         icon_save.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 icon_saveMouseReleased(evt);
@@ -357,7 +348,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         icon_save_as.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         icon_save_as.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/play.png"))); // NOI18N
         icon_save_as.setToolTipText("Guardar como");
-        icon_save_as.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        icon_save_as.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         icon_save_as.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 icon_save_asMouseReleased(evt);
@@ -368,7 +359,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         icon_table.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         icon_table.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/table.png"))); // NOI18N
         icon_table.setToolTipText("Tabla de Simbolos");
-        icon_table.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        icon_table.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         icon_table.setDisabledIcon(null);
         icon_table.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -380,7 +371,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         icon_lexico.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         icon_lexico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/analysis (1).png"))); // NOI18N
         icon_lexico.setToolTipText("Léxico");
-        icon_lexico.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        icon_lexico.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         icon_lexico.setDisabledIcon(null);
         icon_lexico.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -392,7 +383,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         icon_sintactic.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         icon_sintactic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Lexico.png"))); // NOI18N
         icon_sintactic.setToolTipText("Sintáctico");
-        icon_sintactic.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        icon_sintactic.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         icon_sintactic.setDisabledIcon(null);
         icon_sintactic.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -404,7 +395,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         icon_run.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         icon_run.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/play.png"))); // NOI18N
         icon_run.setToolTipText("Compilar");
-        icon_run.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        icon_run.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         icon_run.setDisabledIcon(null);
         icon_run.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -432,7 +423,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         icon_undo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         icon_undo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Atras.png"))); // NOI18N
         icon_undo.setToolTipText("Deshacer");
-        icon_undo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        icon_undo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         icon_undo.setDisabledIcon(null);
         icon_undo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -444,7 +435,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         icon_redo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         icon_redo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Deltante.png"))); // NOI18N
         icon_redo.setToolTipText("Rehacer");
-        icon_redo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        icon_redo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         icon_redo.setDisabledIcon(null);
         icon_redo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -559,6 +550,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
         mnuEdit.add(miZoomOutFont);
+
+        jMenuItem1.setText("Prueba");
+        jMenuItem1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jMenuItem1MouseReleased(evt);
+            }
+        });
+        mnuEdit.add(jMenuItem1);
 
         barraMenu.add(mnuEdit);
 
@@ -899,6 +898,7 @@ NumeroLinea lineatxtCodigo;
         String documento = "";
         try {
             entrada = new FileInputStream(archivo);
+            this.setTitle(archivo.getName()+" - ANADAN");
             int ascci;
             while ((ascci = entrada.read()) != -1) {
                 char caracter = (char) ascci;
@@ -1074,7 +1074,7 @@ NumeroLinea lineatxtCodigo;
                 lb.setBounds(5, 5, 700, 20);
                 lb.setFont(new Font("Verdana", Font.PLAIN, 14));
                 jPanel1.add(lb);
-                num=1;
+                num = 1;
             }
 
             for (LabelError le : labelsErrores) {
@@ -1264,6 +1264,7 @@ NumeroLinea lineatxtCodigo;
                     case Signo_de_Resta:
                     case Signo_de_Multiplicación:
                     case Signo_de_División:
+                    case Signo_de_Exponente:
                         tblTablaSimbolos.setValueAt(c.columna, i, 0);
                         tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
                         tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
@@ -1469,6 +1470,11 @@ NumeroLinea lineatxtCodigo;
         txtAreaEdit.setForeground(new Color(248, 243, 245));
     }//GEN-LAST:event_txtAreaEditKeyTyped
 
+    private void jMenuItem1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MouseReleased
+        //new ErroresSinSem(this,true).setVisible(true);
+            
+    }//GEN-LAST:event_jMenuItem1MouseReleased
+    
     public void rquicksort() {
 
         int col = m.getColumnCount();
@@ -1610,6 +1616,7 @@ NumeroLinea lineatxtCodigo;
     private javax.swing.JLabel icon_undo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -1742,10 +1749,16 @@ NumeroLinea lineatxtCodigo;
                     showModalLexical(le);
                 } else {
                     if (le.getGramatica() != null) {
-                        showMessageDialog(null, "Estamos trabajando en modal de gramáticas\n"
-                                + le.getGramatica().getProduccion() + "\n" + le.getGramatica().getError());
+                        //showMessageDialog(null, "Estamos trabajando en modal de gramáticas\n"
+                        //        + le.getGramatica().getProduccion() + "\n" + le.getGramatica().getError());
+                        
+                        //VENTANA MODAL-----------------------------------------------------------------------------------
+                        new ErroresSinSem(null,true,le.getGramatica().getProduccion(),le.getGramatica().getError()).setVisible(true);
+                        
+                        
                     } else {
                         showMessageDialog(null, "Estamos trabajando en modal de gramáticas\n");
+                        //new ErroresSinSem(null,true,le.getGramatica().getProduccion(),le.getGramatica().getError()).setVisible(true);
                     }
                 }
             }
@@ -1760,35 +1773,18 @@ NumeroLinea lineatxtCodigo;
         });
     }
 
+    
     private void newFile() {
-        /* if (seleccionar.showDialog(null, "Nuevo") == JFileChooser.APPROVE_OPTION) {
-            archivo = seleccionar.getSelectedFile();
-            name = archivo.getAbsolutePath();
-
-            if (archivo.getName().endsWith("txt")) {
-                String Documento = "";
-                txtAreaEdit.setText("");
-                String mensaje = GuardarArchivo(archivo, Documento);
-                if (mensaje != null) {
-                    jPanel1.removeAll();
-                    jPanel1.revalidate();
-                    jPanel1.repaint();
-                } else {
-                    showMessageDialog(null, "Archivo no compatible");
-                }
-            } else {
-                showMessageDialog(null, "Fallo al guardar, coloque extencion .txt");
-            }
-        }*/
         int resp = JOptionPane.showConfirmDialog(null,
                 "¿Desea guardar el Archivo?", "Advertencia", JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.INFORMATION_MESSAGE);
         if (resp == 0) {
             mnuSave.doClick();
             limpiar();
+            this.setTitle("Sin título - ANADAN");
         }
         if (resp == 1) {
-            limpiar();
+            this.setTitle("Sin título - ANADAN");
         }
     }
 
@@ -2072,15 +2068,15 @@ NumeroLinea lineatxtCodigo;
         //System.out.println(sim);
         if (sim.getTipo().equals("just")) {
             double r = Double.parseDouble(result);
-            if( r%1 != 0){
-                int r_int = (int) r;
-                sim.setValor(r_int);
+            if (r % 1 != 0) {
+                sim.setValor(r);
                 sim.setTipo("broken");
                 System.out.println("Cambio el tipo");
+            } else {
+                int r_int = (int) r;
+                sim.setValor(r_int);
             }
-            else
-                sim.setValor(r);
-            
+
         } else {
             float r_floar = (float) Double.parseDouble(result);
             sim.setValor(r_floar);

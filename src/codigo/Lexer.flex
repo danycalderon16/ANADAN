@@ -6,17 +6,44 @@ import static codigo.Tokens.*;
 %type Tokens
 %line
 %column
+
+//******* ALFABETO ****************
 L=[a-z_]+
 D=[0-9]+
-CAP=[A-Z]+
+
 espacio=[ ,\t,\r,\n]+
-num = {D}+
+CAP=[A-Z]+
 
 A=[/*]
 C=[*/]
+num = {D}+
 
-cadena = (\")~(\")
- 
+
+nuumero_erroneo_mas_puntos = ("+"|"-")*(\.)*{num}?(\.*)({num}?(\.)*{num}?)* | ("+"|"-")*({num}?(\.)*{num}?)* 
+
+numero_erroneo             = (("+"|"-")?{L}+|("+"|"-")?{D}+ "." {D}+)("."|{D}|{L})+ 
+
+numero_erroneo             = ("+"|"-")?{D}+ "." {D}+{L}({L}|{D})*
+
+
+
+nuumero_erroneo_mas_puntos = ("+"|"-")*(\.)*("^"|{num})*?(\.*)(("^"|{num})*?(\.)*("^"|{num})*?)* | ("+"|"-")*(("^"|{num})*?(\.)*("^"|{num})*?)* 
+
+numero_erroneo             = (("+"|"-")?{L}+|("+"|"-")?("^"|{num})* "." {D}+)("."|("^"|{num})*|{L})+ 
+
+numero_erroneo             = ("+"|"-")?("^"|{num})+ "." ("^"|{num})*+{L}({L}|{D})*
+
+
+
+mal_nombre_para_id         = {D}+{L}+|{CAP}{L}({L}|{D})*| \"\$\&\?\¿\%{L}({L}|{D})*
+mayusculas_en_cadena       = {L}{CAP}+{L}*
+cadena                     = (\")~(\")
+
+identificador              = {L}({L}|{D})*
+                                  
+numero                     = {D}+ | ("+"|"-")?{D}+ | {D}+"."{D}+ | ("+"|"-")?{D}+ "." {D}+|
+                             {D}+"^"{D}+ | ("+"|"-")?{D}+"^"{D}+ | {D}+"."{D}+"^"{D}+ | ("+"|"-")?{D}+ "." {D}+"^"{D}+|
+                             {D}+"^"{D}+"."{D}+ | ("+"|"-")?{D}+"^"{D}+"."{D}+ | {D}+"."{D}+"^"{D}+"."{D}+ | ("+"|"-")?{D}+ "." {D}+"^"{D}+"."{D}+
 %{
     public String lexeme;
     InformacionLexema c = new InformacionLexema();
@@ -88,8 +115,9 @@ cadena = (\")~(\")
 
 <YYINITIAL> "+" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Signo_de_Suma;}
 <YYINITIAL> "-" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Signo_de_Resta;}
-<YYINITIAL>"*" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Signo_de_Multiplicación;}
-<YYINITIAL>"/" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Signo_de_División;}
+<YYINITIAL> "*" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Signo_de_Multiplicación;}
+<YYINITIAL> "/" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Signo_de_División;}
+<YYINITIAL> "^" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Signo_de_Exponente;}
 
 <YYINITIAL> "%" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Signo_de_Residuo;}
 <YYINITIAL> "!" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return NOT;}
@@ -113,29 +141,19 @@ cadena = (\")~(\")
 <YYINITIAL> "[" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Corchete_Abre ;}
 <YYINITIAL> "]" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Corchete_Cierra;}
 
-
 <YYINITIAL> "\"" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return COMILLAS_DOBLES;}
-
 <YYINITIAL> ";" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return PuntoYComa;}
 
-
 <YYINITIAL> {cadena} {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Cadena;} 
-
-<YYINITIAL> {L}({L}|{D})* {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Identificador;}
-<YYINITIAL> {D}+|("+"|"-")?{D}+ "." {D}+ {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Numero;}
-
-<YYINITIAL> (("+-")|("-+"))({D}+|{D}+ "." {D}+) {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return NUMERO_ERRONEO;}
-<YYINITIAL> (\.)*{num}?((\.*)|({num}))* {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return NUMERO_ERRONEO_MAS_PUNTOS;}
- 
-<YYINITIAL> (("+"|"-")?{L}+|("+"|"-")?{D}+ "." {D}+)("."|{D}|{L})+ {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return NUMERO_ERRONEO;} 
-
-<YYINITIAL> (("+"|"-")?{D}+|("+"|"-")?{D}+ "." {D}+){L}({L}|{D})* {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return NUMERO_ERRONEO;}
-
-<YYINITIAL> {CAP}{L}({L}|{D})* {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return MAL_NOMBRE_PARA_IDENTIFICADOR;}
-
-<YYINITIAL> \"\$\&\?\¿\%{L}({L}|{D})* {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return MAL_NOMBRE_PARA_IDENTIFICADOR;} 
-
-<YYINITIAL> {L}{CAP}+{L}* {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return MAYUSCULAS_EN_CADENA;}
+<YYINITIAL> {identificador} {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Identificador;}
+<YYINITIAL> {numero} {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Numero;}
+<YYINITIAL> {numero_erroneo} {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return NUMERO_ERRONEO;}
+<YYINITIAL> {nuumero_erroneo_mas_puntos} {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return NUMERO_ERRONEO_MAS_PUNTOS;}
+<YYINITIAL> {numero_erroneo} {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return NUMERO_ERRONEO;} 
+<YYINITIAL> {numero_erroneo} {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return NUMERO_ERRONEO;}
+<YYINITIAL>  {D}+{L}+|{CAP}{L}({L}|{D})*|\"\$\&\?\¿\%{L}({L}|{D})* {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return MAL_NOMBRE_PARA_IDENTIFICADOR;}
+<YYINITIAL> {mal_nombre_para_id} {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return MAL_NOMBRE_PARA_IDENTIFICADOR;} 
+<YYINITIAL> {mayusculas_en_cadena} {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return MAYUSCULAS_EN_CADENA;}
 
 . {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return ERROR;}
 

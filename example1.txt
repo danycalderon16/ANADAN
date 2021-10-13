@@ -1,0 +1,8 @@
+hola()
+begin
+ 	just a;
+	a = 2 + 3/2;
+
+	a = 2 + 3/2;
+	filltriangle(1,1,1,1,1,1,1,1,1);
+end
