@@ -1,6 +1,7 @@
 package codigo;
 
 import ds.desktop.notify.DesktopNotify;
+import frames.ModalExp;
 import frames.ModalLexico;
 import java.awt.Color;
 import java.awt.Desktop;
@@ -45,6 +46,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
+import modelos.Expresion;
 import pila.Pila;
 
 import static util.Utils.*;
@@ -53,6 +55,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     public static ArrayList<LabelError> labelsErrores;
     private ArrayList<Simbolos> simbolos = new ArrayList<Simbolos>();
+    private ArrayList<Expresion> exp_list = new ArrayList<>();
 
     public static boolean errores_lexicos = false;
     public static boolean errores_sintacticos = false;
@@ -193,6 +196,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         icon_abrir = new javax.swing.JLabel();
         icon_undo = new javax.swing.JLabel();
         icon_redo = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        icon_exps = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
         barraMenu = new javax.swing.JMenuBar();
@@ -406,7 +411,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/split.png"))); // NOI18N
-        panelToolBar.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 10, 20, 30));
+        panelToolBar.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 10, 20, 30));
 
         icon_abrir.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         icon_abrir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/OpenFile.png"))); // NOI18N
@@ -443,6 +448,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
         panelToolBar.add(icon_redo, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 10, 30, 30));
+
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/split.png"))); // NOI18N
+        panelToolBar.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 10, 20, 30));
+
+        icon_exps.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        icon_exps.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/equation.png"))); // NOI18N
+        icon_exps.setToolTipText("Rehacer");
+        icon_exps.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        icon_exps.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                icon_expsMouseReleased(evt);
+            }
+        });
+        panelToolBar.add(icon_exps, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 10, 30, 30));
 
         getContentPane().add(panelToolBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1130, 50));
 
@@ -885,6 +905,7 @@ NumeroLinea lineatxtCodigo;
         icon_save.setIcon(resizeIcon(new ImageIcon(getClass().getResource("/img/save.png")), icon_save.getWidth(), icon_save.getHeight()));
         icon_save_as.setIcon(resizeIcon(new ImageIcon(getClass().getResource("/img/save-as.png")), icon_save_as.getWidth(), icon_save_as.getHeight()));
         icon_new.setIcon(resizeIcon(new ImageIcon(getClass().getResource("/img/new_file.png")), icon_new.getWidth(), icon_new.getHeight()));
+        icon_exps.setIcon(resizeIcon(new ImageIcon(getClass().getResource("/img/equation.png")), icon_new.getWidth(), icon_new.getHeight()));
 
     }
 
@@ -1473,6 +1494,11 @@ NumeroLinea lineatxtCodigo;
         //new ErroresSinSem(this,true).setVisible(true);
             
     }//GEN-LAST:event_jMenuItem1MouseReleased
+
+    private void icon_expsMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_expsMouseReleased
+        ModalExp me = new ModalExp(exp_list);
+        me.setVisible(true);
+    }//GEN-LAST:event_icon_expsMouseReleased
     
     public void rquicksort() {
 
@@ -1604,6 +1630,7 @@ NumeroLinea lineatxtCodigo;
     private javax.swing.JMenuBar barraMenu;
     private javax.swing.JMenu btnayuda;
     private javax.swing.JLabel icon_abrir;
+    private javax.swing.JLabel icon_exps;
     private javax.swing.JLabel icon_lexico;
     private javax.swing.JLabel icon_new;
     private javax.swing.JLabel icon_redo;
@@ -1615,6 +1642,7 @@ NumeroLinea lineatxtCodigo;
     private javax.swing.JLabel icon_undo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -1906,6 +1934,8 @@ NumeroLinea lineatxtCodigo;
     }
 
     private void resolverExp(String str) {
+        Expresion expresion = new Expresion(str);
+        
         str = str.replace(" ", "");
         String s1[] = str.split("=");
         str = s1[1];
@@ -1926,11 +1956,13 @@ NumeroLinea lineatxtCodigo;
                 }
             }
         }
-        //System.out.println(newStr);
-
+        
         //Creado pila con operadores y operandos en notacion infija
         pila.push("=");
         newStr = newStr + ")";
+        
+        expresion.setInfija_parentesis(s1[0]+" = "+newStr);
+        
         String s2[] = newStr.split("");
         for (int i = 0; i < s2.length; i++) {
             pila.push(s2[i]);
@@ -1955,8 +1987,7 @@ NumeroLinea lineatxtCodigo;
         }
 
         newPila.push(s1[0]);
-        //System.out.print("154 newPila: ");
-        //newPila.imprimir();
+        
         //Haciendo notacion postfija
         String postfija = "";
         Pila operadores = new Pila();
@@ -1972,30 +2003,25 @@ NumeroLinea lineatxtCodigo;
                 operadores.push(character);
             } else {
                 if (")".equals(character)) {
+                    String stri = operadores.imprimir();
+                    System.out.println("OPs: "+stri);
+                    expresion.setPila_ops(stri);
                     String op = operadores.pop();
                     while (!"(".equals(op)) {
                         postfija += op + " ";
                         op = operadores.pop();
                     }
                 } else {
-                    //System.out.println(character);
                     postfija += character + " ";
-                    //System.out.println(postfija);
                 }
             }
         }
 
-        //System.out.print("183 pilaOp: ");
-        //operadores.imprimir();
         while (!operadores.isEmpty()) {
             String op = operadores.pop();
-            //System.out.println("187 op: "+op);
             postfija += op + " ";
-            //op = operadores.pop();
-
         }
 
-        //System.out.println("189 Postfija: "+postfija);
         String post[] = postfija.split(" ");
 
         int i = 0;
@@ -2004,62 +2030,61 @@ NumeroLinea lineatxtCodigo;
                 i++;
             }
         }
-        //System.out.println(i);
+
         String post_sin_espacios[] = new String[i];
+        String string_pf = "";
         int j = 0;
         for (String string : post) {
             if (!string.isEmpty()) {
                 post_sin_espacios[j++] = string;
+                string_pf += string+", ";
             }
         }
+        
+        expresion.setPostfija(string_pf);
 
         Pila pila_exp = new Pila();
 
         for (String exp : post_sin_espacios) {
-            pila_exp.imprimir();
+            //pila_exp.imprimir();
             if ("*".equals(exp)) {
                 double op1 = Double.parseDouble(pila_exp.pop());
                 double op2 = Double.parseDouble(pila_exp.pop());
-                System.out.println(op1 + "*" + op2 + "=" + (op1 * op2));
+                //System.out.println(op1 + "*" + op2 + "=" + (op1 * op2));
                 pila_exp.push((op1 * op2) + "");
                 continue;
             }
             if ("/".equals(exp)) {
                 double op1 = Double.parseDouble(pila_exp.pop());
                 double op2 = Double.parseDouble(pila_exp.pop());
-                System.out.println(op2 + "/" + op1 + "=" + (op2 / op1));
+                //System.out.println(op2 + "/" + op1 + "=" + (op2 / op1));
                 pila_exp.push((op2 / op1) + "");
                 continue;
             }
             if ("+".equals(exp)) {
                 double op1 = Double.parseDouble(pila_exp.pop());
                 double op2 = Double.parseDouble(pila_exp.pop());
-                System.out.println(op1 + "+" + op2 + "=" + (op1 + op2));
+                //System.out.println(op1 + "+" + op2 + "=" + (op1 + op2));
                 pila_exp.push((op1 + op2) + "");
                 continue;
             }
             if ("-".equals(exp)) {
                 double op1 = Double.parseDouble(pila_exp.pop());
                 double op2 = Double.parseDouble(pila_exp.pop());
-                System.out.println(op1 + "-" + op2 + "=" + (op1 - op2));
+                //System.out.println(op1 + "-" + op2 + "=" + (op1 - op2));
                 pila_exp.push((op2 - op1) + "");
                 continue;
             }
-            if ("=".equals(exp)) {/*
-                double op1 = Double.parseDouble(pila_exp.pop());
-                double op2 = Double.parseDouble(pila_exp.pop());
-                pila_exp.push((op1 * op2) + "");*/
+            if ("=".equals(exp)) {
                 continue;
             }
 
-            //    System.out.println(exp);
             pila_exp.push(exp);
         }
-        pila_exp.imprimir();
+        //pila_exp.imprimir();
         String result = pila_exp.pop();
         String id = pila_exp.pop();
         Simbolo sim = TablaSimbolos.buscar(id);
-        //System.out.println(sim);
         if (sim.getTipo().equals("just")) {
             double r = Double.parseDouble(result);
             if (r % 1 != 0) {
@@ -2075,8 +2100,7 @@ NumeroLinea lineatxtCodigo;
             float r_floar = (float) Double.parseDouble(result);
             sim.setValor(r_floar);
         }
-        //System.out.println(sim);
-
+        exp_list.add(expresion);
     }
 
     private void limpiar() {
