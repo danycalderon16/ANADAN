@@ -18,6 +18,7 @@ public class Expresion {
     String infija_parentesis;
     ArrayList<String> pila_ops;
     String postfija;
+    String result;
 
     public Expresion(String infija) {
         this.infija = infija;
@@ -56,9 +57,17 @@ public class Expresion {
         this.postfija = postfija;
     }
 
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
+
     @Override
     public String toString() {
-        return "Expresion{" + "infija=" + infija + ", infija_parentesis=" + infija_parentesis +", Pilas:"+ showPila() + ", postfija=" + postfija + '}';
+        return "Expresion{" + "infija=" + infija + ", infija_parentesis=" + infija_parentesis + ", pila_ops=" + pila_ops + ", postfija=" + postfija + ", result=" + result + '}';
     }
 
     private String showPila() {

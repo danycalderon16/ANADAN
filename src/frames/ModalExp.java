@@ -6,7 +6,10 @@
 package frames;
 
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import modelos.Expresion;
+import static util.Utils.resizeIcon;
 
 /**
  *
@@ -15,12 +18,20 @@ import modelos.Expresion;
 public class ModalExp extends javax.swing.JFrame {
 
     public ArrayList<Expresion> exp_list;
+    private int index = 0;
+    
     public ModalExp(ArrayList<Expresion> exps) {
         initComponents();
-        setLocationRelativeTo(this);
-        this.exp_list = exps;
+        setLocationRelativeTo(this); 
+        icon_close.setIcon(resizeIcon(new ImageIcon(getClass().getResource("/img/close_icon.png")), icon_close.getWidth(), icon_close.getHeight()));       
+        this.exp_list = exps;        
+        System.out.println(exps);
+        for (Expresion exp : exps) {
+            cmbExps.addItem(exp.getInfija());            
+        }
         
         setData();
+        
     }
 
     /**
@@ -39,92 +50,118 @@ public class ModalExp extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         lb_exp_inf_parentesis = new javax.swing.JLabel();
+        icon_close = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        cmbExps = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        lb_exp_result = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lb_exp.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         lb_exp.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lb_exp.setText("x=mc2");
+        lb_exp.setToolTipText("");
+        lb_exp.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jPanel1.add(lb_exp, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 316, 45));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setText("Expresión");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 85, 120, 30));
 
         lb_exp_post.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lb_exp_post.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lb_exp_post.setText("x=mc2");
         lb_exp_post.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jPanel1.add(lb_exp_post, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 370, 246, 30));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel2.setText("Postfija");
+        jLabel2.setText("Pilas");
         jLabel2.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 120, 30));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel3.setText("Infija con parentesis");
         jLabel3.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 148, 167, 30));
 
         lb_exp_inf_parentesis.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lb_exp_inf_parentesis.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lb_exp_inf_parentesis.setText("x=mc2");
         lb_exp_inf_parentesis.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jPanel1.add(lb_exp_inf_parentesis, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 133, 246, 45));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lb_exp, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(29, 29, 29)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lb_exp_post, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lb_exp_inf_parentesis, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(47, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lb_exp, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lb_exp_inf_parentesis, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lb_exp_post, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(220, Short.MAX_VALUE))
-        );
+        icon_close.setText("jLabel4");
+        icon_close.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        icon_close.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                icon_closeMouseReleased(evt);
+            }
+        });
+        jPanel1.add(icon_close, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 10, 30, 30));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 54, 710, 10));
+
+        cmbExps.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciones una expresión" }));
+        cmbExps.setAutoscrolls(true);
+        jPanel1.add(cmbExps, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 210, -1));
+
+        jLabel4.setText("Expresiones");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 120, -1));
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 200, 460, 150));
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel5.setText("Postfija");
+        jLabel5.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 430, 120, 30));
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel6.setText("Postfija");
+        jLabel6.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, 120, 30));
+
+        lb_exp_result.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lb_exp_result.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lb_exp_result.setText("x=mc2");
+        lb_exp_result.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jPanel1.add(lb_exp_result, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 420, 246, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 730, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void icon_closeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_closeMouseReleased
+        this.dispose();
+    }//GEN-LAST:event_icon_closeMouseReleased
 
     /**
      * @param args the command line arguments
@@ -162,18 +199,41 @@ public class ModalExp extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cmbExps;
+    private javax.swing.JLabel icon_close;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel lb_exp;
     private javax.swing.JLabel lb_exp_inf_parentesis;
     private javax.swing.JLabel lb_exp_post;
+    private javax.swing.JLabel lb_exp_result;
     // End of variables declaration//GEN-END:variables
 
     private void setData() {
+        
         lb_exp.setText(exp_list.get(0).getInfija());
         lb_exp_inf_parentesis.setText(exp_list.get(0).getInfija_parentesis());
         lb_exp_post.setText(exp_list.get(0).getPostfija());
+        for (String object : exp_list.get(0).getPila_ops()) {
+            //jTextArea1.append("---------------------------------------\n");
+            String ops[] = object.split(",");
+            jTextArea1.append("|  ");
+            for (String op : ops) {
+                jTextArea1.append(op+"  |  ");                
+            }
+            jTextArea1.append("\n\n");
+            //jTextArea1.append("---------------------------------------\n");
+            
+        }
+        
+        lb_exp_result.setText(exp_list.get(0).getResult());
     }
 }

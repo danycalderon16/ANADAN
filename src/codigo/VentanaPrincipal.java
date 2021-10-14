@@ -2109,14 +2109,17 @@ NumeroLinea lineatxtCodigo;
                 sim.setValor(r);
                 sim.setTipo("broken");
                 System.out.println("Cambio el tipo");
+                expresion.setResult(r+"");
             } else {
                 int r_int = (int) r;
                 sim.setValor(r_int);
+                expresion.setResult(r_int+"");
             }
 
         } else {
-            float r_floar = (float) Double.parseDouble(result);
-            sim.setValor(r_floar);
+            float r_float = (float) Double.parseDouble(result);
+            sim.setValor(r_float);
+            expresion.setResult(r_float+"");
         }
         exp_list.add(expresion);
     }
