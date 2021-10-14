@@ -36,16 +36,13 @@ public class ModalLexico extends javax.swing.JFrame {
         
     }
      
-    public void recorreAutomata(String mensaje){
-        System.out.println("hey im using wh");
+    public void AutomataNum(String mensaje){
+        
         String[] mensajePartido= mensaje.split("'");
         String error= mensajePartido[1];
-        
         String[] estados={"q1","q2","q3","q4","q5","q9","q10","q11","q12","13"};
         String [] estados1={"q1","q2","q3","q6","q7","q8","q12","13"};
-        String inicial="q1";
-        String[] estadosFinales={"q2","q4","q7","q9"};
-        String[] alfabeto={"0", "1", "2", "3", "4", "5", "6", "7","8", "9", "+", "-", "*", "/", "^", "e", "."};
+ 
         String cadenaRecorrido="Cadena que entro: "+ error+"\n";
        
         for (int j = 0; j < 2;  j++) {    
@@ -98,7 +95,7 @@ public class ModalLexico extends javax.swing.JFrame {
                             cadenaRecorrido+="q2-- "+error.charAt(c)+" -->q3 \n";
                         break;
                         default:
-                            cadenaRecorrido+="de q2 no existe salida a otro estado con el caracter:'"+error.charAt(c)+"'";
+                            cadenaRecorrido+="de q2 no existe salida a otro estado con el caracter: '"+error.charAt(c)+"'";
                       InfoError.setText("");
                       InfoError.setText(cadenaRecorrido);
                             return;
@@ -126,7 +123,7 @@ public class ModalLexico extends javax.swing.JFrame {
                             cadenaRecorrido+="q3-- "+error.charAt(c)+" -->q6 \n";
                             break;
                         default:
-                            cadenaRecorrido+="de q3 no existe salida a otro estado con el caracter:'"+error.charAt(c)+"'";
+                            cadenaRecorrido+="de q3 no existe salida a otro estado con el caracter: '"+error.charAt(c)+"'";
                             InfoError.setText("");
                             InfoError.setText(cadenaRecorrido);
                             return;
@@ -146,7 +143,7 @@ public class ModalLexico extends javax.swing.JFrame {
                             cadenaRecorrido+="q4-- "+error.charAt(c)+" -->q5 \n";
                             break;
                         default:
-                            cadenaRecorrido+="de q4 no existe salida a otro estado con el caracter:'"+error.charAt(c)+"'";
+                            cadenaRecorrido+="de q4 no existe salida a otro estado con el caracter: '"+error.charAt(c)+"'";
                             InfoError.setText("");
                             InfoError.setText(cadenaRecorrido);
                             return;
@@ -171,7 +168,7 @@ public class ModalLexico extends javax.swing.JFrame {
                             cadenaRecorrido+="q5-- "+error.charAt(c)+" -->q9 \n";
                             break;
                         default:
-                            cadenaRecorrido+="de q5 no existe salida a otro estado con el caracter:'"+error.charAt(c)+"'";
+                            cadenaRecorrido+="de q5 no existe salida a otro estado con el caracter: '"+error.charAt(c)+"'";
                             InfoError.setText("");
                             InfoError.setText(cadenaRecorrido);
                             return;
@@ -198,7 +195,7 @@ public class ModalLexico extends javax.swing.JFrame {
                             cadenaRecorrido+="q6-- E -->q7 \n";
                             break;
                         default:
-                            cadenaRecorrido+="de q6 no existe salida a otro estado con el caracter:'"+error.charAt(c)+"'";
+                            cadenaRecorrido+="de q6 no existe salida a otro estado con el caracter: '"+error.charAt(c)+"'";
                             InfoError.setText("");
                             InfoError.setText(cadenaRecorrido);
                             return;
@@ -218,7 +215,7 @@ public class ModalLexico extends javax.swing.JFrame {
                             cadenaRecorrido+="q7-- "+error.charAt(c)+" -->q8 \n";
                         break;
                         default:
-                            cadenaRecorrido+="de q7 no existe salida a otro estado con el caracter:'"+error.charAt(c)+"'";
+                            cadenaRecorrido+="de q7 no existe salida a otro estado con el caracter: '"+error.charAt(c)+"'";
                             InfoError.setText("");
                             InfoError.setText(cadenaRecorrido);
                       return;
@@ -230,7 +227,7 @@ public class ModalLexico extends javax.swing.JFrame {
                             cadenaRecorrido+="q8-- "+error.charAt(c)+" -->q12 \n";
                         break;
                         default:
-                            cadenaRecorrido+="de q8 no existe salida a otro estado con el caracter:'"+error.charAt(c)+"'";
+                            cadenaRecorrido+="de q8 no existe salida a otro estado con el caracter: '"+error.charAt(c)+"'";
                             InfoError.setText("");
                             InfoError.setText(cadenaRecorrido);
                       return;
@@ -257,7 +254,7 @@ public class ModalLexico extends javax.swing.JFrame {
                             cadenaRecorrido+="q9-- E -->q10 \n";
                             break;
                         default:
-                            cadenaRecorrido+="de q9 no existe salida a otro estado con el caracter:'"+error.charAt(c)+"'";
+                            cadenaRecorrido+="de q9 no existe salida a otro estado con el caracter: '"+error.charAt(c)+"'";
                             InfoError.setText("");
                             InfoError.setText(cadenaRecorrido);
                             return;
@@ -277,7 +274,7 @@ public class ModalLexico extends javax.swing.JFrame {
                             cadenaRecorrido+="q10-- "+error.charAt(c)+" -->q11 \n";
                         break;
                         default:
-                            cadenaRecorrido+="de q10 no existe salida a otro estado con el caracter:'"+error.charAt(c)+"'";
+                            cadenaRecorrido+="de q10 no existe salida a otro estado con el caracter: '"+error.charAt(c)+"'";
                             InfoError.setText("");
                             InfoError.setText(cadenaRecorrido);
                       return;
@@ -301,7 +298,7 @@ public class ModalLexico extends javax.swing.JFrame {
                             cadenaRecorrido+="q11-- "+error.charAt(c)+" -->q12 \n";
                             break;
                         default:
-                            cadenaRecorrido+="de q11 no existe salida a otro estado con el caracter:'"+error.charAt(c)+"'";
+                            cadenaRecorrido+="de q11 no existe salida a otro estado con el caracter: '"+error.charAt(c)+"'";
                             InfoError.setText("");
                             InfoError.setText(cadenaRecorrido);
                       return;
@@ -321,7 +318,7 @@ public class ModalLexico extends javax.swing.JFrame {
                             cadenaRecorrido+="q12-- "+error.charAt(c)+" -->q13 \n";
                         break;
                         default:
-                            cadenaRecorrido+="de q12 no existe salida a otro estado con el caracter:'"+error.charAt(c)+"'";
+                            cadenaRecorrido+="de q12 no existe salida a otro estado con el caracter: '"+error.charAt(c)+"'";
                             InfoError.setText("");
         InfoError.setText(cadenaRecorrido);
                       return;
@@ -342,7 +339,7 @@ public class ModalLexico extends javax.swing.JFrame {
                             i--;
                             break;
                         default:
-                            cadenaRecorrido+="de q7 no existe salida a otro estado con el caracter:'"+error.charAt(c)+"'";
+                            cadenaRecorrido+="de q7 no existe salida a otro estado con el caracter: '"+error.charAt(c)+"'";
                             InfoError.setText("");
                             InfoError.setText(cadenaRecorrido);
                       return;
@@ -358,6 +355,103 @@ public class ModalLexico extends javax.swing.JFrame {
         }//for
         
     }//recorreAutomata
+    public void AutomataId(String mensaje){
+        System.out.println("AutomataId");
+        String[] mensajePartido= mensaje.split("'");
+        String error= mensajePartido[1];
+        String[] estados={"q1","q2"};
+
+         
+        String cadenaRecorrido="Cadena que entro: "+ error+"\n";
+ 
+           int c=-1;
+            for (int i = 0;i < error.length(); i++) {
+                c++;
+                String opcion=estados[i];
+               System.out.println("Opcion> "+opcion);
+                switch(opcion){
+                    case "q1":
+                        switch (error.charAt(c)) {
+                            case '_':
+                            case 'a':
+                            case 'b':
+                            case 'c':
+                            case 'd':
+                            case 'e':
+                            case 'f':    
+                            case 'g':
+                            case 'h':
+                            case 'i':
+                            case 'j':
+                            case 'k':
+                            case 'l':
+                            case 'm':
+                            case 'n':
+                            case 'o':
+                            case 'p':    
+                            case 'q':
+                            case 'r':
+                            case 's':  
+                            case 't':
+                            case 'u':
+                            case 'v':
+                            case 'w':    
+                            case 'x':
+                            case 'y':
+                            case 'z': 
+                                 cadenaRecorrido+="q1-- "+error.charAt(c)+" -->q2 \n";
+                                break;
+                            default:
+                                cadenaRecorrido+="de q1 no existe salida a otro estado con el caracter: '"+error.charAt(c)+"'";
+                                InfoError.setText("");
+                                InfoError.setText(cadenaRecorrido);
+                                return;
+                        }
+                       break;
+                    case "q2": 
+                        switch (error.charAt(c)) {
+                            case '_':
+                            case 'a':
+                            case 'b':
+                            case 'c':
+                            case 'd':
+                            case 'e':
+                            case 'f':    
+                            case 'g':
+                            case 'h':
+                            case 'i':
+                            case 'j':
+                            case 'k':
+                            case 'l':
+                            case 'm':
+                            case 'n':
+                            case 'o':
+                            case 'p':    
+                            case 'q':
+                            case 'r':
+                            case 's':  
+                            case 't':
+                            case 'u':
+                            case 'v':
+                            case 'w':    
+                            case 'x':
+                            case 'y':
+                            case 'z':
+                                i--;
+                                cadenaRecorrido+="q2-- "+error.charAt(c)+" -->q2 \n";
+                                break;
+                            default:
+                                cadenaRecorrido+="de q2 no existe salida a otro estado con el caracter: '"+error.charAt(c)+"'";
+                                InfoError.setText("");
+                                InfoError.setText(cadenaRecorrido);
+                                return;
+                        }
+                    default:
+                        break;
+
+                    }//switch
+            }//for
+    }//automata
     public void close() {
         show = false;
         dispose();
@@ -500,7 +594,24 @@ public class ModalLexico extends javax.swing.JFrame {
     }//GEN-LAST:event_icon_close_btnMouseReleased
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        recorreAutomata(lb_info_error.getText());
+       switch(InfoError.getText()){
+           case "numeros":
+               AutomataNum(lb_info_error.getText());
+               String a=lb_info_error.getText().split("'").toString();
+               System.out.println("**********"+a+" ******************");
+               break;
+           case "identificadores":
+               AutomataId(lb_info_error.getText());
+               break;
+           case "cadenas":
+               
+               break;
+           default:
+               break;
+               
+       
+       }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
