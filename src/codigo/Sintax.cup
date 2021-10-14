@@ -80,6 +80,9 @@ non terminal String t_dato;
 non terminal inicio, declaracion_for, if, if_else,
     while, do_while, for, sentencia_booleana, sentencia_for ,datos_array,continua,cuerpo,
     declaraciones,declaracion,bloquesentencias,sentencias,sentencia,expresion,
+    op_mayor,
+    op_menor,
+    exp,
     expresion_prima,
     termino,
     termino_prima,
@@ -322,7 +325,7 @@ declaracion ::=
                 +id+"' ya está declarada." );   
                 VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. La variable: '"
                 +id+"' ya está declarada.", idright+1,SINTACTICO,
-                new Gramatica("declaracion ::= JUST IDENTIFICADOR = NUMEOR PUNTOYCOMA ", "Variable repetida")));
+                new Gramatica("declaracion ::= JUST IDENTIFICADOR = NUMERO PUNTOYCOMA ", "Variable repetida")));
             }else{
                 TablaSimbolos.crear(id, "just","Variable númerica");
                 TablaSimbolos.insertar(id, String.valueOf(valor));
@@ -451,219 +454,6 @@ declaracion ::=
     IDENTIFICADOR IDENTIFICADOR SIGNO_DE_IGUAL NEW IDENTIFICADOR PARENTESIS_ABRE parametrosa PARENTESIS_CIERRA PUNTOYCOMA
 ;
 
-t_dato::= BROKEN:td{: RESULT =  td;:}|
-        JUST:td{: RESULT =  td;:}|
-        WORD:td{: RESULT =  td;:}|
-        FLAG:td{: RESULT =  td;:}
-;
-
-expresion ::= 
-    expresion:e SIGNO_DE_SUMA termino:t {:
-        if (e instanceof Integer){
-            if(t instanceof String){
-                String str = ((String) t).substring(0, 1);
-                if(str.equals("\"")){
-                    JLabel lb = new JLabel();
-                    lb.setForeground(new Color(217, 33, 51));
-                    lb.setFont(new Font("Verdana", Font.PLAIN, 14));
-                    lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-                    lb.setText("Error en la línea " + (tright+1) + ". Error semántico. No se puede sumar una variable 'just' y una 'word'" );   
-                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico. No se puede sumar una variable 'just' y una 'word'", tright+1,SINTACTICO,
-                    new Gramatica("expresion ::= expresion SIGNO_DE_SUMA termino", "No se puede sumar una variable 'just' y una 'word'")));                          
-                }
-            }
-        }
-        if (t instanceof Integer){
-            if(e instanceof String){
-                String str = ((String) e).substring(0, 1);
-                if(str.equals("\"")){
-                    JLabel lb = new JLabel();
-                    lb.setForeground(new Color(217, 33, 51));
-                    lb.setFont(new Font("Verdana", Font.PLAIN, 14));
-                    lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-                    lb.setText("Error en la línea " + (eright+1) + ". Error semántico. No se puede sumar una variable 'word' y una 'just'" );   
-                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico. No se puede sumar una variable 'word' y una 'just'", eright+1,SINTACTICO,
-                    new Gramatica("expresion ::= expresion SIGNO_DE_SUMA termino", "No se puede sumar una variable 'word' y una 'just'")));                          
-                }
-            }
-        }
-
-        //System.out.println("EMPIEZA EXPRESION");
-        RESULT = e+"+"+t;
-        //System.out.println("termino: "+t);
-        //System.out.println("exp: "+e);
-    :} |
-    expresion:e SIGNO_DE_RESTA termino:t {:
-        if (e instanceof Integer){
-            if(t instanceof String){
-                String str = ((String) t).substring(0, 1);
-                if(str.equals("\"")){
-                    JLabel lb = new JLabel();
-                    lb.setForeground(new Color(217, 33, 51));
-                    lb.setFont(new Font("Verdana", Font.PLAIN, 14));
-                    lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-                    lb.setText("Error en la línea " + (tright+1) + ". Error semántico. No se puede restar una variable 'just' y una 'word'" );   
-                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico. No se puede restar una variable 'just' y una 'word'", tright+1,SINTACTICO,
-                    new Gramatica("expresion ::= expresion SIGNO_DE_SUMA termino", "No se puede restar una variable 'just' y una 'word'")));                          
-                }
-            }
-        }
-        if (t instanceof Integer){
-            if(e instanceof String){
-                String str = ((String) e).substring(0, 1);
-                if(str.equals("\"")){
-                    JLabel lb = new JLabel();
-                    lb.setForeground(new Color(217, 33, 51));
-                    lb.setFont(new Font("Verdana", Font.PLAIN, 14));
-                    lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-                    lb.setText("Error en la línea " + (eright+1) + ". Error semántico. No se puede restar una variable 'word' y una 'just'" );   
-                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico. No se puede restar una variable 'word' y una 'just'", eright+1,SINTACTICO,
-                    new Gramatica("expresion ::= expresion SIGNO_DE_SUMA termino", "No se puede restar una variable 'word' y una 'just'")));                          
-                }
-            }
-        }
-        //System.out.println("EMPIEZA EXPRESION");
-        RESULT = e+"-"+t;
-        //System.out.println("termino: "+t);
-        //System.out.println("exp: "+e);
-    :} |
-    termino:t {:
-        RESULT = t; 
-        //System.out.println("EMPIEZA EXPRESION");        
-        //System.out.println("termino: "+t);
-        :} 
-;
-    
-termino ::= factor:f1 SIGNO_DE_MULTIPLICACIÓN factor:f2 {:
-        RESULT = f1+"*"+f2;
-        if (f1 instanceof Integer){
-            if(f2 instanceof String){
-                String str = ((String) f2).substring(0, 1);
-                if(str.equals("\"")){
-                    JLabel lb = new JLabel();
-                    lb.setForeground(new Color(217, 33, 51));
-                    lb.setFont(new Font("Verdana", Font.PLAIN, 14));
-                    lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-                    lb.setText("Error en la línea " + (f2right+1) + ". Error semántico. No se puede multiplicar una variable 'just' y una 'word'" );   
-                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico. No se puede multiplicar una variable 'just' y  una 'word'", f2right+1,SINTACTICO,
-                    new Gramatica("termino ::= factor: SIGNO_DE_MULTIPLICACIÓN factor", "No se puede multiplicar una variable 'just' y una 'word'")));          
-                }
-                else
-                    System.out.println("**"+f2+": f2  es varibale");                    
-            }
-        }
-        if (f1 instanceof String){
-           if(f2 instanceof Integer){
-                String str = ((String) f1).substring(0, 1);
-                if(str.equals("\"")){
-                JLabel lb = new JLabel();
-                    lb.setForeground(new Color(217, 33, 51));
-                    lb.setFont(new Font("Verdana", Font.PLAIN, 14));
-                    lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-                    lb.setText("Error en la línea " + (f2right+1) + ". Error semántico. No se puede multiplicar una variable 'word' una 'just'" );   
-                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico. No se puede multiplicar una variable 'word' una 'just'", f2right+1,SINTACTICO,
-                    new Gramatica("termino ::= factor: SIGNO_DE_MULTIPLICACIÓN factor", "No se puede multiplicar una variable 'word' una 'just'")));
-                }
-            }
-        }
-        //System.out.println("factor1 "+f1);
-        //System.out.println("factor2 "+f2);
-    :} |
-    factor:f1 SIGNO_DE_DIVISIÓN factor:f2 {:
-    System.out.println("EMPIEZA TERMINO");
-        RESULT = f1+"/"+f2;
-        if (f1 instanceof Integer){
-            if(f2 instanceof String){
-                String str = ((String) f2).substring(0, 1);
-                if(str.equals("\"")){
-                    JLabel lb = new JLabel();
-                    lb.setForeground(new Color(217, 33, 51));
-                    lb.setFont(new Font("Verdana", Font.PLAIN, 14));
-                    lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-                    lb.setText("Error en la línea " + (f2right+1) + ". Error semántico. No se puede dividir una variable 'just' y una 'word'" );   
-                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico. No se puede dividir una variable 'just' y una 'word'", f2right+1,SINTACTICO,
-                    new Gramatica("termino ::= factor: SIGNO_DE_MULTIPLICACIÓN factor", "No se puede dividir una variable 'just' y una 'word'")));
-                }
-                else
-                    System.out.println("**"+f2+": f2  es varibale");
-            }
-        }
-        if (f1 instanceof String){
-            if(f2 instanceof Integer){
-                String str = ((String) f1).substring(0, 1);
-                if(str.equals("\"")){
-                    JLabel lb = new JLabel();
-                    lb.setForeground(new Color(217, 33, 51));
-                    lb.setFont(new Font("Verdana", Font.PLAIN, 14));
-                    lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-                    lb.setText("Error en la línea " + (f2right+1) + ". Error semántico. No se puede dividir una variable 'word' y una 'just'" );   
-                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico. No se puede dividir una variable 'word' y una 'just'", f2right+1,SINTACTICO,
-                    new Gramatica("termino ::= factor: SIGNO_DE_MULTIPLICACIÓN factor", "No se puede dividir una variable 'word' y una 'just'")));
-                }
-            }
-        }
-        //System.out.println("factor1 "+f1);
-        //System.out.println("factor2 "+f2);
-    :} |
-    factor:f {:RESULT = f; 
-        //System.out.println("EMPIEZA TERMINO");
-        //System.out.println("factor "+f);
-    :} 
-;
-    
-factor ::= 
-    PARENTESIS_ABRE expresion:e PARENTESIS_CIERRA {:
-        //System.out.println("EMPIEZA FACTOR");
-        RESULT =  "("+e+")";
-        //System.out.println("exp: "+e);
-    :} |
-    IDENTIFICADOR:f  {:
-        Simbolo sim = TablaSimbolos.buscar(f);
-        //Si es nulo, devuelvo un error
-        if (sim == null) {
-            JLabel lb = new JLabel();
-                lb.setForeground(new Color(217, 33, 51));
-                lb.setFont(new Font("Verdana", Font.PLAIN, 14));
-                lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-                lb.setText("Error en la línea " + (fright+1) + ". Error semántico. La variable '"+f+"' no existe" );   
-                VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico. La variable '"+f+"' no existe", fright+1,SINTACTICO,
-                new Gramatica("sentasignacion::= IDENTIFICADOR SIGNO_DE_IGUAL expresion PUNTOYCOMA","Error semántico. La variable '"+f+"' no existe")));
-                System.out.println("El identificador '"+f+"' no existe");
-                 
-                RESULT = 0; 
-        }
-        else{
-            System.out.println("*****id: "+sim.valor);  
-            RESULT = sim.valor; 
-        }
-        //System.out.println("EMPIEZA FACTOR");
-        //System.out.println("factor "+f);:}   | 
-    CADENA_TEXTO:f {:RESULT = f; 
-        //System.out.println("EMPIEZA FACTOR");
-        //System.out.println("factor "+f);:}    | 
-    NUMERO:f {:RESULT = f; 
-        //System.out.println("EMPIEZA FACTOR");
-        //System.out.println("factor "+f);:}   | 
-    DECIMAL:f {:RESULT = f; 
-        //System.out.println("EMPIEZA FACTOR");
-        //System.out.println("factor "+f);:}   | 
-    FALSE:f {:RESULT = f; 
-        //System.out.println("EMPIEZA FACTOR");
-        //System.out.println("factor "+f);:}   | 
-    TRUE:f {:RESULT = f; 
-        //System.out.println("EMPIEZA FACTOR");
-        //System.out.println("factor "+f);:}  ;
-/*
-expresion ::= NUMERO | IDENTIFICADOR | PARENTESIS_ABRE  expresion op_art expresion PARENTESIS_CIERRA;
-*/
-op_rel ::= MAYOR_QUE | MENOR_QUE | MAYOR_O_IGUAL_QUE | MENOR_O_IGUAL_QUE | DIFERENTE_QUE | IGUAL_QUE;
-op_art ::= SIGNO_DE_SUMA | SIGNO_DE_RESTA | SIGNO_DE_DIVISIÓN | SIGNO_DE_MULTIPLICACIÓN ;
-op_log ::= OR | AND;
-
-
-sentif::=  IF PARENTESIS_ABRE condicion PARENTESIS_CIERRA LLAVE_ABRE bloquesentencias LLAVE_CIERRA sentelse;
-sentelse::= ELSE LLAVE_ABRE bloquesentencias LLAVE_CIERRA |;
-sentwhile::= WHILE PARENTESIS_ABRE condicion PARENTESIS_CIERRA LLAVE_ABRE bloquesentencias LLAVE_CIERRA;
 sentasignacion::= IDENTIFICADOR:identificador SIGNO_DE_IGUAL expresion:e PUNTOYCOMA{:
         //Buscar variable en la tabla de simbolos
         Simbolo sim = TablaSimbolos.buscar(identificador);
@@ -693,6 +483,45 @@ sentasignacion::= IDENTIFICADOR:identificador SIGNO_DE_IGUAL expresion:e PUNTOYC
         }
     :};
 
+
+t_dato::= BROKEN:td{: RESULT =  td;:}|
+        JUST:td{: RESULT =  td;:}|
+        WORD:td{: RESULT =  td;:}|
+        FLAG:td{: RESULT =  td;:}
+;
+
+expresion::= 
+    expresion op_menor termino |
+    termino 
+;
+
+termino::=
+    termino op_mayor factor |
+    factor  
+;
+
+factor::=
+    PARENTESIS_ABRE expresion PARENTESIS_CIERRA |
+    expresion  |
+    IDENTIFICADOR |
+    NUMERO | 
+    DECIMAL |
+    CADENA_TEXTO |
+    TRUE |
+    FALSE   |
+;
+
+op_menor ::= SIGNO_DE_SUMA | SIGNO_DE_RESTA ;
+op_mayor ::= SIGNO_DE_MULTIPLICACIÓN | SIGNO_DE_DIVISIÓN ;
+
+op_rel ::= MAYOR_QUE | MENOR_QUE | MAYOR_O_IGUAL_QUE | MENOR_O_IGUAL_QUE | DIFERENTE_QUE | IGUAL_QUE;
+op_art ::= SIGNO_DE_SUMA | SIGNO_DE_RESTA | SIGNO_DE_DIVISIÓN | SIGNO_DE_MULTIPLICACIÓN ;
+op_log ::= OR | AND;
+
+
+sentif::=  IF PARENTESIS_ABRE condicion PARENTESIS_CIERRA LLAVE_ABRE bloquesentencias LLAVE_CIERRA sentelse;
+sentelse::= ELSE LLAVE_ABRE bloquesentencias LLAVE_CIERRA |;
+sentwhile::= WHILE PARENTESIS_ABRE condicion PARENTESIS_CIERRA LLAVE_ABRE bloquesentencias LLAVE_CIERRA;
 sentcut::= CUT PUNTOYCOMA;
 
 condicion::= IDENTIFICADOR:id IGUAL_QUE FALSE {:
