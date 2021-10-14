@@ -310,13 +310,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblTablaSimbolos);
         if (tblTablaSimbolos.getColumnModel().getColumnCount() > 0) {
-            tblTablaSimbolos.getColumnModel().getColumn(0).setResizable(false);
-            tblTablaSimbolos.getColumnModel().getColumn(0).setPreferredWidth(1);
-            tblTablaSimbolos.getColumnModel().getColumn(1).setResizable(false);
-            tblTablaSimbolos.getColumnModel().getColumn(1).setPreferredWidth(10);
-            tblTablaSimbolos.getColumnModel().getColumn(2).setResizable(false);
+            tblTablaSimbolos.getColumnModel().getColumn(0).setMinWidth(80);
+            tblTablaSimbolos.getColumnModel().getColumn(0).setPreferredWidth(15);
+            tblTablaSimbolos.getColumnModel().getColumn(0).setMaxWidth(80);
+            tblTablaSimbolos.getColumnModel().getColumn(1).setMinWidth(80);
+            tblTablaSimbolos.getColumnModel().getColumn(1).setPreferredWidth(15);
+            tblTablaSimbolos.getColumnModel().getColumn(1).setMaxWidth(80);
             tblTablaSimbolos.getColumnModel().getColumn(2).setPreferredWidth(15);
-            tblTablaSimbolos.getColumnModel().getColumn(3).setResizable(false);
+            tblTablaSimbolos.getColumnModel().getColumn(3).setPreferredWidth(15);
         }
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 50, 430, 390));
@@ -342,7 +343,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         icon_save.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         icon_save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/play.png"))); // NOI18N
         icon_save.setToolTipText("Guardar");
-        icon_save.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        icon_save.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         icon_save.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 icon_saveMouseReleased(evt);
@@ -353,7 +354,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         icon_save_as.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         icon_save_as.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/play.png"))); // NOI18N
         icon_save_as.setToolTipText("Guardar como");
-        icon_save_as.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        icon_save_as.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         icon_save_as.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 icon_save_asMouseReleased(evt);
@@ -364,7 +365,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         icon_table.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         icon_table.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/table.png"))); // NOI18N
         icon_table.setToolTipText("Tabla de Simbolos");
-        icon_table.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        icon_table.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         icon_table.setDisabledIcon(null);
         icon_table.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -376,7 +377,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         icon_lexico.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         icon_lexico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/analysis (1).png"))); // NOI18N
         icon_lexico.setToolTipText("Léxico");
-        icon_lexico.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        icon_lexico.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         icon_lexico.setDisabledIcon(null);
         icon_lexico.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -388,7 +389,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         icon_sintactic.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         icon_sintactic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Lexico.png"))); // NOI18N
         icon_sintactic.setToolTipText("Sintáctico");
-        icon_sintactic.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        icon_sintactic.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         icon_sintactic.setDisabledIcon(null);
         icon_sintactic.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -400,7 +401,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         icon_run.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         icon_run.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/play.png"))); // NOI18N
         icon_run.setToolTipText("Compilar");
-        icon_run.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        icon_run.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         icon_run.setDisabledIcon(null);
         icon_run.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -428,7 +429,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         icon_undo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         icon_undo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Atras.png"))); // NOI18N
         icon_undo.setToolTipText("Deshacer");
-        icon_undo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        icon_undo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         icon_undo.setDisabledIcon(null);
         icon_undo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -440,7 +441,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         icon_redo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         icon_redo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Deltante.png"))); // NOI18N
         icon_redo.setToolTipText("Rehacer");
-        icon_redo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        icon_redo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         icon_redo.setDisabledIcon(null);
         icon_redo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -919,7 +920,7 @@ NumeroLinea lineatxtCodigo;
         String documento = "";
         try {
             entrada = new FileInputStream(archivo);
-            this.setTitle(archivo.getName()+" - ANADAN");
+            this.setTitle(archivo.getName() + " - ANADAN");
             int ascci;
             while ((ascci = entrada.read()) != -1) {
                 char caracter = (char) ascci;
@@ -1268,7 +1269,7 @@ NumeroLinea lineatxtCodigo;
                         tblTablaSimbolos.setValueAt("ERROR:CADENA_NO_VALIDA", i, 3);
                         i++;
 
-                        lb.setText("Error en la línea " + (c.linea + 1) + ". Error léxico. Error '" + lexer.yytext() + "'");
+                        lb.setText("Error en la línea " + (c.linea + 1) + ". Error léxico. El caracter '" + lexer.yytext() + "' no pertenece al lenguaje.");
                         labelsErrores.add(new LabelError(lb, "ERROR", c.linea + 1, LEXICO));
                         counter++;
                         break;
@@ -1494,14 +1495,14 @@ NumeroLinea lineatxtCodigo;
 
     private void jMenuItem1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MouseReleased
         //new ErroresSinSem(this,true).setVisible(true);
-            
+
     }//GEN-LAST:event_jMenuItem1MouseReleased
 
     private void icon_expsMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_expsMouseReleased
         ModalExp me = new ModalExp(exp_list);
         me.setVisible(true);
     }//GEN-LAST:event_icon_expsMouseReleased
-    
+
     public void rquicksort() {
 
         int col = m.getColumnCount();
@@ -1676,82 +1677,95 @@ NumeroLinea lineatxtCodigo;
     public static javax.swing.JTable tblTablaSimbolos;
     private javax.swing.JTextPane txtAreaEdit;
     // End of variables declaration//GEN-END:variables
- 
 
- 
-      ImageIcon imgENum1 = new ImageIcon("C:/ANADAN/src/Automatas/NumeroErroneo.jpg");
-      public Icon NumErr1 = new ImageIcon(imgENum1.getImage().getScaledInstance(467, 318, Image.SCALE_DEFAULT));
-    
-      ImageIcon imgENum2 = new ImageIcon("C:/ANADAN/src/Automatas/NumeroErroneoMasSignosAlPrincipio.jpg");
-      public Icon NumErr2 = new ImageIcon(imgENum2.getImage().getScaledInstance(362, 315, Image.SCALE_DEFAULT));
-     
-      ImageIcon imgEId1 = new ImageIcon("C:/ANADAN/src/Automatas/Identificador_inicio_mal.jpg");
-      public Icon IdErr2 = new ImageIcon(imgEId1.getImage().getScaledInstance(481, 141, Image.SCALE_DEFAULT));
-           
-      ImageIcon imgECad1 = new ImageIcon("C:/ANADAN/src/Automatas/Cadena.jpg");
-      public Icon CadErr1 = new ImageIcon(imgECad1.getImage().getScaledInstance(406, 136, Image.SCALE_DEFAULT));
-            
- 
-  
+    ImageIcon imgENum1 = new ImageIcon("C:/ANADAN/src/Automatas/NumeroErroneo.jpg");
+    public Icon NumErr1 = new ImageIcon(imgENum1.getImage().getScaledInstance(467, 318, Image.SCALE_DEFAULT));
+
+    ImageIcon imgENum2 = new ImageIcon("C:/ANADAN/src/Automatas/NumeroErroneoMasSignosAlPrincipio.jpg");
+    public Icon NumErr2 = new ImageIcon(imgENum2.getImage().getScaledInstance(362, 315, Image.SCALE_DEFAULT));
+
+    ImageIcon imgEId1 = new ImageIcon("C:/ANADAN/src/Automatas/Identificador_inicio_mal.jpg");
+    public Icon IdErr2 = new ImageIcon(imgEId1.getImage().getScaledInstance(481, 141, Image.SCALE_DEFAULT));
+
+    ImageIcon imgECad1 = new ImageIcon("C:/ANADAN/src/Automatas/Cadena.jpg");
+    public Icon CadErr1 = new ImageIcon(imgECad1.getImage().getScaledInstance(406, 136, Image.SCALE_DEFAULT));
+
     private void showModalLexical(LabelError err) {
         ModalLexico ml = new ModalLexico(err);
- 
-     
+
+        //  err.get
         switch (err.getError()) {
-                   
-                    case "NUMERO_ERRONEO_MAS_PUNTOS":
-                          ModalLexico.jlbAutomata.setIcon(NumErr1);
-                            if(ml.isOpen()){
-                                ml.close();
-                            }
-                       ModalLexico.jlbEstados.setText("Q={q1,q2,q3,q4,q5,q6,q7,q8,q9,q10,q11,q12,q13}");
-                       ModalLexico.jlbInicial.setText("S=q1");
-                       ModalLexico.jlbFinal.setText("F={q3,q5,q8,q11,q13}");        
-                       ModalLexico.txtAlfabeto.setText("Σ={0, 1, 2, 3, 4, 5, 6, 7,8, 9, +, -, *, /, ^, e, ., E}");
-                       ModalLexico.InfoError.setText("numeros");
-                       ml.setVisible(true);
-                        break;
-                        
-                     case "NUMERO_ERRONEO":
-                          ModalLexico.jlbAutomata.setIcon(NumErr1);
-                            if(ml.isOpen()){
-                                ml.close();
-                            }
-                       ModalLexico.jlbEstados.setText("Q={q1,q2,q3,q4,q5,q6,q7,q8,q9,q10,q11,q12,q13}");
-                       ModalLexico.jlbInicial.setText("S=q1");
-                       ModalLexico.jlbFinal.setText("F={q3,q5,q8,q11,q13}");        
-                       ModalLexico.txtAlfabeto.setText("Σ={0, 1, 2, 3, 4, 5, 6, 7,8, 9, +, -, *, /, ^, e, ., E}");
-                       ModalLexico.InfoError.setText("numeros");
-                       ml.setVisible(true);                         
-                         break;
-                     case "MAL_NOMBRE_PARA_IDENTIFICADOR":
-                           ModalLexico.jlbAutomata.setIcon(IdErr2);
-                            if(ml.isOpen()){
-                                ml.close();
-                            }
-                       ModalLexico.jlbEstados.setText("Q={q1,q2}");
-                       ModalLexico.jlbInicial.setText("S=q1");
-                       ModalLexico.jlbFinal.setText("F={q2}");        
-                       ModalLexico.txtAlfabeto.setText("Σ={0, 1, 2, 3, 4, 5, 6, 7,8, 9,a,b,c,d,e,f,g,h,i,j,k,l,n,m,o,p,q,r,s,t,u,v,w,x,y,z,_}");
-                       ModalLexico.InfoError.setText("identificadores");
-                       ml.setVisible(true);    
-                        break;                
-                     case "MAYUSCULAS_EN_CADENA":
-                     ModalLexico.jlbAutomata.setIcon(CadErr1);
-                            if(ml.isOpen()){
-                                ml.close();
-                            }
-                       ModalLexico.jlbEstados.setText("Q={q1}");
-                       ModalLexico.jlbInicial.setText("S=q1");
-                       ModalLexico.jlbFinal.setText("F={q1}");        
-                       ModalLexico.txtAlfabeto.setText("Σ={a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, 0, 1, 2, 3,\n" +
-                                                          "4, 5, 6, 7, 8, 9, !,\n" +
-                                                          "%, ^, &, *, (, ), -, +, =, {, }, [, ], \\, |, ;, :, ”, <, ,, >, ., ?, /, \n" +
-                                                          "tabulador, espacio en blanco, nueva\n" +
-                                                          "línea, retorno de carro}");
-                       ModalLexico.InfoError.setText("Las mayusculas no se reconocen en este lenguaje");                       
-                       ml.setVisible(true); 
-                       break;
+//            case "ERROR":
+//                 ModalLexico.jlbAutomata.setIcon(CadErr1);
+//                if (ml.isOpen()) {
+//                    ml.close();
+//                }
+//
+//                //  System.out.println(err.getLabel().get);
+//                ModalLexico.jlbEstados.setText("Q={q1}");
+//                ModalLexico.jlbInicial.setText("S=q1");
+//                ModalLexico.jlbFinal.setText("F={q1");
+//                ModalLexico.txtAlfabeto.setText("Σ={0, 1, 2, 3, 4, 5, 6, 7,8, 9,a,b,c,d,e,f,g,h,i,j,k,l,n,m,\n"
+//                        + "o,p,q,r,s,t,u,v,w,x,y,z,_},{,(,),-, . , , ''" );
+//                ml.setVisible(true);
+//                break;
+            case "NUMERO_ERRONEO_MAS_PUNTOS":
+                ModalLexico.jlbAutomata.setIcon(NumErr1);
+                if (ml.isOpen()) {
+                    ml.close();
+                }
+
+                //  System.out.println(err.getLabel().get);
+                ModalLexico.jlbEstados.setText("Q={q1,q2,q3,q4,q5,q6,q7,q8,q9,q10,q11,q12,q13}");
+                ModalLexico.jlbInicial.setText("S=q1");
+                ModalLexico.jlbFinal.setText("F={q3,q5,q8,q11,q13}");
+                ModalLexico.txtAlfabeto.setText("Σ={0, 1, 2, 3, 4, 5, 6, 7,8, 9, +, -, *, /, ^, e, .}");
+                ModalLexico.InfoError.setText("numeros");
+                ml.setVisible(true);
+                break;
+
+            case "NUMERO_ERRONEO":
+                ModalLexico.jlbAutomata.setIcon(NumErr1);
+                if (ml.isOpen()) {
+                    ml.close();
+                }
+                ModalLexico.jlbEstados.setText("Q={q1,q2,q3,q4,q5,q6,q7,q8,q9,q10,q11,q12,q13}");
+                ModalLexico.jlbInicial.setText("S=q1");
+                ModalLexico.jlbFinal.setText("F={q3,q5,q8,q11,q13}");
+                ModalLexico.txtAlfabeto.setText("Σ={0, 1, 2, 3, 4, 5, 6, 7,8, 9, +, -, *, /, ^, e, .}");
+                ModalLexico.InfoError.setText("numeros");
+                ml.setVisible(true);
+                break;
+            case "MAL_NOMBRE_PARA_IDENTIFICADOR":
+            case "ERROR":
+                ModalLexico.jlbAutomata.setIcon(IdErr2);
+                if (ml.isOpen()) {
+                    ml.close();
+                }
+                ModalLexico.jlbEstados.setText("Q={q1,q2}");
+                ModalLexico.jlbInicial.setText("S=q1");
+                ModalLexico.jlbFinal.setText("F={q2}");
+                ModalLexico.txtAlfabeto.setText("Σ={0, 1, 2, 3, 4, 5, 6, 7,8, 9,a,b,c,d,e,f,g,h,i,j,k,l,n,m,\no,p,q,r,s,t,u,v,w,x,y,z,_}");
+                ModalLexico.InfoError.setText("identificadores");
+                ml.setVisible(true);
+                break;
+            case "MAYUSCULAS_EN_CADENA":
+                ModalLexico.jlbAutomata.setIcon(CadErr1);
+                if (ml.isOpen()) {
+                    ml.close();
+                }
+                ModalLexico.jlbEstados.setText("Q={q1}");
+                ModalLexico.jlbInicial.setText("S=q1");
+                ModalLexico.jlbFinal.setText("F={q1}");
+                ModalLexico.txtAlfabeto.setText("Σ={a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, \nu, v, w, x, y, z, 0, 1, 2, 3,\n"
+                        + "4, 5, 6, 7, 8, 9, !,\n"
+                        + "%, ^, &, *, (, ), -, +, =, {, }, [, ], \\, |, ;, :, ”, <, ,, >, ., ?, /, \n"
+                        + "tabulador, espacio en blanco, nueva\n"
+                        + "línea, retorno de carro}");
+                ModalLexico.InfoError.setText("Las mayusculas no se reconocen en este lenguaje");
+                ml.setVisible(true);
+                break;
+
         }
 
     }
@@ -1779,11 +1793,10 @@ NumeroLinea lineatxtCodigo;
                     if (le.getGramatica() != null) {
                         //showMessageDialog(null, "Estamos trabajando en modal de gramáticas\n"
                         //        + le.getGramatica().getProduccion() + "\n" + le.getGramatica().getError());
-                        
+
                         //VENTANA MODAL-----------------------------------------------------------------------------------
-                        new ErroresSinSem(null,true,le.getGramatica().getProduccion(),le.getGramatica().getError()).setVisible(true);
-                        
-                        
+                        new ErroresSinSem(null, true, le.getGramatica().getProduccion(), le.getGramatica().getError()).setVisible(true);
+
                     } else {
                         showMessageDialog(null, "Estamos trabajando en modal de gramáticas\n");
                         //new ErroresSinSem(null,true,le.getGramatica().getProduccion(),le.getGramatica().getError()).setVisible(true);
@@ -1801,7 +1814,6 @@ NumeroLinea lineatxtCodigo;
         });
     }
 
-    
     private void newFile() {
         int resp = JOptionPane.showConfirmDialog(null,
                 "¿Desea guardar el Archivo?", "Advertencia", JOptionPane.YES_NO_CANCEL_OPTION,
@@ -1941,7 +1953,7 @@ NumeroLinea lineatxtCodigo;
 
     private void resolverExp(String str) {
         Expresion expresion = new Expresion(str);
-        
+
         str = str.replace(" ", "");
         String s1[] = str.split("=");
         str = s1[1];
@@ -1962,13 +1974,13 @@ NumeroLinea lineatxtCodigo;
                 }
             }
         }
-        
+
         //Creado pila con operadores y operandos en notacion infija
         pila.push("=");
         newStr = newStr + ")";
-        
-        expresion.setInfija_parentesis(s1[0]+" = "+newStr);
-        
+
+        expresion.setInfija_parentesis(s1[0] + " = " + newStr);
+
         String s2[] = newStr.split("");
         for (int i = 0; i < s2.length; i++) {
             pila.push(s2[i]);
@@ -1993,7 +2005,7 @@ NumeroLinea lineatxtCodigo;
         }
 
         newPila.push(s1[0]);
-        
+
         //Haciendo notacion postfija
         String postfija = "";
         Pila operadores = new Pila();
@@ -2010,7 +2022,7 @@ NumeroLinea lineatxtCodigo;
             } else {
                 if (")".equals(character)) {
                     String stri = operadores.imprimir();
-                    System.out.println("OPs: "+stri);
+                    System.out.println("OPs: " + stri);
                     expresion.setPila_ops(stri);
                     String op = operadores.pop();
                     while (!"(".equals(op)) {
@@ -2043,10 +2055,10 @@ NumeroLinea lineatxtCodigo;
         for (String string : post) {
             if (!string.isEmpty()) {
                 post_sin_espacios[j++] = string;
-                string_pf += string+", ";
+                string_pf += string + ", ";
             }
         }
-        
+
         expresion.setPostfija(string_pf);
 
         Pila pila_exp = new Pila();

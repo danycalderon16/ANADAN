@@ -156,4 +156,3 @@ numero                     = {D}+ | ("+"|"-")?{D}+ | {D}+"."{D}+ | ("+"|"-")?{D}
 <YYINITIAL> {mayusculas_en_cadena} {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return MAYUSCULAS_EN_CADENA;}
 
 . {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return ERROR;}
-
