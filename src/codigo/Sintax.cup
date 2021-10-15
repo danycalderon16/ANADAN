@@ -826,8 +826,7 @@ condicion::= IDENTIFICADOR:id IGUAL_QUE FALSE {:
             }
         :} |
         NUMERO:num op_rel IDENTIFICADOR:id {:
-            Simbolo sim = TablaSimbolos.buscar(id);
-        
+            Simbolo sim = TablaSimbolos.buscar(id);        
             if (sim == null) {
                 JLabel lb = new JLabel();
                     lb.setForeground(new Color(217, 33, 51));
@@ -847,6 +846,40 @@ condicion::= IDENTIFICADOR:id IGUAL_QUE FALSE {:
                     VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico. La variable '"+id+"' no es de tipo just", idright+1,SINTACTICO,
                     new Gramatica("condicion::= TRUE IGUAL_QUE IDENTIFICADOR","Error semántico. La variable '"+id+"' no es de tipo just")));           
                 }
+            }
+        :} |
+        IDENTIFICADOR:id_1 op_rel IDENTIFICADOR:id_2 {:
+            Simbolo sim_1 = TablaSimbolos.buscar(id_1);
+            Simbolo sim_2 = TablaSimbolos.buscar(id_2);
+        
+            if (sim_1 == null) {
+                JLabel lb = new JLabel();
+                    lb.setForeground(new Color(217, 33, 51));
+                    lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+                    lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                    lb.setText("Error en la línea " + (id_1right+1) + ". Error sintáctico. La variable '"+id_1+"' no existe" );   
+                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. La variable '"+id_1+"' no existe", id_1right+1,SINTACTICO,
+                    new Gramatica("condicion::= TRUE IGUAL_QUE IFENTIFICADOR","Error sintáctico. La variable '"+id_1+"' no existe")));
+            }
+            else{
+                if (sim_2 == null) {
+                JLabel lb = new JLabel();
+                    lb.setForeground(new Color(217, 33, 51));
+                    lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+                    lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                    lb.setText("Error en la línea " + (id_2right+1) + ". Error sintáctico. La variable '"+id_2+"' no existe" );   
+                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. La variable '"+id_2+"' no existe", id_2right+1,SINTACTICO,
+                    new Gramatica("condicion::= TRUE IGUAL_QUE IFENTIFICADOR","Error sintáctico. La variable '"+id_2+"' no existe")));
+                }else
+                    if(sim_1.tipo.equals("just") && !sim_2.tipo.equals("cad")){ 
+                        JLabel lb = new JLabel();
+                        lb.setForeground(new Color(217, 33, 51));
+                        lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+                        lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                        lb.setText("Error en la línea " + (id_1right+1) + ". Error semántico. La variable '"+id_1+"' es del tipo "+sim_1.tipo+" y la varibale '"+id_2+"' es del tipo "+sim_2+".");   
+                        VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico. La variable '"+id_1+"' es del tipo "+sim_1.tipo+" y la varibale '"+id_2+"' es del tipo "+sim_2+".", id_1right+1,SINTACTICO,
+                        new Gramatica("condicion::= IDENTIFICADOR IGUAL_QUE IDENTIFICADOR","Error semántico. La variable '"+id_1+"' es del tipo "+sim_1.tipo+" y la varibale '"+id_2+"' es del tipo "+id_2+".")));           
+                    }
             }
         :};
 

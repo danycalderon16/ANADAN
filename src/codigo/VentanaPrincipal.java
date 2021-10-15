@@ -1084,7 +1084,7 @@ NumeroLinea lineatxtCodigo;
         if (labelsErrores.isEmpty()) {
             JLabel lb = new JLabel("El programa no contiene errores sintacticos.");
             lb.setForeground(color_success);
-            lb.setBounds(5, 5, 700, 20);
+            lb.setBounds(5, 5, 900, 20);
             lb.setFont(new Font("Verdana", Font.PLAIN, 14));
             jPanel1.add(lb);
         } else {
@@ -1093,7 +1093,7 @@ NumeroLinea lineatxtCodigo;
             if (!errores_lexicos) {
                 JLabel lb = new JLabel("El programa no contiene errores lexicos.");
                 lb.setForeground(color_success);
-                lb.setBounds(5, 5, 700, 20);
+                lb.setBounds(5, 5, 900, 20);
                 lb.setFont(new Font("Verdana", Font.PLAIN, 14));
                 jPanel1.add(lb);
                 num = 1;
@@ -1101,7 +1101,7 @@ NumeroLinea lineatxtCodigo;
 
             for (LabelError le : labelsErrores) {
                 y = 5 + 30 * num;
-                le.getLabel().setBounds(5, y, 700, 20);
+                le.getLabel().setBounds(5, y, 900, 20);
                 clickLabel(le);
                 jPanel1.add(le.getLabel());
                 num++;
