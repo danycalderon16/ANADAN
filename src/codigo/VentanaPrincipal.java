@@ -1786,7 +1786,6 @@ NumeroLinea lineatxtCodigo;
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                System.out.println("Desde 1719: " + le);
                 if (le.getTipo() == LEXICO) {
                     showModalLexical(le);
                 } else {

@@ -52,9 +52,7 @@ public class ErroresSinSem extends javax.swing.JDialog {
         txtprod.setBackground(bgColor);
         //----------------------------------------------------------------------------------------------------
         
-        
-        
-        String perror = gram;
+          String perror = gram;
         String error = err;
         tipoerror(error);
         txterror3.setText(error);

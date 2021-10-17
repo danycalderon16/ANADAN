@@ -453,7 +453,154 @@ declaracion ::=
     :}|
     t_dato CORCHETE_ABRE CORCHETE_CIERRA IDENTIFICADOR SIGNO_DE_IGUAL t_dato CORCHETE_ABRE NUMERO CORCHETE_CIERRA PUNTOYCOMA |
     t_dato CORCHETE_ABRE CORCHETE_CIERRA IDENTIFICADOR SIGNO_DE_IGUAL LLAVE_ABRE datos_array LLAVE_CIERRA PUNTOYCOMA |
-    IDENTIFICADOR IDENTIFICADOR SIGNO_DE_IGUAL NEW IDENTIFICADOR PARENTESIS_ABRE parametrosa PARENTESIS_CIERRA PUNTOYCOMA
+    IDENTIFICADOR IDENTIFICADOR SIGNO_DE_IGUAL NEW IDENTIFICADOR PARENTESIS_ABRE parametrosa PARENTESIS_CIERRA PUNTOYCOMA |
+    
+    //"""""""""""""""""""""""""""""""""""""""""""" ERRORES DE PUNTO Y COMa """"""""""""""""""""""""""""""""""""""""""""""""""""
+    JUST:tipo IDENTIFICADOR:id{:
+         try{                
+            JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. Falta punto y coma en declaración: declaración: JUST "+id);   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. Falta punto y coma en declaración: JUST "+id, idright+1,SINTACTICO,
+            new Gramatica("JUST IDENTIFICADOR PUNTOYCOMA", "Falta punto y coma en declaración: JUST "+id)));
+
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }   
+    :} | 
+    BROKEN:tipo IDENTIFICADOR:id {:
+         try{                
+            JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. Falta punto y coma en declaración: BROKEN "+id );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. Falta punto y coma en declaración: BROKEN "+id, idright+1,SINTACTICO,
+            new Gramatica("BROKEN IDENTIFICADOR PUNTOYCOMA ", "Falta punto y coma en declaración: BROKEN "+id)));
+
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }   
+    :} |
+    FLAG:tipo IDENTIFICADOR:id{:
+         try{                
+            JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. Falta punto y coma en declaración: FLAG "+id );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. Falta punto y coma en declaración: FLAG "+id, idright+1,SINTACTICO,
+            new Gramatica("FLAG IDENTIFICADOR PUNTOYCOMA ", "Falta punto y coma en declaración: FLAG "+id)));
+
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }   
+    :} |
+    WORD:tipo IDENTIFICADOR:id{:
+         try{                
+            JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. Falta punto y coma en declaración: WORD "+id );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. Falta punto y coma en declaración: WORD "+id, idright+1,SINTACTICO,
+            new Gramatica("WORD IDENTIFICADOR PUNTOYCOMA ", "Falta punto y coma en declaración: WORD "+id)));
+
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }   
+    :} |
+    JUST:tipo IDENTIFICADOR:id SIGNO_DE_IGUAL NUMERO:valor {:
+         try{                
+            JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. Falta punto y coma en declaración: JUST "+id+" = "+valor );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. Falta punto y coma en declaración: JUST "+id+" = "+valor, idright+1,SINTACTICO,
+            new Gramatica("JUST IDENTIFICADOR SIGNO_DE_IGUAL NUMERO PUNTOYCOMA", "Falta punto y coma en declaración: JUST "+id+" = "+valor)));
+
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }   
+    :} | 
+    BROKEN:tipo IDENTIFICADOR:id SIGNO_DE_IGUAL DECIMAL:valor {:
+         try{                
+            JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. Falta punto y coma en declaración: BROKEN "+id+" = "+valor );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. Falta punto y coma en declaración: BROKEN "+id+" = "+valor, idright+1,SINTACTICO,
+            new Gramatica("BROKEN IDENTIFICADOR SIGNO_DE_IGUAL DECIMAL PUNTOYCOMA ", "Falta punto y coma en declaración: BROKEN "+id+" = "+valor)));
+
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }   
+    :} |
+    FLAG:tipo IDENTIFICADOR:id SIGNO_DE_IGUAL TRUE:valor {:
+         try{                
+            JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. Falta punto y coma en declaración: FLAG "+id+" = "+valor );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. Falta punto y coma en declaración: FLAG "+id+" = "+valor, idright+1,SINTACTICO,
+            new Gramatica("FLAG IDENTIFICADOR SIGNO_DE_IGUAL TRUE PUNTOYCOMA ", "Falta punto y coma en declaración: FLAG "+id+" = "+valor)));
+
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }   
+    :} |
+    FLAG:tipo IDENTIFICADOR:id SIGNO_DE_IGUAL FALSE:valor {:
+         try{                
+            JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. Falta punto y coma en declaración: FLAG "+id+" = "+valor );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. Falta punto y coma en declaración: FLAG "+id+" = "+valor, idright+1,SINTACTICO,
+            new Gramatica("FLAG IDENTIFICADOR SIGNO_DE_IGUAL FALSE PUNTOYCOMA ", "Falta punto y coma en declaración: FLAG "+id+" = "+valor)));
+
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }   
+    :} |
+    WORD:tipo IDENTIFICADOR:id SIGNO_DE_IGUAL CADENA_TEXTO:valor {:
+         try{                
+            JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. Falta punto y coma en declaración: WORD "+id+" = "+valor );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. Falta punto y coma en declaración: WORD "+id+" = "+valor, idright+1,SINTACTICO,
+            new Gramatica("WORD IDENTIFICADOR SIGNO_DE_IGUAL CADENA_TEXTO PUNTOYCOMA ", "Falta punto y coma en declaración: WORD "+id+" = "+valor)));
+
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }   
+    :}
+    
 ;
 
 t_dato::= BROKEN:td{: RESULT =  td;:}|
@@ -641,24 +788,29 @@ factor ::=
         else{
             System.out.println("*****id: "+sim.valor);  
             RESULT = sim.valor; 
-        }
-        //System.out.println("EMPIEZA FACTOR");
-        //System.out.println("factor "+f);:}   | 
-    CADENA_TEXTO:f {:RESULT = f; 
-        //System.out.println("EMPIEZA FACTOR");
-        //System.out.println("factor "+f);:}    | 
-    NUMERO:f {:RESULT = f; 
-        //System.out.println("EMPIEZA FACTOR");
-        //System.out.println("factor "+f);:}   | 
-    DECIMAL:f {:RESULT = f; 
-        //System.out.println("EMPIEZA FACTOR");
-        //System.out.println("factor "+f);:}   | 
-    FALSE:f {:RESULT = f; 
-        //System.out.println("EMPIEZA FACTOR");
-        //System.out.println("factor "+f);:}   | 
+        };
+    :}   | 
+    CADENA_TEXTO:f {:RESULT = f; ;
+    :}   | 
+    NUMERO:f {:RESULT = f; ;
+    :}   | 
+    DECIMAL:f {:RESULT = f; ;
+    :}   | 
+    FALSE:f {:RESULT = f; ;
+    :}   | 
     TRUE:f {:RESULT = f; 
-        //System.out.println("EMPIEZA FACTOR");
-        //System.out.println("factor "+f);:}  ;
+        :}  
+    |
+    error:e{: 
+       JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (eright+1) + ". Error sintáctico. La expresión no esta bien escrita" );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. La expresión no esta bien escrita", eright+1,SINTACTICO,
+            new Gramatica("factor::= expresion | NUMERO | DECIMAL | IDENTIFICADOR","Error sintáctico. La expresión no esta bien escrita")));
+    :}
+;
 /*
 expresion ::= NUMERO | IDENTIFICADOR | PARENTESIS_ABRE  expresion op_art expresion PARENTESIS_CIERRA;
 */
@@ -667,8 +819,28 @@ op_art ::= SIGNO_DE_SUMA | SIGNO_DE_RESTA | SIGNO_DE_DIVISIÓN | SIGNO_DE_MULTIP
 op_log ::= OR | AND;
 
 
-sentif::=  IF PARENTESIS_ABRE condicion PARENTESIS_CIERRA LLAVE_ABRE bloquesentencias LLAVE_CIERRA sentelse;
-sentelse::= ELSE LLAVE_ABRE bloquesentencias LLAVE_CIERRA |;
+sentif::=  IF PARENTESIS_ABRE condicion PARENTESIS_CIERRA LLAVE_ABRE  bloquesentencias LLAVE_CIERRA 
+            |  error:e {: 
+            JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (eright+1) + ". Error sintáctico. El bloque 'if' no está bien escrito" );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. El bloque 'if' no está bien escrito", eright+1,SINTACTICO,
+            new Gramatica("factor::= expresion | NUMERO | DECIMAL | IDENTIFICADOR","Error sintáctico. El bloque 'if' no está bien escrito")));
+    :} sentelse
+;
+sentelse::= ELSE LLAVE_ABRE bloquesentencias LLAVE_CIERRA |  
+            error:e{: 
+            JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (eright+1) + ". Error sintáctico. El bloque 'else' no está bien escrito" );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. El bloque 'else' no está bien escrito", eright+1,SINTACTICO,
+            new Gramatica("factor::= expresion | NUMERO | DECIMAL | IDENTIFICADOR","Error sintáctico. El bloque 'else' no está bien escrito")));;
+            :}
+;
 sentwhile::= WHILE PARENTESIS_ABRE condicion PARENTESIS_CIERRA LLAVE_ABRE bloquesentencias LLAVE_CIERRA;
 sentasignacion::= IDENTIFICADOR:identificador SIGNO_DE_IGUAL expresion:e PUNTOYCOMA{:
         //Buscar variable en la tabla de simbolos

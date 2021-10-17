@@ -11,21 +11,22 @@ import static codigo.Tokens.*;
 L=[a-z_]+
 D=[0-9]+
 
+//******** IGNORAR *******************
 espacio=[ ,\t,\r,\n]+
 CAP=[A-Z]+
 
+//*********** COMENTARIOS ***************
 A=[/*]
 C=[*/]
 num = {D}+
 
+//*************************** EXPRESIONES REGULARES **************************
 
 nuumero_erroneo_mas_puntos = ("+"|"-")*(\.)*{num}?(\.*)({num}?(\.)*{num}?)* | ("+"|"-")*({num}?(\.)*{num}?)* 
 
 numero_erroneo             = (("+"|"-")?{L}+|("+"|"-")?{D}+ "." {D}+)("."|{D}|{L})+ 
 
 numero_erroneo             = ("+"|"-")?{D}+ "." {D}+{L}({L}|{D})*
-
-
 
 nuumero_erroneo_mas_puntos = ("+"|"-")*(\.)*("^"|{num})*?(\.*)(("^"|{num})*?(\.)*("^"|{num})*?)* | ("+"|"-")*(("^"|{num})*?(\.)*("^"|{num})*?)* 
 
@@ -54,6 +55,9 @@ numero                     = {D}+ | ("+"|"-")?{D}+ | {D}+"."{D}+ | ("+"|"-")?{D}
 {espacio} {/*Ignore*/}
 {A}[^]*{C} {/*Ignore*/}
 
+//******************* PALABRAS RESERVADAS *****************************************
+
+//  ********** "word" = [word] 
 <YYINITIAL> "word" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Word;}
 <YYINITIAL> "setfilamenttype" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Setfilamenttype;}
 <YYINITIAL> "fillrectangle" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Fillrectangle;}
@@ -143,6 +147,8 @@ numero                     = {D}+ | ("+"|"-")?{D}+ | {D}+"."{D}+ | ("+"|"-")?{D}
 
 <YYINITIAL> "\"" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return COMILLAS_DOBLES;}
 <YYINITIAL> ";" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return PuntoYComa;}
+
+//**************************** INDENTIFICADORES Y NUMEROS ****************************************
 
 <YYINITIAL> {cadena} {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Cadena;} 
 <YYINITIAL> {identificador} {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Identificador;}

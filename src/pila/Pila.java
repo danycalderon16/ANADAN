@@ -96,7 +96,7 @@ public class Pila {
         return str;
     }
 
-    public static void main(String[] ar) {
+    public static void main(String[] ar) throws InterruptedException {
         /* String exp = "123";
         String[] arb = exp.split("");
         Pila pila = new Pila();
@@ -260,12 +260,15 @@ public class Pila {
         String id = pila_exp.pop();
         int r_int = (int) Double.parseDouble(result);
         JOptionPane.showMessageDialog(null, r_int);*/
-        
-        double d = 8;
-        if(d%1==0)
-            System.out.println("Entero");
-        else
-            System.out.println("Flotane");
+       
+         
+        System.out.println(System.nanoTime());
+        System.out.println(System.nanoTime());
+        System.out.println(System.nanoTime());
+        System.out.println(System.nanoTime());
+        System.out.println(System.nanoTime());
+        System.out.println(System.nanoTime());
+System.out.println(System.currentTimeMillis());
 
     }
 }
