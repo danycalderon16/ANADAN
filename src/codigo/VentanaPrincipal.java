@@ -1758,7 +1758,6 @@ NumeroLinea lineatxtCodigo;
                         //VENTANA MODAL-----------------------------------------------------------------------------------
                         new ErroresSinSem(null,true,le.getGramatica().getProduccion(),le.getGramatica().getError()).setVisible(true);
                         
-                        
                     } else {
                         showMessageDialog(null, "Estamos trabajando en modal de gramáticas\n");
                         //new ErroresSinSem(null,true,le.getGramatica().getProduccion(),le.getGramatica().getError()).setVisible(true);
