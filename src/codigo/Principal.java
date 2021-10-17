@@ -6,7 +6,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-
 public class Principal{
 
     public static void main(String[] args) throws Exception {
@@ -14,7 +13,7 @@ public class Principal{
         String cup                           = "C:/ANADAN/src/codigo/LexerCup.flex";
         String[] rutaS = {"-parser", "Sintax", "C:/ANADAN/src/codigo/Sintax.cup"};
         generar(lexer, cup, rutaS);
-    }
+    }                   
 
     private static void generarLexer(String path) {
         File file = new File(path);

@@ -1,6 +1,7 @@
 package codigo;
 
 import ds.desktop.notify.DesktopNotify;
+import frames.ModalExp;
 import frames.ModalLexico;
 import java.awt.Color;
 import java.awt.Desktop;
@@ -45,6 +46,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
+import modelos.Expresion;
 import pila.Pila;
 
 import static util.Utils.*;
@@ -53,6 +55,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     public static ArrayList<LabelError> labelsErrores;
     private ArrayList<Simbolos> simbolos = new ArrayList<Simbolos>();
+    private ArrayList<Expresion> exp_list = new ArrayList<>();
 
     public static boolean errores_lexicos = false;
     public static boolean errores_sintacticos = false;
@@ -86,17 +89,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         initComponents();
         seticon();
         undoManager();
-        this.setTitle("ANADAN");
+        this.setTitle("Sin título - ANADAN");
         setLocationRelativeTo(null);
         m = (DefaultTableModel) tblTablaSimbolos.getModel();
         numeroLineas();
         mnuMinimize.setEnabled(false);
 
-        //UIDefaults defs = UIManager.getDefaults();
-        //defs.put("TextPane.background", new ColorUIResource(Color.BLACK));
-        //defs.put("TextPane.inactiveBackground", new ColorUIResource(Color.BLACK));
-        //txtAreaEdit.updateUI(defs);
-        //CAMBIAR COLOR DEL JTEXTPANE-----------------------------------------------------------------
         Color bgColor = new Color(42, 43, 46);
         UIDefaults defaults = new UIDefaults();
         defaults.put("TextPane.background", new ColorUIResource(bgColor));
@@ -105,13 +103,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         txtAreaEdit.putClientProperty("Nimbus.Overrides.InheritDefaults", true);
         txtAreaEdit.setBackground(bgColor);
 
-        //bgColor = new Color(42, 43, 46);
-        //UIDefaults defaults1 = new UIDefaults();
-        //defaults1.put("EditorPane.background", new ColorUIResource(bgColor));
-        //defaults1.put("EditorPane[Enabled].backgroundPainter", bgColor);
-        //txtConsolaPane.putClientProperty("Nimbus.Overrides", defaults1);
-        //txtConsolaPane.putClientProperty("Nimbus.Overrides.InheritDefaults", true);
-        //txtConsolaPane.setBackground(bgColor);
         Color darkColor = new Color(153, 153, 153);
         tblTablaSimbolos.setForeground(Color.WHITE);
         tblTablaSimbolos.setBackground(darkColor);
@@ -205,6 +196,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         icon_abrir = new javax.swing.JLabel();
         icon_undo = new javax.swing.JLabel();
         icon_redo = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        icon_exps = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
         barraMenu = new javax.swing.JMenuBar();
@@ -248,9 +241,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jplAreaEdit.setLayout(jplAreaEditLayout);
         jplAreaEditLayout.setHorizontalGroup(
             jplAreaEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jplAreaEditLayout.createSequentialGroup()
-                .addComponent(scPanAreaEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 694, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(scPanAreaEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
         );
         jplAreaEditLayout.setVerticalGroup(
             jplAreaEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -319,9 +310,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblTablaSimbolos);
         if (tblTablaSimbolos.getColumnModel().getColumnCount() > 0) {
-            tblTablaSimbolos.getColumnModel().getColumn(0).setPreferredWidth(1);
-            tblTablaSimbolos.getColumnModel().getColumn(1).setPreferredWidth(10);
+            tblTablaSimbolos.getColumnModel().getColumn(0).setMinWidth(80);
+            tblTablaSimbolos.getColumnModel().getColumn(0).setPreferredWidth(15);
+            tblTablaSimbolos.getColumnModel().getColumn(0).setMaxWidth(80);
+            tblTablaSimbolos.getColumnModel().getColumn(1).setMinWidth(80);
+            tblTablaSimbolos.getColumnModel().getColumn(1).setPreferredWidth(15);
+            tblTablaSimbolos.getColumnModel().getColumn(1).setMaxWidth(80);
             tblTablaSimbolos.getColumnModel().getColumn(2).setPreferredWidth(15);
+            tblTablaSimbolos.getColumnModel().getColumn(3).setPreferredWidth(15);
         }
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 50, 430, 390));
@@ -416,7 +412,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/split.png"))); // NOI18N
-        panelToolBar.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 10, 20, 30));
+        panelToolBar.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 10, 20, 30));
 
         icon_abrir.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         icon_abrir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/OpenFile.png"))); // NOI18N
@@ -453,6 +449,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
         panelToolBar.add(icon_redo, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 10, 30, 30));
+
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/split.png"))); // NOI18N
+        panelToolBar.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 10, 20, 30));
+
+        icon_exps.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        icon_exps.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/equation.png"))); // NOI18N
+        icon_exps.setToolTipText("Rehacer");
+        icon_exps.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        icon_exps.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                icon_expsMouseReleased(evt);
+            }
+        });
+        panelToolBar.add(icon_exps, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 10, 30, 30));
 
         getContentPane().add(panelToolBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1130, 50));
 
@@ -581,7 +592,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         mnuTablaS.add(mnuFija);
 
-        miDynamicTable.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_MASK));
+        miDynamicTable.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         miDynamicTable.setText("Dynamic");
         miDynamicTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -603,7 +614,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         mnuCompile.setText("Compile");
         mnuCompile.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        miCompileLexical.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
+        miCompileLexical.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         miCompileLexical.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Lexico.png"))); // NOI18N
         miCompileLexical.setText("Lexical");
         miCompileLexical.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -613,7 +624,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         mnuCompile.add(miCompileLexical);
 
-        miCompileSyntax.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
+        miCompileSyntax.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         miCompileSyntax.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/analysis (1).png"))); // NOI18N
         miCompileSyntax.setText("Syntax");
         miCompileSyntax.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -895,6 +906,7 @@ NumeroLinea lineatxtCodigo;
         icon_save.setIcon(resizeIcon(new ImageIcon(getClass().getResource("/img/save.png")), icon_save.getWidth(), icon_save.getHeight()));
         icon_save_as.setIcon(resizeIcon(new ImageIcon(getClass().getResource("/img/save-as.png")), icon_save_as.getWidth(), icon_save_as.getHeight()));
         icon_new.setIcon(resizeIcon(new ImageIcon(getClass().getResource("/img/new_file.png")), icon_new.getWidth(), icon_new.getHeight()));
+        icon_exps.setIcon(resizeIcon(new ImageIcon(getClass().getResource("/img/equation.png")), icon_new.getWidth(), icon_new.getHeight()));
 
     }
 
@@ -908,6 +920,7 @@ NumeroLinea lineatxtCodigo;
         String documento = "";
         try {
             entrada = new FileInputStream(archivo);
+            this.setTitle(archivo.getName() + " - ANADAN");
             int ascci;
             while ((ascci = entrada.read()) != -1) {
                 char caracter = (char) ascci;
@@ -1071,7 +1084,7 @@ NumeroLinea lineatxtCodigo;
         if (labelsErrores.isEmpty()) {
             JLabel lb = new JLabel("El programa no contiene errores sintacticos.");
             lb.setForeground(color_success);
-            lb.setBounds(5, 5, 700, 20);
+            lb.setBounds(5, 5, 900, 20);
             lb.setFont(new Font("Verdana", Font.PLAIN, 14));
             jPanel1.add(lb);
         } else {
@@ -1080,7 +1093,7 @@ NumeroLinea lineatxtCodigo;
             if (!errores_lexicos) {
                 JLabel lb = new JLabel("El programa no contiene errores lexicos.");
                 lb.setForeground(color_success);
-                lb.setBounds(5, 5, 700, 20);
+                lb.setBounds(5, 5, 900, 20);
                 lb.setFont(new Font("Verdana", Font.PLAIN, 14));
                 jPanel1.add(lb);
                 num = 1;
@@ -1088,7 +1101,7 @@ NumeroLinea lineatxtCodigo;
 
             for (LabelError le : labelsErrores) {
                 y = 5 + 30 * num;
-                le.getLabel().setBounds(5, y, 700, 20);
+                le.getLabel().setBounds(5, y, 900, 20);
                 clickLabel(le);
                 jPanel1.add(le.getLabel());
                 num++;
@@ -1214,21 +1227,22 @@ NumeroLinea lineatxtCodigo;
                         tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
                         tblTablaSimbolos.setValueAt("ERROR:CADENA_NO_VALIDA", i, 3);
                         i++;
-                        lb.setText("Error en la línea " + (c.linea + 1) + ". Error léxico. El número '" + lexer.yytext() + "' tiene puntos de más.");
+                        lb.setText("Error en la línea " + (c.linea + 1) + ". Error léxico. El formato del número '" + lexer.yytext() + "' es erroneo.");
                         labelsErrores.add(new LabelError(lb, "NUMERO_ERRONEO_MAS_PUNTOS", c.linea + 1, LEXICO));
                         counter++;
                         break;
-                    case MAYUSCULAS_EN_CADENA:
-                        tblTablaSimbolos.setValueAt(c.columna, i, 0);
-                        tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
-                        tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
-                        tblTablaSimbolos.setValueAt("ERROR:CADENA_NO_VALIDA", i, 3);
-                        i++;
-                        lb.setText("Error en la línea " + (c.linea + 1) + ". Error léxico. Las mayúsculas no están definidas en el lenguaje: '" + lexer.yytext() + "'");
-                        labelsErrores.add(new LabelError(lb, "MAYUSCULAS_EN_CADENA", c.linea + 1, LEXICO));
-                        counter++;
-                        break;
+//                    case MAYUSCULAS_EN_CADENA:
+//                        tblTablaSimbolos.setValueAt(c.columna, i, 0);
+//                        tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
+//                        tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
+//                        tblTablaSimbolos.setValueAt("ERROR:CADENA_NO_VALIDA", i, 3);
+//                        i++;
+//                        lb.setText("Error en la línea " + (c.linea + 1) + ". Error léxico. Las mayúsculas no están definidas en el lenguaje: '" + lexer.yytext() + "'");
+//                        labelsErrores.add(new LabelError(lb, "MAYUSCULAS_EN_CADENA", c.linea + 1, LEXICO));
+//                        counter++;
+//                        break;
                     case MAL_NOMBRE_PARA_IDENTIFICADOR:
+                    case MAYUSCULAS_EN_CADENA:
                         tblTablaSimbolos.setValueAt(c.columna, i, 0);
                         tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
                         tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
@@ -1255,7 +1269,7 @@ NumeroLinea lineatxtCodigo;
                         tblTablaSimbolos.setValueAt("ERROR:CADENA_NO_VALIDA", i, 3);
                         i++;
 
-                        lb.setText("Error en la línea " + (c.linea + 1) + ". Error léxico. Error '" + lexer.yytext() + "'");
+                        lb.setText("Error en la línea " + (c.linea + 1) + ". Error léxico. El caracter '" + lexer.yytext() + "' no pertenece al lenguaje.");
                         labelsErrores.add(new LabelError(lb, "ERROR", c.linea + 1, LEXICO));
                         counter++;
                         break;
@@ -1273,6 +1287,7 @@ NumeroLinea lineatxtCodigo;
                     case Signo_de_Resta:
                     case Signo_de_Multiplicación:
                     case Signo_de_División:
+                    case Signo_de_Exponente:
                         tblTablaSimbolos.setValueAt(c.columna, i, 0);
                         tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
                         tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
@@ -1480,9 +1495,14 @@ NumeroLinea lineatxtCodigo;
 
     private void jMenuItem1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MouseReleased
         //new ErroresSinSem(this,true).setVisible(true);
-            
+
     }//GEN-LAST:event_jMenuItem1MouseReleased
-    
+
+    private void icon_expsMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_expsMouseReleased
+        ModalExp me = new ModalExp(exp_list);
+        me.setVisible(true);
+    }//GEN-LAST:event_icon_expsMouseReleased
+
     public void rquicksort() {
 
         int col = m.getColumnCount();
@@ -1613,6 +1633,7 @@ NumeroLinea lineatxtCodigo;
     private javax.swing.JMenuBar barraMenu;
     private javax.swing.JMenu btnayuda;
     private javax.swing.JLabel icon_abrir;
+    private javax.swing.JLabel icon_exps;
     private javax.swing.JLabel icon_lexico;
     private javax.swing.JLabel icon_new;
     private javax.swing.JLabel icon_redo;
@@ -1624,6 +1645,7 @@ NumeroLinea lineatxtCodigo;
     private javax.swing.JLabel icon_undo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -1673,7 +1695,20 @@ NumeroLinea lineatxtCodigo;
 
         //  err.get
         switch (err.getError()) {
-
+//            case "ERROR":
+//                 ModalLexico.jlbAutomata.setIcon(CadErr1);
+//                if (ml.isOpen()) {
+//                    ml.close();
+//                }
+//
+//                //  System.out.println(err.getLabel().get);
+//                ModalLexico.jlbEstados.setText("Q={q1}");
+//                ModalLexico.jlbInicial.setText("S=q1");
+//                ModalLexico.jlbFinal.setText("F={q1");
+//                ModalLexico.txtAlfabeto.setText("Σ={0, 1, 2, 3, 4, 5, 6, 7,8, 9,a,b,c,d,e,f,g,h,i,j,k,l,n,m,\n"
+//                        + "o,p,q,r,s,t,u,v,w,x,y,z,_},{,(,),-, . , , ''" );
+//                ml.setVisible(true);
+//                break;
             case "NUMERO_ERRONEO_MAS_PUNTOS":
                 ModalLexico.jlbAutomata.setIcon(NumErr1);
                 if (ml.isOpen()) {
@@ -1685,6 +1720,7 @@ NumeroLinea lineatxtCodigo;
                 ModalLexico.jlbInicial.setText("S=q1");
                 ModalLexico.jlbFinal.setText("F={q3,q5,q8,q11,q13}");
                 ModalLexico.txtAlfabeto.setText("Σ={0, 1, 2, 3, 4, 5, 6, 7,8, 9, +, -, *, /, ^, e, .}");
+                ModalLexico.InfoError.setText("numeros");
                 ml.setVisible(true);
                 break;
 
@@ -1697,9 +1733,11 @@ NumeroLinea lineatxtCodigo;
                 ModalLexico.jlbInicial.setText("S=q1");
                 ModalLexico.jlbFinal.setText("F={q3,q5,q8,q11,q13}");
                 ModalLexico.txtAlfabeto.setText("Σ={0, 1, 2, 3, 4, 5, 6, 7,8, 9, +, -, *, /, ^, e, .}");
+                ModalLexico.InfoError.setText("numeros");
                 ml.setVisible(true);
                 break;
             case "MAL_NOMBRE_PARA_IDENTIFICADOR":
+            case "ERROR":
                 ModalLexico.jlbAutomata.setIcon(IdErr2);
                 if (ml.isOpen()) {
                     ml.close();
@@ -1707,8 +1745,8 @@ NumeroLinea lineatxtCodigo;
                 ModalLexico.jlbEstados.setText("Q={q1,q2}");
                 ModalLexico.jlbInicial.setText("S=q1");
                 ModalLexico.jlbFinal.setText("F={q2}");
-                ModalLexico.txtAlfabeto.setText("Σ={0, 1, 2, 3, 4, 5, 6, 7,8, 9,a,b,c,d,e,f,g,h,i,j,k,l,n,m,o,p,q,r,s,t,u,v,w,x,y,z,_}");
-                ModalLexico.InfoError.setText("Los identificadores solo pueden iniciar con una letra y/o guion bajo");
+                ModalLexico.txtAlfabeto.setText("Σ={0, 1, 2, 3, 4, 5, 6, 7,8, 9,a,b,c,d,e,f,g,h,i,j,k,l,n,m,\no,p,q,r,s,t,u,v,w,x,y,z,_}");
+                ModalLexico.InfoError.setText("identificadores");
                 ml.setVisible(true);
                 break;
             case "MAYUSCULAS_EN_CADENA":
@@ -1719,7 +1757,7 @@ NumeroLinea lineatxtCodigo;
                 ModalLexico.jlbEstados.setText("Q={q1}");
                 ModalLexico.jlbInicial.setText("S=q1");
                 ModalLexico.jlbFinal.setText("F={q1}");
-                ModalLexico.txtAlfabeto.setText("Σ={a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, 0, 1, 2, 3,\n"
+                ModalLexico.txtAlfabeto.setText("Σ={a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, \nu, v, w, x, y, z, 0, 1, 2, 3,\n"
                         + "4, 5, 6, 7, 8, 9, !,\n"
                         + "%, ^, &, *, (, ), -, +, =, {, }, [, ], \\, |, ;, :, ”, <, ,, >, ., ?, /, \n"
                         + "tabulador, espacio en blanco, nueva\n"
@@ -1727,6 +1765,7 @@ NumeroLinea lineatxtCodigo;
                 ModalLexico.InfoError.setText("Las mayusculas no se reconocen en este lenguaje");
                 ml.setVisible(true);
                 break;
+
         }
 
     }
@@ -1747,17 +1786,21 @@ NumeroLinea lineatxtCodigo;
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                System.out.println("Desde 1719: " + le);
                 if (le.getTipo() == LEXICO) {
                     showModalLexical(le);
                 } else {
                     if (le.getGramatica() != null) {
                         //showMessageDialog(null, "Estamos trabajando en modal de gramáticas\n"
                         //        + le.getGramatica().getProduccion() + "\n" + le.getGramatica().getError());
-                        
+
                         //VENTANA MODAL-----------------------------------------------------------------------------------
+//<<<<<<< HEAD
                         new ErroresSinSem(null,true,le.getGramatica().getProduccion(),le.getGramatica().getError()).setVisible(true);
                         
+//=======
+                        new ErroresSinSem(null, true, le.getGramatica().getProduccion(), le.getGramatica().getError()).setVisible(true);
+
+//>>>>>>> f8b798c1a60ea373f747119512989b9a29a25862
                     } else {
                         showMessageDialog(null, "Estamos trabajando en modal de gramáticas\n");
                         //new ErroresSinSem(null,true,le.getGramatica().getProduccion(),le.getGramatica().getError()).setVisible(true);
@@ -1775,36 +1818,17 @@ NumeroLinea lineatxtCodigo;
         });
     }
 
-    
     private void newFile() {
-        /* if (seleccionar.showDialog(null, "Nuevo") == JFileChooser.APPROVE_OPTION) {
-            archivo = seleccionar.getSelectedFile();
-            name = archivo.getAbsolutePath();
-
-            if (archivo.getName().endsWith("txt")) {
-                String Documento = "";
-                txtAreaEdit.setText("");
-                String mensaje = GuardarArchivo(archivo, Documento);
-                if (mensaje != null) {
-                    jPanel1.removeAll();
-                    jPanel1.revalidate();
-                    jPanel1.repaint();
-                } else {
-                    showMessageDialog(null, "Archivo no compatible");
-                }
-            } else {
-                showMessageDialog(null, "Fallo al guardar, coloque extencion .txt");
-            }
-        }*/
         int resp = JOptionPane.showConfirmDialog(null,
                 "¿Desea guardar el Archivo?", "Advertencia", JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.INFORMATION_MESSAGE);
         if (resp == 0) {
             mnuSave.doClick();
             limpiar();
+            this.setTitle("Sin título - ANADAN");
         }
         if (resp == 1) {
-            limpiar();
+            this.setTitle("Sin título - ANADAN");
         }
     }
 
@@ -1932,6 +1956,8 @@ NumeroLinea lineatxtCodigo;
     }
 
     private void resolverExp(String str) {
+        Expresion expresion = new Expresion(str);
+
         str = str.replace(" ", "");
         String s1[] = str.split("=");
         str = s1[1];
@@ -1952,11 +1978,13 @@ NumeroLinea lineatxtCodigo;
                 }
             }
         }
-        //System.out.println(newStr);
 
         //Creado pila con operadores y operandos en notacion infija
         pila.push("=");
         newStr = newStr + ")";
+
+        expresion.setInfija_parentesis(s1[0] + " = " + newStr);
+
         String s2[] = newStr.split("");
         for (int i = 0; i < s2.length; i++) {
             pila.push(s2[i]);
@@ -1981,8 +2009,7 @@ NumeroLinea lineatxtCodigo;
         }
 
         newPila.push(s1[0]);
-        //System.out.print("154 newPila: ");
-        //newPila.imprimir();
+
         //Haciendo notacion postfija
         String postfija = "";
         Pila operadores = new Pila();
@@ -1998,30 +2025,25 @@ NumeroLinea lineatxtCodigo;
                 operadores.push(character);
             } else {
                 if (")".equals(character)) {
+                    String stri = operadores.imprimir();
+                    System.out.println("OPs: " + stri);
+                    expresion.setPila_ops(stri);
                     String op = operadores.pop();
                     while (!"(".equals(op)) {
                         postfija += op + " ";
                         op = operadores.pop();
                     }
                 } else {
-                    //System.out.println(character);
                     postfija += character + " ";
-                    //System.out.println(postfija);
                 }
             }
         }
 
-        //System.out.print("183 pilaOp: ");
-        //operadores.imprimir();
         while (!operadores.isEmpty()) {
             String op = operadores.pop();
-            //System.out.println("187 op: "+op);
             postfija += op + " ";
-            //op = operadores.pop();
-
         }
 
-        //System.out.println("189 Postfija: "+postfija);
         String post[] = postfija.split(" ");
 
         int i = 0;
@@ -2030,79 +2052,80 @@ NumeroLinea lineatxtCodigo;
                 i++;
             }
         }
-        //System.out.println(i);
+
         String post_sin_espacios[] = new String[i];
+        String string_pf = "";
         int j = 0;
         for (String string : post) {
             if (!string.isEmpty()) {
                 post_sin_espacios[j++] = string;
+                string_pf += string + ", ";
             }
         }
+
+        expresion.setPostfija(string_pf);
 
         Pila pila_exp = new Pila();
 
         for (String exp : post_sin_espacios) {
-            pila_exp.imprimir();
+            //pila_exp.imprimir();
             if ("*".equals(exp)) {
                 double op1 = Double.parseDouble(pila_exp.pop());
                 double op2 = Double.parseDouble(pila_exp.pop());
-                System.out.println(op1 + "*" + op2 + "=" + (op1 * op2));
+                //System.out.println(op1 + "*" + op2 + "=" + (op1 * op2));
                 pila_exp.push((op1 * op2) + "");
                 continue;
             }
             if ("/".equals(exp)) {
                 double op1 = Double.parseDouble(pila_exp.pop());
                 double op2 = Double.parseDouble(pila_exp.pop());
-                System.out.println(op2 + "/" + op1 + "=" + (op2 / op1));
+                //System.out.println(op2 + "/" + op1 + "=" + (op2 / op1));
                 pila_exp.push((op2 / op1) + "");
                 continue;
             }
             if ("+".equals(exp)) {
                 double op1 = Double.parseDouble(pila_exp.pop());
                 double op2 = Double.parseDouble(pila_exp.pop());
-                System.out.println(op1 + "+" + op2 + "=" + (op1 + op2));
+                //System.out.println(op1 + "+" + op2 + "=" + (op1 + op2));
                 pila_exp.push((op1 + op2) + "");
                 continue;
             }
             if ("-".equals(exp)) {
                 double op1 = Double.parseDouble(pila_exp.pop());
                 double op2 = Double.parseDouble(pila_exp.pop());
-                System.out.println(op1 + "-" + op2 + "=" + (op1 - op2));
+                //System.out.println(op1 + "-" + op2 + "=" + (op1 - op2));
                 pila_exp.push((op2 - op1) + "");
                 continue;
             }
-            if ("=".equals(exp)) {/*
-                double op1 = Double.parseDouble(pila_exp.pop());
-                double op2 = Double.parseDouble(pila_exp.pop());
-                pila_exp.push((op1 * op2) + "");*/
+            if ("=".equals(exp)) {
                 continue;
             }
 
-            //    System.out.println(exp);
             pila_exp.push(exp);
         }
-        pila_exp.imprimir();
+        //pila_exp.imprimir();
         String result = pila_exp.pop();
         String id = pila_exp.pop();
         Simbolo sim = TablaSimbolos.buscar(id);
-        //System.out.println(sim);
         if (sim.getTipo().equals("just")) {
             double r = Double.parseDouble(result);
             if (r % 1 != 0) {
                 sim.setValor(r);
                 sim.setTipo("broken");
                 System.out.println("Cambio el tipo");
+                expresion.setResult(r+"");
             } else {
                 int r_int = (int) r;
                 sim.setValor(r_int);
+                expresion.setResult(r_int+"");
             }
 
         } else {
-            float r_floar = (float) Double.parseDouble(result);
-            sim.setValor(r_floar);
+            float r_float = (float) Double.parseDouble(result);
+            sim.setValor(r_float);
+            expresion.setResult(r_float+"");
         }
-        //System.out.println(sim);
-
+        exp_list.add(expresion);
     }
 
     private void limpiar() {

@@ -97,6 +97,7 @@ setfilamenttype {return new Symbol(sym.SETFILAMENTTYPE, yychar, yyline, yytext()
 "-" {return new Symbol(sym.SIGNO_DE_RESTA, yychar, yyline, yytext());}
 "*" {return new Symbol(sym.SIGNO_DE_MULTIPLICACIÓN, yychar, yyline, yytext());}
 "/" {return new Symbol(sym.SIGNO_DE_DIVISIÓN, yychar, yyline, yytext());}
+"^" {return new Symbol(sym.SIGNO_DE_EXPONENTE, yychar, yyline, yytext());}
 
 "%" {return new Symbol(sym.SIGNO_DE_RESIDUO, yychar, yyline, yytext());}
 "!" {return new Symbol(sym.NOT, yychar, yyline, yytext());}

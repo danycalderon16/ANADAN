@@ -72,6 +72,7 @@ public enum Tokens {
     Signo_de_Resta,
     Signo_de_Multiplicación,
     Signo_de_División,
+    Signo_de_Exponente,
     Signo_de_Residuo,
     NOT,
     AND,

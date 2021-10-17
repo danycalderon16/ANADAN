@@ -22,7 +22,6 @@ parser code
 
     static TablaSimbolos tablaSimbolos = new TablaSimbolos();
     static int verificarTipo = 0;
-    JLabel lb = new JLabel();
     private final int SINTACTICO = 232;
     
     static Stack <String> listaIdentificadores = new Stack <String>();
@@ -38,6 +37,7 @@ parser code
     }
 
     public void syntax_error(Symbol s){                            
+        JLabel lb = new JLabel();
         lb.setForeground(new Color(217, 33, 51));
         lb.setFont(new Font("Verdana", Font.PLAIN, 14));
         lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -45,7 +45,8 @@ parser code
         VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico", s.right+1,SINTACTICO));
     }
 
-    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{       
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{  
+        JLabel lb = new JLabel();     
         lb.setForeground(new Color(217, 33, 51));
         lb.setFont(new Font("Verdana", Font.PLAIN, 14));
         lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -58,6 +59,9 @@ parser code
     }
 
 :};
+
+
+/*----------------------------------------  TERMINALES  ------------------------------------------------------------*/
 
 terminal String IDENTIFICADOR;
 terminal Integer NUMERO;
@@ -74,6 +78,7 @@ IGUAL_QUE, PARENTESIS_ABRE, PARENTESIS_CIERRA, LLAVE_ABRE, LLAVE_CIERRA, CORCHET
 CORCHETE_CIERRA, PUNTOYCOMA,  COMA,  PUNTO, 
 ERROR;
 
+/*----------------------------------------  NO TERMINALES  ----------------------------------------------------------*/
 non terminal String t_dato;
 non terminal inicio, declaracion_for, if, if_else,
     while, do_while, for, sentencia_booleana, sentencia_for ,datos_array,continua,cuerpo,
@@ -131,6 +136,8 @@ non terminal inicio, declaracion_for, if, if_else,
     expresioncinco;
 
 start with inicio;
+
+/*----------------------------------------  INICIO  ------------------------------------------------------------*/
 inicio ::= 
     IDENTIFICADOR:nombre PARENTESIS_ABRE PARENTESIS_CIERRA BEGIN bloquesentencias END
     {:
@@ -197,6 +204,9 @@ sentencia::= declaracion | sentif | sentwhile | sentasignacion | sentcut | metod
             error PUNTOYCOMA | error LLAVE_CIERRA 
 ; 
 
+
+/*----------------------------------------  DECLARACION DE VARIABLES  -------------------------------------------------*/
+
 declaracion ::= 
    
     JUST IDENTIFICADOR:id PUNTOYCOMA   {:
@@ -205,8 +215,6 @@ declaracion ::=
             Simbolo sim = TablaSimbolos.buscar(id);
         //Si es nulo, devuelvo un error
             if (sim != null) {
-                //Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
-                //RESULT = 0;
                 System.out.println("El identificador '"+id+"' ya existe");                             
                 
                 lb.setForeground(new Color(217, 33, 51));
@@ -232,8 +240,6 @@ declaracion ::=
             Simbolo sim = TablaSimbolos.buscar(id);
              //Si es nulo, devuelvo un error
             if (sim != null) {
-                //Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
-                //RESULT = 0;
                 System.out.println("El identificador '"+id+"' ya existe");                             
                 
                 lb.setForeground(new Color(217, 33, 51));
@@ -259,8 +265,6 @@ declaracion ::=
             Simbolo sim = TablaSimbolos.buscar(id);
              //Si es nulo, devuelvo un error
             if (sim != null) {
-                //Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
-                //RESULT = 0;
                 System.out.println("El identificador '"+id+"' ya existe");                             
                 
                 lb.setForeground(new Color(217, 33, 51));
@@ -287,10 +291,8 @@ declaracion ::=
             Simbolo sim = TablaSimbolos.buscar(id);
              //Si es nulo, devuelvo un error
             if (sim != null) {
-                //Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
-                //RESULT = 0;
-                System.out.println("El identificador '"+id+"' ya existe");                             
-                
+                System.out.println("El identificador '"+id+"' ya existe");                                                       
+                JLabel lb = new JLabel();
                 lb.setForeground(new Color(217, 33, 51));
                 lb.setFont(new Font("Verdana", Font.PLAIN, 14));
                 lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -316,10 +318,8 @@ declaracion ::=
             Simbolo sim = TablaSimbolos.buscar(id);
              //Si es nulo, devuelvo un error
             if (sim != null) {
-                //Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
-                //RESULT = 0;
                 System.out.println("El identificador '"+id+"' ya existe");                             
-                
+                JLabel lb = new JLabel();
                 lb.setForeground(new Color(217, 33, 51));
                 lb.setFont(new Font("Verdana", Font.PLAIN, 14));
                 lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -345,10 +345,8 @@ declaracion ::=
             Simbolo sim = TablaSimbolos.buscar(id);
              //Si es nulo, devuelvo un error
             if (sim != null) {
-                //Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
-                //RESULT = 0;
-                System.out.println("El identificador '"+id+"' ya existe");                             
-                
+                System.out.println("El identificador '"+id+"' ya existe");                           
+                JLabel lb = new JLabel();
                 lb.setForeground(new Color(217, 33, 51));
                 lb.setFont(new Font("Verdana", Font.PLAIN, 14));
                 lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -374,10 +372,8 @@ declaracion ::=
             Simbolo sim = TablaSimbolos.buscar(id);
              //Si es nulo, devuelvo un error
             if (sim != null) {
-                //Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
-                //RESULT = 0;
                 System.out.println("El identificador '"+id+"' ya existe");                             
-                
+                JLabel lb = new JLabel();
                 lb.setForeground(new Color(217, 33, 51));
                 lb.setFont(new Font("Verdana", Font.PLAIN, 14));
                 lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -457,8 +453,6 @@ sentasignacion::= IDENTIFICADOR:identificador SIGNO_DE_IGUAL expresion:e PUNTOYC
         Simbolo sim = TablaSimbolos.buscar(identificador);
         //Si es nulo, devuelvo un error
         if (sim == null) {
-            //Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
-            //RESULT = 0;
             System.out.println("El identificador '"+identificador+"' no existe");
         }
         else{

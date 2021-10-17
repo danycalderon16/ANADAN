@@ -10,7 +10,6 @@ import javax.swing.JLabel;
 import modelos.LabelError;
 import modelos.Gramatica;
 import java.awt.Color;
-//import static javax.swing.JOptionPane.*;
 
 action code
     {:
@@ -61,6 +60,7 @@ parser code
 
 :};
 
+/*----------------------------------------  TERMINALES  ------------------------------------------------------------*/
 terminal String IDENTIFICADOR;
 terminal Integer NUMERO;
 terminal Double DECIMAL;
@@ -73,10 +73,11 @@ WHILE, CASE,  CUT, BEGIN, MODEL, DEFECT, NEW, DO, GOBACK,  HOME,
 PRINTERPORT, METHOD, CHECK, TRAP, CLASS, MAIN, SIGNO_DE_IGUAL, SIGNO_DE_SUMA, SIGNO_DE_RESTA,
 SIGNO_DE_MULTIPLICACIÓN, SIGNO_DE_DIVISIÓN, SIGNO_DE_RESIDUO, NOT, AND, OR, MAS_MAS,
 MENOS_MENOS, MENOR_QUE, MAYOR_QUE, MENOR_O_IGUAL_QUE, MAYOR_O_IGUAL_QUE, DIFERENTE_QUE,
-IGUAL_QUE, PARENTESIS_ABRE, PARENTESIS_CIERRA, LLAVE_ABRE, LLAVE_CIERRA, CORCHETE_ABRE,
+IGUAL_QUE, PARENTESIS_ABRE, PARENTESIS_CIERRA, LLAVE_ABRE, LLAVE_CIERRA, CORCHETE_ABRE,SIGNO_DE_EXPONENTE,
 CORCHETE_CIERRA, PUNTOYCOMA,  COMA,  PUNTO, 
 ERROR;
 
+/*----------------------------------------  NO TERMINALES  ---------------------------------------------------------*/
 non terminal String t_dato;
 non terminal inicio, declaracion_for, if, if_else,
     while, do_while, for, sentencia_booleana, sentencia_for ,datos_array,continua,cuerpo,
@@ -135,6 +136,7 @@ non terminal inicio, declaracion_for, if, if_else,
     parametroa,
     expresioncinco;
 
+/*----------------------------------------  INICIO  ------------------------------------------------------------*/
 start with inicio;
 inicio ::=  IDENTIFICADOR:nombre PARENTESIS_ABRE PARENTESIS_CIERRA BEGIN bloquesentencias END
     {:
@@ -201,16 +203,16 @@ sentencia::= declaracion | sentif | sentwhile | sentasignacion | sentcut | metod
             error PUNTOYCOMA | error LLAVE_CIERRA 
 ; 
 
+/*---------------------------------------- DECLARACION DE VARIABLES -------------------------------------------*/
+
 declaracion ::= 
    
     JUST IDENTIFICADOR:id PUNTOYCOMA   {:
         System.out.println(id+" en la linea: "+(idright+1));
         try{
             Simbolo sim = TablaSimbolos.buscar(id);
-        //Si es nulo, devuelvo un error
+            //Si es nulo, devuelvo un error
             if (sim != null) {
-                //Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
-                //RESULT = 0;
                 System.out.println("El identificador '"+id+"' ya existe");
                 JLabel lb = new JLabel();
                 lb.setForeground(new Color(217, 33, 51));
@@ -223,7 +225,6 @@ declaracion ::=
                 new Gramatica("declaracion ::= JUST IDENTIFICADOR PUNTOYCOMA ", "indetificador repetido")));
             }else{
                 TablaSimbolos.crear(id, "just","Variable númerica");
-                //Crear relacion ciclo PARA con su variable asociada
                 TablaSimbolos.lista.push(id);          
             }
         }
@@ -238,8 +239,6 @@ declaracion ::=
             Simbolo sim = TablaSimbolos.buscar(id);
         //Si es nulo, devuelvo un error
             if (sim != null) {
-                //Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
-                //RESULT = 0;
                 System.out.println("El identificador '"+id+"' ya existe");    
                 JLabel lb = new JLabel();
                 lb.setForeground(new Color(217, 33, 51));
@@ -266,8 +265,6 @@ declaracion ::=
             Simbolo sim = TablaSimbolos.buscar(id);
              //Si es nulo, devuelvo un error
             if (sim != null) {
-                //Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
-                //RESULT = 0;
                 System.out.println("El identificador '"+id+"' ya existe");    
                 JLabel lb = new JLabel();
                 lb.setForeground(new Color(217, 33, 51));
@@ -294,8 +291,6 @@ declaracion ::=
             Simbolo sim = TablaSimbolos.buscar(id);
              //Si es nulo, devuelvo un error
             if (sim != null) {
-                //Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
-                //RESULT = 0;
                 System.out.println("El identificador '"+id+"' ya existe");    
                 JLabel lb = new JLabel();
                 lb.setForeground(new Color(217, 33, 51));
@@ -323,8 +318,6 @@ declaracion ::=
             Simbolo sim = TablaSimbolos.buscar(id);
              //Si es nulo, devuelvo un error
             if (sim != null) {
-                //Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
-                //RESULT = 0;
                 System.out.println("El identificador '"+id+"' ya existe");   
                 JLabel lb = new JLabel();
                 lb.setForeground(new Color(217, 33, 51));
@@ -334,7 +327,7 @@ declaracion ::=
                 +id+"' ya está declarada." );   
                 VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. La variable: '"
                 +id+"' ya está declarada.", idright+1,SINTACTICO,
-                new Gramatica("declaracion ::= JUST IDENTIFICADOR = NUMEOR PUNTOYCOMA ", "Variable repetida")));
+                new Gramatica("declaracion ::= JUST IDENTIFICADOR = NUMERO PUNTOYCOMA ", "Variable repetida")));
             }else{
                 TablaSimbolos.crear(id, "just","Variable númerica");
                 TablaSimbolos.insertar(id, String.valueOf(valor));
@@ -353,8 +346,6 @@ declaracion ::=
             Simbolo sim = TablaSimbolos.buscar(id);
              //Si es nulo, devuelvo un error
             if (sim != null) {
-                //Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
-                //RESULT = 0;
                 System.out.println("El identificador '"+id+"' ya existe");     
                 JLabel lb = new JLabel();
                 lb.setForeground(new Color(217, 33, 51));
@@ -382,8 +373,6 @@ declaracion ::=
             Simbolo sim = TablaSimbolos.buscar(id);
              //Si es nulo, devuelvo un error
             if (sim != null) {
-                //Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
-                //RESULT = 0;
                 System.out.println("El identificador '"+id+"' ya existe");   
                 JLabel lb = new JLabel();
                 lb.setForeground(new Color(217, 33, 51));
@@ -412,8 +401,6 @@ declaracion ::=
             Simbolo sim = TablaSimbolos.buscar(id);
              //Si es nulo, devuelvo un error
             if (sim != null) {
-                //Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
-                //RESULT = 0;
                 System.out.println("El identificador '"+id+"' ya existe");     
                 JLabel lb = new JLabel();
                 lb.setForeground(new Color(217, 33, 51));
@@ -442,8 +429,6 @@ declaracion ::=
             Simbolo sim = TablaSimbolos.buscar(id);
              //Si es nulo, devuelvo un error
             if (sim != null) {
-                //Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
-                //RESULT = 0;
                 System.out.println("El identificador '"+id+"' ya existe");       
                 JLabel lb = new JLabel();
                 lb.setForeground(new Color(217, 33, 51));
@@ -468,7 +453,154 @@ declaracion ::=
     :}|
     t_dato CORCHETE_ABRE CORCHETE_CIERRA IDENTIFICADOR SIGNO_DE_IGUAL t_dato CORCHETE_ABRE NUMERO CORCHETE_CIERRA PUNTOYCOMA |
     t_dato CORCHETE_ABRE CORCHETE_CIERRA IDENTIFICADOR SIGNO_DE_IGUAL LLAVE_ABRE datos_array LLAVE_CIERRA PUNTOYCOMA |
-    IDENTIFICADOR IDENTIFICADOR SIGNO_DE_IGUAL NEW IDENTIFICADOR PARENTESIS_ABRE parametrosa PARENTESIS_CIERRA PUNTOYCOMA
+    IDENTIFICADOR IDENTIFICADOR SIGNO_DE_IGUAL NEW IDENTIFICADOR PARENTESIS_ABRE parametrosa PARENTESIS_CIERRA PUNTOYCOMA |
+    
+    //"""""""""""""""""""""""""""""""""""""""""""" ERRORES DE PUNTO Y COMa """"""""""""""""""""""""""""""""""""""""""""""""""""
+    JUST:tipo IDENTIFICADOR:id{:
+         try{                
+            JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. Falta punto y coma en declaración: declaración: JUST "+id);   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. Falta punto y coma en declaración: JUST "+id, idright+1,SINTACTICO,
+            new Gramatica("JUST IDENTIFICADOR PUNTOYCOMA", "Falta punto y coma en declaración: JUST "+id)));
+
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }   
+    :} | 
+    BROKEN:tipo IDENTIFICADOR:id {:
+         try{                
+            JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. Falta punto y coma en declaración: BROKEN "+id );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. Falta punto y coma en declaración: BROKEN "+id, idright+1,SINTACTICO,
+            new Gramatica("BROKEN IDENTIFICADOR PUNTOYCOMA ", "Falta punto y coma en declaración: BROKEN "+id)));
+
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }   
+    :} |
+    FLAG:tipo IDENTIFICADOR:id{:
+         try{                
+            JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. Falta punto y coma en declaración: FLAG "+id );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. Falta punto y coma en declaración: FLAG "+id, idright+1,SINTACTICO,
+            new Gramatica("FLAG IDENTIFICADOR PUNTOYCOMA ", "Falta punto y coma en declaración: FLAG "+id)));
+
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }   
+    :} |
+    WORD:tipo IDENTIFICADOR:id{:
+         try{                
+            JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. Falta punto y coma en declaración: WORD "+id );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. Falta punto y coma en declaración: WORD "+id, idright+1,SINTACTICO,
+            new Gramatica("WORD IDENTIFICADOR PUNTOYCOMA ", "Falta punto y coma en declaración: WORD "+id)));
+
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }   
+    :} |
+    JUST:tipo IDENTIFICADOR:id SIGNO_DE_IGUAL NUMERO:valor {:
+         try{                
+            JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. Falta punto y coma en declaración: JUST "+id+" = "+valor );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. Falta punto y coma en declaración: JUST "+id+" = "+valor, idright+1,SINTACTICO,
+            new Gramatica("JUST IDENTIFICADOR SIGNO_DE_IGUAL NUMERO PUNTOYCOMA", "Falta punto y coma en declaración: JUST "+id+" = "+valor)));
+
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }   
+    :} | 
+    BROKEN:tipo IDENTIFICADOR:id SIGNO_DE_IGUAL DECIMAL:valor {:
+         try{                
+            JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. Falta punto y coma en declaración: BROKEN "+id+" = "+valor );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. Falta punto y coma en declaración: BROKEN "+id+" = "+valor, idright+1,SINTACTICO,
+            new Gramatica("BROKEN IDENTIFICADOR SIGNO_DE_IGUAL DECIMAL PUNTOYCOMA ", "Falta punto y coma en declaración: BROKEN "+id+" = "+valor)));
+
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }   
+    :} |
+    FLAG:tipo IDENTIFICADOR:id SIGNO_DE_IGUAL TRUE:valor {:
+         try{                
+            JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. Falta punto y coma en declaración: FLAG "+id+" = "+valor );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. Falta punto y coma en declaración: FLAG "+id+" = "+valor, idright+1,SINTACTICO,
+            new Gramatica("FLAG IDENTIFICADOR SIGNO_DE_IGUAL TRUE PUNTOYCOMA ", "Falta punto y coma en declaración: FLAG "+id+" = "+valor)));
+
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }   
+    :} |
+    FLAG:tipo IDENTIFICADOR:id SIGNO_DE_IGUAL FALSE:valor {:
+         try{                
+            JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. Falta punto y coma en declaración: FLAG "+id+" = "+valor );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. Falta punto y coma en declaración: FLAG "+id+" = "+valor, idright+1,SINTACTICO,
+            new Gramatica("FLAG IDENTIFICADOR SIGNO_DE_IGUAL FALSE PUNTOYCOMA ", "Falta punto y coma en declaración: FLAG "+id+" = "+valor)));
+
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }   
+    :} |
+    WORD:tipo IDENTIFICADOR:id SIGNO_DE_IGUAL CADENA_TEXTO:valor {:
+         try{                
+            JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. Falta punto y coma en declaración: WORD "+id+" = "+valor );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. Falta punto y coma en declaración: WORD "+id+" = "+valor, idright+1,SINTACTICO,
+            new Gramatica("WORD IDENTIFICADOR SIGNO_DE_IGUAL CADENA_TEXTO PUNTOYCOMA ", "Falta punto y coma en declaración: WORD "+id+" = "+valor)));
+
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }   
+    :}
+    
 ;
 
 t_dato::= BROKEN:td{: RESULT =  td;:}|
@@ -477,6 +609,7 @@ t_dato::= BROKEN:td{: RESULT =  td;:}|
         FLAG:td{: RESULT =  td;:}
 ;
 
+/*---------------------------------------- EXPRESIONES ------------------------------------------------------------*/
 expresion ::= 
     expresion:e SIGNO_DE_SUMA termino:t {:
         if (e instanceof Integer){
@@ -487,8 +620,8 @@ expresion ::=
                     lb.setForeground(new Color(217, 33, 51));
                     lb.setFont(new Font("Verdana", Font.PLAIN, 14));
                     lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-                    lb.setText("Error en la línea " + (tright+1) + ". Error sintáctico. No se puede sumar una variable 'just' y una 'word'" );   
-                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. No se puede sumar una variable 'just' y una 'word'", tright+1,SINTACTICO,
+                    lb.setText("Error en la línea " + (tright+1) + ". Error semántico. No se puede sumar una variable 'just' y una 'word'" );   
+                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico. No se puede sumar una variable 'just' y una 'word'", tright+1,SINTACTICO,
                     new Gramatica("expresion ::= expresion SIGNO_DE_SUMA termino", "No se puede sumar una variable 'just' y una 'word'")));                          
                 }
             }
@@ -501,8 +634,8 @@ expresion ::=
                     lb.setForeground(new Color(217, 33, 51));
                     lb.setFont(new Font("Verdana", Font.PLAIN, 14));
                     lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-                    lb.setText("Error en la línea " + (eright+1) + ". Error sintáctico. No se puede sumar una variable 'word' y una 'just'" );   
-                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. No se puede sumar una variable 'word' y una 'just'", eright+1,SINTACTICO,
+                    lb.setText("Error en la línea " + (eright+1) + ". Error semántico. No se puede sumar una variable 'word' y una 'just'" );   
+                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico. No se puede sumar una variable 'word' y una 'just'", eright+1,SINTACTICO,
                     new Gramatica("expresion ::= expresion SIGNO_DE_SUMA termino", "No se puede sumar una variable 'word' y una 'just'")));                          
                 }
             }
@@ -522,8 +655,8 @@ expresion ::=
                     lb.setForeground(new Color(217, 33, 51));
                     lb.setFont(new Font("Verdana", Font.PLAIN, 14));
                     lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-                    lb.setText("Error en la línea " + (tright+1) + ". Error sintáctico. No se puede restar una variable 'just' y una 'word'" );   
-                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. No se puede restar una variable 'just' y una 'word'", tright+1,SINTACTICO,
+                    lb.setText("Error en la línea " + (tright+1) + ". Error semántico. No se puede restar una variable 'just' y una 'word'" );   
+                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico. No se puede restar una variable 'just' y una 'word'", tright+1,SINTACTICO,
                     new Gramatica("expresion ::= expresion SIGNO_DE_SUMA termino", "No se puede restar una variable 'just' y una 'word'")));                          
                 }
             }
@@ -536,8 +669,8 @@ expresion ::=
                     lb.setForeground(new Color(217, 33, 51));
                     lb.setFont(new Font("Verdana", Font.PLAIN, 14));
                     lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-                    lb.setText("Error en la línea " + (eright+1) + ". Error sintáctico. No se puede restar una variable 'word' y una 'just'" );   
-                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. No se puede restar una variable 'word' y una 'just'", eright+1,SINTACTICO,
+                    lb.setText("Error en la línea " + (eright+1) + ". Error semántico. No se puede restar una variable 'word' y una 'just'" );   
+                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico. No se puede restar una variable 'word' y una 'just'", eright+1,SINTACTICO,
                     new Gramatica("expresion ::= expresion SIGNO_DE_SUMA termino", "No se puede restar una variable 'word' y una 'just'")));                          
                 }
             }
@@ -564,8 +697,8 @@ termino ::= factor:f1 SIGNO_DE_MULTIPLICACIÓN factor:f2 {:
                     lb.setForeground(new Color(217, 33, 51));
                     lb.setFont(new Font("Verdana", Font.PLAIN, 14));
                     lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-                    lb.setText("Error en la línea " + (f2right+1) + ". Error sintáctico. No se puede multiplicar una variable 'just' y una 'word'" );   
-                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. No se puede multiplicar una variable 'just' y  una 'word'", f2right+1,SINTACTICO,
+                    lb.setText("Error en la línea " + (f2right+1) + ". Error semántico. No se puede multiplicar una variable 'just' y una 'word'" );   
+                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico. No se puede multiplicar una variable 'just' y  una 'word'", f2right+1,SINTACTICO,
                     new Gramatica("termino ::= factor: SIGNO_DE_MULTIPLICACIÓN factor", "No se puede multiplicar una variable 'just' y una 'word'")));          
                 }
                 else
@@ -580,8 +713,8 @@ termino ::= factor:f1 SIGNO_DE_MULTIPLICACIÓN factor:f2 {:
                     lb.setForeground(new Color(217, 33, 51));
                     lb.setFont(new Font("Verdana", Font.PLAIN, 14));
                     lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-                    lb.setText("Error en la línea " + (f2right+1) + ". Error sintáctico. No se puede multiplicar una variable 'word' una 'just'" );   
-                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. No se puede multiplicar una variable 'word' una 'just'", f2right+1,SINTACTICO,
+                    lb.setText("Error en la línea " + (f2right+1) + ". Error semántico. No se puede multiplicar una variable 'word' una 'just'" );   
+                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico. No se puede multiplicar una variable 'word' una 'just'", f2right+1,SINTACTICO,
                     new Gramatica("termino ::= factor: SIGNO_DE_MULTIPLICACIÓN factor", "No se puede multiplicar una variable 'word' una 'just'")));
                 }
             }
@@ -600,8 +733,8 @@ termino ::= factor:f1 SIGNO_DE_MULTIPLICACIÓN factor:f2 {:
                     lb.setForeground(new Color(217, 33, 51));
                     lb.setFont(new Font("Verdana", Font.PLAIN, 14));
                     lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-                    lb.setText("Error en la línea " + (f2right+1) + ". Error sintáctico. No se puede dividir una variable 'just' y una 'word'" );   
-                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. No se puede dividir una variable 'just' y una 'word'", f2right+1,SINTACTICO,
+                    lb.setText("Error en la línea " + (f2right+1) + ". Error semántico. No se puede dividir una variable 'just' y una 'word'" );   
+                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico. No se puede dividir una variable 'just' y una 'word'", f2right+1,SINTACTICO,
                     new Gramatica("termino ::= factor: SIGNO_DE_MULTIPLICACIÓN factor", "No se puede dividir una variable 'just' y una 'word'")));
                 }
                 else
@@ -616,8 +749,8 @@ termino ::= factor:f1 SIGNO_DE_MULTIPLICACIÓN factor:f2 {:
                     lb.setForeground(new Color(217, 33, 51));
                     lb.setFont(new Font("Verdana", Font.PLAIN, 14));
                     lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-                    lb.setText("Error en la línea " + (f2right+1) + ". Error sintáctico. No se puede dividir una variable 'word' y una 'just'" );   
-                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. No se puede dividir una variable 'word' y una 'just'", f2right+1,SINTACTICO,
+                    lb.setText("Error en la línea " + (f2right+1) + ". Error semántico. No se puede dividir una variable 'word' y una 'just'" );   
+                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico. No se puede dividir una variable 'word' y una 'just'", f2right+1,SINTACTICO,
                     new Gramatica("termino ::= factor: SIGNO_DE_MULTIPLICACIÓN factor", "No se puede dividir una variable 'word' y una 'just'")));
                 }
             }
@@ -642,37 +775,42 @@ factor ::=
         //Si es nulo, devuelvo un error
         if (sim == null) {
             JLabel lb = new JLabel();
-                lb.setForeground(new Color(217, 33, 51));
-                lb.setFont(new Font("Verdana", Font.PLAIN, 14));
-                lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-                lb.setText("Error en la línea " + (fright+1) + ". Error sintáctico. La variable '"+f+"' no existe" );   
-                VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. La variable '"+f+"' no existe", fright+1,SINTACTICO,
-                new Gramatica("sentasignacion::= IDENTIFICADOR SIGNO_DE_IGUAL expresion PUNTOYCOMA","Error sintáctico. La variable '"+f+"' no existe")));
-                System.out.println("El identificador '"+f+"' no existe");
-                 
-                RESULT = 0; 
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (fright+1) + ". Error semántico. La variable '"+f+"' no existe" );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico. La variable '"+f+"' no existe", fright+1,SINTACTICO,
+            new Gramatica("sentasignacion::= IDENTIFICADOR SIGNO_DE_IGUAL expresion PUNTOYCOMA","Error semántico. La variable '"+f+"' no existe")));
+            System.out.println("El identificador '"+f+"' no existe");
+                
+            RESULT = 0; 
         }
         else{
             System.out.println("*****id: "+sim.valor);  
             RESULT = sim.valor; 
-        }
-        //System.out.println("EMPIEZA FACTOR");
-        //System.out.println("factor "+f);:}   | 
-    CADENA_TEXTO:f {:RESULT = f; 
-        //System.out.println("EMPIEZA FACTOR");
-        //System.out.println("factor "+f);:}    | 
-    NUMERO:f {:RESULT = f; 
-        //System.out.println("EMPIEZA FACTOR");
-        //System.out.println("factor "+f);:}   | 
-    DECIMAL:f {:RESULT = f; 
-        //System.out.println("EMPIEZA FACTOR");
-        //System.out.println("factor "+f);:}   | 
-    FALSE:f {:RESULT = f; 
-        //System.out.println("EMPIEZA FACTOR");
-        //System.out.println("factor "+f);:}   | 
+        };
+    :}   | 
+    CADENA_TEXTO:f {:RESULT = f; ;
+    :}   | 
+    NUMERO:f {:RESULT = f; ;
+    :}   | 
+    DECIMAL:f {:RESULT = f; ;
+    :}   | 
+    FALSE:f {:RESULT = f; ;
+    :}   | 
     TRUE:f {:RESULT = f; 
-        //System.out.println("EMPIEZA FACTOR");
-        //System.out.println("factor "+f);:}  ;
+        :}  
+    |
+    error:e{: 
+       JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (eright+1) + ". Error sintáctico. La expresión no esta bien escrita" );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. La expresión no esta bien escrita", eright+1,SINTACTICO,
+            new Gramatica("factor::= expresion | NUMERO | DECIMAL | IDENTIFICADOR","Error sintáctico. La expresión no esta bien escrita")));
+    :}
+;
 /*
 expresion ::= NUMERO | IDENTIFICADOR | PARENTESIS_ABRE  expresion op_art expresion PARENTESIS_CIERRA;
 */
@@ -681,8 +819,28 @@ op_art ::= SIGNO_DE_SUMA | SIGNO_DE_RESTA | SIGNO_DE_DIVISIÓN | SIGNO_DE_MULTIP
 op_log ::= OR | AND;
 
 
-sentif::=  IF PARENTESIS_ABRE condicion PARENTESIS_CIERRA LLAVE_ABRE bloquesentencias LLAVE_CIERRA sentelse;
-sentelse::= ELSE LLAVE_ABRE bloquesentencias LLAVE_CIERRA |;
+sentif::=  IF PARENTESIS_ABRE condicion PARENTESIS_CIERRA LLAVE_ABRE  bloquesentencias LLAVE_CIERRA 
+            |  error:e {: 
+            JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (eright+1) + ". Error sintáctico. El bloque 'if' no está bien escrito" );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. El bloque 'if' no está bien escrito", eright+1,SINTACTICO,
+            new Gramatica("factor::= expresion | NUMERO | DECIMAL | IDENTIFICADOR","Error sintáctico. El bloque 'if' no está bien escrito")));
+    :} sentelse
+;
+sentelse::= ELSE LLAVE_ABRE bloquesentencias LLAVE_CIERRA |  
+            error:e{: 
+            JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (eright+1) + ". Error sintáctico. El bloque 'else' no está bien escrito" );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. El bloque 'else' no está bien escrito", eright+1,SINTACTICO,
+            new Gramatica("factor::= expresion | NUMERO | DECIMAL | IDENTIFICADOR","Error sintáctico. El bloque 'else' no está bien escrito")));;
+            :}
+;
 sentwhile::= WHILE PARENTESIS_ABRE condicion PARENTESIS_CIERRA LLAVE_ABRE bloquesentencias LLAVE_CIERRA;
 sentasignacion::= IDENTIFICADOR:identificador SIGNO_DE_IGUAL expresion:e PUNTOYCOMA{:
         //Buscar variable en la tabla de simbolos
@@ -690,12 +848,12 @@ sentasignacion::= IDENTIFICADOR:identificador SIGNO_DE_IGUAL expresion:e PUNTOYC
         //Si es nulo, devuelvo un error
         if (sim == null) {
             JLabel lb = new JLabel();
-                lb.setForeground(new Color(217, 33, 51));
-                lb.setFont(new Font("Verdana", Font.PLAIN, 14));
-                lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-                lb.setText("Error en la línea " + (identificadorright+1) + ". Error sintáctico. La variable '"+identificador+"' no existe" );   
-                VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. La variable '"+identificador+"' no existe", identificadorright+1,SINTACTICO,
-                new Gramatica("sentasignacion::= IDENTIFICADOR SIGNO_DE_IGUAL expresion PUNTOYCOMA","Error sintáctico. La variable '"+identificador+"' no existe")));
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (identificadorright+1) + ". Error semántico. La variable '"+identificador+"' no existe" );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico. La variable '"+identificador+"' no existe", identificadorright+1,SINTACTICO,
+            new Gramatica("sentasignacion::= IDENTIFICADOR SIGNO_DE_IGUAL expresion PUNTOYCOMA","Error semántico. La variable '"+identificador+"' no existe")));
             System.out.println("El identificador '"+identificador+"' no existe");
         }
         else{
@@ -720,12 +878,12 @@ condicion::= IDENTIFICADOR:id IGUAL_QUE FALSE {:
         
             if (sim == null) {
                 JLabel lb = new JLabel();
-                    lb.setForeground(new Color(217, 33, 51));
-                    lb.setFont(new Font("Verdana", Font.PLAIN, 14));
-                    lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-                    lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. La variable '"+id+"' no existe" );   
-                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. La variable '"+id+"' no existe", idright+1,SINTACTICO,
-                    new Gramatica("condicion::= IDENTIFICADOR IGUAL_QUE FALSE","Error sintáctico. La variable '"+id+"' no existe")));
+                lb.setForeground(new Color(217, 33, 51));
+                lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+                lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. La variable '"+id+"' no existe" );   
+                VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. La variable '"+id+"' no existe", idright+1,SINTACTICO,
+                new Gramatica("condicion::= IDENTIFICADOR IGUAL_QUE FALSE","Error sintáctico. La variable '"+id+"' no existe")));
                 System.out.println("El identificador '"+id+"' no existe");
             }
             else{
@@ -745,12 +903,12 @@ condicion::= IDENTIFICADOR:id IGUAL_QUE FALSE {:
         
             if (sim == null) {
                 JLabel lb = new JLabel();
-                    lb.setForeground(new Color(217, 33, 51));
-                    lb.setFont(new Font("Verdana", Font.PLAIN, 14));
-                    lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-                    lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. La variable '"+id+"' no existe" );   
-                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. La variable '"+id+"' no existe", idright+1,SINTACTICO,
-                    new Gramatica("condicion::= IDENTIFICADOR IGUAL_QUE TRUE","Error sintáctico. La variable '"+id+"' no existe")));
+                lb.setForeground(new Color(217, 33, 51));
+                lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+                lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. La variable '"+id+"' no existe" );   
+                VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. La variable '"+id+"' no existe", idright+1,SINTACTICO,
+                new Gramatica("condicion::= IDENTIFICADOR IGUAL_QUE TRUE","Error sintáctico. La variable '"+id+"' no existe")));
                 System.out.println("El identificador '"+id+"' no existe");
             }
             else{
@@ -795,12 +953,12 @@ condicion::= IDENTIFICADOR:id IGUAL_QUE FALSE {:
         
             if (sim == null) {
                 JLabel lb = new JLabel();
-                    lb.setForeground(new Color(217, 33, 51));
-                    lb.setFont(new Font("Verdana", Font.PLAIN, 14));
-                    lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-                    lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. La variable '"+id+"' no existe" );   
-                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. La variable '"+id+"' no existe", idright+1,SINTACTICO,
-                    new Gramatica("condicion::= TRUE IGUAL_QUE IDENTIFICADOR","Error sintáctico. La variable '"+id+"' no existe")));
+                lb.setForeground(new Color(217, 33, 51));
+                lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+                lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. La variable '"+id+"' no existe" );   
+                VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. La variable '"+id+"' no existe", idright+1,SINTACTICO,
+                new Gramatica("condicion::= TRUE IGUAL_QUE IDENTIFICADOR","Error sintáctico. La variable '"+id+"' no existe")));
                 System.out.println("El identificador '"+id+"' no existe");
             }
             else{
@@ -840,8 +998,7 @@ condicion::= IDENTIFICADOR:id IGUAL_QUE FALSE {:
             }
         :} |
         NUMERO:num op_rel IDENTIFICADOR:id {:
-            Simbolo sim = TablaSimbolos.buscar(id);
-        
+            Simbolo sim = TablaSimbolos.buscar(id);        
             if (sim == null) {
                 JLabel lb = new JLabel();
                     lb.setForeground(new Color(217, 33, 51));
@@ -861,6 +1018,40 @@ condicion::= IDENTIFICADOR:id IGUAL_QUE FALSE {:
                     VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico. La variable '"+id+"' no es de tipo just", idright+1,SINTACTICO,
                     new Gramatica("condicion::= TRUE IGUAL_QUE IDENTIFICADOR","Error semántico. La variable '"+id+"' no es de tipo just")));           
                 }
+            }
+        :} |
+        IDENTIFICADOR:id_1 op_rel IDENTIFICADOR:id_2 {:
+            Simbolo sim_1 = TablaSimbolos.buscar(id_1);
+            Simbolo sim_2 = TablaSimbolos.buscar(id_2);
+        
+            if (sim_1 == null) {
+                JLabel lb = new JLabel();
+                    lb.setForeground(new Color(217, 33, 51));
+                    lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+                    lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                    lb.setText("Error en la línea " + (id_1right+1) + ". Error sintáctico. La variable '"+id_1+"' no existe" );   
+                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. La variable '"+id_1+"' no existe", id_1right+1,SINTACTICO,
+                    new Gramatica("condicion::= TRUE IGUAL_QUE IFENTIFICADOR","Error sintáctico. La variable '"+id_1+"' no existe")));
+            }
+            else{
+                if (sim_2 == null) {
+                JLabel lb = new JLabel();
+                    lb.setForeground(new Color(217, 33, 51));
+                    lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+                    lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                    lb.setText("Error en la línea " + (id_2right+1) + ". Error sintáctico. La variable '"+id_2+"' no existe" );   
+                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. La variable '"+id_2+"' no existe", id_2right+1,SINTACTICO,
+                    new Gramatica("condicion::= TRUE IGUAL_QUE IFENTIFICADOR","Error sintáctico. La variable '"+id_2+"' no existe")));
+                }else
+                    if(sim_1.tipo.equals("just") && !sim_2.tipo.equals("cad")){ 
+                        JLabel lb = new JLabel();
+                        lb.setForeground(new Color(217, 33, 51));
+                        lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+                        lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                        lb.setText("Error en la línea " + (id_1right+1) + ". Error semántico. La variable '"+id_1+"' es del tipo "+sim_1.tipo+" y la varibale '"+id_2+"' es del tipo "+sim_2+".");   
+                        VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico. La variable '"+id_1+"' es del tipo "+sim_1.tipo+" y la varibale '"+id_2+"' es del tipo "+sim_2+".", id_1right+1,SINTACTICO,
+                        new Gramatica("condicion::= IDENTIFICADOR IGUAL_QUE IDENTIFICADOR","Error semántico. La variable '"+id_1+"' es del tipo "+sim_1.tipo+" y la varibale '"+id_2+"' es del tipo "+id_2+".")));           
+                    }
             }
         :};
 
@@ -904,8 +1095,6 @@ parametro::= t_dato:td IDENTIFICADOR:id {:
             Simbolo sim = TablaSimbolos.buscar(id);
              //Si es nulo, devuelvo un error
             if (sim != null) {
-                //Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
-                //RESULT = 0;
                 JLabel lb = new JLabel();
                 lb.setForeground(new Color(217, 33, 51));
                 lb.setFont(new Font("Verdana", Font.PLAIN, 14));
@@ -950,8 +1139,6 @@ sentencia_for::=
             Simbolo sim = TablaSimbolos.buscar(id);
              //Si es nulo, devuelvo un error
             if (sim == null) {
-                //Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
-                //RESULT = 0;
                 System.out.println("El identificador '"+id+"' ya existe");   
                 JLabel lb = new JLabel();
                 lb.setForeground(new Color(217, 33, 51));
@@ -980,8 +1167,6 @@ sentencia_for::=
             Simbolo sim = TablaSimbolos.buscar(id);
              //Si es nulo, devuelvo un error
             if (sim != null) {
-                //Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
-                //RESULT = 0;
                 System.out.println("El identificador '"+id+"' ya existe");   
                 JLabel lb = new JLabel();
                 lb.setForeground(new Color(217, 33, 51));
