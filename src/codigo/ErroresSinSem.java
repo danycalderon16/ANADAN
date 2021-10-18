@@ -8,6 +8,7 @@ package codigo;
 import java.awt.Color;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
+import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.UIDefaults;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.text.AttributeSet;
@@ -41,6 +42,7 @@ public class ErroresSinSem extends javax.swing.JDialog {
         initComponents();
         this.setSize(730,535);
         this.setLocationRelativeTo(null);
+        seticon();
         
         //CAMBIAR COLOR DEL JTEXTPANE-----------------------------------------------------------------
         Color bgColor = new Color(42, 43, 46);
@@ -58,6 +60,7 @@ public class ErroresSinSem extends javax.swing.JDialog {
         txterror3.setText(error);
         produc(perror);
         terminales(perror);
+        
     }
     
     public void terminales(String errort){
@@ -81,6 +84,11 @@ public class ErroresSinSem extends javax.swing.JDialog {
             }
         }
     }
+    
+    public void seticon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/logopro2.png")));
+    }
+    
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -128,10 +136,10 @@ public class ErroresSinSem extends javax.swing.JDialog {
         jScrollPane1.setBounds(12, 112, 690, 116);
 
         txterror3.setBackground(new java.awt.Color(204, 204, 204));
-        txterror3.setFont(new java.awt.Font("Consolas", 0, 16)); // NOI18N
+        txterror3.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
         txterror3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel1.add(txterror3);
-        txterror3.setBounds(44, 26, 625, 36);
+        txterror3.setBounds(19, 26, 680, 36);
 
         txterror.setBackground(new java.awt.Color(204, 204, 204));
         txterror.setFont(new java.awt.Font("Consolas", 0, 16)); // NOI18N
@@ -233,7 +241,7 @@ public class ErroresSinSem extends javax.swing.JDialog {
         }
         this.setTitle(a);
     }
-    public void produc(String b){   
+    public void produc(String b){  
         String a[] = b.split("=");
         jltrampa.setText(a[0]+"=");
         txtprod.setText("\n\n"+"          "+a[1]);

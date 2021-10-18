@@ -1797,11 +1797,10 @@ NumeroLinea lineatxtCodigo;
 //<<<<<<< HEAD
                         new ErroresSinSem(null,true,le.getGramatica().getProduccion(),le.getGramatica().getError()).setVisible(true);
                         
-//=======
-                        new ErroresSinSem(null, true, le.getGramatica().getProduccion(), le.getGramatica().getError()).setVisible(true);
 
 //>>>>>>> f8b798c1a60ea373f747119512989b9a29a25862
                     } else {
+                        
                         showMessageDialog(null, "Estamos trabajando en modal de gramáticas\n");
                         //new ErroresSinSem(null,true,le.getGramatica().getProduccion(),le.getGramatica().getError()).setVisible(true);
                     }

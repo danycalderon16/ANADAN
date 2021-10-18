@@ -464,7 +464,7 @@ declaracion ::=
             lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
             lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. Falta punto y coma en declaración: declaración: JUST "+id);   
             VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. Falta punto y coma en declaración: JUST "+id, idright+1,SINTACTICO,
-            new Gramatica("JUST IDENTIFICADOR PUNTOYCOMA", "Falta punto y coma en declaración: JUST "+id)));
+            new Gramatica("declaracion ::= JUST IDENTIFICADOR PUNTOYCOMA", "Falta punto y coma en declaración: JUST "+id)));
 
         }
         catch(Exception e){                                    
@@ -480,7 +480,7 @@ declaracion ::=
             lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
             lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. Falta punto y coma en declaración: BROKEN "+id );   
             VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. Falta punto y coma en declaración: BROKEN "+id, idright+1,SINTACTICO,
-            new Gramatica("BROKEN IDENTIFICADOR PUNTOYCOMA ", "Falta punto y coma en declaración: BROKEN "+id)));
+            new Gramatica("declaracion ::= BROKEN IDENTIFICADOR PUNTOYCOMA ", "Falta punto y coma en declaración: BROKEN "+id)));
 
         }
         catch(Exception e){                                    
@@ -496,7 +496,7 @@ declaracion ::=
             lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
             lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. Falta punto y coma en declaración: FLAG "+id );   
             VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. Falta punto y coma en declaración: FLAG "+id, idright+1,SINTACTICO,
-            new Gramatica("FLAG IDENTIFICADOR PUNTOYCOMA ", "Falta punto y coma en declaración: FLAG "+id)));
+            new Gramatica("declaracion ::= FLAG IDENTIFICADOR PUNTOYCOMA ", "Falta punto y coma en declaración: FLAG "+id)));
 
         }
         catch(Exception e){                                    
@@ -512,7 +512,7 @@ declaracion ::=
             lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
             lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. Falta punto y coma en declaración: WORD "+id );   
             VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. Falta punto y coma en declaración: WORD "+id, idright+1,SINTACTICO,
-            new Gramatica("WORD IDENTIFICADOR PUNTOYCOMA ", "Falta punto y coma en declaración: WORD "+id)));
+            new Gramatica("declaracion ::= WORD IDENTIFICADOR PUNTOYCOMA ", "Falta punto y coma en declaración: WORD "+id)));
 
         }
         catch(Exception e){                                    
@@ -528,7 +528,7 @@ declaracion ::=
             lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
             lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. Falta punto y coma en declaración: JUST "+id+" = "+valor );   
             VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. Falta punto y coma en declaración: JUST "+id+" = "+valor, idright+1,SINTACTICO,
-            new Gramatica("JUST IDENTIFICADOR SIGNO_DE_IGUAL NUMERO PUNTOYCOMA", "Falta punto y coma en declaración: JUST "+id+" = "+valor)));
+            new Gramatica("declaracion ::= JUST IDENTIFICADOR SIGNO_DE_IGUAL NUMERO PUNTOYCOMA", "Falta punto y coma en declaración: JUST "+id+" = "+valor)));
 
         }
         catch(Exception e){                                    
@@ -544,7 +544,7 @@ declaracion ::=
             lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
             lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. Falta punto y coma en declaración: BROKEN "+id+" = "+valor );   
             VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. Falta punto y coma en declaración: BROKEN "+id+" = "+valor, idright+1,SINTACTICO,
-            new Gramatica("BROKEN IDENTIFICADOR SIGNO_DE_IGUAL DECIMAL PUNTOYCOMA ", "Falta punto y coma en declaración: BROKEN "+id+" = "+valor)));
+            new Gramatica("declaracion ::= BROKEN IDENTIFICADOR SIGNO_DE_IGUAL DECIMAL PUNTOYCOMA ", "Falta punto y coma en declaración: BROKEN "+id+" = "+valor)));
 
         }
         catch(Exception e){                                    
@@ -560,7 +560,7 @@ declaracion ::=
             lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
             lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. Falta punto y coma en declaración: FLAG "+id+" = "+valor );   
             VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. Falta punto y coma en declaración: FLAG "+id+" = "+valor, idright+1,SINTACTICO,
-            new Gramatica("FLAG IDENTIFICADOR SIGNO_DE_IGUAL TRUE PUNTOYCOMA ", "Falta punto y coma en declaración: FLAG "+id+" = "+valor)));
+            new Gramatica("declaracion ::= FLAG IDENTIFICADOR SIGNO_DE_IGUAL TRUE PUNTOYCOMA ", "Falta punto y coma en declaración: FLAG "+id+" = "+valor)));
 
         }
         catch(Exception e){                                    
@@ -576,7 +576,7 @@ declaracion ::=
             lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
             lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. Falta punto y coma en declaración: FLAG "+id+" = "+valor );   
             VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. Falta punto y coma en declaración: FLAG "+id+" = "+valor, idright+1,SINTACTICO,
-            new Gramatica("FLAG IDENTIFICADOR SIGNO_DE_IGUAL FALSE PUNTOYCOMA ", "Falta punto y coma en declaración: FLAG "+id+" = "+valor)));
+            new Gramatica("declaracion ::= FLAG IDENTIFICADOR SIGNO_DE_IGUAL FALSE PUNTOYCOMA ", "Falta punto y coma en declaración: FLAG "+id+" = "+valor)));
 
         }
         catch(Exception e){                                    
@@ -592,7 +592,7 @@ declaracion ::=
             lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
             lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. Falta punto y coma en declaración: WORD "+id+" = "+valor );   
             VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. Falta punto y coma en declaración: WORD "+id+" = "+valor, idright+1,SINTACTICO,
-            new Gramatica("WORD IDENTIFICADOR SIGNO_DE_IGUAL CADENA_TEXTO PUNTOYCOMA ", "Falta punto y coma en declaración: WORD "+id+" = "+valor)));
+            new Gramatica("declaracion ::= WORD IDENTIFICADOR SIGNO_DE_IGUAL CADENA_TEXTO PUNTOYCOMA ", "Falta punto y coma en declaración: WORD "+id+" = "+valor)));
 
         }
         catch(Exception e){                                    

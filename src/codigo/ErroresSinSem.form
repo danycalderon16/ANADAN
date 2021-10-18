@@ -103,13 +103,13 @@
               <Color blue="cc" green="cc" red="cc" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Consolas" size="16" style="0"/>
+              <Font name="Consolas" size="12" style="0"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="44" y="26" width="625" height="36"/>
+              <AbsoluteConstraints x="19" y="26" width="680" height="36"/>
             </Constraint>
           </Constraints>
         </Component>
