@@ -7,15 +7,21 @@ import java_cup.runtime.Symbol;
 %full
 %line
 %char
+
+//******* ALFABETO ****************
 L=[a-z_]+
 D = [0-9]
 num = {D}+
 S = \+|\-
 CAP=[A-Z]+
+
+//******** IGNORAR *******************
 espacio=[ \t\r\n]
 
+//*********** COMENTARIOS ***************
 A=[/*]
 C=[*/]
+
 
 cadena = (\")~(\")
 enteros = {S}?{num}
@@ -31,6 +37,7 @@ numDec =  {S}?{num}?\.{num}
 %}
 %%
 
+//*********** terminales ***************
 ({cadena})       {return new Symbol(sym.CADENA_TEXTO,      yychar, yyline, yytext());}
 setfilamenttype {return new Symbol(sym.SETFILAMENTTYPE, yychar, yyline, yytext());}
 "fillrectangle" {return new Symbol(sym.FILLRECTANGLE, yychar, yyline, yytext());}

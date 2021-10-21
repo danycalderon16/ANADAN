@@ -29,7 +29,7 @@ public class ModalExp extends javax.swing.JFrame {
         for (Expresion exp : exps) {
             cmbExps.addItem(exp.getInfija());            
         }
-        
+        this.index = exps.size()-1;
         setData();
         
     }
@@ -127,7 +127,7 @@ public class ModalExp extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel5.setText("Postfija");
+        jLabel5.setText("Resultado");
         jLabel5.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 430, 120, 30));
 
@@ -141,7 +141,7 @@ public class ModalExp extends javax.swing.JFrame {
         lb_exp_result.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lb_exp_result.setText("x=mc2");
         lb_exp_result.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        jPanel1.add(lb_exp_result, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 420, 246, 30));
+        jPanel1.add(lb_exp_result, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 430, 246, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -219,10 +219,10 @@ public class ModalExp extends javax.swing.JFrame {
 
     private void setData() {
         
-        lb_exp.setText(exp_list.get(0).getInfija());
-        lb_exp_inf_parentesis.setText(exp_list.get(0).getInfija_parentesis());
-        lb_exp_post.setText(exp_list.get(0).getPostfija());
-        for (String object : exp_list.get(0).getPila_ops()) {
+        lb_exp.setText(exp_list.get(index).getInfija());
+        lb_exp_inf_parentesis.setText(exp_list.get(index).getInfija_parentesis());
+        lb_exp_post.setText(exp_list.get(index).getPostfija());
+        for (String object : exp_list.get(index).getPila_ops()) {
             //jTextArea1.append("---------------------------------------\n");
             String ops[] = object.split(",");
             jTextArea1.append("|  ");
@@ -234,6 +234,6 @@ public class ModalExp extends javax.swing.JFrame {
             
         }
         
-        lb_exp_result.setText(exp_list.get(0).getResult());
+        lb_exp_result.setText(exp_list.get(index).getResult());
     }
 }

@@ -312,6 +312,7 @@ declaracion ::=
             TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
         }                           
     :}|
+    //********************* DECLARACION E INICIALIZACION  ******************* *//
     JUST:tipo IDENTIFICADOR:id SIGNO_DE_IGUAL NUMERO:valor PUNTOYCOMA 
     {:
         try{
