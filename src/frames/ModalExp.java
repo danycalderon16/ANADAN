@@ -114,6 +114,11 @@ public class ModalExp extends javax.swing.JFrame {
 
         cmbExps.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciones una expresión" }));
         cmbExps.setAutoscrolls(true);
+        cmbExps.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbExpsItemStateChanged(evt);
+            }
+        });
         jPanel1.add(cmbExps, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 210, -1));
 
         jLabel4.setText("Expresiones");
@@ -162,6 +167,11 @@ public class ModalExp extends javax.swing.JFrame {
     private void icon_closeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_closeMouseReleased
         this.dispose();
     }//GEN-LAST:event_icon_closeMouseReleased
+
+    private void cmbExpsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbExpsItemStateChanged
+        // TODO add your handling code here:
+        System.out.println(evt.getItemSelectable().toString());
+    }//GEN-LAST:event_cmbExpsItemStateChanged
 
     /**
      * @param args the command line arguments

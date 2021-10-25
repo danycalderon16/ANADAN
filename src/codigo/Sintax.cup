@@ -183,24 +183,49 @@ inicio ::=  IDENTIFICADOR:nombre PARENTESIS_ABRE PARENTESIS_CIERRA BEGIN bloques
     :}|
     error BEGIN;
 
-bloquesentencias::= sentencias |;
+//bloquesentencias::= sentencias |;
 
-sentencias::= sentencia sentencias | sentencia;
+//sentencias::= sentencia sentencias | sentencia;
 
-sentencia::= declaracion | sentif | sentwhile | sentasignacion | sentcut | metodo |
+bloquesentencias::= 
+            bloquesentencias declaracion | 
+            declaracion |
+            bloquesentencias sentif | 
+            sentif | 
+            bloquesentencias sentwhile | 
+            sentwhile | 
+            bloquesentencias sentasignacion | 
+            sentasignacion | 
+            bloquesentencias sentcut | 
+            sentcut | 
+            bloquesentencias metodo |
+            metodo |
+            bloquesentencias home |
             home |
+            bloquesentencias main |
             main |
+            bloquesentencias metodos_parametros|
             metodos_parametros|
+            bloquesentencias metodo_sin_parametros|
             metodo_sin_parametros|
+            bloquesentencias metodo_un_parametro|
             metodo_un_parametro|
+            bloquesentencias metodo_cuatro_parametros|
             metodo_cuatro_parametros|
+            bloquesentencias metodo_nueve_parametros|
             metodo_nueve_parametros|
+            bloquesentencias metodo_doce_parametros|
             metodo_doce_parametros|
+            bloquesentencias for |
             for |
+            bloquesentencias tryycatch |
             tryycatch |
+            bloquesentencias get|
             get|
-            give|
-            error PUNTOYCOMA | error LLAVE_CIERRA 
+            bloquesentencias give|
+            give|            
+            error PUNTOYCOMA | 
+            error LLAVE_CIERRA 
 ; 
 
 /*---------------------------------------- DECLARACION DE VARIABLES -------------------------------------------*/
@@ -790,17 +815,11 @@ factor ::=
             System.out.println("*****id: "+sim.valor);  
             RESULT = sim.valor; 
         };
-    :}   | 
-    CADENA_TEXTO:f {:RESULT = f; ;
-    :}   | 
+    :}     | 
     NUMERO:f {:RESULT = f; ;
     :}   | 
     DECIMAL:f {:RESULT = f; ;
-    :}   | 
-    FALSE:f {:RESULT = f; ;
-    :}   | 
-    TRUE:f {:RESULT = f; 
-        :}  
+    :} 
     |
     error:e{: 
        JLabel lb = new JLabel();
@@ -843,7 +862,56 @@ sentelse::= ELSE LLAVE_ABRE bloquesentencias LLAVE_CIERRA |
             :}
 ;
 sentwhile::= WHILE PARENTESIS_ABRE condicion PARENTESIS_CIERRA LLAVE_ABRE bloquesentencias LLAVE_CIERRA;
-sentasignacion::= IDENTIFICADOR:identificador SIGNO_DE_IGUAL expresion:e PUNTOYCOMA{:
+sentasignacion::= 
+        IDENTIFICADOR:identificador SIGNO_DE_IGUAL CADENA_TEXTO:v PUNTOYCOMA {:
+            Simbolo sim = TablaSimbolos.buscar(identificador);
+            //Si es nulo, devuelvo un error
+            if (sim == null) {
+                JLabel lb = new JLabel();
+                lb.setForeground(new Color(217, 33, 51));
+                lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+                lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                lb.setText("Error en la línea " + (vright+1) + ". Error semántico. La variable '"+identificador+"' no existe" );   
+                VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico. La variable '"+identificador+"' no existe", vright+1,SINTACTICO,
+                new Gramatica("sentasignacion::= IDENTIFICADOR SIGNO_DE_IGUAL CADENA_TEXTO PUNTOYCOMA","Error semántico. La variable '"+identificador+"' no existe")));
+                System.out.println("El identificador '"+identificador+"' no existe");
+            }else{
+                sim.setValor(v);
+            }
+        :} |
+        IDENTIFICADOR:identificador SIGNO_DE_IGUAL FALSE:v PUNTOYCOMA {:
+            Simbolo sim = TablaSimbolos.buscar(identificador);
+            //Si es nulo, devuelvo un error
+            if (sim == null) {
+                JLabel lb = new JLabel();
+                lb.setForeground(new Color(217, 33, 51));
+                lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+                lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                lb.setText("Error en la línea " + (vright+1) + ". Error semántico. La variable '"+identificador+"' no existe" );   
+                VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico. La variable '"+identificador+"' no existe", vright+1,SINTACTICO,
+                new Gramatica("sentasignacion::= IDENTIFICADOR SIGNO_DE_IGUAL FALSE PUNTOYCOMA","Error semántico. La variable '"+identificador+"' no existe")));
+                System.out.println("El identificador '"+identificador+"' no existe");
+            }else{
+                sim.setValor("false");
+            }
+        :} |
+        IDENTIFICADOR:identificador SIGNO_DE_IGUAL TRUE:v PUNTOYCOMA {:
+            Simbolo sim = TablaSimbolos.buscar(identificador);
+            //Si es nulo, devuelvo un error
+            if (sim == null) {
+                JLabel lb = new JLabel();
+                lb.setForeground(new Color(217, 33, 51));
+                lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+                lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                lb.setText("Error en la línea " + (vright+1) + ". Error semántico. La variable '"+identificador+"' no existe" );   
+                VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico. La variable '"+identificador+"' no existe", vright+1,SINTACTICO,
+                new Gramatica("sentasignacion::= IDENTIFICADOR SIGNO_DE_IGUAL TRUE PUNTOYCOMA","Error semántico. La variable '"+identificador+"' no existe")));
+                System.out.println("El identificador '"+identificador+"' no existe");
+            }else{
+                sim.setValor("true");
+            }
+        :} |
+        IDENTIFICADOR:identificador SIGNO_DE_IGUAL expresion:e PUNTOYCOMA{:
         //Buscar variable en la tabla de simbolos
         Simbolo sim = TablaSimbolos.buscar(identificador);
         //Si es nulo, devuelvo un error
@@ -870,7 +938,8 @@ sentasignacion::= IDENTIFICADOR:identificador SIGNO_DE_IGUAL expresion:e PUNTOYC
                 new Gramatica("sentasignacion::= IDENTIFICADOR SIGNO_DE_IGUAL expresion PUNTOYCOMA","Error semántico. La variable '"+identificador+"' no es de algún tipo numérico")));           
             }
         }
-    :};
+    :}
+;
 
 sentcut::= CUT PUNTOYCOMA;
 
@@ -1054,7 +1123,10 @@ condicion::= IDENTIFICADOR:id IGUAL_QUE FALSE {:
                         new Gramatica("condicion::= IDENTIFICADOR IGUAL_QUE IDENTIFICADOR","Error semántico. La variable '"+id_1+"' es del tipo "+sim_1.tipo+" y la varibale '"+id_2+"' es del tipo "+id_2+".")));           
                     }
             }
-        :};
+        :} | 
+        NUMERO op_rel NUMERO |
+
+;
 
 metodos_parametros::=
     metodo_sin_parametros    PARENTESIS_ABRE PARENTESIS_CIERRA PUNTOYCOMA |
