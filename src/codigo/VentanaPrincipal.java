@@ -46,6 +46,8 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
+import modelos.Cuadruplo;
+import modelos.Cuadruplos;
 import modelos.Expresion;
 import pila.Pila;
 
@@ -2096,14 +2098,19 @@ NumeroLinea lineatxtCodigo;
         expresion.setPostfija(string_pf);
 
         Pila pila_exp = new Pila();
+        Cuadruplos cuadruplos = new Cuadruplos();
+                
 
         for (String exp : post_sin_espacios) {
+            Cuadruplo cua;
             //pila_exp.imprimir();
             if ("*".equals(exp)) {
                 double op1 = Double.parseDouble(pila_exp.pop());
                 double op2 = Double.parseDouble(pila_exp.pop());
                 //System.out.println(op1 + "*" + op2 + "=" + (op1 * op2));
                 pila_exp.push((op1 * op2) + "");
+                cua = new Cuadruplo("*", op1+"", op2+"", (op1*op2)+"");
+                cuadruplos.addCuadruplo(cua);
                 continue;
             }
             if ("/".equals(exp)) {
@@ -2111,12 +2118,15 @@ NumeroLinea lineatxtCodigo;
                 double op2 = Double.parseDouble(pila_exp.pop());
                 //System.out.println(op2 + "/" + op1 + "=" + (op2 / op1));
                 pila_exp.push((op2 / op1) + "");
+                cua = new Cuadruplo("/", op1+"", op2+"", (op2/op1)+"");
+                cuadruplos.addCuadruplo(cua);
                 continue;
             }
             if ("+".equals(exp)) {
                 double op1 = Double.parseDouble(pila_exp.pop());
                 double op2 = Double.parseDouble(pila_exp.pop());
-                //System.out.println(op1 + "+" + op2 + "=" + (op1 + op2));
+                cua = new Cuadruplo("+", op1+"", op2+"", (op1+op2)+"");
+                cuadruplos.addCuadruplo(cua);
                 pila_exp.push((op1 + op2) + "");
                 continue;
             }
@@ -2124,6 +2134,9 @@ NumeroLinea lineatxtCodigo;
                 double op1 = Double.parseDouble(pila_exp.pop());
                 double op2 = Double.parseDouble(pila_exp.pop());
                 //System.out.println(op1 + "-" + op2 + "=" + (op1 - op2));
+                
+                cua = new Cuadruplo("-", op1+"", op2+"", (op2-op1)+"");
+                cuadruplos.addCuadruplo(cua);
                 pila_exp.push((op2 - op1) + "");
                 continue;
             }
@@ -2136,6 +2149,9 @@ NumeroLinea lineatxtCodigo;
         //pila_exp.imprimir();
         String result = pila_exp.pop();
         String id = pila_exp.pop();
+        Cuadruplo cua;
+        cua = new Cuadruplo("=", result, "   ", result);
+        cuadruplos.addCuadruplo(cua);
         Simbolo sim = TablaSimbolos.buscar(id);
         if (sim.getTipo().equals("just")) {
             double r = Double.parseDouble(result);
@@ -2156,6 +2172,7 @@ NumeroLinea lineatxtCodigo;
             expresion.setResult(r_float+"");
         }
         exp_list.add(expresion);
+        System.out.println(cuadruplos.imprimir());
     }
 
     private void limpiar() {

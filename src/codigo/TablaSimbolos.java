@@ -129,7 +129,7 @@ public class TablaSimbolos {
         }
         catch(Exception e)
         {
-            System.out.println("Error al eliminar una variable de la tabla de simbolos");
+           // System.out.println("Error al eliminar una variable de la tabla de simbolos");
             return nombre;
         }                
     }
@@ -141,12 +141,12 @@ public class TablaSimbolos {
         {
             simbolo = new Simbolo(nombre, tipo, null, clase);
           
-            System.out.println("Agregando a tabla de simbolos con nombre: " + nombre);
+            //System.out.println("Agregando a tabla de simbolos con nombre: " + nombre);
             tablaSimbolos.put(nombre, simbolo);            
             //System.out.println("Variable creada exitosamente!!!");
               
             imprimir();                
-            System.out.println(" ");
+            //System.out.println(" ");
             return simbolo;
         }
         else
@@ -166,7 +166,7 @@ public class TablaSimbolos {
             tablaSimbolos.remove(nombre);//Elimino para actualizar
             tablaSimbolos.put(nombre, simbolo);
             
-            System.out.println("Variable '"+nombre+"' actualizada" );
+       //     System.out.println("Variable '"+nombre+"' actualizada" );
 //            imprimir();
 //            System.out.println("Saliendo de insertar de TablaSimbolos\n");
             return simbolo;
@@ -184,19 +184,19 @@ public class TablaSimbolos {
     {
 //        System.out.println("\nIngresando a imprimir de TablaSimbolos");
 //        System.out.println("    Valores de la tabla de simbolos:");
-        for (Simbolo s : tablaSimbolos.values())
-            System.out.println(String.format("      "
-                    + "Nombre: %s, valor: %s, tipo: %s",s.nombre, s.valor, s.tipo));        
+     //   for (Simbolo s : tablaSimbolos.values())
+            //System.out.println(String.format("      "
+            //        + "Nombre: %s, valor: %s, tipo: %s",s.nombre, s.valor, s.tipo));        
 //        System.out.println("Saliendo de imprimir en TablaSimbolos\n ");        
     }
     
     static public void mostrar(){
         try {
             for (Simbolo s  : tablaSimbolos.values()) {
-                System.out.println("Tipo: "+s.tipo+" | Nombre: "+s.nombre+" | Valor: "+s.valor.toString());
+                //System.out.println("Tipo: "+s.tipo+" | Nombre: "+s.nombre+" | Valor: "+s.valor.toString());
             }            
         } catch (Exception e) {
-            System.out.println("Error");
+            //System.out.println("Error");
         }
     }
     public static Collection<Simbolo> enviarLista(){
