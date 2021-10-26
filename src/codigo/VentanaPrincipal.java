@@ -94,7 +94,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         m = (DefaultTableModel) tblTablaSimbolos.getModel();
         numeroLineas();
         mnuMinimize.setEnabled(false);
-
         Color bgColor = new Color(42, 43, 46);
         UIDefaults defaults = new UIDefaults();
         defaults.put("TextPane.background", new ColorUIResource(bgColor));
@@ -198,8 +197,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         icon_redo = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         icon_exps = new javax.swing.JLabel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
         barraMenu = new javax.swing.JMenuBar();
         mnufile = new javax.swing.JMenu();
         mnuNew = new javax.swing.JMenuItem();
@@ -487,8 +489,36 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jScrollPane2.setViewportView(jPanel1);
 
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 440, 1130, 250));
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1130, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
+        );
+
         jScrollPane2.getAccessibleContext().setAccessibleName("");
+
+        jTabbedPane1.addTab("Consola", jPanel3);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1130, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 217, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Cuadruplos", jPanel2);
+
+        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 440, 1130, 250));
+        jTabbedPane1.getAccessibleContext().setAccessibleName("Consola");
 
         mnufile.setText("File");
 
@@ -1179,6 +1209,9 @@ NumeroLinea lineatxtCodigo;
     }
 
     public void analisisLexico() {
+        for (int i = exp_list.size()-1; i >=0; i--) {
+            exp_list.remove(i);
+        }
         errores_lexicos = false;
         errores_sintacticos = false;
         InformacionLexema c = new InformacionLexema();
@@ -1499,8 +1532,10 @@ NumeroLinea lineatxtCodigo;
     }//GEN-LAST:event_jMenuItem1MouseReleased
 
     private void icon_expsMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_expsMouseReleased
-        ModalExp me = new ModalExp(exp_list);
-        me.setVisible(true);
+        if(!exp.equals("")){
+            ModalExp me = new ModalExp(exp_list);
+            me.setVisible(true);
+        }
     }//GEN-LAST:event_icon_expsMouseReleased
 
     public void rquicksort() {
@@ -1648,8 +1683,11 @@ NumeroLinea lineatxtCodigo;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JPanel jplAreaEdit;
     private javax.swing.JMenuItem miCompile;
     private javax.swing.JMenuItem miCompileLexical;
