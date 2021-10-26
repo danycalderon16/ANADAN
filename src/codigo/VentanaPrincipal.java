@@ -54,8 +54,8 @@ import static util.Utils.*;
 public class VentanaPrincipal extends javax.swing.JFrame {
 
     public static ArrayList<LabelError> labelsErrores;
+    public static ArrayList<Expresion> exp_list = new ArrayList<>();
     private ArrayList<Simbolos> simbolos = new ArrayList<Simbolos>();
-    private ArrayList<Expresion> exp_list = new ArrayList<>();
 
     public static boolean errores_lexicos = false;
     public static boolean errores_sintacticos = false;
@@ -946,7 +946,7 @@ NumeroLinea lineatxtCodigo;
 
     private void miCompileLexicalMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_miCompileLexicalMouseReleased
         analisisLexico();
-        System.out.println("Lexico");
+        // System.out.println("Lexico");
     }//GEN-LAST:event_miCompileLexicalMouseReleased
 
     private void mnuSaveMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuSaveMouseReleased
@@ -1078,7 +1078,7 @@ NumeroLinea lineatxtCodigo;
             if (labelsErrore.getTipo() == SINTACTICO) {
                 errores_sintacticos = true;
             }
-            System.out.println(labelsErrore);
+            //System.out.println(labelsErrore);
         }
 
         if (labelsErrores.isEmpty()) {
@@ -1108,7 +1108,7 @@ NumeroLinea lineatxtCodigo;
             }
         }
         if (!exp.isEmpty() && !errores_sintacticos) {
-            resolverExp(exp);
+            //resolverExp(exp);
         }
 
         /* if (!errores_lexicos ) {
@@ -1771,7 +1771,7 @@ NumeroLinea lineatxtCodigo;
     }
 
     private void showModalSintaxtic(LabelError err) {
-        System.out.println(err);
+        //System.out.println(err);
     }
 
     private void clickLabel(LabelError le) {
@@ -1790,15 +1790,8 @@ NumeroLinea lineatxtCodigo;
                     showModalLexical(le);
                 } else {
                     if (le.getGramatica() != null) {
-                        //showMessageDialog(null, "Estamos trabajando en modal de gramáticas\n"
-                        //        + le.getGramatica().getProduccion() + "\n" + le.getGramatica().getError());
-
-                        //VENTANA MODAL-----------------------------------------------------------------------------------
-//<<<<<<< HEAD
                         new ErroresSinSem(null,true,le.getGramatica().getProduccion(),le.getGramatica().getError()).setVisible(true);
                         
-
-//>>>>>>> f8b798c1a60ea373f747119512989b9a29a25862
                     } else {
                         
                         showMessageDialog(null, "Estamos trabajando en modal de gramáticas\n");
@@ -1954,7 +1947,7 @@ NumeroLinea lineatxtCodigo;
 
     }
 
-    private void resolverExp(String str) {
+    public static void resolverExp(String str) {
         Expresion expresion = new Expresion(str);
 
         str = str.replace(" ", "");
@@ -2025,7 +2018,7 @@ NumeroLinea lineatxtCodigo;
             } else {
                 if (")".equals(character)) {
                     String stri = operadores.imprimir();
-                    System.out.println("OPs: " + stri);
+                    //System.out.println("OPs: " + stri);
                     expresion.setPila_ops(stri);
                     String op = operadores.pop();
                     while (!"(".equals(op)) {
@@ -2111,7 +2104,7 @@ NumeroLinea lineatxtCodigo;
             if (r % 1 != 0) {
                 sim.setValor(r);
                 sim.setTipo("broken");
-                System.out.println("Cambio el tipo");
+                //System.out.println("Cambio el tipo");
                 expresion.setResult(r+"");
             } else {
                 int r_int = (int) r;

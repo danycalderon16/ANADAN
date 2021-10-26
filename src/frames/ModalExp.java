@@ -170,7 +170,8 @@ public class ModalExp extends javax.swing.JFrame {
 
     private void cmbExpsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbExpsItemStateChanged
         // TODO add your handling code here:
-        System.out.println(evt.getItemSelectable().toString());
+        index = cmbExps.getSelectedIndex() - 1;
+        setData();
     }//GEN-LAST:event_cmbExpsItemStateChanged
 
     /**
@@ -228,6 +229,7 @@ public class ModalExp extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void setData() {
+        jTextArea1.setText("");
         
         lb_exp.setText(exp_list.get(index).getInfija());
         lb_exp_inf_parentesis.setText(exp_list.get(index).getInfija_parentesis());

@@ -1,5 +1,6 @@
 package codigo;
 
+
 import java.util.*;
 import java.io.*;
 import java_cup.runtime.Symbol;
@@ -926,8 +927,10 @@ sentasignacion::=
             System.out.println("El identificador '"+identificador+"' no existe");
         }
         else{
-            if(sim.tipo.equals("just") || sim.tipo.equals("broken"))
+            if(sim.tipo.equals("just") || sim.tipo.equals("broken")){
                 VentanaPrincipal.exp = identificador +"="+ String.valueOf(e);
+                resolverExp(VentanaPrincipal.exp);
+            }
             else{ 
                 JLabel lb = new JLabel();
                 lb.setForeground(new Color(217, 33, 51));
