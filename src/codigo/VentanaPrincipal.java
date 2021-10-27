@@ -58,6 +58,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     public static ArrayList<LabelError> labelsErrores;
     public static ArrayList<Expresion> exp_list = new ArrayList<>();
     private ArrayList<Simbolos> simbolos = new ArrayList<Simbolos>();
+    
+    private static DefaultTableModel mc = new DefaultTableModel();
 
     public static boolean errores_lexicos = false;
     public static boolean errores_sintacticos = false;
@@ -94,6 +96,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         this.setTitle("Sin título - ANADAN");
         setLocationRelativeTo(null);
         m = (DefaultTableModel) tblTablaSimbolos.getModel();
+        mc = (DefaultTableModel) tblCuadruplos.getModel();
         numeroLineas();
         mnuMinimize.setEnabled(false);
         Color bgColor = new Color(42, 43, 46);
@@ -204,6 +207,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblCuadruplos = new javax.swing.JTable();
         barraMenu = new javax.swing.JMenuBar();
         mnufile = new javax.swing.JMenu();
         mnuNew = new javax.swing.JMenuItem();
@@ -471,6 +476,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         getContentPane().add(panelToolBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1130, 50));
 
+        jTabbedPane1.setBackground(new java.awt.Color(51, 51, 51));
+        jTabbedPane1.setForeground(new java.awt.Color(255, 255, 255));
+
         jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane2.setPreferredSize(new java.awt.Dimension(100, 900));
 
@@ -506,15 +514,29 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Consola", jPanel3);
 
+        jPanel2.setBackground(new java.awt.Color(51, 51, 51));
+
+        tblCuadruplos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Operador", "Agumento 1", "Argumento 2", "Resultado"
+            }
+        ));
+        jScrollPane3.setViewportView(tblCuadruplos);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1130, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 698, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 432, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 217, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Cuadruplos", jPanel2);
@@ -1689,6 +1711,7 @@ NumeroLinea lineatxtCodigo;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JPanel jplAreaEdit;
     private javax.swing.JMenuItem miCompile;
@@ -1714,6 +1737,7 @@ NumeroLinea lineatxtCodigo;
     private javax.swing.JMenu mnufile;
     private javax.swing.JPanel panelToolBar;
     private javax.swing.JScrollPane scPanAreaEdit;
+    private javax.swing.JTable tblCuadruplos;
     public static javax.swing.JTable tblTablaSimbolos;
     private javax.swing.JTextPane txtAreaEdit;
     // End of variables declaration//GEN-END:variables
@@ -2172,7 +2196,13 @@ NumeroLinea lineatxtCodigo;
             expresion.setResult(r_float+"");
         }
         exp_list.add(expresion);
-        System.out.println(cuadruplos.imprimir());
+        cuadruplos.addSalto();
+        //System.out.println(cuadruplos.imprimir());
+        for (Cuadruplo cuadruplo : cuadruplos.getCuadruplos()) {
+            //if(cuadruplo.getOp().isEmpty())
+               // mc.addRow(new Object[]{"----","----","----","----"});
+            mc.addRow(new Object[]{cuadruplo.getOp(),cuadruplo.getArg1(),cuadruplo.getArg2(),cuadruplo.getTemp()});
+        }
     }
 
     private void limpiar() {

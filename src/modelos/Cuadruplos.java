@@ -33,12 +33,25 @@ public class Cuadruplos {
         this.text = "OP    Arg1    Arg2    Result\n";
     }
 
+    public List<Cuadruplo> getCuadruplos() {
+        return cuadruplos;
+    }
+
+    public void setCuadruplos(List<Cuadruplo> cuadruplos) {
+        this.cuadruplos = cuadruplos;
+    }
+    
+    public void addSalto(){
+        this.text = ("\n");
+        this.cuadruplos.add(new Cuadruplo("","","",""));
+    }
+    
     public void addCuadruplo(Cuadruplo cua) {
         if (ultimo == null) {
             cua.setTemp("TEMP" + temp++);
             //System.err.println("ultimo null");
             this.text += cua.getOp() + "    " + cua.getArg1() + "    " + cua.getArg2() + "    " + cua.getTemp() + "\n";
-            cuadruplos.add(cua);
+            this.cuadruplos.add(cua);
         } else {
             //System.err.println("linea 43: "+cua.getArg1() +" | "+ ultimo.getResult());
             if (cua.getArg1().equals(ultimo.getResult())) {
@@ -58,11 +71,11 @@ public class Cuadruplos {
             }
             cua.setTemp("TEMP" + (temp++));
             this.text += cua.getOp() + "    " + cua.getArg1() + "    " + cua.getArg2() + "    " + cua.getTemp() + "\n";
-            cuadruplos.add(cua);
+            this.cuadruplos.add(cua);
         }
 
-        antepenultimo = ultimo;
-        ultimo = cua;
+        this.antepenultimo = this.ultimo;
+        this.ultimo = cua;
     }
 
     public String imprimir() {

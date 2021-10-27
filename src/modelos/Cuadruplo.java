@@ -70,6 +70,11 @@ public class Cuadruplo {
     public void setResult(String result) {
         this.result = result;
     }
+
+    @Override
+    public String toString() {
+        return "Cuadruplo{" + "temp=" + temp + ", op=" + op + ", arg1=" + arg1 + ", arg2=" + arg2 + ", result=" + result + '}';
+    }
     
     
     
