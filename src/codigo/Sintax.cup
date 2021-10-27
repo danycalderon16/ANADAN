@@ -367,6 +367,33 @@ declaracion ::=
             TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
         }                      
     :}|
+    BROKEN:tipo IDENTIFICADOR:id SIGNO_DE_IGUAL NUMERO:valor PUNTOYCOMA 
+    {:
+        try{
+            Simbolo sim = TablaSimbolos.buscar(id);
+             //Si es nulo, devuelvo un error
+            if (sim != null) {
+                System.out.println("El identificador '"+id+"' ya existe");     
+                JLabel lb = new JLabel();
+                lb.setForeground(new Color(217, 33, 51));
+                lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+                lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. La variable: '"
+                +id+"' ya está declarada." );   
+                VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. La variable: '"
+                +id+"' ya está declarada.", idright+1,SINTACTICO, new Gramatica("declaracion ::= BROKEN IDENTIFICADOR SIGNO_DE_IGUAL DECIMAL PUNTOYCOMA ", "Variable repetido")));
+            }else{
+                TablaSimbolos.crear(id, "broken","Variable flotante");
+                TablaSimbolos.insertar(id, String.valueOf(valor));
+                //Crear relacion ciclo PARA con su variable asociada
+                TablaSimbolos.lista.push(id);          
+            }
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                      
+    :}|
     BROKEN:tipo IDENTIFICADOR:id SIGNO_DE_IGUAL DECIMAL:valor PUNTOYCOMA 
     {:
         try{
@@ -482,7 +509,72 @@ declaracion ::=
     t_dato CORCHETE_ABRE CORCHETE_CIERRA IDENTIFICADOR SIGNO_DE_IGUAL LLAVE_ABRE datos_array LLAVE_CIERRA PUNTOYCOMA |
     IDENTIFICADOR IDENTIFICADOR SIGNO_DE_IGUAL NEW IDENTIFICADOR PARENTESIS_ABRE parametrosa PARENTESIS_CIERRA PUNTOYCOMA |
     
-    //"""""""""""""""""""""""""""""""""""""""""""" ERRORES DE PUNTO Y COMa """"""""""""""""""""""""""""""""""""""""""""""""""""
+    //""""""""""""""""""""""""""""""""""""""""""""    ERRORES DE TIOS      """"""""""""""""""""""""""""""""""""""""""""""""""""
+    JUST:tipo IDENTIFICADOR:id SIGNO_DE_IGUAL DECIMAL:valor PUNTOYCOMA {:
+         try{                
+            JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (idright+1) + ". Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato." );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato.", idright+1,SINTACTICO,
+            new Gramatica("declaracion ::= JUST IDENTIFICADOR SIGNO_DE_IGUAL NUMERO PUNTOYCOMA", "Falta punto y coma en declaración: JUST "+id+" = "+valor)));
+
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }   
+    :} | 
+    JUST:tipo IDENTIFICADOR:id SIGNO_DE_IGUAL CADENA_TEXTO:valor PUNTOYCOMA {:
+         try{                
+            JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (idright+1) + ". Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato." );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato.", idright+1,SINTACTICO,
+            new Gramatica("declaracion ::= JUST IDENTIFICADOR SIGNO_DE_IGUAL NUMERO PUNTOYCOMA", "Falta punto y coma en declaración: JUST "+id+" = "+valor)));
+
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }   
+    :} | 
+    JUST:tipo IDENTIFICADOR:id SIGNO_DE_IGUAL TRUE:valor PUNTOYCOMA {:
+         try{                
+            JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (idright+1) + ". Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato." );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato.", idright+1,SINTACTICO,
+            new Gramatica("declaracion ::= JUST IDENTIFICADOR SIGNO_DE_IGUAL NUMERO PUNTOYCOMA", "Falta punto y coma en declaración: JUST "+id+" = "+valor)));
+
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }   
+    :} | 
+    JUST:tipo IDENTIFICADOR:id SIGNO_DE_IGUAL FALSE:valor PUNTOYCOMA {:
+         try{                
+            JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (idright+1) + ". Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato." );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato.", idright+1,SINTACTICO,
+            new Gramatica("declaracion ::= JUST IDENTIFICADOR SIGNO_DE_IGUAL NUMERO PUNTOYCOMA", "Falta punto y coma en declaración: JUST "+id+" = "+valor)));
+
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }   
+    :} | 
+    //"""""""""""""""""""""""""""""""""""""""""""" ERRORES DE PUNTO Y COMA """"""""""""""""""""""""""""""""""""""""""""""""""""
     JUST:tipo IDENTIFICADOR:id{:
          try{                
             JLabel lb = new JLabel();

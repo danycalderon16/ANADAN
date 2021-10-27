@@ -40,12 +40,12 @@ public class Cuadruplos {
     public void setCuadruplos(List<Cuadruplo> cuadruplos) {
         this.cuadruplos = cuadruplos;
     }
-    
-    public void addSalto(){
-        this.text = ("\n");
-        this.cuadruplos.add(new Cuadruplo("","","",""));
+
+    public void addSalto() {
+        this.text += ("\n");
+        this.cuadruplos.add(new Cuadruplo("", "", "", ""));
     }
-    
+
     public void addCuadruplo(Cuadruplo cua) {
         if (ultimo == null) {
             cua.setTemp("TEMP" + temp++);
@@ -58,7 +58,7 @@ public class Cuadruplos {
                 cua.setArg1(ultimo.getTemp());
             }
             if (cua.getArg2().equals(ultimo.getResult())) {
-            //System.err.println("linea 42: "+cua.getArg2()+" | "+ ultimo.getResult());
+                //System.err.println("linea 42: "+cua.getArg2()+" | "+ ultimo.getResult());
                 cua.setArg2(ultimo.getTemp());
             }
             if (antepenultimo != null) {
@@ -70,7 +70,14 @@ public class Cuadruplos {
                 }
             }
             cua.setTemp("TEMP" + (temp++));
-            this.text += cua.getOp() + "    " + cua.getArg1() + "    " + cua.getArg2() + "    " + cua.getTemp() + "\n";
+            if (cua.getOp().equals("=")){
+                String aux = this.ultimo.getTemp();
+                cua.setTemp(cua.getArg1());
+                cua.setArg1(aux);
+                this.text += cua.getOp() + "    " + this.ultimo.getTemp() + "    " + cua.getArg2() + "    " + cua.getArg1() + "\n";
+            } else {
+                this.text += cua.getOp() + "    " + cua.getArg1() + "    " + cua.getArg2() + "    " + cua.getTemp() + "\n";
+            }
             this.cuadruplos.add(cua);
         }
 

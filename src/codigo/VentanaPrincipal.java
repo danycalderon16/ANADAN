@@ -250,13 +250,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jplAreaEdit.setLayout(jplAreaEditLayout);
         jplAreaEditLayout.setHorizontalGroup(
             jplAreaEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scPanAreaEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
+            .addGroup(jplAreaEditLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(scPanAreaEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jplAreaEditLayout.setVerticalGroup(
             jplAreaEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jplAreaEditLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jplAreaEditLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(scPanAreaEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         getContentPane().add(jplAreaEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 700, 390));
@@ -1995,6 +1999,10 @@ NumeroLinea lineatxtCodigo;
     private void analisisSintactico() {
         analisisLexico();
         TablaSimbolos.limpiar();
+        int rowCount = mc.getRowCount();
+        for (int i = rowCount - 1; i >= 0; i--) {
+            mc.removeRow(i);
+        }
 
         mnuMinimize.setEnabled(true);
         String ST = txtAreaEdit.getText();
@@ -2008,10 +2016,12 @@ NumeroLinea lineatxtCodigo;
             Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
         mostrarErrores();
+        
 
     }
 
     public static void resolverExp(String str) {
+          
         Expresion expresion = new Expresion(str);
 
         str = str.replace(" ", "");
@@ -2174,7 +2184,7 @@ NumeroLinea lineatxtCodigo;
         String result = pila_exp.pop();
         String id = pila_exp.pop();
         Cuadruplo cua;
-        cua = new Cuadruplo("=", result, "   ", result);
+        cua = new Cuadruplo("=", id, "   ", result);
         cuadruplos.addCuadruplo(cua);
         Simbolo sim = TablaSimbolos.buscar(id);
         if (sim.getTipo().equals("just")) {
@@ -2197,7 +2207,7 @@ NumeroLinea lineatxtCodigo;
         }
         exp_list.add(expresion);
         cuadruplos.addSalto();
-        //System.out.println(cuadruplos.imprimir());
+        System.out.println(cuadruplos.imprimir());
         for (Cuadruplo cuadruplo : cuadruplos.getCuadruplos()) {
             //if(cuadruplo.getOp().isEmpty())
                // mc.addRow(new Object[]{"----","----","----","----"});
@@ -2210,6 +2220,10 @@ NumeroLinea lineatxtCodigo;
         //Remove rows one by one from the end of the table
         for (int i = rowCount - 1; i >= 0; i--) {
             m.removeRow(i);
+        }
+        rowCount = mc.getRowCount();
+        for (int i = rowCount - 1; i >= 0; i--) {
+            mc.removeRow(i);
         }
         jPanel1.removeAll();
         jPanel1.revalidate();

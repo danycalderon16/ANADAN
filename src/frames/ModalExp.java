@@ -25,7 +25,6 @@ public class ModalExp extends javax.swing.JFrame {
         setLocationRelativeTo(this); 
         icon_close.setIcon(resizeIcon(new ImageIcon(getClass().getResource("/img/close_icon.png")), icon_close.getWidth(), icon_close.getHeight()));       
         this.exp_list = exps;        
-        System.out.println(exps);
         for (Expresion exp : exps) {
             cmbExps.addItem(exp.getInfija());            
         }
