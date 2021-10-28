@@ -518,7 +518,7 @@ declaracion ::=
             lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
             lb.setText("Error en la línea " + (idright+1) + ". Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato." );   
             VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato.", idright+1,SINTACTICO,
-            new Gramatica("declaracion ::= JUST IDENTIFICADOR SIGNO_DE_IGUAL NUMERO PUNTOYCOMA", "Falta punto y coma en declaración: JUST "+id+" = "+valor)));
+            new Gramatica("declaracion ::= JUST IDENTIFICADOR SIGNO_DE_IGUAL NUMERO PUNTOYCOMA", "Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato.")));
 
         }
         catch(Exception e){                                    
@@ -532,9 +532,9 @@ declaracion ::=
             lb.setForeground(new Color(217, 33, 51));
             lb.setFont(new Font("Verdana", Font.PLAIN, 14));
             lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-            lb.setText("Error en la línea " + (idright+1) + ". Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato." );   
-            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato.", idright+1,SINTACTICO,
-            new Gramatica("declaracion ::= JUST IDENTIFICADOR SIGNO_DE_IGUAL NUMERO PUNTOYCOMA", "Falta punto y coma en declaración: JUST "+id+" = "+valor)));
+            lb.setText("Error en la línea " + (idright+1) + ". Error semántico, el valor "+valor+" no corresponde con el tipo de dato." );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico, el valor "+valor+" no corresponde con el tipo de dato.", idright+1,SINTACTICO,
+            new Gramatica("declaracion ::= JUST IDENTIFICADOR SIGNO_DE_IGUAL NUMERO PUNTOYCOMA", "Error semántico, el valor "+valor+" no corresponde con el tipo de dato.")));
 
         }
         catch(Exception e){                                    
@@ -550,7 +550,7 @@ declaracion ::=
             lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
             lb.setText("Error en la línea " + (idright+1) + ". Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato." );   
             VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato.", idright+1,SINTACTICO,
-            new Gramatica("declaracion ::= JUST IDENTIFICADOR SIGNO_DE_IGUAL NUMERO PUNTOYCOMA", "Falta punto y coma en declaración: JUST "+id+" = "+valor)));
+            new Gramatica("declaracion ::= JUST IDENTIFICADOR SIGNO_DE_IGUAL NUMERO PUNTOYCOMA", "Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato.")));
 
         }
         catch(Exception e){                                    
@@ -566,7 +566,7 @@ declaracion ::=
             lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
             lb.setText("Error en la línea " + (idright+1) + ". Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato." );   
             VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato.", idright+1,SINTACTICO,
-            new Gramatica("declaracion ::= JUST IDENTIFICADOR SIGNO_DE_IGUAL NUMERO PUNTOYCOMA", "Falta punto y coma en declaración: JUST "+id+" = "+valor)));
+            new Gramatica("declaracion ::= JUST IDENTIFICADOR SIGNO_DE_IGUAL DECIMAL PUNTOYCOMA", "Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato.")));
 
         }
         catch(Exception e){                                    
@@ -574,6 +574,166 @@ declaracion ::=
             TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
         }   
     :} | 
+    BROKEN:tipo IDENTIFICADOR:id SIGNO_DE_IGUAL CADENA_TEXTO:valor PUNTOYCOMA {:
+         try{                
+            JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (idright+1) + ". Error semántico, el valor "+valor+" no corresponde con el tipo de dato." );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico, el valor "+valor+" no corresponde con el tipo de dato.", idright+1,SINTACTICO,
+            new Gramatica("declaracion ::= BROKEN IDENTIFICADOR SIGNO_DE_IGUAL DECIMAL PUNTOYCOMA", "Error semántico, el valor "+valor+" no corresponde con el tipo de dato.")));
+
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }   
+    :} | 
+    BROKEN:tipo IDENTIFICADOR:id SIGNO_DE_IGUAL FALSE:valor PUNTOYCOMA {:
+         try{                
+            JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (idright+1) + ". Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato." );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato.", idright+1,SINTACTICO,
+            new Gramatica("declaracion ::= BROKEN IDENTIFICADOR SIGNO_DE_IGUAL DECIMAL PUNTOYCOMA", "Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato.")));
+
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }   
+    :} | 
+    BROKEN:tipo IDENTIFICADOR:id SIGNO_DE_IGUAL TRUE:valor PUNTOYCOMA {:
+         try{                
+            JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (idright+1) + ". Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato." );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato.", idright+1,SINTACTICO,
+            new Gramatica("declaracion ::= BROKEN IDENTIFICADOR SIGNO_DE_IGUAL DECIMAL PUNTOYCOMA", "Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato.")));
+
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }   
+    :} |  
+    WORD:tipo IDENTIFICADOR:id SIGNO_DE_IGUAL NUMERO:valor PUNTOYCOMA {:
+         try{                
+            JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (idright+1) + ". Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato." );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato.", idright+1,SINTACTICO,
+            new Gramatica("declaracion ::= WORD IDENTIFICADOR SIGNO_DE_IGUAL CADENA_TEXTO PUNTOYCOMA", "Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato.")));
+
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }   
+    :} | 
+    WORD:tipo IDENTIFICADOR:id SIGNO_DE_IGUAL DECIMAL:valor PUNTOYCOMA {:
+         try{                
+            JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (idright+1) + ". Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato." );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato.", idright+1,SINTACTICO,
+            new Gramatica("declaracion ::= WORD IDENTIFICADOR SIGNO_DE_IGUAL CADENA_TEXTO PUNTOYCOMA", "Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato.")));
+
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }   
+    :} | 
+    WORD:tipo IDENTIFICADOR:id SIGNO_DE_IGUAL FALSE:valor PUNTOYCOMA {:
+         try{                
+            JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (idright+1) + ". Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato." );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato.", idright+1,SINTACTICO,
+            new Gramatica("declaracion ::= WORD IDENTIFICADOR SIGNO_DE_IGUAL CADENA_TEXTO PUNTOYCOMA", "Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato.")));
+
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }   
+    :} | 
+    WORD:tipo IDENTIFICADOR:id SIGNO_DE_IGUAL TRUE:valor PUNTOYCOMA {:
+         try{                
+            JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (idright+1) + ". Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato." );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato.", idright+1,SINTACTICO,
+            new Gramatica("declaracion ::= WORD IDENTIFICADOR SIGNO_DE_IGUAL CADENA_TEXTO PUNTOYCOMA", "Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato.")));
+
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }   
+    :} |
+    FLAG:tipo IDENTIFICADOR:id SIGNO_DE_IGUAL CADENA_TEXTO:valor PUNTOYCOMA {:
+         try{                
+            JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (idright+1) + ". Error semántico, el valor "+valor+" no corresponde con el tipo de dato." );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico, el valor "+valor+" no corresponde con el tipo de dato.", idright+1,SINTACTICO,
+            new Gramatica("declaracion ::= FLAG IDENTIFICADOR SIGNO_DE_IGUAL TRUE|FALSE PUNTOYCOMA", "Error semántico, el valor "+valor+" no corresponde con el tipo de dato.")));
+
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }   
+    :} |
+    FLAG:tipo IDENTIFICADOR:id SIGNO_DE_IGUAL NUMERO:valor PUNTOYCOMA {:
+         try{                
+            JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (idright+1) + ". Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato." );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato.", idright+1,SINTACTICO,
+            new Gramatica("declaracion ::= FLAG IDENTIFICADOR SIGNO_DE_IGUAL TRUE|FALSE PUNTOYCOMA", "Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato.")));
+
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }   
+    :} |
+    FLAG:tipo IDENTIFICADOR:id SIGNO_DE_IGUAL DECIMAL:valor PUNTOYCOMA {:
+         try{                
+            JLabel lb = new JLabel();
+            lb.setForeground(new Color(217, 33, 51));
+            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            lb.setText("Error en la línea " + (idright+1) + ". Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato." );   
+            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato.", idright+1,SINTACTICO,
+            new Gramatica("declaracion ::= FLAG IDENTIFICADOR SIGNO_DE_IGUAL TRUE|FALSE PUNTOYCOMA", "Error semántico, el valor '"+valor+"' no corresponde con el tipo de dato.")));
+
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }   
+    :} |
     //"""""""""""""""""""""""""""""""""""""""""""" ERRORES DE PUNTO Y COMA """"""""""""""""""""""""""""""""""""""""""""""""""""
     JUST:tipo IDENTIFICADOR:id{:
          try{                
