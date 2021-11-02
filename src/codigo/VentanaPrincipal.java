@@ -56,6 +56,11 @@ import static util.Utils.*;
 public class VentanaPrincipal extends javax.swing.JFrame {
 
     public static ArrayList<LabelError> labelsErrores;
+    
+    //VARIABLE DE CODIGO INTERMEDIO
+    public static String intercode = "void setup() {\n";
+    public static ArrayList<String> intercode2 = new ArrayList<String>();
+    //****************************
     public static ArrayList<Expresion> exp_list = new ArrayList<>();
     private ArrayList<Simbolos> simbolos = new ArrayList<Simbolos>();
     
@@ -230,6 +235,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         miCompileLexical = new javax.swing.JMenuItem();
         miCompileSyntax = new javax.swing.JMenuItem();
         miCompile = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         mnuMinimize = new javax.swing.JMenu();
         mnuUndo = new javax.swing.JMenu();
         mnuRedo = new javax.swing.JMenu();
@@ -650,7 +656,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         mnuTablaS.add(mnuFija);
 
-        miDynamicTable.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        miDynamicTable.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_MASK));
         miDynamicTable.setText("Dynamic");
         miDynamicTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -672,7 +678,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         mnuCompile.setText("Compile");
         mnuCompile.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        miCompileLexical.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        miCompileLexical.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
         miCompileLexical.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Lexico.png"))); // NOI18N
         miCompileLexical.setText("Lexical");
         miCompileLexical.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -682,7 +688,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         mnuCompile.add(miCompileLexical);
 
-        miCompileSyntax.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        miCompileSyntax.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
         miCompileSyntax.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/analysis (1).png"))); // NOI18N
         miCompileSyntax.setText("Syntax");
         miCompileSyntax.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -700,6 +706,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         miCompile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Compilar.png"))); // NOI18N
         miCompile.setText(" Compile");
         mnuCompile.add(miCompile);
+
+        jMenuItem2.setText("Generar Intermedio");
+        jMenuItem2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jMenuItem2MouseReleased(evt);
+            }
+        });
+        mnuCompile.add(jMenuItem2);
 
         barraMenu.add(mnuCompile);
 
@@ -1288,7 +1302,7 @@ NumeroLinea lineatxtCodigo;
                         tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
                         tblTablaSimbolos.setValueAt("ERROR:CADENA_NO_VALIDA", i, 3);
                         i++;
-                        lb.setText("Error en la línea " + (c.linea + 1) + ". Error léxico. El formato del número '" + lexer.yytext() + "' es erroneo.");
+                        lb.setText("Error en la línea " + (c.linea + 1) + ". Error léxico. El formatooo del número '" + lexer.yytext() + "' es erroneo.");
                         labelsErrores.add(new LabelError(lb, "NUMERO_ERRONEO_MAS_PUNTOS", c.linea + 1, LEXICO));
                         counter++;
                         break;
@@ -1319,7 +1333,7 @@ NumeroLinea lineatxtCodigo;
                         tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
                         tblTablaSimbolos.setValueAt("ERROR:CADENA_NO_VALIDA", i, 3);
                         i++;
-                        lb.setText("Error en la línea " + (c.linea + 1) + ". Error léxico. El formato del número '" + lexer.yytext() + "' es erroneo");
+                        lb.setText("Error en la línea " + (c.linea + 1) + ". Error léxico. El formatoo del número '" + lexer.yytext() + "' es erroneo");
                         labelsErrores.add(new LabelError(lb, "NUMERO_ERRONEO", c.linea + 1, LEXICO));
                         counter++;
                         break;
@@ -1566,6 +1580,11 @@ NumeroLinea lineatxtCodigo;
         }
     }//GEN-LAST:event_icon_expsMouseReleased
 
+    private void jMenuItem2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem2MouseReleased
+        Arduino test = new Arduino(txtAreaEdit.getText());
+        new CodigoGenerado(null,true,test.getArduino().toString()).setVisible(true);
+    }//GEN-LAST:event_jMenuItem2MouseReleased
+
     public void rquicksort() {
 
         int col = m.getColumnCount();
@@ -1710,6 +1729,7 @@ NumeroLinea lineatxtCodigo;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -1743,7 +1763,7 @@ NumeroLinea lineatxtCodigo;
     private javax.swing.JScrollPane scPanAreaEdit;
     private javax.swing.JTable tblCuadruplos;
     public static javax.swing.JTable tblTablaSimbolos;
-    private javax.swing.JTextPane txtAreaEdit;
+    public static javax.swing.JTextPane txtAreaEdit;
     // End of variables declaration//GEN-END:variables
 
     ImageIcon imgENum1 = new ImageIcon("C:/ANADAN/src/Automatas/NumeroErroneo.jpg");
@@ -2230,4 +2250,8 @@ NumeroLinea lineatxtCodigo;
         jPanel1.repaint();
         txtAreaEdit.setText("");
     }
+    
+    
+    
+
 }

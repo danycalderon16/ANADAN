@@ -23,19 +23,19 @@ num = {D}+
 
 //*************************** EXPRESIONES REGULARES **************************
 
-nuumero_erroneo_mas_puntos = ("+"|"-")*(\.)*{num}?(\.*)({num}?(\.)*{num}?)* | ("+"|"-")*({num}?(\.)*{num}?)* 
+nuumero_erroneo_mas_puntos = ("+"|"-")*(\.)*{num}?(\.*)({num}?(\.)*{num}?)* | ("+"|"-")*({num}?(\.)*{num}?)*
 
 numero_erroneo             = (("+"|"-")?{L}+|("+"|"-")?{D}+ "." {D}+)("."|{D}|{L})+ 
 
 numero_erroneo             = ("+"|"-")?{D}+ "." {D}+{L}({L}|{D})*
 
-nuumero_erroneo_mas_puntos = ("+"|"-")*(\.)*("^"|{num})*?(\.*)(("^"|{num})*?(\.)*("^"|{num})*?)* | ("+"|"-")*(("^"|{num})*?(\.)*("^"|{num})*?)* 
+nuumero_erroneo_mas_puntos = ("+"|"-")*(\.)*("^"|{num})*?(\.*)(("^"|{num})*?(\.)*("^"|{num})*?)* | ("+"|"-")*(("^"|{num})*?(\.)*("^"|{num})*?)*
+
+//nuumero_erroneo_mas_puntos = ("+"|"-")? ({D}* "." (\.)+ {D}*)+//
 
 numero_erroneo             = (("+"|"-")?{L}+|("+"|"-")?("^"|{num})* "." {D}+)("."|("^"|{num})*|{L})+ 
 
 numero_erroneo             = ("+"|"-")?("^"|{num})+ "." ("^"|{num})*+{L}({L}|{D})*
-
-
 
 mal_nombre_para_id         = {D}+{L}+|{CAP}{L}({L}|{D})*| \"\$\&\?\¿\%{L}({L}|{D})*
 mayusculas_en_cadena       = {L}{CAP}+{L}*

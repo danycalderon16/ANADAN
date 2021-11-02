@@ -10,6 +10,7 @@ import java.awt.Font;
 import javax.swing.JLabel;
 import modelos.LabelError;
 import modelos.Gramatica;
+import modelos.CodigoIntermedio;
 import java.awt.Color;
 
 action code
@@ -1092,7 +1093,9 @@ op_art ::= SIGNO_DE_SUMA | SIGNO_DE_RESTA | SIGNO_DE_DIVISIÓN | SIGNO_DE_MULTIP
 op_log ::= OR | AND;
 
 
-sentif::=  IF PARENTESIS_ABRE condicion PARENTESIS_CIERRA LLAVE_ABRE  bloquesentencias LLAVE_CIERRA 
+sentif::=  IF PARENTESIS_ABRE condicion PARENTESIS_CIERRA LLAVE_ABRE  bloquesentencias LLAVE_CIERRA {:
+                //VentanaPrincipal.intercode = VentanaPrincipal.intercode + "if(";//
+            :} 
             |  error:e {: 
             JLabel lb = new JLabel();
             lb.setForeground(new Color(217, 33, 51));
@@ -1300,7 +1303,7 @@ condicion::= IDENTIFICADOR:id IGUAL_QUE FALSE {:
         :} |
         IDENTIFICADOR:id op_rel NUMERO:num {:
             Simbolo sim = TablaSimbolos.buscar(id);
-        
+            //VentanaPrincipal.intercode = VentanaPrincipal.intercode + id + "==" + num;//
             if (sim == null) {
                 JLabel lb = new JLabel();
                     lb.setForeground(new Color(217, 33, 51));
@@ -1383,12 +1386,13 @@ condicion::= IDENTIFICADOR:id IGUAL_QUE FALSE {:
 
 ;
 
+
 metodos_parametros::=
     metodo_sin_parametros    PARENTESIS_ABRE PARENTESIS_CIERRA PUNTOYCOMA |
-    metodo_un_parametro      PARENTESIS_ABRE NUMERO PARENTESIS_CIERRA PUNTOYCOMA |
-    metodo_cuatro_parametros PARENTESIS_ABRE NUMERO COMA NUMERO COMA NUMERO COMA NUMERO PARENTESIS_CIERRA PUNTOYCOMA |
-    metodo_nueve_parametros  PARENTESIS_ABRE NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO PARENTESIS_CIERRA PUNTOYCOMA |
-    metodo_doce_parametros   PARENTESIS_ABRE NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO PARENTESIS_CIERRA PUNTOYCOMA;
+    metodo_un_parametro      PARENTESIS_ABRE parametroa PARENTESIS_CIERRA PUNTOYCOMA |
+    metodo_cuatro_parametros PARENTESIS_ABRE parametroa COMA parametroa COMA parametroa COMA parametroa PARENTESIS_CIERRA PUNTOYCOMA |
+    metodo_nueve_parametros  PARENTESIS_ABRE parametroa COMA parametroa COMA parametroa COMA parametroa COMA parametroa COMA parametroa COMA parametroa COMA parametroa COMA parametroa PARENTESIS_CIERRA PUNTOYCOMA |
+    metodo_doce_parametros   PARENTESIS_ABRE parametroa COMA parametroa COMA parametroa COMA parametroa COMA parametroa COMA parametroa COMA parametroa COMA parametroa COMA parametroa COMA parametroa COMA parametroa COMA parametroa PARENTESIS_CIERRA PUNTOYCOMA;
 
 metodo_doce_parametros ::= FILLRECTANGLE | DRAWRECTANGLE;
  
