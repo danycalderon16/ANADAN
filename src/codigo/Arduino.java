@@ -48,7 +48,29 @@ public class Arduino {
        String llavecierra = ".*[//}].*";
        String metodo = ".*method.*[//(].*";
        
-          String test = "flag a; /*Hola*/";
+       //FUNCIONES BÁSICAS
+       String fb1 = ".*setfilamenttype[//(].*";
+       String fb2 = ".*fillrectangle[//(].*";
+       String fb3 = ".*drawrentangle[//(].*";
+       String fb4 = ".*sleep[//(].*";
+       String fb5 = ".*fillcircle[//(].*";
+       String fb6 = ".*drawcircle[//(].*";
+       String fb7 = ".*drawtriangle[//(].*";
+       String fb8 = ".*filltriangle[//(].*";
+       String fb9 = ".*stop[//(].*";
+       String fb10 = ".*getextrusorx[//(].*";
+       String fb11 = ".*getextrusory[//(].*";
+       String fb12 = ".*getextrusorz[//(].*";
+       String fb13 = ".*getfilamenttype[//(].*";
+       String fb14 = ".*gettemperature[//(].*";
+       String fb15 = ".*get[//(].*";
+       String fb16 = ".*give[//(].*";
+       
+       
+       
+        
+          
+          
    
         StringTokenizer splitfake = new StringTokenizer(fuente,"\n");
         while(splitfake.hasMoreTokens()){
@@ -120,7 +142,10 @@ public class Arduino {
             }else if(linea.matches(fin)){
                 saliente += "}\n"; 
             }else if(linea.matches(sentif) || linea.matches(llavecierra) || linea.matches(sentfor) || linea.matches(sentwhile)
-                    || linea.matches(sentswitch) || linea.matches(sentcase) || linea.matches(sentcut)){
+                    || linea.matches(sentswitch) || linea.matches(sentcase) || linea.matches(sentcut) || linea.matches(fb1)
+                    || linea.matches(fb2) || linea.matches(fb3) || linea.matches(fb4) || linea.matches(fb5) || linea.matches(fb6)
+                    || linea.matches(fb7) || linea.matches(fb8) || linea.matches(fb9) || linea.matches(fb10) || linea.matches(fb11)
+                    || linea.matches(fb12) || linea.matches(fb13) || linea.matches(fb14) || linea.matches(fb15) || linea.matches(fb16)){
                 saliente += linea + "\n"; 
             }else if(linea.matches(printerport)){
                 String[] first = linea.split("[//(]");
