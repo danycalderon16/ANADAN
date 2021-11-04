@@ -48,6 +48,8 @@ public class Arduino {
        String llavecierra = ".*[//}].*";
        String metodo = ".*method.*[//(].*";
        
+       String asignacion = ".*=.*;.*";
+       
        //FUNCIONES BÁSICAS
        String fb1 = ".*setfilamenttype[//(].*";
        String fb2 = ".*fillrectangle[//(].*";
@@ -145,7 +147,8 @@ public class Arduino {
                     || linea.matches(sentswitch) || linea.matches(sentcase) || linea.matches(sentcut) || linea.matches(fb1)
                     || linea.matches(fb2) || linea.matches(fb3) || linea.matches(fb4) || linea.matches(fb5) || linea.matches(fb6)
                     || linea.matches(fb7) || linea.matches(fb8) || linea.matches(fb9) || linea.matches(fb10) || linea.matches(fb11)
-                    || linea.matches(fb12) || linea.matches(fb13) || linea.matches(fb14) || linea.matches(fb15) || linea.matches(fb16)){
+                    || linea.matches(fb12) || linea.matches(fb13) || linea.matches(fb14) || linea.matches(fb15) || linea.matches(fb16)
+                    || linea.matches(asignacion)){
                 saliente += linea + "\n"; 
             }else if(linea.matches(printerport)){
                 String[] first = linea.split("[//(]");
