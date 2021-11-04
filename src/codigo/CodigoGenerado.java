@@ -74,39 +74,8 @@ public class CodigoGenerado extends javax.swing.JDialog {
     public void llenarcodigo2(String arduino){
         txtcod.setText(arduino);
     }
-            
-            public void llenarcodigo(){
-            String a[] = VentanaPrincipal.txtAreaEdit.getText().split("\n");
-            
-            String cadena="";
-            
-            
-            for(int i=0; i<a.length; i++){
-                VentanaPrincipal.intercode2.add(a[i]);
-            }
-            
-            for(int i=0; i<VentanaPrincipal.intercode2.size(); i++){
-                
-                txtcod.setText(VentanaPrincipal.intercode2.get(i));
-               
-                if(i==0){VentanaPrincipal.intercode2.set(i, "void setup() {");}
-                
-                if(VentanaPrincipal.intercode2.get(i).contains("begin")){VentanaPrincipal.intercode2.remove(i);}
-                
-                if(VentanaPrincipal.intercode2.get(i).contains("just")){VentanaPrincipal.intercode2.set(i, 
-                        VentanaPrincipal.intercode2.get(i).replace("just", "int"));}
-                
-                if(i==VentanaPrincipal.intercode2.size()-1){VentanaPrincipal.intercode2.set(i, "}");}
-                
-                
-                cadena = cadena +"\n"+ VentanaPrincipal.intercode2.get(i);
-                
-            }
-            txtcod.setText(cadena);
-            
-    }        
+                    
     
-            
     public void seticon() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/logopro2.png")));
     }
