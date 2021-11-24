@@ -112,8 +112,8 @@ numero                     = {D}+ | ("+"|"-")?{D}+ | {D}+"."{D}+ | ("+"|"-")?{D}
 <YYINITIAL> "main" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Main;}
 
 <YYINITIAL> "righttemple" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Righttemple;}
-<YYINITIAL> "righttrim" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Righttrim;}
-<YYINITIAL> "lefttrim" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Lefttrim;}
+<YYINITIAL> "rightrim" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Rightrim;}
+<YYINITIAL> "leftrim" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Leftrim;}
 <YYINITIAL> "lefttemple" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Lefttemple;}
 <YYINITIAL> "bridge" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Bridge;}
 

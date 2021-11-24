@@ -95,9 +95,9 @@ public enum Tokens {
     Identificador,
     Numero,
     COMILLAS_DOBLES,
-    Lefttrim,
+    Leftrim,
     Lefttemple,
-    Righttrim,
+    Rightrim,
     Righttemple,
     Bridge
 }

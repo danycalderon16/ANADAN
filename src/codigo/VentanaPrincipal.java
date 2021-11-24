@@ -1422,10 +1422,10 @@ NumeroLinea lineatxtCodigo;
                     case Word:
                     case True:
                     case False:
-                    case Righttrim:
+                    case Rightrim:
                     case Righttemple:
                     case Bridge:
-                    case Lefttrim:
+                    case Leftrim:
                     case Lefttemple:
                         tblTablaSimbolos.setValueAt(c.columna, i, 0);
                         tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
