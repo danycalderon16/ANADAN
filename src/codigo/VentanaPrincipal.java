@@ -1422,6 +1422,11 @@ NumeroLinea lineatxtCodigo;
                     case Word:
                     case True:
                     case False:
+                    case Righttrim:
+                    case Righttemple:
+                    case Bridge:
+                    case Lefttrim:
+                    case Lefttemple:
                         tblTablaSimbolos.setValueAt(c.columna, i, 0);
                         tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
                         tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);

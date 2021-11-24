@@ -111,6 +111,13 @@ numero                     = {D}+ | ("+"|"-")?{D}+ | {D}+"."{D}+ | ("+"|"-")?{D}
 <YYINITIAL> "false" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return False;}
 <YYINITIAL> "main" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Main;}
 
+<YYINITIAL> "righttemple" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Righttemple;}
+<YYINITIAL> "righttrim" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Righttrim;}
+<YYINITIAL> "lefttrim" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Lefttrim;}
+<YYINITIAL> "lefttemple" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Lefttemple;}
+<YYINITIAL> "bridge" {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Bridge;}
+
+
 <YYINITIAL> "\," {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Coma;}
 <YYINITIAL> "." {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return Punto;}
 
@@ -158,7 +165,7 @@ numero                     = {D}+ | ("+"|"-")?{D}+ | {D}+"."{D}+ | ("+"|"-")?{D}
 <YYINITIAL> {nuumero_erroneo_mas_puntos} {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return NUMERO_ERRONEO_MAS_PUNTOS;}
 <YYINITIAL> {numero_erroneo} {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return NUMERO_ERRONEO;} 
 <YYINITIAL> {numero_erroneo} {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return NUMERO_ERRONEO;}
-<YYINITIAL>  {D}+{L}+|{CAP}{L}({L}|{D})*|\"\$\&\?\¿\%{L}({L}|{D})* {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return MAL_NOMBRE_PARA_IDENTIFICADOR;}
+<YYINITIAL>  {D}+{L}+|{CAP}{L}({L}|{D})*|\$\&\?\¿\%{L}({L}|{D})* {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return MAL_NOMBRE_PARA_IDENTIFICADOR;}
 <YYINITIAL> {mal_nombre_para_id} {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return MAL_NOMBRE_PARA_IDENTIFICADOR;} 
 <YYINITIAL> {mayusculas_en_cadena} {c.linea=yyline;c.columna=yycolumn;lexeme=yytext(); return MAYUSCULAS_EN_CADENA;}
 

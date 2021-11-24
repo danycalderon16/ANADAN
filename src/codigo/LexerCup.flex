@@ -81,6 +81,13 @@ setfilamenttype {return new Symbol(sym.SETFILAMENTTYPE, yychar, yyline, yytext()
 "defect" {return new Symbol(sym.DEFECT, yychar, yyline, yytext());}
 "new" {return new Symbol(sym.NEW, yychar, yyline, yytext());}
 
+
+"righttemple" {return new Symbol(sym.RIGHTTEMPLE, yychar, yyline, yytext());}
+"righttrim" {return new Symbol(sym.RIGHTTRIM, yychar, yyline, yytext());}
+"lefttrim" {return new Symbol(sym.LEFTTRIM, yychar, yyline, yytext());}
+"lefttemple" {return new Symbol(sym.LEFTTEMPLE, yychar, yyline, yytext());}
+"bridge" {return new Symbol(sym.BRIDGE, yychar, yyline, yytext());}
+
 "do" {return new Symbol(sym.DO, yychar, yyline, yytext());}
 "goback" {return new Symbol(sym.GOBACK, yychar, yyline, yytext());}
 "broken" {return new Symbol(sym.BROKEN, yychar, yyline, yytext());}

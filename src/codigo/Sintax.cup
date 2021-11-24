@@ -77,6 +77,7 @@ SIGNO_DE_MULTIPLICACIÓN, SIGNO_DE_DIVISIÓN, SIGNO_DE_RESIDUO, NOT, AND, OR, MA
 MENOS_MENOS, MENOR_QUE, MAYOR_QUE, MENOR_O_IGUAL_QUE, MAYOR_O_IGUAL_QUE, DIFERENTE_QUE,
 IGUAL_QUE, PARENTESIS_ABRE, PARENTESIS_CIERRA, LLAVE_ABRE, LLAVE_CIERRA, CORCHETE_ABRE,SIGNO_DE_EXPONENTE,
 CORCHETE_CIERRA, PUNTOYCOMA,  COMA,  PUNTO, 
+RIGHTTEMPLE,RIGHTTRIM,LEFTTRIM,LEFTTEMPLE,BRIDGE,
 ERROR;
 
 /*----------------------------------------  NO TERMINALES  ---------------------------------------------------------*/
@@ -136,6 +137,7 @@ non terminal inicio, declaracion_for, if, if_else,
     get,
     give,
     parametroa,
+    rutinas,
     expresioncinco;
 
 /*----------------------------------------  INICIO  ------------------------------------------------------------*/
@@ -226,6 +228,8 @@ bloquesentencias::=
             get|
             bloquesentencias give|
             give|            
+            bloquesentencias rutinas   |
+            rutinas |    
             error PUNTOYCOMA | 
             error LLAVE_CIERRA 
 ; 
@@ -235,10 +239,12 @@ bloquesentencias::=
 declaracion ::= 
    
     JUST IDENTIFICADOR:id PUNTOYCOMA   {:
+        System.out.println(id+" en la linea: "+(idright+1));
         try{
             Simbolo sim = TablaSimbolos.buscar(id);
             //Si es nulo, devuelvo un error
             if (sim != null) {
+                System.out.println("El identificador '"+id+"' ya existe");
                 JLabel lb = new JLabel();
                 lb.setForeground(new Color(217, 33, 51));
                 lb.setFont(new Font("Verdana", Font.PLAIN, 14));
@@ -508,7 +514,7 @@ declaracion ::=
     t_dato CORCHETE_ABRE CORCHETE_CIERRA IDENTIFICADOR SIGNO_DE_IGUAL LLAVE_ABRE datos_array LLAVE_CIERRA PUNTOYCOMA |
     IDENTIFICADOR IDENTIFICADOR SIGNO_DE_IGUAL NEW IDENTIFICADOR PARENTESIS_ABRE parametrosa PARENTESIS_CIERRA PUNTOYCOMA |
     
-    //""""""""""""""""""""""""""""""""""""""""""""    ERRORES DE TIPOS      """"""""""""""""""""""""""""""""""""""""""""""""""""
+    //""""""""""""""""""""""""""""""""""""""""""""    ERRORES DE TIOS      """"""""""""""""""""""""""""""""""""""""""""""""""""
     JUST:tipo IDENTIFICADOR:id SIGNO_DE_IGUAL DECIMAL:valor PUNTOYCOMA {:
          try{                
             JLabel lb = new JLabel();
@@ -1083,7 +1089,9 @@ factor ::=
             new Gramatica("factor::= expresion | NUMERO | DECIMAL | IDENTIFICADOR","Error sintáctico. La expresión no esta bien escrita")));
     :}
 ;
-
+/*
+expresion ::= NUMERO | IDENTIFICADOR | PARENTESIS_ABRE  expresion op_art expresion PARENTESIS_CIERRA;
+*/
 op_rel ::= MAYOR_QUE | MENOR_QUE | MAYOR_O_IGUAL_QUE | MENOR_O_IGUAL_QUE | DIFERENTE_QUE | IGUAL_QUE;
 op_art ::= SIGNO_DE_SUMA | SIGNO_DE_RESTA | SIGNO_DE_DIVISIÓN | SIGNO_DE_MULTIPLICACIÓN ;
 op_log ::= OR | AND;
@@ -1114,7 +1122,6 @@ sentelse::= ELSE LLAVE_ABRE bloquesentencias LLAVE_CIERRA |
             :}
 ;
 sentwhile::= WHILE PARENTESIS_ABRE condicion PARENTESIS_CIERRA LLAVE_ABRE bloquesentencias LLAVE_CIERRA;
-
 sentasignacion::= 
         IDENTIFICADOR:identificador SIGNO_DE_IGUAL CADENA_TEXTO:v PUNTOYCOMA {:
             Simbolo sim = TablaSimbolos.buscar(identificador);
@@ -1181,7 +1188,7 @@ sentasignacion::=
         else{
             if(sim.tipo.equals("just") || sim.tipo.equals("broken")){
                 VentanaPrincipal.exp = identificador +"="+ String.valueOf(e);
-                resolverExp(VentanaPrincipal.exp);
+                // resolverExp(VentanaPrincipal.exp);
             }
             else{ 
                 JLabel lb = new JLabel();
@@ -1537,3 +1544,12 @@ tryycatch::= CHECK LLAVE_ABRE bloquesentencias LLAVE_CIERRA TRAP PARENTESIS_ABRE
 get::= GET PARENTESIS_ABRE CADENA_TEXTO PARENTESIS_CIERRA PUNTOYCOMA;
 
 give::= GIVE PARENTESIS_ABRE IDENTIFICADOR PARENTESIS_CIERRA PUNTOYCOMA;
+
+rutinas::= 
+    RIGHTTRIM PARENTESIS_ABRE CADENA_TEXTO COMA DECIMAL COMA DECIMAL COMA DECIMAL COMA DECIMAL COMA DECIMAL COMA DECIMAL  PARENTESIS_CIERRA PUNTOYCOMA    |
+    LEFTTRIM PARENTESIS_ABRE CADENA_TEXTO COMA DECIMAL COMA DECIMAL COMA DECIMAL COMA DECIMAL COMA DECIMAL COMA DECIMAL PARENTESIS_CIERRA PUNTOYCOMA  |
+    RIGHTTEMPLE PARENTESIS_ABRE CADENA_TEXTO COMA DECIMAL COMA DECIMAL COMA DECIMAL COMA DECIMAL COMA DECIMAL COMA DECIMAL PARENTESIS_CIERRA PUNTOYCOMA   |
+    LEFTTEMPLE PARENTESIS_ABRE CADENA_TEXTO COMA DECIMAL COMA DECIMAL COMA DECIMAL COMA DECIMAL COMA DECIMAL COMA DECIMAL  PARENTESIS_CIERRA PUNTOYCOMA   |
+    BRIDGE PARENTESIS_ABRE CADENA_TEXTO COMA DECIMAL COMA DECIMAL COMA DECIMAL COMA DECIMAL COMA DECIMAL COMA DECIMAL PARENTESIS_CIERRA PUNTOYCOMA 
+     
+;

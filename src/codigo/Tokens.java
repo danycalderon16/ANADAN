@@ -94,5 +94,10 @@ public enum Tokens {
     PuntoYComa,
     Identificador,
     Numero,
-    COMILLAS_DOBLES
+    COMILLAS_DOBLES,
+    Lefttrim,
+    Lefttemple,
+    Righttrim,
+    Righttemple,
+    Bridge
 }
