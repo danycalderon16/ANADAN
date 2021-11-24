@@ -1183,52 +1183,7 @@ NumeroLinea lineatxtCodigo;
             //resolverExp(exp);
         }
 
-        /* if (!errores_lexicos ) {
-            lb.setForeground(color_success);
-            lb.setBounds(5, 5, 700, 20);
-            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
-            jPanel1.add(lb);
-            System.out.println("Sin errores lexicos");
-                System.out.println(lb.getText());
-                showMessageDialog(null, "1");
-            if(!errores_sintacticos){
-                System.out.println("Sin errores sintacticos");
-                lb.setText("El programa no contiene errores sintacticos.");
-                lb.setBounds(5, 25, 700, 20);
-                lb.setFont(new Font("Verdana", Font.PLAIN, 14));
-                jLabel1.add(lb);
-                System.out.println(lb.getText());
-                showMessageDialog(null, "2");
-            }else{
-                int num = 0;
-                int y = 0;
-                for (LabelError le : labelsErrores) {
-                    y = 5 +30*num;
-                    System.out.println("y:"+y);
-                    le.getLabel().setBounds(5, y, 700, 20);
-                    System.out.println(le.getLabel().getY());
-                    clickLabel(le);
-                    jPanel1.add(le.getLabel());
-                    num++;
-                    System.out.println("Mostrando errores lexicos y sintacticos");
-                showMessageDialog(null, "3");
-                }
-            }
-        }else{
-            int num = 0;
-            int y = 0;
-            for (LabelError le : labelsErrores) {
-                y = 5 +30*num;
-                System.out.println("y:"+y);
-                le.getLabel().setBounds(5, y, 700, 20);
-                System.out.println(le.getLabel().getY());
-                clickLabel(le);
-                jPanel1.add(le.getLabel());
-                num++;
-                System.out.println("Mostrando errores lexicos y sintacticos");
-                showMessageDialog(null, "4");
-            }            
-         }     */
+        
     }
 
     public void buja(String[] A, int ini, int ter) {
@@ -2030,9 +1985,6 @@ NumeroLinea lineatxtCodigo;
         try {
             s.parse();
         } catch (Exception ex) {
-            //Symbol sym = s.getS();
-            //Errores+=("    >Linea: "+(sym.right+1)+" Columna: "+(sym.left+1)+", Error en la estructura: "+ sym.value);
-            //txtConsola.setForeground(Color.red);
             Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
         mostrarErrores();

@@ -235,12 +235,10 @@ bloquesentencias::=
 declaracion ::= 
    
     JUST IDENTIFICADOR:id PUNTOYCOMA   {:
-        System.out.println(id+" en la linea: "+(idright+1));
         try{
             Simbolo sim = TablaSimbolos.buscar(id);
             //Si es nulo, devuelvo un error
             if (sim != null) {
-                System.out.println("El identificador '"+id+"' ya existe");
                 JLabel lb = new JLabel();
                 lb.setForeground(new Color(217, 33, 51));
                 lb.setFont(new Font("Verdana", Font.PLAIN, 14));
@@ -510,7 +508,7 @@ declaracion ::=
     t_dato CORCHETE_ABRE CORCHETE_CIERRA IDENTIFICADOR SIGNO_DE_IGUAL LLAVE_ABRE datos_array LLAVE_CIERRA PUNTOYCOMA |
     IDENTIFICADOR IDENTIFICADOR SIGNO_DE_IGUAL NEW IDENTIFICADOR PARENTESIS_ABRE parametrosa PARENTESIS_CIERRA PUNTOYCOMA |
     
-    //""""""""""""""""""""""""""""""""""""""""""""    ERRORES DE TIOS      """"""""""""""""""""""""""""""""""""""""""""""""""""
+    //""""""""""""""""""""""""""""""""""""""""""""    ERRORES DE TIPOS      """"""""""""""""""""""""""""""""""""""""""""""""""""
     JUST:tipo IDENTIFICADOR:id SIGNO_DE_IGUAL DECIMAL:valor PUNTOYCOMA {:
          try{                
             JLabel lb = new JLabel();
@@ -1085,9 +1083,7 @@ factor ::=
             new Gramatica("factor::= expresion | NUMERO | DECIMAL | IDENTIFICADOR","Error sintáctico. La expresión no esta bien escrita")));
     :}
 ;
-/*
-expresion ::= NUMERO | IDENTIFICADOR | PARENTESIS_ABRE  expresion op_art expresion PARENTESIS_CIERRA;
-*/
+
 op_rel ::= MAYOR_QUE | MENOR_QUE | MAYOR_O_IGUAL_QUE | MENOR_O_IGUAL_QUE | DIFERENTE_QUE | IGUAL_QUE;
 op_art ::= SIGNO_DE_SUMA | SIGNO_DE_RESTA | SIGNO_DE_DIVISIÓN | SIGNO_DE_MULTIPLICACIÓN ;
 op_log ::= OR | AND;
@@ -1118,6 +1114,7 @@ sentelse::= ELSE LLAVE_ABRE bloquesentencias LLAVE_CIERRA |
             :}
 ;
 sentwhile::= WHILE PARENTESIS_ABRE condicion PARENTESIS_CIERRA LLAVE_ABRE bloquesentencias LLAVE_CIERRA;
+
 sentasignacion::= 
         IDENTIFICADOR:identificador SIGNO_DE_IGUAL CADENA_TEXTO:v PUNTOYCOMA {:
             Simbolo sim = TablaSimbolos.buscar(identificador);
