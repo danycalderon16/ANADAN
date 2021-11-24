@@ -16,11 +16,11 @@ import javax.swing.text.StyleContext;
 
 public class Arduino {
 
-    String fuente = "";
-    String saliente = "";
-    String salientetab = "";
-    String salienteloop = "void loop() {\n";
-    String[] codseg;
+    String fuente = ""; //CONTENDRÁ EL CÓDIGO FUENTE
+    String saliente = ""; //CONTENDRA EL CÓDIGO INTERMEDIO EN ARDUINO
+    String salientetab = ""; //CONTENDRÁ EL CÓDIGO INTERMEDIO EN ARDUINO CON TABULACIONES
+    String salienteloop = "void loop() {\n"; //CONTENTDRÁ LO CORRESPONDIENTE AL MÉTODO LOOP
+    String[] codseg; 
     public int tab=0;
     
     public Arduino(String sentencias) {
@@ -31,6 +31,8 @@ public class Arduino {
         return salientetab;
     }
     public void expresiones(){
+        
+    //EXPRESIONES REGULARES DEL LENGUAJE DE ANADAN PARA CAMBIAR POR ESTRUCTURAS EN ARDUINO
        String inijust = ".*just.*;.*";
        String iniflag = ".*flag.*;.*";
        String inibroken = ".*broken.*[//;].*";
@@ -50,7 +52,7 @@ public class Arduino {
        
        String asignacion = ".*=.*;.*";
        
-       //FUNCIONES BÁSICAS
+       //EXPRESIONES REGULARES DE LAS FUNCIONES BÁSICAS DE ANADAN
        String fb1 = ".*setfilamenttype[//(].*";
        String fb2 = ".*fillrectangle[//(].*";
        String fb3 = ".*drawrentangle[//(].*";
@@ -68,18 +70,14 @@ public class Arduino {
        String fb15 = ".*get[//(].*";
        String fb16 = ".*give[//(].*";
        
-       
-       
-        
-          
-          
-   
+       //SEPARAMOS EL CÓDIGO FUENTE ESCRITO POR EL USUARIO EN TOKENS INDIVIDUALES
         StringTokenizer splitfake = new StringTokenizer(fuente,"\n");
+        //EVALUACIÓN DE TOKENS INDIVIDUALES
         while(splitfake.hasMoreTokens()){
-    
+        //linea CONTIENE CADA TOKEN EN CADA CICLO DEL WHILE
             String linea = splitfake.nextToken().replaceAll("\\s", "");
             
-            //System.out.println(linea);
+            //SE EVALUA CADA LINEA CON LAS EXPRESIONES REGULARES ANTERIORES A TRAVÉS DE MATCHES
             if(linea.matches(metodo)){
                 String[] first = linea.split("[//(]");
                 String[] second = first[0].split("method");
@@ -160,9 +158,10 @@ public class Arduino {
                 salienteloop += "delay(1000);\n";
             }
         }
+        //SE ADJUNTA EL MÉTODO LOOP AL MÉTODO SETUP
         saliente += salienteloop + "}";
         codseg = saliente.split("\n");
-        
+        //SE CREAN TABULACIONES
         for(int i=0; i<codseg.length; i++){
             for(int j=0; j<tab; j++){
                 codseg[i] = "\t"+codseg[i];
