@@ -146,7 +146,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                         if (text.substring(wordL, wordR).matches("(\\W)*(just|broken|word|flag|word)")) {
                             //setCharacterAttributes(wordL, wordL+1, attrWhite, false);
                             setCharacterAttributes(wordL + 1, wordR - wordL, attr, false);
-                        } else if (text.substring(wordL, wordR).matches("(\\W)*(begin|end|setfilamenttype|fillrectangle|drawrectangle|sleep|fillcircle|drawcircle|drawtriangle|filltriangle|stop|getextrusorx|getextrusory|getextrusorz|getfilamenttype|setnewfilament|getfilament|gettemperatura|same|get|give|select|empty|cut|model|defect|new|goback|home|sleep|printerport|check|trap)")) {
+                        } else if (text.substring(wordL, wordR).matches("(\\W)*(rightrim|leftrim|righttemple|lefttemple|bridge|begin|end|setfilamenttype|fillrectangle|drawrectangle|sleep|fillcircle|drawcircle|drawtriangle|filltriangle|stop|getextrusorx|getextrusory|getextrusorz|getfilamenttype|setnewfilament|getfilament|gettemperatura|same|get|give|select|empty|cut|model|defect|new|goback|home|sleep|printerport|check|trap)")) {
                             setCharacterAttributes(wordL + 1, wordR - wordL, attrBlue, false);
                         } else if (text.substring(wordL, wordR).matches("(\\W)*(method|class|main)")) {
                             setCharacterAttributes(wordL + 1, wordR - wordL, attrOrange, false);

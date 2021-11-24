@@ -1,0 +1,9 @@
+prueba()
+begin
+	word x;
+	x = 5;
+	broken j;
+	broken j;
+	just z;
+	just u
+end
