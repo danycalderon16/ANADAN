@@ -20,7 +20,16 @@ import static util.Utils.resizeIcon;
 import codigo.VentanaPrincipal;
 import static codigo.VentanaPrincipal.intercode;
 import static codigo.VentanaPrincipal.txtAreaEdit;
+import ds.desktop.notify.DesktopNotify;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 
@@ -92,6 +101,10 @@ public class CodigoGenerado extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtcod = new javax.swing.JTextPane();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -115,10 +128,32 @@ public class CodigoGenerado extends javax.swing.JDialog {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 718, Short.MAX_VALUE)
+                .addContainerGap(17, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 714, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
+
+        jMenu1.setText("File");
+
+        jMenuItem1.setText(".gcode");
+        jMenuItem1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jMenuItem1MouseReleased(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("Export as gcode");
+        jMenuItem2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jMenuItem2MouseReleased(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -134,6 +169,74 @@ public class CodigoGenerado extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jMenuItem1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MouseReleased
+        CodigoG codigoggenerado = new CodigoG(txtcod.getText());
+        String[] copiacodigog;
+        
+        copiacodigog = codigoggenerado.getCodigoG();
+        //System.out.println(copiacodigog[0]);
+        txtcod.setText("");
+        for(int i=0; i<copiacodigog.length; i++){
+           txtcod.setText(txtcod.getText()+"\n"+copiacodigog[i]);
+        }
+        //txtcod.setText(codigoggenerado.getCodigoG().toString()+"");
+        //System.out.println(codigoggenerado.getCodigoG()+"");
+    }//GEN-LAST:event_jMenuItem1MouseReleased
+    JFileChooser seleccionar = new JFileChooser();
+    File archivo;
+    FileInputStream entrada;
+    FileOutputStream salida;
+    String name;
+    private void jMenuItem2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem2MouseReleased
+                if (name == null) {
+
+            if (seleccionar.showDialog(null, "Save") == JFileChooser.APPROVE_OPTION) {
+
+                archivo = seleccionar.getSelectedFile();
+                if (archivo.getName().endsWith("gcode")) {
+                    String Documento = txtcod.getText();
+                    String mensaje = GuardarArchivo(archivo, Documento);
+                    if (mensaje != null) {
+                        showMessageDialog(null, mensaje);
+                    } else {
+                        showMessageDialog(null, "Archivo no compatible");
+                    }
+                } else {
+                    showMessageDialog(null, "Fallo al guardar, coloque extencion .txt");
+                }
+            }
+            name = archivo.getName();
+            return;
+        } else {
+        }
+
+        File archivo = new File(name);
+        PrintWriter escribir;
+        try {
+            escribir = new PrintWriter(archivo);
+            escribir.print(txtcod.getText());
+            escribir.close();
+
+            DesktopNotify.showDesktopMessage("ANADAN-INFORMATION", "Actualizaciones guardadas", DesktopNotify.SUCCESS, 5000L);
+            //   showMessageDialog(null,"Actualizaciones guardadas");
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem2MouseReleased
+
+        public String GuardarArchivo(File archivo, String documento) {
+        String mensaje = null;
+        try {
+            salida = new FileOutputStream(archivo);
+            byte[] bytxt = documento.getBytes();
+            salida.write(bytxt);
+            mensaje = "Archivo guardado";
+
+        } catch (Exception e) {
+        }
+        return mensaje;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -178,6 +281,10 @@ public class CodigoGenerado extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextPane txtcod;
