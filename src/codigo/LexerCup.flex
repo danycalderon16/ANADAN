@@ -87,6 +87,8 @@ setfilamenttype {return new Symbol(sym.SETFILAMENTTYPE, yychar, yyline, yytext()
 "leftrim" {return new Symbol(sym.LEFTRIM, yychar, yyline, yytext());}
 "lefttemple" {return new Symbol(sym.LEFTTEMPLE, yychar, yyline, yytext());}
 "bridge" {return new Symbol(sym.BRIDGE, yychar, yyline, yytext());}
+"rims" {return new Symbol(sym.RIMS, yychar, yyline, yytext());}
+"templates" {return new Symbol(sym.TEMPLATES, yychar, yyline, yytext());}
 
 "do" {return new Symbol(sym.DO, yychar, yyline, yytext());}
 "goback" {return new Symbol(sym.GOBACK, yychar, yyline, yytext());}

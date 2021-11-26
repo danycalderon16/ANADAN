@@ -1427,6 +1427,8 @@ NumeroLinea lineatxtCodigo;
                     case Bridge:
                     case Leftrim:
                     case Lefttemple:
+                    case Templates:
+                    case Rims:
                         tblTablaSimbolos.setValueAt(c.columna, i, 0);
                         tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
                         tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);

@@ -99,5 +99,7 @@ public enum Tokens {
     Lefttemple,
     Rightrim,
     Righttemple,
-    Bridge
+    Bridge,
+    Templates,
+    Rims
 }

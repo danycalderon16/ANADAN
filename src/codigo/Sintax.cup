@@ -77,7 +77,7 @@ SIGNO_DE_MULTIPLICACIÓN, SIGNO_DE_DIVISIÓN, SIGNO_DE_RESIDUO, NOT, AND, OR, MA
 MENOS_MENOS, MENOR_QUE, MAYOR_QUE, MENOR_O_IGUAL_QUE, MAYOR_O_IGUAL_QUE, DIFERENTE_QUE,
 IGUAL_QUE, PARENTESIS_ABRE, PARENTESIS_CIERRA, LLAVE_ABRE, LLAVE_CIERRA, CORCHETE_ABRE,SIGNO_DE_EXPONENTE,
 CORCHETE_CIERRA, PUNTOYCOMA,  COMA,  PUNTO, 
-RIGHTTEMPLE,RIGHTRIM,LEFTRIM,LEFTTEMPLE,BRIDGE,
+RIGHTTEMPLE,RIGHTRIM,LEFTRIM,LEFTTEMPLE,BRIDGE,RIMS, TEMPLATES,
 ERROR;
 
 /*----------------------------------------  NO TERMINALES  ---------------------------------------------------------*/
@@ -1191,7 +1191,7 @@ sentasignacion::=
         else{
             if(sim.tipo.equals("just") || sim.tipo.equals("broken")){
                 VentanaPrincipal.exp = identificador +"="+ String.valueOf(e);
-                // resolverExp(VentanaPrincipal.exp);
+                resolverExp(VentanaPrincipal.exp);
             }
             else{ 
                 JLabel lb = new JLabel();
@@ -1625,4 +1625,4 @@ parametro_decimal::=
     |  | DECIMAL | NUMERO;
 
 nombres_rutinas::= 
-    RIGHTTEMPLE | LEFTTEMPLE | RIGHTRIM | LEFTRIM | BRIDGE ;
+    RIGHTTEMPLE | LEFTTEMPLE | RIGHTRIM | LEFTRIM | BRIDGE |TEMPLATES  | RIMS;
