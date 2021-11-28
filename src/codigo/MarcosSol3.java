@@ -15,7 +15,7 @@ public class MarcosSol3 {
         valor();
     }
     
-    public String[] marcosredondos = new String [5];
+    public String[] marcosredondos = new String [4];
     public void valor(){
         marcosredondos[0]="G1 X81.589 Y119.789 E4.08179\n" +
 "G1 X79.723 Y120.556 E4.13618\n" +

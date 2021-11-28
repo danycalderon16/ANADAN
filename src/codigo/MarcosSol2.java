@@ -15,7 +15,7 @@ public class MarcosSol2 {
         valor();
     }
     
-    public String[] marcosredondos = new String [4];
+    public String[] marcosredondos = new String [5];
     public void valor(){
         marcosredondos[0]="G1 E2.91770 F2400.00000\n" +
 "G92 E0\n" +

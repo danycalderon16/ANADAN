@@ -1,15 +1,8 @@
 package codigo;
 
 import static codigo.VentanaPrincipal.txtAreaEdit;
-import java.awt.Color;
-import java.util.ArrayList;
+
 import java.util.StringTokenizer;
-import static javax.swing.JOptionPane.showMessageDialog;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.DefaultStyledDocument;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyleContext;
 
 
 
@@ -23,11 +16,18 @@ public class CodigoG {
     String resultado ="";
     String[] codseg; 
     String[] nada;
-    String[] salientemarcos = new String [10];
+    String[] salientemarcos = new String [14];
     String[] lefttemplate = new String [3];
     String[] righttemplate = new String [3];
     public int tab=0;
     VariablesCodigoG variables = new VariablesCodigoG();
+    MarcosSol sol1 = new MarcosSol();
+    MarcosSol2 sol2 = new MarcosSol2();
+    MarcosSol3 sol3 = new MarcosSol3();
+    MarcosTeashades tea = new MarcosTeashades();
+    MarcosThugLife thug = new MarcosThugLife();
+    MarcosThugLife2 thug2 = new MarcosThugLife2();
+    MarcosThugLife3 thug3 = new MarcosThugLife3();
     
     public CodigoG(String sentencias) {
         fuente = sentencias;
@@ -41,6 +41,10 @@ public class CodigoG {
         salientemarcos[7]="";
         salientemarcos[8]="";
         salientemarcos[9]="";
+        salientemarcos[10]="";
+        salientemarcos[11]="";
+        salientemarcos[12]="";
+        salientemarcos[13]="";
         lefttemplate[0]="";
         lefttemplate[1]="";
         lefttemplate[2]="";
@@ -59,44 +63,6 @@ public class CodigoG {
             return righttemplate;
     }
     public void expresiones(){
-        
-    //EXPRESIONES REGULARES DEL LENGUAJE DE ANADAN PARA CAMBIAR POR ESTRUCTURAS EN ARDUINO
-       String inijust = ".*just.*;.*";
-       String iniflag = ".*flag.*;.*";
-       String inibroken = ".*broken.*[//;].*";
-       String iniword = ".*word.*[//;].*";
-       String inicio = ".*begin.*";
-       String fin = ".*end.*";
-       String sentif = ".*if[//(].*";
-       String sentfor = ".*for[//(].*";
-       String sentwhile = ".*while[//(].*";
-       String sentswitch = ".*switch[//(].*";
-       String sentcase = ".*case[//:].*";
-       String sentcut = ".*cut[//;].*";
-       String printerport = ".*printerport[//(].*";
-       
-       String llavecierra = ".*[//}].*";
-       String metodo = ".*method.*[//(].*";
-       
-       String asignacion = ".*=.*;.*";
-       
-       //EXPRESIONES REGULARES DE LAS FUNCIONES BÁSICAS DE ANADAN
-       String fb1 = ".*setfilamenttype[//(].*";
-       String fb2 = ".*fillrectangle[//(].*";
-       String fb3 = ".*drawrentangle[//(].*";
-       String fb4 = ".*sleep[//(].*";
-       String fb5 = ".*fillcircle[//(].*";
-       String fb6 = ".*drawcircle[//(].*";
-       String fb7 = ".*drawtriangle[//(].*";
-       String fb8 = ".*filltriangle[//(].*";
-       String fb9 = ".*stop[//(].*";
-       String fb10 = ".*getextrusorx[//(].*";
-       String fb11 = ".*getextrusory[//(].*";
-       String fb12 = ".*getextrusorz[//(].*";
-       String fb13 = ".*getfilamenttype[//(].*";
-       String fb14 = ".*gettemperature[//(].*";
-       String fb15 = ".*get[//(].*";
-       String fb16 = ".*give[//(].*";
        
        //String fb17 = ".*rightrim[//(].*";
        String fb18 = ".*rims[//(].*";
@@ -111,85 +77,8 @@ public class CodigoG {
         //linea CONTIENE CADA TOKEN EN CADA CICLO DEL WHILE
             String linea = splitfake.nextToken().replaceAll("\\s", "");
             //SE EVALUA CADA LINEA CON LAS EXPRESIONES REGULARES ANTERIORES A TRAVÉS DE MATCHES
-            if(linea.matches(metodo)){
-                String[] first = linea.split("[//(]");
-                String[] second = first[0].split("method");
-                String[] n1 = first[1].split("[//)]");
-                String[] n2 = n1[0].split(",");
-                //saliente += "void " + second[1] + "(";
-                
-                if(n2.length>0){for(int i=0; i<n2.length; i++){
-                        
-                        if(n2[i].contains("broken")){
-                            if(i>=1){
-                            n2[i]=n2[i].replace("broken", ",float "); 
-                            }else{
-                            n2[i]=n2[i].replace("broken", "float ");
-                            }
-                            //saliente +=n2[i];
-                        }
-                        if(n2[i].contains("flag")){
-                            if(i>=1){
-                            n2[i]=n2[i].replace("flag", ",boolean "); 
-                            }else{
-                            n2[i]=n2[i].replace("flag", "boolean "); 
-                            }
-                            //saliente +=n2[i];
-                        }if(n2[i].contains("just")){
-                            if(i>=1){
-                            n2[i]=n2[i].replace("just", ",int "); 
-                            }else{
-                            n2[i]=n2[i].replace("just", "int "); 
-                            }
-                            //saliente +=n2[i];
-                        }
-                        if(n2[i].contains("word")){
-                            if(i>=1){
-                            n2[i]=n2[i].replace("word", ",string "); 
-                            }else{
-                            n2[i]=n2[i].replace("word", "string "); 
-                            }
-                            //saliente +=n2[i];
-                        }
-                }
-                //saliente +="){\n";
-                }       
-            }else if(linea.matches(inijust)){
-                String[] first = linea.split(";");
-                String[] second = first[0].split("just");
-                //saliente += "int " + second[1] + ";\n"; 
-            }else if(linea.matches(iniflag)){
-                String[] first = linea.split(";");
-                String[] second = first[0].split("flag");
-                //saliente += "boolean " + second[1] + ";\n"; 
-            }else if(linea.matches(inibroken)){
-                String[] first = linea.split(";");
-                String[] second = first[0].split("broken");
-                //saliente += "float " + second[1] + ";\n"; 
-            }else if(linea.matches(iniword)){
-                String[] first = linea.split(";");
-                String[] second = first[0].split("word");
-                //saliente += "string " + second[1] + ";\n"; 
-            }else if(linea.matches(inicio)){
-                //saliente += "void setup() {\n"; 
-            }else if(linea.matches(fin)){
-                //saliente += "}\n"; 
-            }else if(linea.matches(sentif) || linea.matches(llavecierra) || linea.matches(sentfor) || linea.matches(sentwhile)
-                    || linea.matches(sentswitch) || linea.matches(sentcase) || linea.matches(sentcut) || linea.matches(fb1)
-                    || linea.matches(fb2) || linea.matches(fb3) || linea.matches(fb4) || linea.matches(fb5) || linea.matches(fb6)
-                    || linea.matches(fb7) || linea.matches(fb8) || linea.matches(fb9) || linea.matches(fb10) || linea.matches(fb11)
-                    || linea.matches(fb12) || linea.matches(fb13) || linea.matches(fb14) || linea.matches(fb15) || linea.matches(fb16)
-                    || linea.matches(asignacion)){
-                //saliente += linea + "\n"; 
-            }else if(linea.matches(printerport)){
-                String[] first = linea.split("[//(]");
-                String[] second = first[1].split("[//)]");
-                //saliente += "pinMode("+second[0]+",OUTPUT);\n";
-                salienteloop += "digitalWrite("+second[0]+",HIGH);\n"; 
-                salienteloop += "delay(1000);\n"; 
-                salienteloop += "digitalWrite("+second[0]+",LOW);\n"; 
-                salienteloop += "delay(1000);\n";
-            }else if(linea.matches(fb18)){
+
+            if(linea.matches(fb18)){
                     String[] first2 = linea.split("[//(]");
                     String[] n3 = first2[1].split("[//)]");
                     String[] n4 = n3[0].split(",");
@@ -12906,7 +12795,41 @@ public class CodigoG {
 "G1 X172.806 Y103.476 E9.71011\n" +
 "G1 X172.828 Y103.639 F7800.000\n" +
 "G1 E7.71011 F2400.00000\n";
-                } 
+                }else if(n4[0].toString().contains("sunnies")){
+                      salientemarcos[0] = sol1.marcosredondos[0]; 
+                      salientemarcos[1] = sol1.marcosredondos[1]; 
+                      salientemarcos[2] = sol1.marcosredondos[2]; 
+                      salientemarcos[3] = sol1.marcosredondos[3]; 
+                      salientemarcos[4] = sol1.marcosredondos[4]; 
+                      salientemarcos[5] = sol2.marcosredondos[0]; 
+                      salientemarcos[6] = sol2.marcosredondos[1]; 
+                      salientemarcos[7] = sol2.marcosredondos[2]; 
+                      salientemarcos[8] = sol2.marcosredondos[3]; 
+                      salientemarcos[9] = sol2.marcosredondos[4]; 
+                      salientemarcos[10] = sol3.marcosredondos[0]; 
+                      salientemarcos[11] = sol3.marcosredondos[1]; 
+                      salientemarcos[12] = sol3.marcosredondos[2]; 
+                      salientemarcos[13] = sol3.marcosredondos[3]; 
+                }else if(n4[0].toString().contains("teashades")){
+                      salientemarcos[0] = tea.marcosredondos[0]; 
+                      salientemarcos[1] = tea.marcosredondos[1]; 
+                      salientemarcos[2] = tea.marcosredondos[2]; 
+                }
+                    else if(n4[0].toString().contains("thug")){
+                      salientemarcos[0] = thug.thuglife[0]; 
+                      salientemarcos[1] = thug.thuglife[1]; 
+                      salientemarcos[2] = thug.thuglife[2]; 
+                      salientemarcos[3] = thug.thuglife[3]; 
+                      salientemarcos[4] = thug.thuglife[4]; 
+                      salientemarcos[5] = thug.thuglife[0]; 
+                      salientemarcos[6] = thug.thuglife[1]; 
+                      salientemarcos[7] = thug.thuglife[2]; 
+                      salientemarcos[8] = thug.thuglife[3]; 
+                      salientemarcos[9] = thug.thuglife[4]; 
+                      salientemarcos[10] = thug.thuglife[0]; 
+                      salientemarcos[11] = thug.thuglife[1]; 
+                      salientemarcos[12] = thug.thuglife[2]; 
+                }
             }else if(linea.matches(fb19)){
                     String[] first2 = linea.split("[//(]");
                     String[] n3 = first2[1].split("[//)]");
