@@ -74,6 +74,9 @@ public class Arduino {
        String fb19 = ".*righttemple[//(].*";
        String fb20 = ".*lefttemple[//(].*";
        String fb21 = ".*bridge[//(].*";
+       String fb22 = ".*rims[//(].*";
+       String fb23 = ".*lefttemple[//(].*";
+       String fb24 = ".*righttemple[//(].*";
        
        //SEPARAMOS EL CÓDIGO FUENTE ESCRITO POR EL USUARIO EN TOKENS INDIVIDUALES
         StringTokenizer splitfake = new StringTokenizer(fuente,"\n");
@@ -152,7 +155,7 @@ public class Arduino {
                     || linea.matches(fb7) || linea.matches(fb8) || linea.matches(fb9) || linea.matches(fb10) || linea.matches(fb11)
                     || linea.matches(fb12) || linea.matches(fb13) || linea.matches(fb14) || linea.matches(fb15) || linea.matches(fb16)
                     || linea.matches(asignacion)||linea.matches(fb17)||linea.matches(fb18)||linea.matches(fb19)||
-                    linea.matches(fb20)||linea.matches(fb21)){
+                    linea.matches(fb20)||linea.matches(fb21)||linea.matches(fb22)||linea.matches(fb23)||linea.matches(fb24)){
                 saliente += linea + "\n"; 
             }else if(linea.matches(printerport)){
                 String[] first = linea.split("[//(]");

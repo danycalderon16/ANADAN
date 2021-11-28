@@ -172,12 +172,22 @@ public class CodigoGenerado extends javax.swing.JDialog {
     private void jMenuItem1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MouseReleased
         CodigoG codigoggenerado = new CodigoG(txtcod.getText());
         String[] copiacodigog;
+        String[] copiacodigog2;
+        String[] copiacodigog3;
         
         copiacodigog = codigoggenerado.getCodigoG();
+        copiacodigog2 = codigoggenerado.getCodigoG2();
+        copiacodigog3 = codigoggenerado.getCodigoG3();
         //System.out.println(copiacodigog[0]);
         txtcod.setText("");
         for(int i=0; i<copiacodigog.length; i++){
            txtcod.setText(txtcod.getText()+"\n"+copiacodigog[i]);
+        }
+        for(int i=0; i<copiacodigog2.length; i++){
+           txtcod.setText(txtcod.getText()+"\n"+copiacodigog2[i]);
+        }
+        for(int i=0; i<copiacodigog3.length; i++){
+           txtcod.setText(txtcod.getText()+"\n"+copiacodigog3[i]);
         }
         //txtcod.setText(codigoggenerado.getCodigoG().toString()+"");
         //System.out.println(codigoggenerado.getCodigoG()+"");
