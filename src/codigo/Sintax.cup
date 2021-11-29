@@ -1100,30 +1100,41 @@ op_art ::= SIGNO_DE_SUMA | SIGNO_DE_RESTA | SIGNO_DE_DIVISIÓN | SIGNO_DE_MULTIP
 op_log ::= OR | AND;
 
 
-sentif::=  IF PARENTESIS_ABRE condicion PARENTESIS_CIERRA LLAVE_ABRE  bloquesentencias LLAVE_CIERRA {:
-                //VentanaPrincipal.intercode = VentanaPrincipal.intercode + "if(";//
-            :} 
-            |  error:e {: 
-            JLabel lb = new JLabel();
-            lb.setForeground(new Color(217, 33, 51));
-            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
-            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-            lb.setText("Error en la línea " + (eright+1) + ". Error sintáctico. El bloque 'if' no está bien escrito" );   
-            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. El bloque 'if' no está bien escrito", eright+1,SINTACTICO,
-            new Gramatica("factor::= expresion | NUMERO | DECIMAL | IDENTIFICADOR","Error sintáctico. El bloque 'if' no está bien escrito")));
-    :} sentelse
+// sentif::=  IF PARENTESIS_ABRE condicion PARENTESIS_CIERRA LLAVE_ABRE  bloquesentencias LLAVE_CIERRA {:
+//                 //VentanaPrincipal.intercode = VentanaPrincipal.intercode + "if(";//
+//             :} 
+//             |  error:e {: 
+//             JLabel lb = new JLabel();
+//             lb.setForeground(new Color(217, 33, 51));
+//             lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+//             lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+//             lb.setText("Error en la línea " + (eright+1) + ". Error sintáctico. El bloque 'if' no está bien escrito" );   
+//             VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. El bloque 'if' no está bien escrito", eright+1,SINTACTICO,
+//             new Gramatica("factor::= expresion | NUMERO | DECIMAL | IDENTIFICADOR","Error sintáctico. El bloque 'if' no está bien escrito")));
+//     :} sentelse
+// ;
+// sentelse::= ELSE LLAVE_ABRE bloquesentencias LLAVE_CIERRA |  
+//             error:e{: 
+//             JLabel lb = new JLabel();
+//             lb.setForeground(new Color(217, 33, 51));
+//             lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+//             lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+//             lb.setText("Error en la línea " + (eright+1) + ". Error sintáctico. El bloque 'else' no está bien escrito" );   
+//             VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. El bloque 'else' no está bien escrito", eright+1,SINTACTICO,
+//             new Gramatica("factor::= expresion | NUMERO | DECIMAL | IDENTIFICADOR","Error sintáctico. El bloque 'else' no está bien escrito")));;
+//             :}
+// ;
+
+sentif::=  IF PARENTESIS_ABRE condicion PARENTESIS_CIERRA LLAVE_ABRE  
+                bloquesentencias 
+            LLAVE_CIERRA
+                sentelse
 ;
-sentelse::= ELSE LLAVE_ABRE bloquesentencias LLAVE_CIERRA |  
-            error:e{: 
-            JLabel lb = new JLabel();
-            lb.setForeground(new Color(217, 33, 51));
-            lb.setFont(new Font("Verdana", Font.PLAIN, 14));
-            lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-            lb.setText("Error en la línea " + (eright+1) + ". Error sintáctico. El bloque 'else' no está bien escrito" );   
-            VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. El bloque 'else' no está bien escrito", eright+1,SINTACTICO,
-            new Gramatica("factor::= expresion | NUMERO | DECIMAL | IDENTIFICADOR","Error sintáctico. El bloque 'else' no está bien escrito")));;
-            :}
+sentelse::= ELSE LLAVE_ABRE 
+                    bloquesentencias 
+                LLAVE_CIERRA |  
 ;
+
 sentwhile::= WHILE PARENTESIS_ABRE condicion PARENTESIS_CIERRA LLAVE_ABRE bloquesentencias LLAVE_CIERRA;
 sentasignacion::= 
         IDENTIFICADOR:identificador SIGNO_DE_IGUAL CADENA_TEXTO:v PUNTOYCOMA {:
