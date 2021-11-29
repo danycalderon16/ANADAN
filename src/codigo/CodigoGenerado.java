@@ -65,7 +65,8 @@ public class CodigoGenerado extends javax.swing.JDialog {
         public CodigoGenerado(java.awt.Frame parent, boolean modal, String codigoArduino) {
         super(parent, modal);
         initComponents();
-        VentanaPrincipal.showTD();
+        VentanaPrincipal.showTD2();
+        VentanaPrincipal.expobjeto();
         this.setTitle("Código Intermedio Generado");
         //CAMBIAR COLOR DEL JTEXTPANE-----------------------------------------------------------------
         Color bgColor = new Color(42, 43, 46);

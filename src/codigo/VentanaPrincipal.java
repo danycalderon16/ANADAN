@@ -1533,14 +1533,18 @@ NumeroLinea lineatxtCodigo;
         //new ErroresSinSem(this,true).setVisible(true);
 
     }//GEN-LAST:event_jMenuItem1MouseReleased
-
+    //public ModalExp me = new ModalExp(exp_list);
     private void icon_expsMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_expsMouseReleased
         if(!exp.equals("")){
             ModalExp me = new ModalExp(exp_list);
             me.setVisible(true);
         }
     }//GEN-LAST:event_icon_expsMouseReleased
-
+    public static void expobjeto(){
+        if(!exp.equals("")){
+            ModalExp me = new ModalExp(exp_list);
+        }    
+    }
     private void jMenuItem2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem2MouseReleased
         Arduino test = new Arduino(txtAreaEdit.getText());
         new CodigoGenerado(null,true,test.getArduino().toString()).setVisible(true);
@@ -1967,7 +1971,26 @@ NumeroLinea lineatxtCodigo;
         TablaDinamica ts = new TablaDinamica(simbolos);
         ts.setVisible(true);
     }
+    public static void showTD2() {
+        for (int i = 0; i < simbolos.size(); i++) {
+            simbolos.remove(i);
+        }
+        for (int i = 0; i < m.getRowCount() - 1; i++) {
+            int linea = Integer.parseInt(m.getValueAt(i, 1).toString());
+            String lexema = m.getValueAt(i, 2).toString();
+            String componente = m.getValueAt(i, 3).toString();
+            if (componente.equals("Identificador")) {
+                if (!existe(lexema)) {
+                    simbolos.add(new Simbolos(componente, linea, lexema, "", ""));
+                }
+            }
+        }
 
+        Collections.sort(simbolos);
+
+        TablaDinamica ts = new TablaDinamica(simbolos);
+    }
+    
     public static boolean existe(String lexema) {
         for (int i = 0; i < simbolos.size(); i++) {
             if (lexema.equals(simbolos.get(i).getLexema())) {

@@ -1,6 +1,7 @@
 package codigo;
 
 import static codigo.VentanaPrincipal.txtAreaEdit;
+import frames.ModalExp;
 
 import java.util.StringTokenizer;
 
@@ -10,10 +11,6 @@ import java.util.StringTokenizer;
 public class CodigoG {
 
     String fuente = ""; //CONTENDRÁ EL CÓDIGO FUENTE
-    String salienteinicio = ""; //CONTENDRA EL CÓDIGO INTERMEDIO EN ARDUINO
-    String salientetab = ""; //CONTENDRÁ EL CÓDIGO INTERMEDIO EN ARDUINO CON TABULACIONES
-    String salienteloop = "void loop() {\n"; //CONTENTDRÁ LO CORRESPONDIENTE AL MÉTODO LOOP
-    String resultado ="";
     String[] codseg; 
     String[] nada;
     String[] salientemarcos = new String [14];
@@ -72,6 +69,7 @@ public class CodigoG {
        String fb19 = ".*lefttemple[//(].*";
        String fb20 = ".*righttemple[//(].*";
        String fb21 = ".*if[//(].*";
+       String fb22 = ".*=.*;.*";
        
        //SEPARAMOS EL CÓDIGO FUENTE ESCRITO POR EL USUARIO EN TOKENS INDIVIDUALES
         StringTokenizer splitfake = new StringTokenizer(fuente,"\n");
@@ -4724,24 +4722,26 @@ public class CodigoG {
                        righttemplate[0] = variables.righttemplate[0];
                         righttemplate[1] = variables.righttemplate[1];
                     }   
-            }  
+            }else if(linea.matches(fb22)){
+                    System.out.println("entro");
+                    String[] first2 = linea.split("=");
+                    
+                    for(int i=1; i<ModalExp.cmbExps.getComponentCount(); i++){
+                        System.err.println(linea+" equals "+ModalExp.cmbExps.getItemAt(i).toString());
+                        if(linea.equals(ModalExp.cmbExps.getItemAt(i).toString()+";")){
+                            System.err.println("4732"+ModalExp.cmbExps.getItemAt(i).toString());
+                            for(int j=0; j<VentanaPrincipal.simbolos.size(); j++){
+                                if(first2[0].equals(VentanaPrincipal.simbolos.get(j).getLexema())){
+                                    System.out.println("4735");
+                                    System.err.println(ModalExp.exp_list.get(i-1).getResult()+" "+j+" 3");
+                                    TablaDinamica.tblDinamica.setValueAt(ModalExp.exp_list.get(i-1).getResult(), j, 3);
+                                    //lb_exp_result.setText(exp_list.get(index).getResult());
+                                }
+                            }
+                        }
+                    }
+                
+            } 
         }
-        //SE ADJUNTA EL MÉTODO LOOP AL MÉTODO SETUP
-        salienteinicio += salienteloop + "}";
-        codseg = salienteinicio.split("\n");
-        //SE CREAN TABULACIONES
-        for(int i=0; i<codseg.length; i++){
-            for(int j=0; j<tab; j++){
-                codseg[i] = "\t"+codseg[i];
-            }
-            salientetab +=codseg[i]+"\n"; 
-            if(codseg[i].contains("{")){tab++;}
-            if(codseg[i].contains("}")){tab--;}
-        }
-        
-        
-        
-        //System.out.println("\n Código Intermedio Generado: \n"+salienteinicio);
     }
-
 }
