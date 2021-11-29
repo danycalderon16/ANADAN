@@ -62,7 +62,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     public static ArrayList<String> intercode2 = new ArrayList<String>();
     //****************************
     public static ArrayList<Expresion> exp_list = new ArrayList<>();
-    private ArrayList<Simbolos> simbolos = new ArrayList<Simbolos>();
+    public static ArrayList<Simbolos> simbolos = new ArrayList<Simbolos>();
     
     private static DefaultTableModel mc = new DefaultTableModel();
 
@@ -93,7 +93,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         return index;
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     public VentanaPrincipal() {
         initComponents();
         seticon();
@@ -1667,7 +1666,7 @@ NumeroLinea lineatxtCodigo;
     String errores = "";
     String name;
     public int tamanioletra = 12;
-    private DefaultTableModel m = new DefaultTableModel();
+    public static DefaultTableModel m = new DefaultTableModel();
     public String arreglo[][];
     //TablaDinamica tabaDinamica = new TablaDinamica();
 
@@ -1947,8 +1946,8 @@ NumeroLinea lineatxtCodigo;
             }
         }
     }
-
-    private void showTD() {
+    //public static TablaDinamica ts = new TablaDinamica(simbolos);
+    public static void showTD() {
         for (int i = 0; i < simbolos.size(); i++) {
             simbolos.remove(i);
         }
@@ -1969,7 +1968,7 @@ NumeroLinea lineatxtCodigo;
         ts.setVisible(true);
     }
 
-    private boolean existe(String lexema) {
+    public static boolean existe(String lexema) {
         for (int i = 0; i < simbolos.size(); i++) {
             if (lexema.equals(simbolos.get(i).getLexema())) {
                 return true;

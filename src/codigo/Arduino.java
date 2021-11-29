@@ -78,6 +78,9 @@ public class Arduino {
        String fb23 = ".*lefttemple[//(].*";
        String fb24 = ".*righttemple[//(].*";
        
+       String fb25 = ".*[///][//*][//*][///].*";
+       
+       
        //SEPARAMOS EL CÓDIGO FUENTE ESCRITO POR EL USUARIO EN TOKENS INDIVIDUALES
         StringTokenizer splitfake = new StringTokenizer(fuente,"\n");
         //EVALUACIÓN DE TOKENS INDIVIDUALES
@@ -86,7 +89,9 @@ public class Arduino {
             String linea = splitfake.nextToken().replaceAll("\\s", "");
             
             //SE EVALUA CADA LINEA CON LAS EXPRESIONES REGULARES ANTERIORES A TRAVÉS DE MATCHES
-            if(linea.matches(metodo)){
+            if(linea.matches(fb25)){
+                
+            }else if(linea.matches(metodo)){
                 String[] first = linea.split("[//(]");
                 String[] second = first[0].split("method");
                 String[] n1 = first[1].split("[//)]");
