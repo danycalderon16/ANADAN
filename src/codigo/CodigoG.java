@@ -19,6 +19,8 @@ public class CodigoG {
     public int tab=0;
     public int endinamica=0;
     public int eserror=0;
+    public String Caracteristicas="";
+    public String Caracteristicas2="";
     VariablesCodigoG variables = new VariablesCodigoG();
     MarcosSol sol1 = new MarcosSol();
     MarcosSol2 sol2 = new MarcosSol2();
@@ -61,6 +63,12 @@ public class CodigoG {
     }
     public String[] getCodigoG3(){
             return righttemplate;
+    }
+    public String getCaracteristicas(){
+        return Caracteristicas;
+    }
+    public String getCaracteristicas2(){
+        return Caracteristicas2;
     }
     public void expresiones(){
        
@@ -130,6 +138,27 @@ public class CodigoG {
                         //if(n4[0].equals(TablaDinamica.tblDinamica.getValueAt(1,1))){}
                 }
                     if(n4[0].toString().contains("square")){
+                        
+                    if(Caracteristicas.isEmpty()){
+                        Caracteristicas = "M104 S"+n4[1]+" ;Temperatura máxima.\n";
+                        Caracteristicas += "M109 S"+n4[2]+" ;Cambia la temperatura.\n";
+                        switch(Integer.parseInt(n4[3])){
+                            case 1:
+                            Caracteristicas += "G21"+" ;Cambia la unidad a milimetros\n";
+                            break;
+                        }
+                        switch(Integer.parseInt(n4[4])){
+                            case 2:
+                            Caracteristicas += "G90"+" ;Usa coordenadas absolutas\n";
+                            break;
+                        }
+                        switch(Integer.parseInt(n4[5])){
+                            case 2:
+                            Caracteristicas += "M82"+" ;Usa distancias absolutas para el extrusor\n";
+                            break;
+                        }
+                        Caracteristicas2 = "M140 S"+n4[6]+" ;Cambia la temperatura\n";
+                    }
 //--------------............................................-----------------------
 //--------------............................................-----------------------
 //--------------............................................-----------------------

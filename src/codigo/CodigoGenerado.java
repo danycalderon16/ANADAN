@@ -170,7 +170,7 @@ public class CodigoGenerado extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void jMenuItem1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MouseReleased
         VentanaPrincipal.txtGive.setText("");
         CodigoG codigoggenerado = new CodigoG(txtcod.getText());
@@ -183,6 +183,7 @@ public class CodigoGenerado extends javax.swing.JDialog {
         copiacodigog3 = codigoggenerado.getCodigoG3();
         //System.out.println(copiacodigog[0]);
         txtcod.setText("");
+        txtcod.setText(codigoggenerado.getCaracteristicas()+"\n");
         for(int i=0; i<copiacodigog.length; i++){
            txtcod.setText(txtcod.getText()+"\n"+copiacodigog[i]);
         }
@@ -192,6 +193,7 @@ public class CodigoGenerado extends javax.swing.JDialog {
         for(int i=0; i<copiacodigog3.length; i++){
            txtcod.setText(txtcod.getText()+"\n"+copiacodigog3[i]);
         }
+         txtcod.setText(txtcod.getText()+"\n"+codigoggenerado.getCaracteristicas2());
         //txtcod.setText(codigoggenerado.getCodigoG().toString()+"");
         //System.out.println(codigoggenerado.getCodigoG()+"");
     }//GEN-LAST:event_jMenuItem1MouseReleased
