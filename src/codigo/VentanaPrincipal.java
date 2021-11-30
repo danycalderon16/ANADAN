@@ -1446,6 +1446,12 @@ NumeroLinea lineatxtCodigo;
                     case Word:
                     case True:
                     case False:
+                        tblTablaSimbolos.setValueAt(c.columna, i, 0);
+                        tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
+                        tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
+                        tblTablaSimbolos.setValueAt("RESERVADA", i, 3);
+                        i++;
+                        break;
                     case Rightrim:
                     case Righttemple:
                     case Bridge:
@@ -1456,7 +1462,7 @@ NumeroLinea lineatxtCodigo;
                         tblTablaSimbolos.setValueAt(c.columna, i, 0);
                         tblTablaSimbolos.setValueAt(c.linea + 1, i, 1);
                         tblTablaSimbolos.setValueAt(lexer.yytext(), i, 2);
-                        tblTablaSimbolos.setValueAt("RESERVADA", i, 3);
+                        tblTablaSimbolos.setValueAt("RESERVADA RUTINA", i, 3);
                         i++;
                         break;
                     case Cadena:
@@ -1987,7 +1993,7 @@ NumeroLinea lineatxtCodigo;
             int linea = Integer.parseInt(m.getValueAt(i, 1).toString());
             String lexema = m.getValueAt(i, 2).toString();
             String componente = m.getValueAt(i, 3).toString();
-            if (componente.equals("Identificador")) {
+            if (componente.equals("Identificador") || componente.equals("RESERVADA RUTINA")) {
                 if (!existe(lexema)) {
                     simbolos.add(new Simbolos(componente, linea, lexema, "", ""));
                 }

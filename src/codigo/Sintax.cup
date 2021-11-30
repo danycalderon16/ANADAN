@@ -68,7 +68,6 @@ terminal Integer NUMERO;
 terminal Double DECIMAL;
 terminal String CADENA_TEXTO,TRUE, FALSE;
 terminal String BROKEN,JUST, WORD, FLAG;
-// terminal String RIGHTTEMPLE,RIGHTRIM,LEFTRIM,LEFTTEMPLE,BRIDGE,RIMS, TEMPLATES;
 terminal SETFILAMENTTYPE, FILLRECTANGLE, DRAWRECTANGLE, SLEEP, FILLCIRCLE, DRAWCIRCLE,
 FILLTRIANGLE, DRAWTRIANGLE, STOP, GETEXTRUSORX, GETEXTRUSORY, GETEXTRUSORZ, GETFILAMENTTYPE, SETNEWFILAMENT,
 GETFILAMENT, GETTEMPERATURE, END, SAME, GET, GIVE, FOR, IF, ELSE, SELECT, EMPTY,
@@ -83,10 +82,7 @@ ERROR;
 
 /*----------------------------------------  NO TERMINALES  ---------------------------------------------------------*/
 non terminal String t_dato;
-// non terminal String nombres_rutinas;
-non terminal 
-    nombres_rutinas,
-    inicio, declaracion_for, if, if_else,
+non terminal inicio, declaracion_for, if, if_else,
     while, do_while, for, sentencia_booleana, sentencia_for ,datos_array,continua,cuerpo,
     declaraciones,declaracion,bloquesentencias,sentencias,sentencia,expresion,
     expresion_prima,
@@ -142,7 +138,7 @@ non terminal
     give,
     parametroa,
     rutinas,
-    
+    nombres_rutinas,
     parametro_texto,
     parametro_decimal,
     expresioncinco;
@@ -1564,68 +1560,67 @@ get::= GET PARENTESIS_ABRE CADENA_TEXTO PARENTESIS_CIERRA PUNTOYCOMA;
 give::= GIVE PARENTESIS_ABRE IDENTIFICADOR PARENTESIS_CIERRA PUNTOYCOMA;
 
 rutinas::= 
-    nombres_rutinas:id PARENTESIS_ABRE parametro_texto COMA parametro_decimal COMA parametro_decimal COMA parametro_decimal COMA parametro_decimal COMA parametro_decimal COMA parametro_decimal  PARENTESIS_CIERRA PUNTOYCOMA   {:
+    nombres_rutinas:id PARENTESIS_ABRE parametro_texto COMA parametro_decimal COMA parametro_decimal COMA parametro_decimal COMA parametro_decimal COMA parametro_decimal COMA parametro_decimal  PARENTESIS_CIERRA PUNTOYCOMA {:
+        System.err.println(id);
         try{
-            Simbolo sim = TablaSimbolos.buscar(id);
-             //Si es nulo, devuelvo un error
+            Simbolo sim = TablaSimbolos.buscar(id.toString());
+            //Si es nulo, devuelvo un error
             if (sim != null) {
-                System.out.println("El identificador '"+id+"' ya existe");    
+                System.out.println("La rutina '"+id+"' ya existe");
                 JLabel lb = new JLabel();
                 lb.setForeground(new Color(217, 33, 51));
                 lb.setFont(new Font("Verdana", Font.PLAIN, 14));
                 lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-                lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. La rutina: '"
+                lb.setText("Error en la línea " + (idright+1) + ". Error semantico. La rutina: '"
                 +id+"' ya existe." );   
-                VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. La rutina: '"
-                +id+"' ya existe.", idright+1,SINTACTICO,
+                VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semantico. La rutina: '"
+                +id+"' ya existe.", idright+1,SINTACTICO, 
                 new Gramatica("rutinas::= nombres_rutinas PARENTESIS_ABRE parametro_texto COMA parametro_decimal COMA parametro_decimal COMA parametro_decimal COMA parametro_decimal COMA parametro_decimal COMA parametro_decimal  PARENTESIS_CIERRA PUNTOYCOMA", 
-                "Rutina repetida")));
+                "indetificador repetido")));
             }else{
-                TablaSimbolos.crear(id, "rutina","rutina");
-                //Crear relacion ciclo PARA con su variable asociada
-                TablaSimbolos.lista.push(id);     
+                TablaSimbolos.crear(id.toString(), "rutina","rutina");
+                TablaSimbolos.lista.push(id.toString());          
             }
         }
         catch(Exception e){                                    
             e.printStackTrace();
             TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
-        }       
-    :}
+        }   
+    :} 
 ;
 
 parametro_texto::=
     IDENTIFICADOR:id {:
-    System.err.println(id);
-        // Simbolo sim = TablaSimbolos.buscar(id);        
-        //     if (sim == null) {
-        //         JLabel lb = new JLabel();
-        //             lb.setForeground(new Color(217, 33, 51));
-        //             lb.setFont(new Font("Verdana", Font.PLAIN, 14));
-        //             lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        //             lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. La variable '"+id+"' no existe" );   
-        //             VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. La variable '"+id+"' no existe", idright+1,SINTACTICO,
-        //             new Gramatica("condicion::= TRUE IGUAL_QUE IFENTIFICADOR","Error sintáctico. La variable '"+id+"' no existe")));
-        //     }else{
-        //         if(sim.getTipo()!="word"){
-        //             JLabel lb = new JLabel();
-        //             lb.setForeground(new Color(217, 33, 51));
-        //             lb.setFont(new Font("Verdana", Font.PLAIN, 14));
-        //             lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        //             lb.setText("Error en la línea " + (idright+1) + ". Error semántico, la variable '"+id+"' debe ser de tipo WORD" );   
-        //             VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico, la variable '"+id+"' debe ser de tipo WORD", idright+1,SINTACTICO,
-        //             new Gramatica("rutina ::= nombre_rutina PARENTESIS_ABRE CADENA_TEXTO COMA BROKEN COMA BROKEN COMA BROKEN COMA BROKEN COMA BROKEN PARENTESIS_CIERRA PUNTOYCOMA", "Error semántico, la variable '"+id+"' debe ser de tipo WORD")));
-        //         }else{
-        //             if(sim.getValor()==null){
-        //                 JLabel lb = new JLabel();
-        //                 lb.setForeground(new Color(217, 33, 51));
-        //                 lb.setFont(new Font("Verdana", Font.PLAIN, 14));
-        //                 lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        //                 lb.setText("Error en la línea " + (idright+1) + ". Error semántico, la variable '"+id+"' no ha sido inicializada" );   
-        //                 VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico, la variable '"+id+"' no ha sido inicializada", idright+1,SINTACTICO,
-        //                 new Gramatica("rutina ::= nombre_rutina PARENTESIS_ABRE CADENA_TEXTO COMA BROKEN COMA BROKEN COMA BROKEN COMA BROKEN COMA BROKEN PARENTESIS_CIERRA PUNTOYCOMA", "Error semántico, la variable '"+id+"' no ha sido inicializada")));
-        //             }                    
-        //         }
-        //     }
+        Simbolo sim = TablaSimbolos.buscar(id);        
+            if (sim == null) {
+                JLabel lb = new JLabel();
+                    lb.setForeground(new Color(217, 33, 51));
+                    lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+                    lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                    lb.setText("Error en la línea " + (idright+1) + ". Error sintáctico. La variable '"+id+"' no existe" );   
+                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error sintáctico. La variable '"+id+"' no existe", idright+1,SINTACTICO,
+                    new Gramatica("condicion::= TRUE IGUAL_QUE IFENTIFICADOR","Error sintáctico. La variable '"+id+"' no existe")));
+            }else{
+                if(sim.getTipo()!="word"){
+                    JLabel lb = new JLabel();
+                    lb.setForeground(new Color(217, 33, 51));
+                    lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+                    lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                    lb.setText("Error en la línea " + (idright+1) + ". Error semántico, la variable '"+id+"' debe ser de tipo WORD" );   
+                    VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico, la variable '"+id+"' debe ser de tipo WORD", idright+1,SINTACTICO,
+                    new Gramatica("rutina ::= nombre_rutina PARENTESIS_ABRE CADENA_TEXTO COMA BROKEN COMA BROKEN COMA BROKEN COMA BROKEN COMA BROKEN PARENTESIS_CIERRA PUNTOYCOMA", "Error semántico, la variable '"+id+"' debe ser de tipo WORD")));
+                }else{
+                    if(sim.getValor()==null){
+                        JLabel lb = new JLabel();
+                        lb.setForeground(new Color(217, 33, 51));
+                        lb.setFont(new Font("Verdana", Font.PLAIN, 14));
+                        lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                        lb.setText("Error en la línea " + (idright+1) + ". Error semántico, la variable '"+id+"' no ha sido inicializada" );   
+                        VentanaPrincipal.labelsErrores.add(new LabelError(lb, "Error semántico, la variable '"+id+"' no ha sido inicializada", idright+1,SINTACTICO,
+                        new Gramatica("rutina ::= nombre_rutina PARENTESIS_ABRE CADENA_TEXTO COMA BROKEN COMA BROKEN COMA BROKEN COMA BROKEN COMA BROKEN PARENTESIS_CIERRA PUNTOYCOMA", "Error semántico, la variable '"+id+"' no ha sido inicializada")));
+                    }                    
+                }
+            }
     
     :}
     | CADENA_TEXTO;
@@ -1667,25 +1662,18 @@ parametro_decimal::=
     |  | DECIMAL | NUMERO;
 
 nombres_rutinas::= 
-    RIGHTTEMPLE:nombre {:
-    RESULT=nombre;
-    :} |
-     LEFTTEMPLE:nombre {:
-    RESULT=nombre;
-    :} |
-     RIGHTRIM:nombre {:
-    RESULT=nombre;
-    :} |
-     LEFTRIM:nombre {:
-    RESULT=nombre;
-    :} |
-     BRIDGE:nombre {:
-    RESULT=nombre;
-    :} |
-    TEMPLATES:nombre {:
-    RESULT=nombre;
-    :} |
-     RIMS: nombre {:
-    RESULT=nombre;
-    :}
-:
+    RIGHTTEMPLE:id {:
+    RESULT = id; :} | 
+    LEFTTEMPLE:id {:
+    RESULT = id; :} | 
+    RIGHTRIM:id {:
+    RESULT = id; :} | 
+    LEFTRIM:id {:
+    RESULT = id; :} | 
+    BRIDGE:id {:
+    RESULT = id; :} | 
+    TEMPLATES:id {:
+    RESULT = id; :} | 
+    RIMS:id {:
+    RESULT = id; :}
+;
