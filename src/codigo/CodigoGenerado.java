@@ -172,6 +172,7 @@ public class CodigoGenerado extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MouseReleased
+        VentanaPrincipal.txtGive.setText("");
         CodigoG codigoggenerado = new CodigoG(txtcod.getText());
         String[] copiacodigog;
         String[] copiacodigog2;

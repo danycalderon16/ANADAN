@@ -70,6 +70,7 @@ public class CodigoG {
        String fb20 = ".*righttemple[//(].*";
        String fb21 = ".*if[//(].*";
        String fb22 = ".*=.*;.*";
+       String fb23 = ".*give[//(].*";
        
        //SEPARAMOS EL CÓDIGO FUENTE ESCRITO POR EL USUARIO EN TOKENS INDIVIDUALES
         StringTokenizer splitfake = new StringTokenizer(fuente,"\n");
@@ -139,13 +140,7 @@ public class CodigoG {
 //--------------............................................-----------------------
 //--------------............................................-----------------------
 //--------------............................................-----------------------
-                    salientemarcos[0]="; Filament gcode\n" +
-                    "\n" +
-                    "M109 S200 ; set temperature and wait for it to be reached\n" +
-                    "G21 ; set units to millimeters\n" +
-                    "G90 ; use absolute coordinates\n" +
-                    "M82 ; use absolute distances for extrusion\n" +
-                    "G92 E0\n" +
+                    salientemarcos[0]="G92 E0\n" +
                     "G1 Z0.350 F7800.000\n" +
                     "G1 E-2.00000 F2400.00000\n" +
                     "G92 E0\n" +
@@ -4723,17 +4718,16 @@ public class CodigoG {
                         righttemplate[1] = variables.righttemplate[1];
                     }   
             }else if(linea.matches(fb22)){
-                    System.out.println("entro");
                     String[] first2 = linea.split("=");
                     
                     for(int i=1; i<ModalExp.cmbExps.getComponentCount(); i++){
-                        System.err.println(linea+" equals "+ModalExp.cmbExps.getItemAt(i).toString());
+                        //System.err.println(linea+" equals "+ModalExp.cmbExps.getItemAt(i).toString());
                         if(linea.equals(ModalExp.cmbExps.getItemAt(i).toString()+";")){
-                            System.err.println("4732"+ModalExp.cmbExps.getItemAt(i).toString());
+                            //System.err.println("4732"+ModalExp.cmbExps.getItemAt(i).toString());
                             for(int j=0; j<VentanaPrincipal.simbolos.size(); j++){
                                 if(first2[0].equals(VentanaPrincipal.simbolos.get(j).getLexema())){
-                                    System.out.println("4735");
-                                    System.err.println(ModalExp.exp_list.get(i-1).getResult()+" "+j+" 3");
+                                    //System.out.println("4735");
+                                    //System.err.println(ModalExp.exp_list.get(i-1).getResult()+" "+j+" 3");
                                     TablaDinamica.tblDinamica.setValueAt(ModalExp.exp_list.get(i-1).getResult(), j, 3);
                                     //lb_exp_result.setText(exp_list.get(index).getResult());
                                 }
@@ -4741,6 +4735,15 @@ public class CodigoG {
                         }
                     }
                 
+            }else if(linea.matches(fb23)){
+                VentanaPrincipal.jTabbedPane1.setSelectedIndex(2);
+                if(VentanaPrincipal.txtGive.getText().isEmpty()){
+                    VentanaPrincipal.txtGive.setText("------------------------------------------------------------------Salida------------------------------------------------------------------");
+                }
+                    String[] first2 = linea.split("[//(]");
+                    String[] n3 = first2[1].split("[//)]");
+                    //System.out.println((char)65);
+                VentanaPrincipal.txtGive.setText(VentanaPrincipal.txtGive.getText()+"\n"+" > "+n3[0]);
             } 
         }
     }
