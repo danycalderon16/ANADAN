@@ -213,6 +213,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblCuadruplos = new javax.swing.JTable();
+        jPanel6 = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        txtGive = new javax.swing.JTextArea();
         barraMenu = new javax.swing.JMenuBar();
         mnufile = new javax.swing.JMenu();
         mnuNew = new javax.swing.JMenuItem();
@@ -549,6 +552,28 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         );
 
         jTabbedPane1.addTab("Cuadruplos", jPanel2);
+
+        jPanel6.setBackground(new java.awt.Color(51, 51, 51));
+
+        txtGive.setBackground(new java.awt.Color(51, 51, 51));
+        txtGive.setColumns(20);
+        txtGive.setFont(new java.awt.Font("Consolas", 1, 15)); // NOI18N
+        txtGive.setForeground(new java.awt.Color(240, 240, 240));
+        txtGive.setRows(5);
+        jScrollPane4.setViewportView(txtGive);
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1125, Short.MAX_VALUE)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Give", jPanel6);
 
         getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 440, 1130, 250));
         jTabbedPane1.getAccessibleContext().setAccessibleName("Consola");
@@ -1533,14 +1558,18 @@ NumeroLinea lineatxtCodigo;
         //new ErroresSinSem(this,true).setVisible(true);
 
     }//GEN-LAST:event_jMenuItem1MouseReleased
-
+    //public ModalExp me = new ModalExp(exp_list);
     private void icon_expsMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_expsMouseReleased
         if(!exp.equals("")){
             ModalExp me = new ModalExp(exp_list);
             me.setVisible(true);
         }
     }//GEN-LAST:event_icon_expsMouseReleased
-
+    public static void expobjeto(){
+        if(!exp.equals("")){
+            ModalExp me = new ModalExp(exp_list);
+        }    
+    }
     private void jMenuItem2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem2MouseReleased
         Arduino test = new Arduino(txtAreaEdit.getText());
         new CodigoGenerado(null,true,test.getArduino().toString()).setVisible(true);
@@ -1694,10 +1723,12 @@ NumeroLinea lineatxtCodigo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JScrollPane jScrollPane4;
+    public static javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JPanel jplAreaEdit;
     private javax.swing.JMenuItem miCompile;
     private javax.swing.JMenuItem miCompileLexical;
@@ -1725,6 +1756,7 @@ NumeroLinea lineatxtCodigo;
     private javax.swing.JTable tblCuadruplos;
     public static javax.swing.JTable tblTablaSimbolos;
     public static javax.swing.JTextPane txtAreaEdit;
+    public static javax.swing.JTextArea txtGive;
     // End of variables declaration//GEN-END:variables
 
     ImageIcon imgENum1 = new ImageIcon("C:/ANADAN/src/Automatas/NumeroErroneo.jpg");
@@ -1967,7 +1999,26 @@ NumeroLinea lineatxtCodigo;
         TablaDinamica ts = new TablaDinamica(simbolos);
         ts.setVisible(true);
     }
+    public static void showTD2() {
+        for (int i = 0; i < simbolos.size(); i++) {
+            simbolos.remove(i);
+        }
+        for (int i = 0; i < m.getRowCount() - 1; i++) {
+            int linea = Integer.parseInt(m.getValueAt(i, 1).toString());
+            String lexema = m.getValueAt(i, 2).toString();
+            String componente = m.getValueAt(i, 3).toString();
+            if (componente.equals("Identificador")) {
+                if (!existe(lexema)) {
+                    simbolos.add(new Simbolos(componente, linea, lexema, "", ""));
+                }
+            }
+        }
 
+        Collections.sort(simbolos);
+
+        TablaDinamica ts = new TablaDinamica(simbolos);
+    }
+    
     public static boolean existe(String lexema) {
         for (int i = 0; i < simbolos.size(); i++) {
             if (lexema.equals(simbolos.get(i).getLexema())) {

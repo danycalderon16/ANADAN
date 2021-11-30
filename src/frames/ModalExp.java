@@ -17,7 +17,7 @@ import static util.Utils.resizeIcon;
  */
 public class ModalExp extends javax.swing.JFrame {
 
-    public ArrayList<Expresion> exp_list;
+    public static ArrayList<Expresion> exp_list;
     private int index = 0;
     
     public ModalExp(ArrayList<Expresion> exps) {
@@ -219,7 +219,7 @@ public class ModalExp extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cmbExps;
+    public static javax.swing.JComboBox<String> cmbExps;
     private javax.swing.JLabel icon_close;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
