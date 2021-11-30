@@ -121,6 +121,11 @@ public class ModalExp extends javax.swing.JFrame {
         jPanel1.add(cmbExps, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 210, -1));
 
         jLabel4.setText("Expresiones");
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 120, -1));
 
         jTextArea1.setColumns(20);
@@ -172,6 +177,11 @@ public class ModalExp extends javax.swing.JFrame {
         index = cmbExps.getSelectedIndex() - 1;
         setData();
     }//GEN-LAST:event_cmbExpsItemStateChanged
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        // TODO add your handling code here:
+        System.err.println(cmbExps.getItemAt(1).toString());
+    }//GEN-LAST:event_jLabel4MouseClicked
 
     /**
      * @param args the command line arguments
