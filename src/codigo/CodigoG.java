@@ -34,6 +34,8 @@ public class CodigoG {
     MarcosThugLife thug = new MarcosThugLife();
     MarcosThugLife2 thug2 = new MarcosThugLife2();
     MarcosThugLife3 thug3 = new MarcosThugLife3();
+    VariablesCodigoG variables2 = new VariablesCodigoG();
+    VariablesCodigoG2 variables3 = new VariablesCodigoG2();
     square2 square2 = new square2();
     
     public CodigoG(String sentencias) {
@@ -4735,13 +4737,15 @@ public class CodigoG {
                       salientemarcos[11] = thug.thuglife[1]; 
                       salientemarcos[12] = thug.thuglife[2]; 
                 }
-            }else if(linea.matches(fb19)){
+            }else if(linea.matches(fb19)){ //LEFTTEMPLE
                     String[] first2 = linea.split("[//(]");
                     String[] n3 = first2[1].split("[//)]");
                     String[] n4 = n3[0].split(",");
    
                 switch(n4[0]){
                         case "simple":
+                        break;
+                        case "curved":
                         break;
                         default:
                             for(int i=0; i<VentanaPrincipal.simbolos.size(); i++){
@@ -4791,8 +4795,12 @@ public class CodigoG {
                         lefttemplate[0] = variables.lefttemplate[0];
                         lefttemplate[1] = variables.lefttemplate[1];
                     }   
+                    else if(n4[0].toString().contains("curved")){  
+                        lefttemplate[0] = variables2.lefttemplate2[0];
+                        lefttemplate[1] = variables2.lefttemplate2[1];
+                    }   
             }   
-            else if(linea.matches(fb20)){
+            else if(linea.matches(fb20)){//RIGHTTEMPLE
                     String[] first2 = linea.split("[//(]");
                     String[] n3 = first2[1].split("[//)]");
                     String[] n4 = n3[0].split(",");
@@ -4800,6 +4808,8 @@ public class CodigoG {
                     
                 switch(n4[0]){
                         case "simple":
+                        break;
+                        case "curved":
                         break;
                         default:
                             for(int i=0; i<VentanaPrincipal.simbolos.size(); i++){
@@ -4848,6 +4858,9 @@ public class CodigoG {
                     if(n4[0].toString().contains("simple")){  
                        righttemplate[0] = variables.righttemplate[0];
                         righttemplate[1] = variables.righttemplate[1];
+                    }else if(n4[0].toString().contains("curved")){  
+                        righttemplate[0] = variables3.righttemplate2[0];
+                        righttemplate[1] = variables3.righttemplate2[1];
                     }   
             }else if(linea.matches(fb22)){
                     String[] first2 = linea.split("=");
@@ -4872,39 +4885,33 @@ public class CodigoG {
                     String[] n3 = first2[1].split("[//)]");
                     //System.out.println((char)65);
                 VentanaPrincipal.txtGive.setText(VentanaPrincipal.txtGive.getText()+"\n"+" > "+n3[0]);
-            }else if(linea.matches(fb24)){
+            }else if(linea.matches(fb24)){//setfilamenttype
                     String[] first2 = linea.split("[//(]");
                     String[] n3 = first2[1].split("[//)]");
                     
                         switch(n3[0]){
                             case "1":
                                 filamento=190;
-                                //Caracteristicas += "\n;La temperatura óptima de impresión para PVA es de "+filamento+" grados.";
                             break;
                             case "2":
                                 filamento=220;
-                                //Caracteristicas += "\n;La temperatura óptima de impresión para HIPS es de "+filamento+" grados.";
                             break;
                             case "3":
                                 filamento=170;
-                                //Caracteristicas += "\n;La temperatura óptima de impresión para LAYWOOD es de "+filamento+" grados.";
                             break;
                         }
             }else if(linea.matches(fb25)){
                     stop=1;
-            }else if(linea.matches(fb26)){
+            }else if(linea.matches(fb26)){//Getfilamenttype
                         switch(filamento){
                             case 190:
                                 VentanaPrincipal.txtGive.setText(VentanaPrincipal.txtGive.getText()+"\n > El tipo de filamento utilizado es PVA.");
-                                //Caracteristicas += "\n;La temperatura óptima de impresión para PVA es de "+filamento+" grados.";
                             break;
                             case 220:
                                 VentanaPrincipal.txtGive.setText(VentanaPrincipal.txtGive.getText()+"\n > El tipo de filamento utilizado es HIPS.");
-                                //Caracteristicas += "\n;La temperatura óptima de impresión para HIPS es de "+filamento+" grados.";
                             break;
                             case 170:
                                 VentanaPrincipal.txtGive.setText(VentanaPrincipal.txtGive.getText()+"\n > El tipo de filamento utilizado es LAYWOOD.");
-                                //Caracteristicas += "\n;La temperatura óptima de impresión para LAYWOOD es de "+filamento+" grados.";
                             break;
                         }
             }else if(linea.matches(fb27)){
