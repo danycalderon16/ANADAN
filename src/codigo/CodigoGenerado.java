@@ -5,6 +5,7 @@
  */
 package codigo;
 
+import static codigo.CodigoG.filamento;
 import java.awt.Color;
 import java.awt.Toolkit;
 import javax.swing.UIDefaults;
@@ -105,8 +106,10 @@ public class CodigoGenerado extends javax.swing.JDialog {
         llenarcodigo2(codigoArduino);
         generargcode();
         generararchivo();
-        GuardarArchivo(file, txtcod.getText());
-        abrirarchivo();
+            GuardarArchivo(file, txtcod.getText());
+        if(!VentanaPrincipal.txtGive.getForeground().equals(Color.RED)){
+            abrirarchivo();
+        }
     }
     public void abrirarchivo(){
             try {
@@ -280,6 +283,19 @@ public class CodigoGenerado extends javax.swing.JDialog {
         //System.out.println(copiacodigog[0]);
         txtcod.setText("");
         txtcod.setText(codigoggenerado.getCaracteristicas() + "\n");
+                        switch(CodigoG.filamento){
+                            case 190:
+                                txtcod.setText(txtcod.getText() +"\n;La temperatura óptima de impresión para PVA es de "+filamento+" grados.");
+                            break;
+                            case 200:
+                                txtcod.setText(txtcod.getText() +"\n;La temperatura óptima de impresión para HIPS es de "+filamento+" grados.");
+                            break;
+                            case 170:
+                                txtcod.setText(txtcod.getText() +"\n;La temperatura óptima de impresión para LAYWOOD es de "+filamento+" grados.");
+                            break;
+                        }
+                        
+        txtcod.setText(txtcod.getText() + "\n");
         for (int i = 0; i < copiacodigog.length; i++) {
             txtcod.setText(txtcod.getText() + "\n" + copiacodigog[i]);
         }
