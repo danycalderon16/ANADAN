@@ -115,7 +115,7 @@ public class CodigoG {
                     String[] first2 = linea.split("[//(]");
                     String[] n3 = first2[1].split("[//)]");
                     String[] n4 = n3[0].split(",");
-
+            
                 switch(n4[0]){
                         case "square":
                         break;
@@ -137,8 +137,6 @@ public class CodigoG {
                             //System.out.println(TablaDinamica.tblDinamica.getValueAt(1, 3));
                         //if(n4[0].equals(TablaDinamica.tblDinamica.getValueAt(1,1))){}
                 }
-                    if(n4[0].toString().contains("square")){
-                        
                     if(Caracteristicas.isEmpty()){
                         Caracteristicas = "M104 S"+n4[1]+" ;Temperatura máxima.\n";
                         Caracteristicas += "M109 S"+n4[2]+" ;Cambia la temperatura.\n";
@@ -159,6 +157,8 @@ public class CodigoG {
                         }
                         Caracteristicas2 = "M140 S"+n4[6]+" ;Cambia la temperatura\n";
                     }
+                    if(n4[0].toString().contains("square")){
+                        
 //--------------............................................-----------------------
 //--------------............................................-----------------------
 //--------------............................................-----------------------
@@ -4720,6 +4720,26 @@ public class CodigoG {
                                 }
                             }
                 }
+                    if(Caracteristicas.isEmpty()){
+                        Caracteristicas = "M104 S"+n4[1]+" ;Temperatura máxima.\n";
+                        Caracteristicas += "M109 S"+n4[2]+" ;Cambia la temperatura.\n";
+                        switch(Integer.parseInt(n4[3])){
+                            case 1:
+                            Caracteristicas += "G21"+" ;Cambia la unidad a milimetros\n";
+                            break;
+                        }
+                        switch(Integer.parseInt(n4[4])){
+                            case 2:
+                            Caracteristicas += "G90"+" ;Usa coordenadas absolutas\n";
+                            break;
+                        }
+                        switch(Integer.parseInt(n4[5])){
+                            case 2:
+                            Caracteristicas += "M82"+" ;Usa distancias absolutas para el extrusor\n";
+                            break;
+                        }
+                        Caracteristicas2 = "M140 S"+n4[6]+" ;Cambia la temperatura\n";
+                    }
                     if(n4[0].toString().contains("simple")){  
                         lefttemplate[0] = variables.lefttemplate[0];
                         lefttemplate[1] = variables.lefttemplate[1];
@@ -4741,7 +4761,26 @@ public class CodigoG {
                                 }
                             }
                 }
-                
+                    if(Caracteristicas.isEmpty()){
+                        Caracteristicas = "M104 S"+n4[1]+" ;Temperatura máxima.\n";
+                        Caracteristicas += "M109 S"+n4[2]+" ;Cambia la temperatura.\n";
+                        switch(Integer.parseInt(n4[3])){
+                            case 1:
+                            Caracteristicas += "G21"+" ;Cambia la unidad a milimetros\n";
+                            break;
+                        }
+                        switch(Integer.parseInt(n4[4])){
+                            case 2:
+                            Caracteristicas += "G90"+" ;Usa coordenadas absolutas\n";
+                            break;
+                        }
+                        switch(Integer.parseInt(n4[5])){
+                            case 2:
+                            Caracteristicas += "M82"+" ;Usa distancias absolutas para el extrusor\n";
+                            break;
+                        }
+                        Caracteristicas2 = "M140 S"+n4[6]+" ;Cambia la temperatura\n";
+                    }
                     if(n4[0].toString().contains("simple")){  
                        righttemplate[0] = variables.righttemplate[0];
                         righttemplate[1] = variables.righttemplate[1];
@@ -4749,7 +4788,7 @@ public class CodigoG {
             }else if(linea.matches(fb22)){
                     String[] first2 = linea.split("=");
                     
-                    for(int i=1; i<ModalExp.cmbExps.getComponentCount(); i++){
+                    for(int i=1; i<=ModalExp.cmbExps.getComponentCount(); i++){
                         //System.err.println(linea+" equals "+ModalExp.cmbExps.getItemAt(i).toString());
                         if(linea.equals(ModalExp.cmbExps.getItemAt(i).toString()+";")){
                             //System.err.println("4732"+ModalExp.cmbExps.getItemAt(i).toString());

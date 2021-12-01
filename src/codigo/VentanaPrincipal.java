@@ -1546,6 +1546,10 @@ NumeroLinea lineatxtCodigo;
 
     private void icon_runMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_runMouseReleased
         analisisSintactico();
+        if(labelsErrores.isEmpty()){
+                    Arduino test = new Arduino(txtAreaEdit.getText());
+                    new CodigoGenerado(null,true,test.getArduino(),"").setVisible(false);
+        }
     }//GEN-LAST:event_icon_runMouseReleased
 
     private void icon_undoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_undoMouseReleased
