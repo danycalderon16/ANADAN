@@ -8207,13 +8207,8 @@ public class square2 {
                         "G1 E0.18354 F2400.00000\n" +
                         "G92 E0\n" +
                         "M107\n" +
-                        "; Filament-specific end gcode \n" +
-                        ";END gcode for filament\n" +
-                        "\n" +
-                        "M104 S0 ; turn off temperature\n" +
-                        "G28 X0  ; home X axis\n" +
-                        "M84     ; disable motors\n" +
-                        "\n" +
-                        "M140 S0 ; set bed temperature";
+                        "M104 S0\n" +
+                        "G28 X0\n" +
+                        "M84\n";
     }
 }

@@ -85,6 +85,7 @@ public class Arduino {
         StringTokenizer splitfake = new StringTokenizer(fuente,"\n");
         //EVALUACIÓN DE TOKENS INDIVIDUALES
         while(splitfake.hasMoreTokens()){
+            
         //linea CONTIENE CADA TOKEN EN CADA CICLO DEL WHILE
             String linea = splitfake.nextToken().replaceAll("\\s", "");
             

@@ -10,7 +10,6 @@ import java.awt.Toolkit;
 import javax.swing.UIDefaults;
 import javax.swing.plaf.ColorUIResource;
 
-
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
@@ -21,10 +20,12 @@ import codigo.VentanaPrincipal;
 import static codigo.VentanaPrincipal.intercode;
 import static codigo.VentanaPrincipal.txtAreaEdit;
 import ds.desktop.notify.DesktopNotify;
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
@@ -32,14 +33,13 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import static javax.swing.JOptionPane.showMessageDialog;
 
-
-
 //DE COLORES
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
+
 public class CodigoGenerado extends javax.swing.JDialog {
 
     /**
@@ -58,11 +58,12 @@ public class CodigoGenerado extends javax.swing.JDialog {
         txtcod.putClientProperty("Nimbus.Overrides.InheritDefaults", true);
         txtcod.setBackground(bgColor);
         //----------------------------------------------------------------------------------------------------
-        
+
         this.setLocationRelativeTo(this);
         seticon();
     }
-        public CodigoGenerado(java.awt.Frame parent, boolean modal, String codigoArduino) {
+
+    public CodigoGenerado(java.awt.Frame parent, boolean modal, String codigoArduino) {
         super(parent, modal);
         initComponents();
         VentanaPrincipal.showTD2();
@@ -77,16 +78,91 @@ public class CodigoGenerado extends javax.swing.JDialog {
         txtcod.putClientProperty("Nimbus.Overrides.InheritDefaults", true);
         txtcod.setBackground(bgColor);
         //----------------------------------------------------------------------------------------------------
-        
+
         this.setLocationRelativeTo(this);
         seticon();
         llenarcodigo2(codigoArduino);
     }
-    public void llenarcodigo2(String arduino){
+
+    public CodigoGenerado(java.awt.Frame parent, boolean modal, String codigoArduino, String a) {
+        super(parent, modal);
+        initComponents();
+        VentanaPrincipal.showTD2();
+        VentanaPrincipal.expobjeto();
+        this.setTitle("Código Intermedio Generado");
+        //CAMBIAR COLOR DEL JTEXTPANE-----------------------------------------------------------------
+        Color bgColor = new Color(42, 43, 46);
+        UIDefaults defaults = new UIDefaults();
+        defaults.put("TextPane.background", new ColorUIResource(bgColor));
+        defaults.put("TextPane[Enabled].backgroundPainter", bgColor);
+        txtcod.putClientProperty("Nimbus.Overrides", defaults);
+        txtcod.putClientProperty("Nimbus.Overrides.InheritDefaults", true);
+        txtcod.setBackground(bgColor);
+        //----------------------------------------------------------------------------------------------------
+
+        this.setLocationRelativeTo(this);
+        seticon();
+        llenarcodigo2(codigoArduino);
+        generargcode();
+        generararchivo();
+        GuardarArchivo(file, txtcod.getText());
+        abrirarchivo();
+    }
+    public void abrirarchivo(){
+            try {
+      //constructor of file class having file as argument  
+      File file = new File("C:\\Anadan Files\\modelo.gcode");
+      if (!Desktop.isDesktopSupported())
+      //check if Desktop is supported by Platform or not  
+      {
+        System.out.println("not supported");
+        return;
+      }
+      Desktop desktop = Desktop.getDesktop();
+      if (file.exists()) //checks file exists or not  
+      desktop.open(file); //opens the specified file  
+    }
+    catch(Exception e) {
+      e.printStackTrace();
+    }
+    }
+    public String GuardarArchivo(File archivo, String documento) {
+        String mensaje = null;
+        try {
+            salida = new FileOutputStream(archivo);
+            byte[] bytxt = documento.getBytes();
+            salida.write(bytxt);
+            mensaje = "Archivo guardado";
+
+        } catch (Exception e) {
+        }
+        return mensaje;
+    }
+    public File file = new File("C:\\Anadan Files\\modelo.gcode");
+
+    public void generararchivo() {
+        try {
+
+            /*If file gets created then the createNewFile() 
+          method would return true or if the file is 
+          already present it would return false */
+            System.out.println("115");
+            boolean flag = file.createNewFile();
+            if (flag) {
+                System.out.println("El archivo se creó correctamente.");
+            } else {
+                System.out.println("El archivo ya está creado.");
+            }
+        } catch (IOException e) {
+            System.out.println("Exception Occurred:");
+            e.printStackTrace();
+        }
+    }
+
+    public void llenarcodigo2(String arduino) {
         txtcod.setText(arduino);
     }
-                    
-    
+
     public void seticon() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/logopro2.png")));
     }
@@ -107,6 +183,8 @@ public class CodigoGenerado extends javax.swing.JDialog {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -116,6 +194,7 @@ public class CodigoGenerado extends javax.swing.JDialog {
         txtcod.setEditable(false);
         txtcod.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtcod.setForeground(new java.awt.Color(204, 204, 204));
+        txtcod.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jScrollPane1.setViewportView(txtcod);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -155,6 +234,23 @@ public class CodigoGenerado extends javax.swing.JDialog {
 
         jMenuBar1.add(jMenu1);
 
+        jMenu2.setText("Optimization");
+        jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jMenu2MouseReleased(evt);
+            }
+        });
+
+        jMenuItem3.setText("Optimize");
+        jMenuItem3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jMenuItem3MouseReleased(evt);
+            }
+        });
+        jMenu2.add(jMenuItem3);
+
+        jMenuBar1.add(jMenu2);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -170,32 +266,35 @@ public class CodigoGenerado extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
-    private void jMenuItem1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MouseReleased
+    public void generargcode() {
         VentanaPrincipal.txtGive.setText("");
+        this.setTitle("Código G Generado");
         CodigoG codigoggenerado = new CodigoG(txtcod.getText());
         String[] copiacodigog;
         String[] copiacodigog2;
         String[] copiacodigog3;
-        
+
         copiacodigog = codigoggenerado.getCodigoG();
         copiacodigog2 = codigoggenerado.getCodigoG2();
         copiacodigog3 = codigoggenerado.getCodigoG3();
         //System.out.println(copiacodigog[0]);
         txtcod.setText("");
-        txtcod.setText(codigoggenerado.getCaracteristicas()+"\n");
-        for(int i=0; i<copiacodigog.length; i++){
-           txtcod.setText(txtcod.getText()+"\n"+copiacodigog[i]);
+        txtcod.setText(codigoggenerado.getCaracteristicas() + "\n");
+        for (int i = 0; i < copiacodigog.length; i++) {
+            txtcod.setText(txtcod.getText() + "\n" + copiacodigog[i]);
         }
-        for(int i=0; i<copiacodigog2.length; i++){
-           txtcod.setText(txtcod.getText()+"\n"+copiacodigog2[i]);
+        for (int i = 0; i < copiacodigog2.length; i++) {
+            txtcod.setText(txtcod.getText() + "\n" + copiacodigog2[i]);
         }
-        for(int i=0; i<copiacodigog3.length; i++){
-           txtcod.setText(txtcod.getText()+"\n"+copiacodigog3[i]);
+        for (int i = 0; i < copiacodigog3.length; i++) {
+            txtcod.setText(txtcod.getText() + "\n" + copiacodigog3[i]);
         }
-         txtcod.setText(txtcod.getText()+"\n"+codigoggenerado.getCaracteristicas2());
+        txtcod.setText(txtcod.getText() + "\n" + codigoggenerado.getCaracteristicas2());
         //txtcod.setText(codigoggenerado.getCodigoG().toString()+"");
         //System.out.println(codigoggenerado.getCodigoG()+"");
+    }
+    private void jMenuItem1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MouseReleased
+        generargcode();
     }//GEN-LAST:event_jMenuItem1MouseReleased
     JFileChooser seleccionar = new JFileChooser();
     File archivo;
@@ -203,7 +302,7 @@ public class CodigoGenerado extends javax.swing.JDialog {
     FileOutputStream salida;
     String name;
     private void jMenuItem2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem2MouseReleased
-                if (name == null) {
+        if (name == null) {
 
             if (seleccionar.showDialog(null, "Save") == JFileChooser.APPROVE_OPTION) {
 
@@ -217,7 +316,7 @@ public class CodigoGenerado extends javax.swing.JDialog {
                         showMessageDialog(null, "Archivo no compatible");
                     }
                 } else {
-                    showMessageDialog(null, "Fallo al guardar, coloque extencion .txt");
+                    showMessageDialog(null, "Fallo al guardar, coloque extencion .gcode");
                 }
             }
             name = archivo.getName();
@@ -239,19 +338,16 @@ public class CodigoGenerado extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jMenuItem2MouseReleased
 
-        public String GuardarArchivo(File archivo, String documento) {
-        String mensaje = null;
-        try {
-            salida = new FileOutputStream(archivo);
-            byte[] bytxt = documento.getBytes();
-            salida.write(bytxt);
-            mensaje = "Archivo guardado";
+    private void jMenu2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseReleased
 
-        } catch (Exception e) {
-        }
-        return mensaje;
-    }
-    
+    }//GEN-LAST:event_jMenu2MouseReleased
+
+    private void jMenuItem3MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem3MouseReleased
+        Optimizacion op = new Optimizacion(txtcod.getText());
+        txtcod.setText(op.getArduino());
+    }//GEN-LAST:event_jMenuItem3MouseReleased
+
+
     /**
      * @param args the command line arguments
      */
@@ -297,9 +393,11 @@ public class CodigoGenerado extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextPane txtcod;
