@@ -4830,13 +4830,9 @@ public class CodigoG {
                     for(int i=1; i<=ModalExp.cmbExps.getComponentCount(); i++){
                         //System.err.println(linea+" equals "+ModalExp.cmbExps.getItemAt(i).toString());
                         if(linea.equals(ModalExp.cmbExps.getItemAt(i).toString()+";")){
-                            //System.err.println("4732"+ModalExp.cmbExps.getItemAt(i).toString());
                             for(int j=0; j<VentanaPrincipal.simbolos.size(); j++){
                                 if(first2[0].equals(VentanaPrincipal.simbolos.get(j).getLexema())){
-                                    //System.out.println("4735");
-                                    //System.err.println(ModalExp.exp_list.get(i-1).getResult()+" "+j+" 3");
                                     TablaDinamica.tblDinamica.setValueAt(ModalExp.exp_list.get(i-1).getResult(), j, 3);
-                                    //lb_exp_result.setText(exp_list.get(index).getResult());
                                 }
                             }
                         }
@@ -4887,7 +4883,7 @@ public class CodigoG {
                             break;
                         }
             }else if(linea.matches(fb27)){
-                VentanaPrincipal.txtGive.setText(VentanaPrincipal.txtGive.getText()+"\n > La temperatura del extrusor es de: "+temperatura);
+                VentanaPrincipal.txtGive.setText(VentanaPrincipal.txtGive.getText()+"\n > La temperatura del extrusor es de: "+temperatura+"°");
             }         
         }
     }

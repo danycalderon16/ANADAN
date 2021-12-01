@@ -132,6 +132,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         initComponents();
         seticon();
         formatoTabla(tblTablaSimbolos);
+        formatoTabla(tblCuadruplos);
         undoManager();
         this.setTitle("Sin título - ANADAN");
         setLocationRelativeTo(null);

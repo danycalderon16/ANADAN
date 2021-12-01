@@ -34,6 +34,7 @@ public class Optimizacion {
        String inifloat = ".*float.*[//;].*";
        String inistring = ".*String.*[//;].*";
        String sentfor = ".*for[//(].*";
+       String sentwhile = ".*while[//(].*";
        String poruno = ".*[//*]1.*";
        
        
@@ -53,7 +54,7 @@ public class Optimizacion {
                 saliente +=variables+dentro;
                 variables="";
                 dentro="";
-            }else if(linea.matches(sentfor)){
+            }else if(linea.matches(sentfor) || linea.matches(sentwhile)){
                 enciclo = 1;
                 dentro += linea+"\n";
             }else if((linea.matches(iniint)||linea.matches(iniboolean)||linea.matches(inifloat)
