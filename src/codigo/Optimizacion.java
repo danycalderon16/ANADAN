@@ -65,7 +65,6 @@ public class Optimizacion {
                     variables += linea+"\n";
                 }    
             }else if(linea.matches(poruno)){
-                System.out.println("lemu gey");
                 String[] first = linea.split("[//*]1");
                 if(enciclo==0){
                 saliente+=first[0]+first[1]+"\n";
