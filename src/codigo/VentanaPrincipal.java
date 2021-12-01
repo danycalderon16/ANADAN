@@ -558,7 +558,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         txtGive.setBackground(new java.awt.Color(51, 51, 51));
         txtGive.setColumns(20);
         txtGive.setFont(new java.awt.Font("Consolas", 1, 15)); // NOI18N
-        txtGive.setForeground(new java.awt.Color(240, 240, 240));
+        txtGive.setForeground(new java.awt.Color(102, 255, 204));
         txtGive.setRows(5);
         jScrollPane4.setViewportView(txtGive);
 

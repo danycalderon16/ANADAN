@@ -143,6 +143,8 @@ public class CodigoG {
                         switch(Integer.parseInt(n4[3])){
                             case 1:
                             Caracteristicas += "G21"+" ;Cambia la unidad a milimetros\n";
+                            case 2:
+                            Caracteristicas += "G20"+" ;Cambia la unidad a pulgadas\n";
                             break;
                         }
                         switch(Integer.parseInt(n4[4])){

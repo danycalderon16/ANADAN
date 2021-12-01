@@ -193,7 +193,7 @@ public class CodigoGenerado extends javax.swing.JDialog {
 
         txtcod.setEditable(false);
         txtcod.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtcod.setForeground(new java.awt.Color(204, 204, 204));
+        txtcod.setForeground(new java.awt.Color(102, 255, 204));
         txtcod.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jScrollPane1.setViewportView(txtcod);
 
