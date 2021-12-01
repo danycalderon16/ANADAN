@@ -36,6 +36,7 @@ public class Optimizacion {
        String sentfor = ".*for[//(].*";
        String sentwhile = ".*while[//(].*";
        String poruno = ".*[//*]1.*";
+       String error = ".*error.*";
        
        
        //SEPARAMOS EL CÓDIGO FUENTE ESCRITO POR EL USUARIO EN TOKENS INDIVIDUALES
@@ -50,7 +51,8 @@ public class Optimizacion {
                 enciclo=0;
                 
                 dentro += linea+"\n";
-                 linea = splitfake.nextToken();
+                 //linea = splitfake.nextToken();
+                 linea = "error";
                 saliente +=variables+dentro;
                 variables="";
                 dentro="";
@@ -73,6 +75,8 @@ public class Optimizacion {
                     
                 dentro+=first[0]+first[1]+"\n";
                 }
+            }else if(linea.matches(error)){
+            
             }else{
                 if(enciclo==0){
                 saliente += linea+"\n";
