@@ -1,0 +1,294 @@
+
+/*----------------------------------------  TERMINALES  ------------------------------------------------------------*/
+IDENTIFICADOR, NUMERO, DECIMAL, CADENA_TEXTO,TRUE, FALSE, BROKEN,JUST, WORD, FLAG,
+SETFILAMENTTYPE, FILLRECTANGLE, DRAWRECTANGLE, SLEEP, FILLCIRCLE, DRAWCIRCLE,
+FILLTRIANGLE, DRAWTRIANGLE, STOP, GETEXTRUSORX, GETEXTRUSORY, GETEXTRUSORZ, 
+GETFILAMENTTYPE, SETNEWFILAMENT,GETFILAMENT, GETTEMPERATURE, END, SAME, GET, 
+GIVE, FOR, IF, ELSE, SELECT, EMPTY,WHILE, CASE,  CUT, BEGIN, MODEL, DEFECT, 
+NEW, DO, GOBACK, HOME, PRINTERPORT, METHOD, CHECK, TRAP, CLASS, MAIN, SIGNO_DE_IGUAL, 
+SIGNO_DE_SUMA, SIGNO_DE_RESTA, SIGNO_DE_MULTIPLICACIÓN, SIGNO_DE_DIVISIÓN, 
+SIGNO_DE_RESIDUO, NOT, AND, OR, MAS_MAS,MENOS_MENOS, MENOR_QUE, MAYOR_QUE, 
+MENOR_O_IGUAL_QUE, MAYOR_O_IGUAL_QUE, DIFERENTE_QUE,IGUAL_QUE, PARENTESIS_ABRE, 
+PARENTESIS_CIERRA, LLAVE_ABRE, LLAVE_CIERRA, CORCHETE_ABRE,SIGNO_DE_EXPONENTE,
+CORCHETE_CIERRA, PUNTOYCOMA,  COMA,  PUNTO, RIGHTTEMPLE, RIGHTRIM, LEFTRIM,
+LEFTTEMPLE,BRIDGE,RIMS, TEMPLATES, ERROR;
+
+/*----------------------------------------  NO TERMINALES  ---------------------------------------------------------*/
+inicio, declaracion_for, if, if_else, t_dato;  while, do_while, for, 
+sentencia_booleana, sentencia_for, datos_array, continua, cuerpo, 
+declaraciones, declaracion, bloquesentencias, sentencias, sentencia, 
+expresion, expresion_prima, termino, termino_prima, factor, sentif, 
+sentelse, sentwhile, sentasignacion, sentcut, expresiondos, expresiontres, 
+expresioncuatro, op_rel, op_art, op_log, condicion, condiciondos, 
+filltriangle, setfilamenttype, stop, getextrusorx, getextrusory, 
+getextrusorz, getfilamenttype, setnewfilament, getfilament, expresioncinco,
+gettemperature, drawtriangle, fillrectangle, drawrectangle, sleep, 
+drawcircle, fillcircle, home, printerport, constructor, metodo, 
+metodos_parametros, metodo_sin_parametros, metodo_un_parametro, 
+metodo_cuatro_parametros, metodo_nueve_parametros, metodo_doce_parametros, 
+parametros, parametrosa, parametro, main, llamar, tryycatch, get, give,
+parametroa, rutinas, nombres_rutinas, parametro_texto, parametro_decimal;
+
+/*----------------------------------------  INICIAL  ------------------------------------------------------------*/
+start with inicio;
+
+/*----------------------------------------  PRODUCCIONES  ------------------------------------------------------------*/
+inicio ::=  IDENTIFICADOR PARENTESIS_ABRE PARENTESIS_CIERRA 
+        BEGIN 
+            bloquesentencias 
+        END |
+        declaracion 
+        IDENTIFICADOR PARENTESIS_ABRE PARENTESIS_CIERRA 
+        BEGIN 
+            bloquesentencias 
+        END |
+        IDENTIFICADOR PARENTESIS_ABRE PARENTESIS_CIERRA 
+        BEGIN 
+            bloquesentencias 
+        END | 
+        error BEGIN;
+
+bloquesentencias ::= 
+            bloquesentencias declaracion | 
+            declaracion |
+            bloquesentencias sentif | 
+            sentif | 
+            bloquesentencias sentwhile | 
+            sentwhile | 
+            bloquesentencias sentasignacion | 
+            sentasignacion | 
+            bloquesentencias sentcut | 
+            sentcut | 
+            bloquesentencias metodo |
+            metodo |
+            bloquesentencias home |
+            home |
+            bloquesentencias main |
+            main |
+            bloquesentencias metodos_parametros|
+            metodos_parametros|
+            bloquesentencias metodo_sin_parametros|
+            metodo_sin_parametros|
+            bloquesentencias metodo_un_parametro|
+            metodo_un_parametro|
+            bloquesentencias metodo_cuatro_parametros|
+            metodo_cuatro_parametros|
+            bloquesentencias metodo_nueve_parametros|
+            metodo_nueve_parametros|
+            bloquesentencias metodo_doce_parametros|
+            metodo_doce_parametros|
+            bloquesentencias for |
+            for |
+            bloquesentencias tryycatch |
+            tryycatch |
+            bloquesentencias get|
+            get|
+            bloquesentencias give|
+            give|            
+            bloquesentencias rutinas   |
+            rutinas |    
+            error PUNTOYCOMA | 
+            error LLAVE_CIERRA 
+; 
+
+/*---------------------------------------- DECLARACION DE VARIABLES -------------------------------------------*/
+
+declaracion ::= 
+    JUST IDENTIFICADOR PUNTOYCOMA   |
+    BROKEN IDENTIFICADOR PUNTOYCOMA   |
+    WORD IDENTIFICADOR PUNTOYCOMA   |
+    FLAG IDENTIFICADOR PUNTOYCOMA  |
+    //********************* DECLARACION E INICIALIZACION  ******************* *//
+    JUST IDENTIFICADOR SIGNO_DE_IGUAL NUMERO PUNTOYCOMA |
+    BROKEN IDENTIFICADOR SIGNO_DE_IGUAL NUMERO PUNTOYCOMA |
+    BROKEN IDENTIFICADOR SIGNO_DE_IGUAL DECIMAL PUNTOYCOMA |
+    WORD IDENTIFICADOR SIGNO_DE_IGUAL CADENA_TEXTO PUNTOYCOMA |
+    FLAG IDENTIFICADOR SIGNO_DE_IGUAL TRUE PUNTOYCOMA |
+    FLAG IDENTIFICADOR SIGNO_DE_IGUAL FALSE PUNTOYCOMA |
+    t_dato CORCHETE_ABRE CORCHETE_CIERRA IDENTIFICADOR SIGNO_DE_IGUAL t_dato CORCHETE_ABRE NUMERO CORCHETE_CIERRA PUNTOYCOMA |
+    t_dato CORCHETE_ABRE CORCHETE_CIERRA IDENTIFICADOR SIGNO_DE_IGUAL LLAVE_ABRE datos_array LLAVE_CIERRA PUNTOYCOMA |
+    IDENTIFICADOR IDENTIFICADOR SIGNO_DE_IGUAL NEW IDENTIFICADOR PARENTESIS_ABRE parametrosa PARENTESIS_CIERRA PUNTOYCOMA |
+    
+    //""""""""""""""""""""""""""""""""""""""""""""    ERRORES DE TIOS      """"""""""""""""""""""""""""""""""""""""""""""""""""
+    JUST IDENTIFICADOR SIGNO_DE_IGUAL DECIMAL PUNTOYCOMA | 
+    JUST IDENTIFICADOR SIGNO_DE_IGUAL CADENA_TEXTO PUNTOYCOMA | 
+    JUST IDENTIFICADOR SIGNO_DE_IGUAL TRUE PUNTOYCOMA | 
+    JUST IDENTIFICADOR SIGNO_DE_IGUAL FALSE PUNTOYCOMA | 
+    BROKEN IDENTIFICADOR SIGNO_DE_IGUAL CADENA_TEXTO PUNTOYCOMA |
+    BROKEN IDENTIFICADOR SIGNO_DE_IGUAL FALSE PUNTOYCOMA | 
+    BROKEN IDENTIFICADOR SIGNO_DE_IGUAL TRUE PUNTOYCOMA |  
+    WORD IDENTIFICADOR SIGNO_DE_IGUAL NUMERO PUNTOYCOMA | 
+    WORD IDENTIFICADOR SIGNO_DE_IGUAL DECIMAL PUNTOYCOMA | 
+    WORD IDENTIFICADOR SIGNO_DE_IGUAL FALSE PUNTOYCOMA | 
+    WORD IDENTIFICADOR SIGNO_DE_IGUAL TRUE PUNTOYCOMA |
+    FLAG IDENTIFICADOR SIGNO_DE_IGUAL CADENA_TEXTO PUNTOYCOMA |
+    FLAG IDENTIFICADOR SIGNO_DE_IGUAL NUMERO PUNTOYCOMA |
+    FLAG IDENTIFICADOR SIGNO_DE_IGUAL DECIMAL PUNTOYCOMA |
+
+    //"""""""""""""""""""""""""""""""""""""""""""" ERRORES DE PUNTO Y COMA """"""""""""""""""""""""""""""""""""""""""""""""""""
+    JUST IDENTIFICADOR| 
+    BROKEN IDENTIFICADOR  |
+    FLAG IDENTIFICADOR |
+    WORD IDENTIFICADOR |
+    JUST IDENTIFICADOR SIGNO_DE_IGUAL NUMERO | 
+    BROKEN IDENTIFICADOR SIGNO_DE_IGUAL DECIMAL  |
+    FLAG IDENTIFICADOR SIGNO_DE_IGUAL TRUE |
+    FLAG IDENTIFICADOR SIGNO_DE_IGUAL FALSE |
+    WORD IDENTIFICADOR SIGNO_DE_IGUAL CADENA_TEXTO   
+;
+
+t_dato ::= BROKEN|
+        JUST|
+        WORD|
+        FLAG
+;
+
+/*---------------------------------------- EXPRESIONES ------------------------------------------------------------*/
+expresion ::= 
+    expresion SIGNO_DE_SUMA termino|
+    expresion SIGNO_DE_RESTA termino|
+    termino
+;
+    
+termino ::= factor SIGNO_DE_MULTIPLICACIÓN factor  |
+    factor SIGNO_DE_DIVISIÓN factor  |
+    factor
+;
+    
+factor ::= 
+    PARENTESIS_ABRE expresion PARENTESIS_CIERRA | 
+    NUMERO  | 
+    DECIMAL
+    |
+    error
+;
+op_rel ::= MAYOR_QUE | MENOR_QUE | MAYOR_O_IGUAL_QUE | MENOR_O_IGUAL_QUE | DIFERENTE_QUE | IGUAL_QUE;
+op_art ::= SIGNO_DE_SUMA | SIGNO_DE_RESTA | SIGNO_DE_DIVISIÓN | SIGNO_DE_MULTIPLICACIÓN ;
+op_log ::= OR | AND;
+
+sentif ::=  IF PARENTESIS_ABRE condicion PARENTESIS_CIERRA LLAVE_ABRE  
+                bloquesentencias 
+            LLAVE_CIERRA
+                sentelse
+;
+sentelse ::= ELSE LLAVE_ABRE 
+                    bloquesentencias 
+                LLAVE_CIERRA |  
+;
+
+sentwhile ::= WHILE PARENTESIS_ABRE condicion PARENTESIS_CIERRA LLAVE_ABRE bloquesentencias LLAVE_CIERRA;
+sentasignacion ::= 
+        IDENTIFICADOR:identificador SIGNO_DE_IGUAL CADENA_TEXTO PUNTOYCOMA|
+        IDENTIFICADOR:identificador SIGNO_DE_IGUAL FALSE PUNTOYCOMA |
+        IDENTIFICADOR:identificador SIGNO_DE_IGUAL TRUE PUNTOYCOMA          |
+        IDENTIFICADOR:identificador SIGNO_DE_IGUAL expresion PUNTOYCOMA        
+;
+
+sentcut ::= CUT PUNTOYCOMA;
+
+condicion ::= IDENTIFICADOR IGUAL_QUE FALSE |
+        IDENTIFICADOR IGUAL_QUE TRUE |
+        FALSE IGUAL_QUE IDENTIFICADOR |
+        TRUE IGUAL_QUE IDENTIFICADOR |
+        IDENTIFICADOR op_rel NUMERO |
+        NUMERO op_rel IDENTIFICADOR |
+        IDENTIFICADOR op_rel IDENTIFICADOR | 
+        NUMERO op_rel NUMERO 
+;
+
+metodos_parametros ::=
+    metodo_sin_parametros    PARENTESIS_ABRE PARENTESIS_CIERRA PUNTOYCOMA |
+    metodo_un_parametro      PARENTESIS_ABRE parametroa PARENTESIS_CIERRA PUNTOYCOMA |
+    metodo_cuatro_parametros PARENTESIS_ABRE parametroa COMA parametroa COMA parametroa COMA parametroa PARENTESIS_CIERRA PUNTOYCOMA |
+    metodo_nueve_parametros  PARENTESIS_ABRE parametroa COMA parametroa COMA parametroa COMA parametroa COMA parametroa COMA parametroa COMA parametroa COMA parametroa COMA parametroa PARENTESIS_CIERRA PUNTOYCOMA |
+    metodo_doce_parametros   PARENTESIS_ABRE parametroa COMA parametroa COMA parametroa COMA parametroa COMA parametroa COMA parametroa COMA parametroa COMA parametroa COMA parametroa COMA parametroa COMA parametroa COMA parametroa PARENTESIS_CIERRA PUNTOYCOMA;
+
+metodo_doce_parametros ::= FILLRECTANGLE | DRAWRECTANGLE;
+ 
+metodo_nueve_parametros ::= FILLTRIANGLE | DRAWTRIANGLE;
+
+metodo_cuatro_parametros ::=  DRAWCIRCLE | FILLCIRCLE;
+
+metodo_un_parametro ::= SETFILAMENTTYPE | SETNEWFILAMENT |  PRINTERPORT; 
+
+metodo_sin_parametros ::= 
+    STOP |
+    GETEXTRUSORX |
+    GETEXTRUSORY |
+    GETEXTRUSORZ |
+    SLEEP |
+    GETFILAMENT |
+    GETFILAMENTTYPE |
+    HOME |
+    GETTEMPERATURE;
+
+metodo ::= METHOD IDENTIFICADOR PARENTESIS_ABRE parametros PARENTESIS_CIERRA LLAVE_ABRE bloquesentencias LLAVE_CIERRA | MODEL IDENTIFICADOR PARENTESIS_ABRE PARENTESIS_CIERRA PUNTOYCOMA;
+
+constructor ::= IDENTIFICADOR PARENTESIS_ABRE parametros PARENTESIS_CIERRA LLAVE_ABRE bloquesentencias LLAVE_CIERRA;
+
+main ::= MAIN PARENTESIS_ABRE PARENTESIS_CIERRA LLAVE_ABRE bloquesentencias LLAVE_CIERRA;
+
+parametros ::= parametro COMA parametros 
+            | parametro |;
+
+parametro ::= t_dato:td IDENTIFICADOR 
+;
+
+parametrosa ::= parametroa | parametroa COMA parametrosa;
+
+parametroa ::= IDENTIFICADOR | NUMERO;
+
+
+for ::= FOR PARENTESIS_ABRE sentencia_for PARENTESIS_CIERRA LLAVE_ABRE bloquesentencias LLAVE_CIERRA ;
+
+
+sentencia_for ::=
+   IDENTIFICADOR SIGNO_DE_IGUAL NUMERO PUNTOYCOMA condicion PUNTOYCOMA declaracion_for
+    |
+   JUST IDENTIFICADOR SIGNO_DE_IGUAL NUMERO PUNTOYCOMA condicion PUNTOYCOMA declaracion_for
+    ;
+
+declaracion_for ::=  |
+    IDENTIFICADOR MAS_MAS | 
+    MAS_MAS IDENTIFICADOR
+;
+
+sentencia_booleana ::= 
+    IDENTIFICADOR op_rel TRUE |
+    IDENTIFICADOR op_rel FALSE |
+    IDENTIFICADOR op_rel NUMERO |
+    IDENTIFICADOR op_rel IDENTIFICADOR |
+    IDENTIFICADOR PUNTO SAME PARENTESIS_ABRE CADENA_TEXTO PARENTESIS_CIERRA 
+;
+
+tryycatch ::= CHECK LLAVE_ABRE bloquesentencias LLAVE_CIERRA TRAP PARENTESIS_ABRE IDENTIFICADOR IDENTIFICADOR PARENTESIS_CIERRA LLAVE_ABRE bloquesentencias LLAVE_CIERRA;
+    
+get ::= GET PARENTESIS_ABRE CADENA_TEXTO PARENTESIS_CIERRA PUNTOYCOMA;
+
+give ::= GIVE PARENTESIS_ABRE IDENTIFICADOR PARENTESIS_CIERRA PUNTOYCOMA;
+
+rutinas ::= 
+    nombres_rutinas PARENTESIS_ABRE parametro_texto COMA parametro_decimal COMA parametro_decimal COMA parametro_decimal COMA parametro_decimal COMA parametro_decimal COMA parametro_decimal  PARENTESIS_CIERRA PUNTOYCOMA 
+    
+;
+
+parametro_texto ::=
+    IDENTIFICADOR 
+    
+    | CADENA_TEXTO;
+
+parametro_decimal ::=
+    IDENTIFICADOR 
+    |   DECIMAL
+    | NUMERO
+;
+
+nombres_rutinas ::= 
+    RIGHTTEMPLE | 
+    LEFTTEMPLE | 
+    RIGHTRIM | 
+    LEFTRIM | 
+    BRIDGE | 
+    TEMPLATES | 
+    RIMS
+;
