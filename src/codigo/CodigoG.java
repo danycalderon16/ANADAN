@@ -1,7 +1,9 @@
 package codigo;
 
 import static codigo.VentanaPrincipal.txtAreaEdit;
+import static codigo.VentanaPrincipal.txtGive;
 import frames.ModalExp;
+import java.awt.Color;
 
 import java.util.StringTokenizer;
 
@@ -16,9 +18,12 @@ public class CodigoG {
     String[] salientemarcos = new String [14];
     String[] lefttemplate = new String [3];
     String[] righttemplate = new String [3];
+    public static int filamento=190;
     public int tab=0;
     public int endinamica=0;
     public int eserror=0;
+    public int stop=0;
+    public int temperatura=0;
     public String Caracteristicas="";
     public String Caracteristicas2="";
     VariablesCodigoG variables = new VariablesCodigoG();
@@ -79,6 +84,12 @@ public class CodigoG {
        String fb21 = ".*if[//(].*";
        String fb22 = ".*=.*;.*";
        String fb23 = ".*give[//(].*";
+       String fb24 = ".*setfilamenttype[//(].*";
+       String fb25 = ".*stop[//(].*";
+       String fb26 = ".*getfilamenttype[//(].*";
+       String fb27 = ".*gettemperature[//(].*";
+       
+       
        
        //SEPARAMOS EL CÓDIGO FUENTE ESCRITO POR EL USUARIO EN TOKENS INDIVIDUALES
         StringTokenizer splitfake = new StringTokenizer(fuente,"\n");
@@ -110,7 +121,9 @@ public class CodigoG {
                 
             }
             System.out.println(linea);
-            if(linea.matches(fb18)){
+            if(stop==1){
+            
+            }else if(linea.matches(fb18)){
                     endinamica=0;
                     String[] first2 = linea.split("[//(]");
                     String[] n3 = first2[1].split("[//)]");
@@ -140,9 +153,25 @@ public class CodigoG {
                     if(Caracteristicas.isEmpty()){
                         Caracteristicas = "M104 S"+n4[1]+" ;Temperatura máxima.\n";
                         Caracteristicas += "M109 S"+n4[2]+" ;Cambia la temperatura.\n";
+                        temperatura = Integer.parseInt(n4[2]);
+                        if(Integer.parseInt(n4[2])<filamento){
+                            VentanaPrincipal.txtGive.setText(VentanaPrincipal.txtGive.getText()+"\n > Advertencia: La temperatura es baja para el tipo de filamento utilizado."
+                                                                                                +"\n > Optición 1: PVA mínimo 190°"
+                                                                                                +"\n > Optición 2: HIPS mínimo 200°"
+                                                                                                +"\n > Optición 3: LAYWOOD mínimo 170°");
+                            txtGive.setForeground(Color.RED);
+                        }else if(Integer.parseInt(n4[2])>(filamento+30)){
+                            VentanaPrincipal.txtGive.setText(VentanaPrincipal.txtGive.getText()+"\n > Advertencia: La temperatura es alta para el tipo de filamento utilizado."
+                                                                                                +"\n > Optición 1: PVA máximo 220°"
+                                                                                                +"\n > Optición 2: HIPS máximo 230°"
+                                                                                                +"\n > Optición 3: LAYWOOD máximo 200°");
+                            txtGive.setForeground(Color.RED);
+                        }
                         switch(Integer.parseInt(n4[3])){
                             case 1:
                             Caracteristicas += "G21"+" ;Cambia la unidad a milimetros\n";
+                            case 2:
+                            Caracteristicas += "G20"+" ;Cambia la unidad a pulgadas\n";
                             break;
                         }
                         switch(Integer.parseInt(n4[4])){
@@ -4723,6 +4752,14 @@ public class CodigoG {
                     if(Caracteristicas.isEmpty()){
                         Caracteristicas = "M104 S"+n4[1]+" ;Temperatura máxima.\n";
                         Caracteristicas += "M109 S"+n4[2]+" ;Cambia la temperatura.\n";
+                        temperatura = Integer.parseInt(n4[2]);
+                        if(Integer.parseInt(n4[2])<filamento){
+                            VentanaPrincipal.txtGive.setText(VentanaPrincipal.txtGive.getText()+"\n > Advertencia: La temperatura es baja para el tipo de filamento utilizado."
+                                                                                                +"\n > Optición 1: PVA mínimo 190°"
+                                                                                                +"\n > Optición 2: HIPS mínimo 200°"
+                                                                                                +"\n > Optición 3: LAYWOOD mínimo 170°");
+                            txtGive.setForeground(Color.RED);
+                        }
                         switch(Integer.parseInt(n4[3])){
                             case 1:
                             Caracteristicas += "G21"+" ;Cambia la unidad a milimetros\n";
@@ -4764,6 +4801,14 @@ public class CodigoG {
                     if(Caracteristicas.isEmpty()){
                         Caracteristicas = "M104 S"+n4[1]+" ;Temperatura máxima.\n";
                         Caracteristicas += "M109 S"+n4[2]+" ;Cambia la temperatura.\n";
+                        temperatura = Integer.parseInt(n4[2]);
+                        if(Integer.parseInt(n4[2])<filamento){
+                            VentanaPrincipal.txtGive.setText(VentanaPrincipal.txtGive.getText()+"\n > Advertencia: La temperatura es baja para el tipo de filamento utilizado."
+                                                                                                +"\n > Optición 1: PVA mínimo 190°"
+                                                                                                +"\n > Optición 2: HIPS mínimo 200°"
+                                                                                                +"\n > Optición 3: LAYWOOD mínimo 170°");
+                            txtGive.setForeground(Color.RED);
+                        }
                         switch(Integer.parseInt(n4[3])){
                             case 1:
                             Caracteristicas += "G21"+" ;Cambia la unidad a milimetros\n";
@@ -4791,13 +4836,9 @@ public class CodigoG {
                     for(int i=1; i<=ModalExp.cmbExps.getComponentCount(); i++){
                         //System.err.println(linea+" equals "+ModalExp.cmbExps.getItemAt(i).toString());
                         if(linea.equals(ModalExp.cmbExps.getItemAt(i).toString()+";")){
-                            //System.err.println("4732"+ModalExp.cmbExps.getItemAt(i).toString());
                             for(int j=0; j<VentanaPrincipal.simbolos.size(); j++){
                                 if(first2[0].equals(VentanaPrincipal.simbolos.get(j).getLexema())){
-                                    //System.out.println("4735");
-                                    //System.err.println(ModalExp.exp_list.get(i-1).getResult()+" "+j+" 3");
                                     TablaDinamica.tblDinamica.setValueAt(ModalExp.exp_list.get(i-1).getResult(), j, 3);
-                                    //lb_exp_result.setText(exp_list.get(index).getResult());
                                 }
                             }
                         }
@@ -4812,7 +4853,44 @@ public class CodigoG {
                     String[] n3 = first2[1].split("[//)]");
                     //System.out.println((char)65);
                 VentanaPrincipal.txtGive.setText(VentanaPrincipal.txtGive.getText()+"\n"+" > "+n3[0]);
-            } 
+            }else if(linea.matches(fb24)){
+                    String[] first2 = linea.split("[//(]");
+                    String[] n3 = first2[1].split("[//)]");
+                    
+                        switch(n3[0]){
+                            case "1":
+                                filamento=190;
+                                //Caracteristicas += "\n;La temperatura óptima de impresión para PVA es de "+filamento+" grados.";
+                            break;
+                            case "2":
+                                filamento=220;
+                                //Caracteristicas += "\n;La temperatura óptima de impresión para HIPS es de "+filamento+" grados.";
+                            break;
+                            case "3":
+                                filamento=170;
+                                //Caracteristicas += "\n;La temperatura óptima de impresión para LAYWOOD es de "+filamento+" grados.";
+                            break;
+                        }
+            }else if(linea.matches(fb25)){
+                    stop=1;
+            }else if(linea.matches(fb26)){
+                        switch(filamento){
+                            case 190:
+                                VentanaPrincipal.txtGive.setText(VentanaPrincipal.txtGive.getText()+"\n > El tipo de filamento utilizado es PVA.");
+                                //Caracteristicas += "\n;La temperatura óptima de impresión para PVA es de "+filamento+" grados.";
+                            break;
+                            case 220:
+                                VentanaPrincipal.txtGive.setText(VentanaPrincipal.txtGive.getText()+"\n > El tipo de filamento utilizado es HIPS.");
+                                //Caracteristicas += "\n;La temperatura óptima de impresión para HIPS es de "+filamento+" grados.";
+                            break;
+                            case 170:
+                                VentanaPrincipal.txtGive.setText(VentanaPrincipal.txtGive.getText()+"\n > El tipo de filamento utilizado es LAYWOOD.");
+                                //Caracteristicas += "\n;La temperatura óptima de impresión para LAYWOOD es de "+filamento+" grados.";
+                            break;
+                        }
+            }else if(linea.matches(fb27)){
+                VentanaPrincipal.txtGive.setText(VentanaPrincipal.txtGive.getText()+"\n > La temperatura del extrusor es de: "+temperatura+"°");
+            }         
         }
     }
 }

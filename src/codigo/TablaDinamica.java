@@ -1,9 +1,15 @@
 package codigo;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Stack;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import modelos.Simbolos;
 
@@ -15,10 +21,47 @@ public class TablaDinamica extends javax.swing.JFrame {
     static Map<String, TablaSimbolos> tablaSimbolos;
 
     static Stack<String> lista;
+    //FORMATO PARA TABLAS------------------------------------------------------------------------------------------------------------------------ 
+    public void formatoTabla(JTable tabla) {
+        Color color1 = new Color(244,118,42);
+        Color color2 = new Color(34, 40, 49);
+        Font fuente = new Font("Consolas", Font.PLAIN, 12);
+        //tabla.setFocusable(false);
+        //tabla.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        //tabla.setRowHeight(25);
+        //tabla.setRowMargin(0);
+        //tabla.setShowVerticalLines(false);
+        //tabla.setBackground(Color.WHITE);
+        //tabla.setSelectionBackground(color1);
+        //tabla.getTableHeader().setDefaultRenderer(new HeaderColor());
+        //tabla.setFont(fuente);
+        //tabla.setForeground(Color.BLACK);
+        //tabla.setEditingRow(-1);
+    }
+    
+    public class HeaderColor extends DefaultTableCellRenderer {
 
+        public HeaderColor() {
+            setOpaque(true);
+        }
+
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean selected, boolean focused, int row, int column) {
+            super.getTableCellRendererComponent(table, value, selected, focused, row, column);
+            setForeground(Color.WHITE);
+            setBackground(new java.awt.Color(34, 40, 49));
+            setFont(new Font("Consolas", Font.PLAIN, 12));
+            return this;
+        }
+    }
+    public void seticon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/logopro2.png")));
+    }
+    
     public TablaDinamica(ArrayList<Simbolos> simbolo) {
         this.simbolos = simbolo;
         limpiar();
+        //formatoTabla(tblDinamica);
+        seticon();
         TablaSimbolos.mostrar();
         initComponents();
         setLocationRelativeTo(null);
@@ -73,7 +116,7 @@ public class TablaDinamica extends javax.swing.JFrame {
 
             },
             new String [] {
-                "LINEA", "IDENTIFICADOR", "TIPO", "VALOR", "CLASE", "DIRECCION DE MEMORIA"
+                "LINEA", "IDENTIFICADOR", "TIPO", "VALOR", "CLASE"
             }
         ));
         jScrollPane1.setViewportView(tblDinamica);

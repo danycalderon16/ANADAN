@@ -5,6 +5,7 @@ import ds.desktop.notify.DesktopNotify;
 import frames.ModalExp;
 import frames.ModalLexico;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.Image;
@@ -35,10 +36,12 @@ import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
+import javax.swing.JTable;
 import javax.swing.UIDefaults;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
 import javax.swing.plaf.ColorUIResource;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.undo.UndoManager;
 import modelos.LabelError;
@@ -74,7 +77,39 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private int coor_7 = 0;
     private int height = 0;
+    
+//FORMATO PARA TABLAS------------------------------------------------------------------------------------------------------------------------ 
+    public void formatoTabla(JTable tabla) {
+        Color color1 = new Color(34, 40, 49);
+        Color color2 = new Color(34, 40, 49);
+        Font fuente = new Font("Consolas", Font.PLAIN, 12);
+        tabla.setFocusable(false);
+        tabla.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tabla.setRowHeight(25);
+        tabla.setRowMargin(0);
+        tabla.setShowVerticalLines(false);
+        tabla.setBackground(Color.WHITE);
+        tabla.setSelectionBackground(color1);
+        tabla.getTableHeader().setDefaultRenderer(new HeaderColor());
+        tabla.setFont(fuente);
+        tabla.setForeground(Color.BLACK);
+        tabla.setEditingRow(-1);
+    }
+    
+    public class HeaderColor extends DefaultTableCellRenderer {
 
+        public HeaderColor() {
+            setOpaque(true);
+        }
+
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean selected, boolean focused, int row, int column) {
+            super.getTableCellRendererComponent(table, value, selected, focused, row, column);
+            setForeground(Color.WHITE);
+            setBackground(new java.awt.Color(34, 40, 49));
+            setFont(new Font("Consolas", Font.PLAIN, 12));
+            return this;
+        }
+    }
     //ESTO ES PARA MARCAR CON COLORES LAS PALABRAS////////////////////////////////////////////////////////////////////////
     private int findLastNonWordChar(String text, int index) {
         while (--index >= 0) {
@@ -98,6 +133,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     public VentanaPrincipal() {
         initComponents();
         seticon();
+        formatoTabla(tblTablaSimbolos);
+        formatoTabla(tblCuadruplos);
         undoManager();
         this.setTitle("Sin título - ANADAN");
         setLocationRelativeTo(null);
@@ -147,7 +184,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                         if (text.substring(wordL, wordR).matches("(\\W)*(just|broken|word|flag|word)")) {
                             //setCharacterAttributes(wordL, wordL+1, attrWhite, false);
                             setCharacterAttributes(wordL + 1, wordR - wordL, attr, false);
-                        } else if (text.substring(wordL, wordR).matches("(\\W)*(rims|templates|rightrim|leftrim|righttemple|lefttemple|bridge|begin|end|setfilamenttype|fillrectangle|drawrectangle|sleep|fillcircle|drawcircle|drawtriangle|filltriangle|stop|getextrusorx|getextrusory|getextrusorz|getfilamenttype|setnewfilament|getfilament|gettemperatura|same|get|give|select|empty|cut|model|defect|new|goback|home|sleep|printerport|check|trap)")) {
+                        } else if (text.substring(wordL, wordR).matches("(\\W)*(gettemperature|rims|templates|rightrim|leftrim|righttemple|lefttemple|bridge|begin|end|setfilamenttype|fillrectangle|drawrectangle|sleep|fillcircle|drawcircle|drawtriangle|filltriangle|stop|getextrusorx|getextrusory|getextrusorz|getfilamenttype|setnewfilament|getfilament|gettemperatura|same|get|give|select|empty|cut|model|defect|new|goback|home|sleep|printerport|check|trap)")) {
                             setCharacterAttributes(wordL + 1, wordR - wordL, attrBlue, false);
                         } else if (text.substring(wordL, wordR).matches("(\\W)*(method|class|main)")) {
                             setCharacterAttributes(wordL + 1, wordR - wordL, attrOrange, false);
@@ -560,7 +597,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         txtGive.setBackground(new java.awt.Color(51, 51, 51));
         txtGive.setColumns(20);
         txtGive.setFont(new java.awt.Font("Consolas", 1, 15)); // NOI18N
-        txtGive.setForeground(new java.awt.Color(240, 240, 240));
+        txtGive.setForeground(new java.awt.Color(102, 255, 204));
         txtGive.setRows(5);
         jScrollPane4.setViewportView(txtGive);
 
@@ -1547,6 +1584,7 @@ NumeroLinea lineatxtCodigo;
     }//GEN-LAST:event_icon_sintacticMouseReleased
 
     private void icon_runMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_runMouseReleased
+        txtGive.setForeground(new Color(102,255,204));
         analisisSintactico();
         if(labelsErrores.isEmpty()){
                     Arduino test = new Arduino(txtAreaEdit.getText());

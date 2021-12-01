@@ -5,6 +5,7 @@
  */
 package codigo;
 
+import static codigo.CodigoG.filamento;
 import java.awt.Color;
 import java.awt.Toolkit;
 import javax.swing.UIDefaults;
@@ -104,10 +105,27 @@ public class CodigoGenerado extends javax.swing.JDialog {
         seticon();
         llenarcodigo2(codigoArduino);
         generargcode();
+        crearcarpeta();
         generararchivo();
-        GuardarArchivo(file, txtcod.getText());
-        abrirarchivo();
+            GuardarArchivo(file, txtcod.getText());
+        if(!VentanaPrincipal.txtGive.getForeground().equals(Color.RED)){
+            abrirarchivo();
+        }
     }
+    public void crearcarpeta(){
+        String path = "C:\\Anadan Files";
+        File Dir = new File(path);
+        if(!Dir.exists()){
+            if(Dir.mkdir()){
+                System.out.println("La carpeta Anadan Files fue creada.");
+            }else{
+                System.out.println("La carpeta Anadan Files no se creó.");
+            }
+        }else{
+            System.out.println("La carpeta ya existe.");
+        }
+    }
+    
     public void abrirarchivo(){
             try {
       //constructor of file class having file as argument  
@@ -193,7 +211,7 @@ public class CodigoGenerado extends javax.swing.JDialog {
 
         txtcod.setEditable(false);
         txtcod.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtcod.setForeground(new java.awt.Color(204, 204, 204));
+        txtcod.setForeground(new java.awt.Color(102, 255, 204));
         txtcod.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jScrollPane1.setViewportView(txtcod);
 
@@ -280,6 +298,19 @@ public class CodigoGenerado extends javax.swing.JDialog {
         //System.out.println(copiacodigog[0]);
         txtcod.setText("");
         txtcod.setText(codigoggenerado.getCaracteristicas() + "\n");
+                        switch(CodigoG.filamento){
+                            case 190:
+                                txtcod.setText(txtcod.getText() +"\n;La temperatura óptima de impresión para PVA es de "+filamento+" grados.");
+                            break;
+                            case 200:
+                                txtcod.setText(txtcod.getText() +"\n;La temperatura óptima de impresión para HIPS es de "+filamento+" grados.");
+                            break;
+                            case 170:
+                                txtcod.setText(txtcod.getText() +"\n;La temperatura óptima de impresión para LAYWOOD es de "+filamento+" grados.");
+                            break;
+                        }
+                        
+        txtcod.setText(txtcod.getText() + "\n");
         for (int i = 0; i < copiacodigog.length; i++) {
             txtcod.setText(txtcod.getText() + "\n" + copiacodigog[i]);
         }
