@@ -116,7 +116,7 @@ public class TablaDinamica extends javax.swing.JFrame {
 
             },
             new String [] {
-                "LINEA", "IDENTIFICADOR", "TIPO", "VALOR", "CLASE", "DIRECCION DE MEMORIA"
+                "LINEA", "IDENTIFICADOR", "TIPO", "VALOR", "CLASE"
             }
         ));
         jScrollPane1.setViewportView(tblDinamica);

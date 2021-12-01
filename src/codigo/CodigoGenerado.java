@@ -105,12 +105,27 @@ public class CodigoGenerado extends javax.swing.JDialog {
         seticon();
         llenarcodigo2(codigoArduino);
         generargcode();
+        crearcarpeta();
         generararchivo();
             GuardarArchivo(file, txtcod.getText());
         if(!VentanaPrincipal.txtGive.getForeground().equals(Color.RED)){
             abrirarchivo();
         }
     }
+    public void crearcarpeta(){
+        String path = "C:\\Anadan Files";
+        File Dir = new File(path);
+        if(!Dir.exists()){
+            if(Dir.mkdir()){
+                System.out.println("La carpeta Anadan Files fue creada.");
+            }else{
+                System.out.println("La carpeta Anadan Files no se creó.");
+            }
+        }else{
+            System.out.println("La carpeta ya existe.");
+        }
+    }
+    
     public void abrirarchivo(){
             try {
       //constructor of file class having file as argument  

@@ -160,6 +160,12 @@ public class CodigoG {
                                                                                                 +"\n > Optición 2: HIPS mínimo 200°"
                                                                                                 +"\n > Optición 3: LAYWOOD mínimo 170°");
                             txtGive.setForeground(Color.RED);
+                        }else if(Integer.parseInt(n4[2])>(filamento+30)){
+                            VentanaPrincipal.txtGive.setText(VentanaPrincipal.txtGive.getText()+"\n > Advertencia: La temperatura es alta para el tipo de filamento utilizado."
+                                                                                                +"\n > Optición 1: PVA máximo 220°"
+                                                                                                +"\n > Optición 2: HIPS máximo 230°"
+                                                                                                +"\n > Optición 3: LAYWOOD máximo 200°");
+                            txtGive.setForeground(Color.RED);
                         }
                         switch(Integer.parseInt(n4[3])){
                             case 1:
