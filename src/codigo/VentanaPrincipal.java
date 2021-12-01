@@ -1,5 +1,6 @@
 package codigo;
 
+import com.sun.jndi.toolkit.url.Uri;
 import ds.desktop.notify.DesktopNotify;
 import frames.ModalExp;
 import frames.ModalLexico;
@@ -21,6 +22,7 @@ import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.StringReader;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.logging.Level;
@@ -1953,7 +1955,9 @@ NumeroLinea lineatxtCodigo;
         } else {
         }
 
-        File archivo = new File(name);
+        File archivo = null;
+        archivo = new File("C:\\ejemplo.gcode");
+        System.out.println(archivo.getPath());
         PrintWriter escribir;
         try {
             escribir = new PrintWriter(archivo);
