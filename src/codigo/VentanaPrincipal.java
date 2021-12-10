@@ -1,6 +1,5 @@
 package codigo;
 
-import com.sun.jndi.toolkit.url.Uri;
 import ds.desktop.notify.DesktopNotify;
 import frames.ModalExp;
 import frames.ModalLexico;
@@ -23,12 +22,10 @@ import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.StringReader;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
